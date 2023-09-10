@@ -20,8 +20,9 @@ router.post(
         return next(new ErrorHandler("Mã giảm giá đã tồn tại!", 400));
       }
 
-      const coupounCode = await CoupounCode.create(req.body);
+      req.body.remainingQuantity = req.body.quantity;
 
+      const coupounCode = await CoupounCode.create(req.body);
       res.status(201).json({
         success: true,
         coupounCode,
@@ -80,6 +81,82 @@ router.get(
       res.status(200).json({
         success: true,
         couponCode,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+// router.post(
+//   "/apply-coupon/:name",
+//   catchAsyncErrors(async (req, res, next) => {
+//     try {
+//       const name = req.params.name;
+
+//       // tim ma giam gia theo ten
+//       const couponCode = await CoupounCode.findOne({ name });
+
+//       // kiem tra xem ma giam gia co ton tai hay khong
+//       if (!couponCode) {
+//         return next(new ErrorHandler("Mã giảm giá không tồn tại!", 400));
+//       }
+//       // kiem tra so luong con lai cua ma giam gia
+//       if (couponCode.remainingQuantity <= 0) {
+//         return next(new ErrorHandler("Mã giảm giá đã hết!", 400));
+//       }
+
+//       const shopId = couponCode.shopId;
+//       const couponCodeValue = couponCode.value;
+
+//       // Kiem tra xem ma giam gia co ap dung cho cua hang hien tai khong
+//       const isCouponValid = cart.filter((item) => item.shopId === shopId);
+//       if (isCouponValid.length === 0) {
+//         return next(
+//           new ErrorHandler("Mã giảm giá không hợp lệ cho cửa hàng này !")
+//         );
+//       }
+
+//       // Tinh toan giam gia dua tren gia tri cua ma giam
+//       const eligiblePrice = isCouponValid.reduce(
+//         (acc, item) => acc + item.qty * item.discountPrice,
+//         0
+//       );
+//       const discountPrice = (eligiblePrice * couponCodeValue) / 100;
+
+//       // Cap nhat so luong con lai cua ma giam gia
+//       couponCode.remainingQuantity -= 1;
+//       await couponCode.save();
+
+//       res.status(200).json({
+//         success: true,
+//         discountPrice,
+//       });
+//     } catch (error) {
+//       return next(new ErrorHandler(error, 400));
+//     }
+//   })
+// );
+
+// // Đoạn mã xử lý cập nhật số lượng còn lại
+router.put(
+  "/update-remaining-quantity/:id",
+  isSeller,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { remainingQuantity } = req.body;
+      const couponCode = await CoupounCode.findByIdAndUpdate(
+        req.params.id,
+        { remainingQuantity },
+        { new: true }
+      );
+
+      if (!couponCode) {
+        return next(new ErrorHandler("Mã giảm giá không tồn tại!", 400));
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Cập nhật số lượng còn lại thành công!",
       });
     } catch (error) {
       return next(new ErrorHandler(error, 400));

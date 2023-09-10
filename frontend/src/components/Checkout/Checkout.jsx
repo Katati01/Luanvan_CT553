@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import styles from "../../styles/styles";
-import { Country, State } from "country-state-city";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import axios from "axios";
-import { server } from "../../server";
-import { toast } from "react-toastify";
+import { Country, State } from "country-state-city";
 import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const Checkout = () => {
   const { user } = useSelector((state) => state.user);
@@ -27,7 +26,7 @@ const Checkout = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const paymentSubmit = () => {
+  const paymentSubmit =  () => {
    if(address1 === ""|| country === "" || city === ""){
       toast.error("Vui lòng chọn địa chỉ giao hàng!")
    } else{
@@ -93,7 +92,17 @@ const Checkout = () => {
         setCouponCode("");
       }
     });
-  };
+  }
+
+ 
+
+
+  
+
+
+
+  
+
 
   const discountPercentenge = couponCodeData ? discountPrice : "";
 
