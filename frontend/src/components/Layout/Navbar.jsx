@@ -13,7 +13,7 @@ const Navbar = ({ active }) => {
               to={i.url}
               className={`${
                 active === index + 1
-                  ? "text-[#fb6a6f] font-[700]"
+                  ? "text-[#d3cd9f] font-[700]"
                   : "text-black 800px:text-[#fff]"
               } pb-[30px] 800px:pb-0 font-[500] px-6 cursor-pointer}`}
             >

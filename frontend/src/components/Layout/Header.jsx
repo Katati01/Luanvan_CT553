@@ -15,6 +15,7 @@ import Cart from "../cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
 
 import { TbAdjustmentsHorizontal, TbArrowBarLeft } from "react-icons/tb";
+import { BiMenu } from "react-icons/bi";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -201,11 +202,7 @@ const Header = ({ activeHeading }) => {
       >
         <div className="w-full flex items-center justify-between">
           <div>
-            <TbAdjustmentsHorizontal
-              size={40}
-              className="ml-4"
-              onClick={() => setOpen(true)}
-            />
+            <BiMenu size={40} className="ml-4" onClick={() => setOpen(true)} />
           </div>
           <div>
             <Link to="/">
