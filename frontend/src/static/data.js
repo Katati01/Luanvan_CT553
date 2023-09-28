@@ -593,17 +593,27 @@ export const footerProductLinks = [
 
 export const footercompanyLinks = [
   {
-    name: "Music and Gaming"
+    name: "Hạt giống",
+    link: "products?category=Hạt%20giống"
   },
   {
-    name: "Điện thoại và máy tính bảng"
+    name: "Đất sạch",
+    link: "products?category=Đất%20sạch"
   },
   {
-    name: "Laptop-máy tính"
+    name: "Phân hữu cơ",
+    link: "products?category=Phân%20hữu%20cơ"
   },
   {
-    name: "Thể thao và du lịch"
-  }
+    name: "Chậu, khay trồng",
+    link: "products?category=Chậu,%20khay%20trồng"
+  },
+  { name: "Chăm mai tết", link: "products?category=Chăm%20mai%20tết" },
+  {
+    name: "Dụng cụ làm vườn",
+    link: "products?category=Dụng%20cụ%20làm%20vườn"
+  },
+  { name: "Danh mục khác", link: "products?category=Danh%20mục%20khác" }
 ];
 
 export const footerSupportLinks = [
@@ -615,11 +625,5 @@ export const footerSupportLinks = [
   },
   {
     name: "Liên hệ"
-  },
-  // {
-  //   name: "Shipping",
-  // },
-  {
-    name: "Video cách cài đặt code"
   }
 ];

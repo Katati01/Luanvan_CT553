@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillYoutube,
-  AiOutlineTwitter
-} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import {
   footercompanyLinks,
@@ -43,25 +37,10 @@ const Footer = () => {
           />
           <br />
           <p></p>
-          <div className="flex items-center mt-[15px]">
-            <AiFillFacebook size={25} className="cursor-pointer" />
-            {/* <AiOutlineTwitter
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-            <AiFillInstagram
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            /> */}
-            <AiFillYoutube
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-          </div>
         </ul>
 
         <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Công ty</h1>
+          <h1 className="mb-1 font-semibold text-[20px]">Công ty</h1>
           {footerProductLinks.map((link, index) => (
             <li key={index}>
               <Link
@@ -76,7 +55,7 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Cửa hàng</h1>
+          <h1 className="mb-1 font-semibold text-[20px]">Cửa hàng</h1>
           {footercompanyLinks.map((link, index) => (
             <li key={index}>
               <Link
@@ -91,7 +70,7 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Hỗ trợ</h1>
+          <h1 className="mb-1 font-semibold text-[20px]">Hỗ trợ</h1>
           {footerSupportLinks.map((link, index) => (
             <li key={index}>
               <Link
