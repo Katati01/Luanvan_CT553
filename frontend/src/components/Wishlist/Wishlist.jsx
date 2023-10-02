@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { IoBagHandleOutline } from "react-icons/io5";
 import { BsCartPlus } from "react-icons/bs";
 import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "../../redux/actions/wishlist";
