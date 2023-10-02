@@ -14,7 +14,7 @@ import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
 
-import { TbAdjustmentsHorizontal, TbArrowBarLeft } from "react-icons/tb";
+import { TbArrowBarLeft } from "react-icons/tb";
 import { BiMenu } from "react-icons/bi";
 
 const Header = ({ activeHeading }) => {
@@ -80,7 +80,7 @@ const Header = ({ activeHeading }) => {
               className="absolute right-2 top-1.5 cursor-pointer"
             />
             {searchData && searchData.length !== 0 ? (
-              <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
+              <div className="absolute min-h-[30vh] w-[100%] bg-slate-50 shadow-sm-2 z-[9] p-4">
                 {searchData &&
                   searchData.map((i, index) => {
                     return (
@@ -106,7 +106,9 @@ const Header = ({ activeHeading }) => {
               </span>
             )}
 
-            <div className={`${styles.button}`}>
+            <div
+              className={`${styles.button} mt-5 relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0`}
+            >
               <Link to={`${isSeller ? "/dashboard" : "/shop-login"}`}>
                 <h1 className="text-[#fff] flex items-center">
                   {isSeller ? "Quản lý " : "Đăng nhập"}{" "}

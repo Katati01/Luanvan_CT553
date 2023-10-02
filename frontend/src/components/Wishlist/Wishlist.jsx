@@ -20,14 +20,14 @@ const Wishlist = ({ setOpenWishlist }) => {
   };
 
   const addToCartHandler = (data) => {
-    const newData = {...data, qty:1};
+    const newData = { ...data, qty: 1 };
     dispatch(addTocart(newData));
     setOpenWishlist(false);
-  }
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
-      <div className="fixed top-0 right-0 h-full w-[80%] overflow-y-scroll 800px:w-[25%] bg-white flex flex-col justify-between shadow-sm">
+      <div className="fixed top-0 right-0 h-full w-[80%] overflow-y-scroll 800px:w-[30%] bg-white flex flex-col justify-between shadow-sm">
         {wishlist && wishlist.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
@@ -62,7 +62,12 @@ const Wishlist = ({ setOpenWishlist }) => {
               <div className="w-full border-t">
                 {wishlist &&
                   wishlist.map((i, index) => (
-                    <CartSingle key={index} data={i} removeFromWishlistHandler={removeFromWishlistHandler} addToCartHandler={addToCartHandler} />
+                    <CartSingle
+                      key={index}
+                      data={i}
+                      removeFromWishlistHandler={removeFromWishlistHandler}
+                      addToCartHandler={addToCartHandler}
+                    />
                   ))}
               </div>
             </div>
@@ -73,33 +78,37 @@ const Wishlist = ({ setOpenWishlist }) => {
   );
 };
 
-const CartSingle = ({ data,removeFromWishlistHandler,addToCartHandler }) => {
+const CartSingle = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
   const [value, setValue] = useState(1);
   const totalPrice = data.discountPrice * value;
 
   return (
     <div className="border-b p-4">
       <div className="w-full 800px:flex items-center">
-        <RxCross1 size={30} 
-        color="#fff"
-        className="cursor-pointer 800px:mb-['unset'] 800px:ml-['unset'] mb-2 ml-2 bg-[#d80a0a] border border-[#e4434373] rounded-[50%]"
-        onClick={() => removeFromWishlistHandler(data)}
+        <RxCross1
+          size={25}
+          color="#fff"
+          className="flex-3 cursor-pointer 800px:mb-['unset'] 800px:ml-['unset'] mb-2 bg-[#d80a0a] border border-[#e4434373] rounded-[100%]"
+          onClick={() => removeFromWishlistHandler(data)}
         />
         <img
           src={`${backend_url}${data?.images[0]}`}
           alt=""
-          className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
+          className="w-[80px] h-min ml-2 mr-2 rounded-[5px]"
         />
 
-        <div className="pl-[5px]">
+        <div className="w-[80%]">
           <h1>{data.name}</h1>
           <h4 className="font-[600] pt-3 800px:pt-[3px] text-[17px] text-[#d02222] font-Roboto">
-          {`${currency.format(totalPrice, { code: "VND" })}`}
+            {`${currency.format(totalPrice, { code: "VND" })}`}
           </h4>
         </div>
         <div>
-          <BsCartPlus size={20} className="cursor-pointer" tile="Add to cart"
-           onClick={() => addToCartHandler(data)}
+          <BsCartPlus
+            size={20}
+            className="cursor-pointer"
+            tile="Add to cart"
+            onClick={() => addToCartHandler(data)}
           />
         </div>
       </div>

@@ -29,15 +29,15 @@ const Cart = ({ setOpenCart }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
-      <div className="fixed top-0 right-0 h-full w-[80%] 800px:w-[25%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm">
+      <div className="fixed top-0 right-0 h-full w-[80%] 800px:w-[30%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm">
         {cart && cart.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
-               <RxCross1 
+              <RxCross1
                 size={25}
                 className="cursor-pointer"
                 onClick={() => setOpenCart(false)}
-                />
+              />
             </div>
             <h5>Giỏ hàng trống !</h5>
           </div>
@@ -54,7 +54,9 @@ const Cart = ({ setOpenCart }) => {
               {/* Item length */}
               <div className={`${styles.noramlFlex} p-4`}>
                 <IoBagHandleOutline size={25} />
-                <h5 className="pl-2 text-[20px] font-[500]">{cart && cart.length} Sản phẩm </h5>
+                <h5 className="pl-2 text-[20px] font-[500]">
+                  {cart && cart.length} Sản phẩm{" "}
+                </h5>
               </div>
 
               {/* cart Single Items */}
@@ -79,7 +81,11 @@ const Cart = ({ setOpenCart }) => {
                   className={`h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px]`}
                 >
                   <h1 className="text-[#fff] text-[18px] font-[600]">
-                    Mua({`${currency.format(totalPrice, { code: "VND" })}`})
+                    Mua (
+                    {`${
+                      " " + currency.format(totalPrice, { code: "VND" }) + " "
+                    }`}
+                    )
                   </h1>
                 </div>
               </Link>
@@ -132,21 +138,23 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         <img
           src={`${backend_url}${data?.images[0]}`}
           alt=""
-          className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
+          className="w-[80px] h-min ml-2 mr-2 rounded-[5px]"
         />
-        <div className="pl-[5px]">
+        <div className="pl-[5px] w-[90%]">
           <h1>{data.name}</h1>
           <h4 className="font-[400] text-[15px] text-[#00000082]">
             {/* ${data.discountPrice} * {value} */}
-            {`${currency.format(data.discountPrice, { code: "VND" })}`} * {value}
+            {`${currency.format(data.discountPrice, { code: "VND" })}`} *{" "}
+            {value}
           </h4>
           <h4 className="font-[600] text-[17px] pt-[3px] text-[#d02222] font-Roboto">
             {/* US${totalPrice} */}
             {`${currency.format(totalPrice, { code: "VND" })}`}
           </h4>
         </div>
-        <RxCross1 size={36} 
-        color="#fff"
+        <RxCross1
+          size={30}
+          color="#fff"
           className="cursor-pointer bg-[#d80a0a] border border-[#e4434373] rounded-[50%]"
           onClick={() => removeFromCartHandler(data)}
         />
