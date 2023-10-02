@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import styles from "../../styles/styles";
-import { Country, State } from "country-state-city";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import axios from "axios";
-import { server } from "../../server";
-import { toast } from "react-toastify";
+import { Country, State } from "country-state-city";
 import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const Checkout = () => {
   const { user } = useSelector((state) => state.user);
@@ -27,57 +26,181 @@ const Checkout = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const paymentSubmit = () => {
-   if(address1 === ""|| country === "" || city === ""){
-      toast.error("Vui lòng chọn địa chỉ giao hàng!")
-   } else{
-    const shippingAddress = {
-      address1,
-      // address2,
-      // zipCode,
-      country,
-      city,
-    };
 
-    const orderData = {
-      cart,
-      totalPrice,
-      subTotalPrice,
-      shipping,
-      discountPrice,
-      shippingAddress,
-      user,
+  // const paymentSubmit =  () => {
+  //  if(address1 === ""|| country === "" || city === ""){
+  //     toast.error("Vui lòng chọn địa chỉ giao hàng!")
+  //  } else{
+  //   const shippingAddress = {
+  //     address1,
+  //     // address2,
+  //     // zipCode,
+  //     country,
+  //     city,
+  //   };
+
+  //   const orderData = {
+  //     cart,
+  //     totalPrice,
+  //     subTotalPrice,
+  //     shipping,
+  //     discountPrice,
+  //     shippingAddress,
+  //     user,
+  //   }
+
+  //   // update local storage with the updated orders array
+  //   localStorage.setItem("latestOrder", JSON.stringify(orderData));
+  //   navigate("/payment");
+  //  }
+  // };
+  
+  const paymentSubmit = async () => {
+    if (address1 === "" || country === "" || city === "") {
+      toast.error("Vui lòng chọn địa chỉ giao hàng!");
+    } else {
+      const shippingAddress = {
+        address1,
+        country,
+        city,
+      };
+  
+      const orderData = {
+        cart,
+        totalPrice,
+        subTotalPrice,
+        shipping,
+        discountPrice,
+        shippingAddress,
+        user,
+      };
+  
+      // update local storage with the updated orders array
+      localStorage.setItem("latestOrder", JSON.stringify(orderData));
+  
+      // Gọi API để cập nhật số lượng mã giảm giá còn lại
+      if (couponCodeData) {
+        const couponName = couponCodeData.name;
+        
+        // Gửi yêu cầu PUT lên máy chủ để cập nhật số lượng còn lại
+        await axios.put(`${server}/coupon/update-coupon-quantity/${couponName}`);
+      }
+      navigate("/payment");
     }
-
-    // update local storage with the updated orders array
-    localStorage.setItem("latestOrder", JSON.stringify(orderData));
-    navigate("/payment");
-   }
   };
-
+  
+  
   const subTotalPrice = cart.reduce(
     (acc, item) => acc + item.qty * item.discountPrice,
     0
   );
 
   // this is shipping cost variable
-  const shipping = subTotalPrice * 0.02;
+  // const shipping = subTotalPrice * 0.02;
+  const shipping = subTotalPrice > 2000000 ? 15000 : 30000
+  // Ban đầu
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const name = couponCode;
+
+  //   await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
+  //     const shopId = res.data.couponCode?.shopId;
+  //     const couponCodeValue = res.data.couponCode?.value;
+  //     if (res.data.couponCode !== null) {
+  //       const isCouponValid =
+  //         cart && cart.filter((item) => item.shopId === shopId);
+
+  //       if (isCouponValid.length === 0) {
+  //         toast.error("Mã voucher không hợp lệ cho cửa hàng này!");
+  //         setCouponCode("");
+  //       } else {
+  //         const eligiblePrice = isCouponValid.reduce(
+  //           (acc, item) => acc + item.qty * item.discountPrice,
+  //           0
+  //         );
+  //         const discountPrice = (eligiblePrice * couponCodeValue) / 100;
+  //         setDiscountPrice(discountPrice);
+  //         setCouponCodeData(res.data.couponCode);
+  //         setCouponCode("");
+  //       }
+  //     }
+  //     if (res.data.couponCode === null) {
+  //       toast.error("Mã Voucher này không tồn tại!");
+  //       setCouponCode("");
+  //     }
+  //   });
+  // }
+
+  
+  
+
+
+  // / chay ok
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const name = couponCode;
+  
+  //   await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
+  //     const shopId = res.data.couponCode?.shopId;
+  //     const couponCodeValue = res.data.couponCode?.value;
+      
+  //     if (res.data.couponCode !== null) {
+  //       // Kiểm tra xem mã giảm giá đã hết chưa
+  //       console.log(res.data.couponCode.remainingQuantity)
+  //       if (res.data.couponCode.remainingQuantity >= res.data.couponCode.quantity) {
+  //         toast.error("Mã giảm giá đã hết!");
+  //         setCouponCode("");
+  //       } else {
+  //         const isCouponValid =
+  //           cart && cart.filter((item) => item.shopId === shopId);
+  
+  //         if (isCouponValid.length === 0) {
+  //           toast.error("Mã voucher không hợp lệ cho cửa hàng này!");
+  //           setCouponCode("");
+  //         } else {
+  //           const eligiblePrice = isCouponValid.reduce(
+  //             (acc, item) => acc + item.qty * item.discountPrice,
+  //             0
+  //           );
+  //           const discountPrice = (eligiblePrice * couponCodeValue) / 100;
+  //           setDiscountPrice(discountPrice);
+  //           setCouponCodeData(res.data.couponCode);
+  //           setCouponCode("");
+  //         }
+  //       }
+  //     }
+  //     if (res.data.couponCode === null) {
+  //       toast.error("Mã Voucher này không tồn tại!");
+  //       setCouponCode("");
+  //     }
+  //   });
+  // };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = couponCode;
-
-    await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
+  
+    await axios.get(`${server}/coupon/get-coupon-value/${name}`).then(  (res) => {
       const shopId = res.data.couponCode?.shopId;
       const couponCodeValue = res.data.couponCode?.value;
+      const remainingQuantity = res.data.couponCode?.remainingQuantity; // Lấy remainingQuantity từ response
+      const quantity = res.data.couponCode?.quantity;
+      
       if (res.data.couponCode !== null) {
         const isCouponValid =
           cart && cart.filter((item) => item.shopId === shopId);
-
+  
         if (isCouponValid.length === 0) {
           toast.error("Mã voucher không hợp lệ cho cửa hàng này!");
           setCouponCode("");
+        } else if (remainingQuantity >= quantity) {
+          toast.error("Mã voucher đã hết!");
+          setCouponCode("");
         } else {
+          // Cập nhật remainingQuantity sau khi sử dụng mã giảm giá
+          // const updatedRemainingQuantity = remainingQuantity + 1;
+
           const eligiblePrice = isCouponValid.reduce(
             (acc, item) => acc + item.qty * item.discountPrice,
             0
@@ -86,6 +209,8 @@ const Checkout = () => {
           setDiscountPrice(discountPrice);
           setCouponCodeData(res.data.couponCode);
           setCouponCode("");
+          
+         
         }
       }
       if (res.data.couponCode === null) {
@@ -94,6 +219,15 @@ const Checkout = () => {
       }
     });
   };
+  
+
+
+  
+
+
+
+  
+
 
   const discountPercentenge = couponCodeData ? discountPrice : "";
 
@@ -107,6 +241,7 @@ const Checkout = () => {
     <div className="w-full flex flex-col items-center py-8">
       <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
         <div className="w-full 800px:w-[65%]">
+          {/* Hiển thị thông tin giao hàng */}
           <ShippingInfo
             user={user}
             country={country}
@@ -124,6 +259,7 @@ const Checkout = () => {
           />
         </div>
         <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
+           {/* Hiển thị giỏ hàng và tính toán phí giao hàng */}
           <CartData
             handleSubmit={handleSubmit}
             totalPrice={totalPrice}
@@ -374,3 +510,4 @@ const CartData = ({
 };
 
 export default Checkout;
+
