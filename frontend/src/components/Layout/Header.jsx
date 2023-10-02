@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styles from "../../styles/styles";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { IoIosArrowForward } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import Navbar from "./Navbar";
+import { IoIosArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { backend_url } from "../../server";
-import Cart from "../cart/Cart";
+import styles from "../../styles/styles";
 import Wishlist from "../Wishlist/Wishlist";
+import Cart from "../cart/Cart";
+import Navbar from "./Navbar";
 
 import { TbAdjustmentsHorizontal, TbArrowBarLeft } from "react-icons/tb";
 

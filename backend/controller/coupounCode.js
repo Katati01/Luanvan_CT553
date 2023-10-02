@@ -20,9 +20,10 @@ router.post(
         return next(new ErrorHandler("Mã giảm giá đã tồn tại!", 400));
       }
 
-      req.body.remainingQuantity = req.body.quantity;
+      req.body.remainingQuantity = 0;
 
       const coupounCode = await CoupounCode.create(req.body);
+
       res.status(201).json({
         success: true,
         coupounCode,
@@ -34,6 +35,7 @@ router.post(
 );
 
 // get all coupons of a shop
+
 router.get(
   "/get-coupon/:id",
   isSeller,
@@ -87,49 +89,28 @@ router.get(
     }
   })
 );
-// router.post(
-//   "/apply-coupon/:name",
+// router.get(
+//   "/get-coupon-value/:name",
 //   catchAsyncErrors(async (req, res, next) => {
 //     try {
-//       const name = req.params.name;
+//       const couponCode = await CoupounCode.findOne({ name: req.params.name });
 
-//       // tim ma giam gia theo ten
-//       const couponCode = await CoupounCode.findOne({ name });
-
-//       // kiem tra xem ma giam gia co ton tai hay khong
 //       if (!couponCode) {
-//         return next(new ErrorHandler("Mã giảm giá không tồn tại!", 400));
-//       }
-//       // kiem tra so luong con lai cua ma giam gia
-//       if (couponCode.remainingQuantity <= 0) {
-//         return next(new ErrorHandler("Mã giảm giá đã hết!", 400));
+//         return next(new ErrorHandler("Mã Voucher này không tồn tại!", 400));
 //       }
 
-//       const shopId = couponCode.shopId;
-//       const couponCodeValue = couponCode.value;
-
-//       // Kiem tra xem ma giam gia co ap dung cho cua hang hien tai khong
-//       const isCouponValid = cart.filter((item) => item.shopId === shopId);
-//       if (isCouponValid.length === 0) {
-//         return next(
-//           new ErrorHandler("Mã giảm giá không hợp lệ cho cửa hàng này !")
-//         );
+//       // Kiểm tra xem số lượng mã giảm giá còn lại có đủ để sử dụng không.
+//       if (couponCode.remainingQuantity >= couponCode.quantity) {
+//         return next(new ErrorHandler("Mã giảm giá đã hết22!", 400));
 //       }
 
-//       // Tinh toan giam gia dua tren gia tri cua ma giam
-//       const eligiblePrice = isCouponValid.reduce(
-//         (acc, item) => acc + item.qty * item.discountPrice,
-//         0
-//       );
-//       const discountPrice = (eligiblePrice * couponCodeValue) / 100;
-
-//       // Cap nhat so luong con lai cua ma giam gia
-//       couponCode.remainingQuantity -= 1;
+//       // Nếu có đủ số lượng, cập nhật trường usedQuantity và lưu vào cơ sở dữ liệu.
+//       couponCode.remainingQuantity += 1;
 //       await couponCode.save();
 
 //       res.status(200).json({
 //         success: true,
-//         discountPrice,
+//         couponCode,
 //       });
 //     } catch (error) {
 //       return next(new ErrorHandler(error, 400));
@@ -138,25 +119,30 @@ router.get(
 // );
 
 // // Đoạn mã xử lý cập nhật số lượng còn lại
+// Cập nhật remainingQuantity của mã giảm giá
+// Cập nhật remainingQuantity của mã giảm giá
 router.put(
-  "/update-remaining-quantity/:id",
-  isSeller,
+  "/update-coupon-quantity/:name",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const { remainingQuantity } = req.body;
-      const couponCode = await CoupounCode.findByIdAndUpdate(
-        req.params.id,
-        { remainingQuantity },
-        { new: true }
-      );
+      const couponCode = await CoupounCode.findOne({ name: req.params.name });
 
       if (!couponCode) {
-        return next(new ErrorHandler("Mã giảm giá không tồn tại!", 400));
+        return next(new ErrorHandler("Mã giảm giá không tồn tại", 400));
       }
 
-      res.status(201).json({
+      // Kiểm tra xem số lượng còn lại có đủ để sử dụng không.
+      if (couponCode.remainingQuantity - couponCode.quantity === 0) {
+        return next(new ErrorHandler("Mã giảm giá đã hết!", 400));
+      }
+
+      // Nếu có đủ số lượng, cập nhật trường remainingQuantity và lưu vào cơ sở dữ liệu.
+      couponCode.remainingQuantity += 1;
+      await couponCode.save();
+
+      res.status(200).json({
         success: true,
-        message: "Cập nhật số lượng còn lại thành công!",
+        message: "Cập nhật số lượng mã giảm giá thành công!",
       });
     } catch (error) {
       return next(new ErrorHandler(error, 400));
