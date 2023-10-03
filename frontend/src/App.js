@@ -37,7 +37,7 @@ import {
   ShopAllRefunds,
   ShopSettingsPage,
   ShopWithDrawMoneyPage,
-  ShopInboxPage,
+  ShopInboxPage
 } from "./routes/ShopRoutes";
 import {
   AdminDashboardPage,
@@ -62,7 +62,6 @@ import axios from "axios";
 import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -296,7 +295,7 @@ const App = () => {
             </ProtectedAdminRoute>
           }
         />
-         <Route
+        <Route
           path="/admin-products"
           element={
             <ProtectedAdminRoute>
@@ -304,7 +303,7 @@ const App = () => {
             </ProtectedAdminRoute>
           }
         />
-         <Route
+        <Route
           path="/admin-events"
           element={
             <ProtectedAdminRoute>
@@ -312,7 +311,7 @@ const App = () => {
             </ProtectedAdminRoute>
           }
         />
-         <Route
+        <Route
           path="/admin-withdraw-request"
           element={
             <ProtectedAdminRoute>

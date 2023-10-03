@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
-  AiOutlineShoppingCart,
+  AiOutlineShoppingCart
 } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
@@ -15,6 +15,7 @@ import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
 
 import { TbAdjustmentsHorizontal, TbArrowBarLeft } from "react-icons/tb";
+import { BiMenu } from "react-icons/bi";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -60,7 +61,7 @@ const Header = ({ activeHeading }) => {
                 alt=""
               /> */}
               {/* <h1>Kiana shop</h1> */}
-              <h1 className="text-[33px] font-bold underline decoration-[#db3f59] hover:decoration-4">
+              <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
                 Kiana shop
               </h1>
             </Link>
@@ -72,7 +73,7 @@ const Header = ({ activeHeading }) => {
               placeholder="Search Product..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
+              className="h-[40px] w-full px-2 border-[#009b49] border-[1px] rounded-md"
             />
             <AiOutlineSearch
               size={30}
@@ -100,7 +101,7 @@ const Header = ({ activeHeading }) => {
           </div>
           <div className="flex items-center">
             {isSeller ? null : (
-              <span className="font-medium mt-1 pr-2">
+              <span className="font-medium mt-1 mr-2 pr-2">
                 Đăng nhập vào cửa hàng
               </span>
             )}
@@ -128,7 +129,7 @@ const Header = ({ activeHeading }) => {
       <div
         className={`${
           active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-        } transition hidden 800px:flex items-center justify-between w-full bg-[#efd3c8] h-[70px]`}
+        } transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]`}
       >
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
@@ -144,8 +145,8 @@ const Header = ({ activeHeading }) => {
                 className="relative cursor-pointer mr-[15px]"
                 onClick={() => setOpenWishlist(true)}
               >
-                <AiOutlineHeart size={35} color="#de650a" />
-                <span className="absolute right-0 top-0 rounded-full bg-[#de650a] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                <AiOutlineHeart size={35} color="#fff" />
+                <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
                   {wishlist && wishlist.length}
                 </span>
               </div>
@@ -156,8 +157,8 @@ const Header = ({ activeHeading }) => {
                 className="relative cursor-pointer mr-[15px]"
                 onClick={() => setOpenCart(true)}
               >
-                <AiOutlineShoppingCart size={35} color="#de650a" />
-                <span className="absolute right-0 top-0 rounded-full bg-[#de650a] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                <AiOutlineShoppingCart size={35} color="#fff" />
+                <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
                   {cart && cart.length}
                 </span>
               </div>
@@ -201,15 +202,11 @@ const Header = ({ activeHeading }) => {
       >
         <div className="w-full flex items-center justify-between">
           <div>
-            <TbAdjustmentsHorizontal
-              size={40}
-              className="ml-4"
-              onClick={() => setOpen(true)}
-            />
+            <BiMenu size={40} className="ml-4" onClick={() => setOpen(true)} />
           </div>
           <div>
             <Link to="/">
-              <h1 className="text-[33px] font-bold underline decoration-[#db3f59] hover:decoration-4">
+              <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
                 Kiana shop
               </h1>
             </Link>
@@ -261,7 +258,7 @@ const Header = ({ activeHeading }) => {
                 <input
                   type="search"
                   placeholder="Tìm kiếm sản phẩm..."
-                  className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
+                  className="h-[40px] w-full px-2 border-[#009b49] border-[2px] rounded-md"
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />

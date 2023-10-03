@@ -10,20 +10,20 @@ const Hero = () => {
       className={`relative min-h-[70vh] 800px:min-h-[80vh] w-full bg-no-repeat ${styles.noramlFlex}`}
       style={{
         backgroundImage:
-          "url(https://static.wixstatic.com/media/9d865c_e06d8b20039b4d9ea6035344b2b2c90b~mv2.jpg/v1/fill/w_1899,h_585,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/9d865c_e06d8b20039b4d9ea6035344b2b2c90b~mv2.jpg)",
+          "url(https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)"
       }}
     >
       <div className={`${styles.section} w-[90%] 800px:w-[60%]`}>
         <h1
-          className={`text-[35px] leading-[1.2] 800px:text-[60px] text-[#3d3a3a] font-[600] capitalize`}
+          className={`text-[35px] leading-[1.2] 800px:text-[60px] text-[#fff] font-[600] capitalize`}
         >
           Kiana shop <br />
         </h1>
-        <p className="pt-5 text-[16px] font-[Poppins] font-[400] text-[#000000ba]">
-          Là dịch vụ thương mại điện tử. Nơi bạn có thể mua những sản phẩm mà
-          mình yêu thích với giá cả hợp lý. <br /> Ngoài ra bạn cũng có thể trở
-          thành một người kinh doanh trên hệ thống của chúng tôi . <br /> Hãy
-          trải nghiệm ngay thôi nào.
+        <p className="pt-5 text-[18px] font-[Poppins] font-[500] text-[#fff]">
+          Chào mừng bạn đến với chúng tôi! Ở đây, chúng tôi mang đến một trải
+          nghiệm độc đáo liên quan đến nông nghiệp hiện đại, kết hợp công nghệ
+          và tình yêu đối với việc trồng trọt, chăm sóc cây trồng và nuôi dưỡng
+          động vật. Hãy khám phá cùng chúng tôi!
         </p>
         <div className="flex justify-evenly">
           <Link to="/products">

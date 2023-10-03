@@ -1,20 +1,14 @@
 import React from "react";
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillYoutube,
-  AiOutlineTwitter,
-} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import {
   footercompanyLinks,
   footerProductLinks,
-  footerSupportLinks,
+  footerSupportLinks
 } from "../../static/data";
 
 const Footer = () => {
   return (
-    <div className="bg-[#db3f59] text-white">
+    <div className="bg-[#009b49] text-white">
       {/* <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#342ac8] py-7">
         <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5">
           <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
@@ -43,26 +37,11 @@ const Footer = () => {
           />
           <br />
           <p></p>
-          <div className="flex items-center mt-[15px]">
-            <AiFillFacebook size={25} className="cursor-pointer" />
-            {/* <AiOutlineTwitter
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-            <AiFillInstagram
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            /> */}
-            <AiFillYoutube
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-          </div>
         </ul>
 
         <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Công ty</h1>
-          {footerProductLinks.map((link,index) => (
+          <h1 className="mb-1 font-semibold text-[20px]">Công ty</h1>
+          {footerProductLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-white hover:text-teal-400 duration-300
@@ -76,8 +55,8 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Cửa hàng</h1>
-          {footercompanyLinks.map((link,index) => (
+          <h1 className="mb-1 font-semibold text-[20px]">Cửa hàng</h1>
+          {footercompanyLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-white hover:text-teal-400 duration-300
@@ -91,8 +70,8 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Hỗ trợ</h1>
-          {footerSupportLinks.map((link,index) => (
+          <h1 className="mb-1 font-semibold text-[20px]">Hỗ trợ</h1>
+          {footerSupportLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-white hover:text-teal-400 duration-300
