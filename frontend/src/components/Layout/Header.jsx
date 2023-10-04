@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
@@ -30,6 +30,9 @@ const Header = ({ activeHeading }) => {
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const searchInputRef = useRef(null);
+  const searchResultsRef = useRef(null);
+
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -41,6 +44,26 @@ const Header = ({ activeHeading }) => {
       );
     setSearchData(filteredProducts);
   };
+
+  const handleDocumentClick = (event) => {
+    // Kiểm tra nếu người dùng không click vào searchBox hoặc searchResult, thì ẩn kết quả tìm kiếm
+    if (
+      !searchInputRef.current.contains(event.target) &&
+      !searchResultsRef.current.contains(event.target)
+    ) {
+      setSearchData(null);
+    }
+  };
+
+  // Sử dụng useEffect để lắng nghe sự kiện "click" trên toàn tài liệu
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+
+    // Clean up khi component unmount
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
 
   window.addEventListener("scroll", () => {
     if (window.scrollY > 70) {
@@ -74,28 +97,36 @@ const Header = ({ activeHeading }) => {
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#009b49] border-[1px] rounded-md"
+              ref={searchInputRef}
             />
             <AiOutlineSearch
               size={30}
               className="absolute right-2 top-1.5 cursor-pointer"
             />
-            {searchData && searchData.length !== 0 ? (
-              <div className="absolute min-h-[30vh] w-[100%] bg-slate-50 shadow-sm-2 z-[9] p-4">
-                {searchData &&
-                  searchData.map((i, index) => {
-                    return (
-                      <Link to={`/product/${i._id}`}>
-                        <div className="w-full flex items-start-py-3">
-                          <img
-                            src={`${backend_url}${i.images[0]}`}
-                            alt=""
-                            className="w-[40px] h-[40px] mr-[10px]"
-                          />
-                          <h1>{i.name}</h1>
-                        </div>
-                      </Link>
-                    );
-                  })}
+            {searchTerm && searchData && searchData.length === 0 ? (
+              <div
+                className="absolute min-h-[6vh] bg-slate-50 shadow-sm-2 z-[2] p-4 w-[100%]"
+                ref={searchResultsRef}
+              >
+                <p className="text-red-500">Không tìm thấy sản phẩm</p>
+              </div>
+            ) : searchData && searchData.length !== 0 ? (
+              <div
+                className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4 w-[100%]"
+                ref={searchResultsRef}
+              >
+                {searchData.map((i, index) => (
+                  <Link to={`/product/${i._id}`} key={i._id}>
+                    <div className="w-full flex items-start py-3">
+                      <img
+                        src={`${backend_url}${i.images[0]}`}
+                        alt=""
+                        className="w-[40px] h-[40px] mr-[10px]"
+                      />
+                      <h1>{i.name}</h1>
+                    </div>
+                  </Link>
+                ))}
               </div>
             ) : null}
           </div>
@@ -219,7 +250,7 @@ const Header = ({ activeHeading }) => {
               onClick={() => setOpenCart(true)}
             >
               <AiOutlineShoppingCart size={30} />
-              <span class="absolute right-0 top-0 rounded-full bg-[#db3f59] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
+              <span className="absolute right-0 top-0 rounded-full bg-[#db3f59] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
                 {cart && cart.length}
               </span>
             </div>
