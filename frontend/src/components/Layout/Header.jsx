@@ -16,7 +16,6 @@ import Navbar from "./Navbar";
 
 import { TbArrowBarLeft } from "react-icons/tb";
 import { BiMenu } from "react-icons/bi";
-import { TbArrowBarLeft } from "react-icons/tb";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
