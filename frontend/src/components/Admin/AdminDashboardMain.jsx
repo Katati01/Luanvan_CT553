@@ -23,7 +23,13 @@ const AdminDashboardMain = () => {
     dispatch(getAllSellers());
   }, []);
 
+<<<<<<<<< Temporary merge branch 1
+  const adminEarning =
+    adminOrders &&
+    adminOrders.reduce((acc, item) => acc + item.totalPrice * 0.05, 0);
+=========
    const adminEarning = adminOrders && adminOrders.reduce((acc,item) => acc + item.totalPrice * 0.05, 0);
+>>>>>>>>> Temporary merge branch 2
 
   const adminBalance = adminEarning?.toFixed(2);
 
