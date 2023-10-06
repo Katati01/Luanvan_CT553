@@ -21,7 +21,7 @@ const AdminDashboardMain = () => {
   useEffect(() => {
     dispatch(getAllOrdersOfAdmin());
     dispatch(getAllSellers());
-  }, []);
+  }, [dispatch]);
 
   const adminEarning =
     adminOrders &&

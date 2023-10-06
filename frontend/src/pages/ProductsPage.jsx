@@ -29,8 +29,8 @@ const ProductsPage = () => {
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
+      preserveAspectRatio: "xMidYMid slice"
+    }
   };
   const sortProducts = (sortBy, data) => {
     switch (sortBy) {
@@ -97,7 +97,7 @@ const ProductsPage = () => {
             </div>
             <div className="mr-[3vw] mt-4">
               <select
-                className="h-[40px] bg-white border border-gray-300 rounded-md px-3 outline-none"
+                className="h-[50px] w-[250px] bg-white border border-gray-300 rounded-md px-3 outline-none"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
