@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styles from "../../styles/styles";
-import { AiOutlineArrowRight, AiOutlineMoneyCollect } from "react-icons/ai";
-import { MdBorderClear } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { DataGrid } from "@material-ui/data-grid";
-import { Button } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllOrdersOfAdmin } from "../../redux/actions/order";
-import Loader from "../Layout/Loader";
-import { getAllSellers } from "../../redux/actions/sellers";
 import currency from "currency-formatter";
+import React, { useEffect } from "react";
+import { AiOutlineMoneyCollect } from "react-icons/ai";
+import { MdBorderClear } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { getAllOrdersOfAdmin } from "../../redux/actions/order";
+import { getAllSellers } from "../../redux/actions/sellers";
+import styles from "../../styles/styles";
+import Loader from "../Layout/Loader";
 
 const AdminDashboardMain = () => {
   const dispatch = useDispatch();
@@ -24,9 +23,13 @@ const AdminDashboardMain = () => {
     dispatch(getAllSellers());
   }, []);
 
+<<<<<<< HEAD
   const adminEarning =
     adminOrders &&
     adminOrders.reduce((acc, item) => acc + item.totalPrice * 0.05, 0);
+=======
+   const adminEarning = adminOrders && adminOrders.reduce((acc,item) => acc + item.totalPrice * 0.05, 0);
+>>>>>>> 161c537b5b643851f7c3ecda9a046348a1441801
 
   const adminBalance = adminEarning?.toFixed(2);
 
