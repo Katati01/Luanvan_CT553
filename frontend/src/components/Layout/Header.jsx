@@ -14,8 +14,8 @@ import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
 
-import { TbAdjustmentsHorizontal, TbArrowBarLeft } from "react-icons/tb";
 import { BiMenu } from "react-icons/bi";
+import { TbArrowBarLeft } from "react-icons/tb";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -79,25 +79,26 @@ const Header = ({ activeHeading }) => {
               size={30}
               className="absolute right-2 top-1.5 cursor-pointer"
             />
-            {searchData && searchData.length !== 0 ? (
-              <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
-                {searchData &&
-                  searchData.map((i, index) => {
-                    return (
-                      <Link to={`/product/${i._id}`}>
-                        <div className="w-full flex items-start-py-3">
-                          <img
-                            src={`${backend_url}${i.images[0]}`}
-                            alt=""
-                            className="w-[40px] h-[40px] mr-[10px]"
-                          />
-                          <h1>{i.name}</h1>
-                        </div>
-                      </Link>
-                    );
-                  })}
-              </div>
-            ) : null}
+            {searchTerm && searchData && searchData.length === 0 ? (
+            <div className="absolute min-h-[6vh] bg-slate-50 shadow-sm-2 z-[2] p-4">
+              <p className="text-red-500">Không tìm thấy sản phẩm</p>
+            </div>
+          ) : searchData && searchData.length !== 0 ? (
+            <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
+              {searchData.map((i, index) => (
+                <Link to={`/product/${i._id}`} key={i._id}>
+                  <div className="w-full flex items-start py-3">
+                    <img
+                      src={`${backend_url}${i.images[0]}`}
+                      alt=""
+                      className="w-[40px] h-[40px] mr-[10px]"
+                    />
+                    <h1>{i.name}</h1>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : null}
           </div>
           <div className="flex items-center">
             {isSeller ? null : (
