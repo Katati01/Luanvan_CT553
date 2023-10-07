@@ -81,7 +81,7 @@ const Singup = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[url(https://images.unsplash.com/photo-1682713939906-8ba6d9095702?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)] 
+      <div className="bg-[url(https://images.unsplash.com/photo-1681919313941-080179983d9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)] 
         min-h-screen g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div
           class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
@@ -90,12 +90,7 @@ const Singup = () => {
             class="w-full"
             alt="Sample image" />
         </div>
-        {/* <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-           Đăng ký
-            </h2>
-        </div> */}
+        
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit}>
@@ -177,7 +172,7 @@ const Singup = () => {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <label
                   htmlFor="avatar"
                   className="block text-sm font-medium text-gray-700"
@@ -210,14 +205,14 @@ const Singup = () => {
                     />
                   </label>
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <button
                   type="submit"
                   className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
                 >
-                  Gửi
+                  ĐĂNG KÝ
                 </button>
               </div>
               <div className={`${styles.noramlFlex} w-full`}>

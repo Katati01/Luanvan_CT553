@@ -23,13 +23,9 @@ const AdminDashboardMain = () => {
     dispatch(getAllSellers());
   }, []);
 
-<<<<<<< HEAD
   const adminEarning =
     adminOrders &&
     adminOrders.reduce((acc, item) => acc + item.totalPrice * 0.05, 0);
-=======
-   const adminEarning = adminOrders && adminOrders.reduce((acc,item) => acc + item.totalPrice * 0.05, 0);
->>>>>>> 161c537b5b643851f7c3ecda9a046348a1441801
 
   const adminBalance = adminEarning?.toFixed(2);
 

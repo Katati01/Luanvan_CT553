@@ -15,14 +15,14 @@ import {
 const ShopCreate = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [name,setName] = useState("");
-  const [phoneNumber,setPhoneNumber] = useState();
-  const [address,setAddress] = useState("");
-  const [zipCode,setZipCode] = useState();
-  const [avatar,setAvatar] = useState();
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [address, setAddress] = useState("");
+  const [zipCode, setZipCode] = useState();
+  const [avatar, setAvatar] = useState();
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-     
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = { headers: { "Content-Type": "multipart/form-data" } };
@@ -69,8 +69,8 @@ const ShopCreate = () => {
           </Link>
         </div>
       </div>
-      <div className="bg-[url(https://images.unsplash.com/photo-1682713939906-8ba6d9095702?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)] 
-      min-h-screen g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
+      <div className="bg-[url(https://images.unsplash.com/photo-1681919313941-080179983d9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)] 
+        min-h-screen g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div
           class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
           <img
@@ -78,7 +78,7 @@ const ShopCreate = () => {
             class="w-full"
             alt="Sample image" />
         </div>
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mt-8 mb-6 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -86,84 +86,84 @@ const ShopCreate = () => {
                   Đăng ký cửa hàng
                 </h2>
               </div>
-          <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Tên cửa hàng
-              </label>
-              <div className="mt-1">
-                <input
-                  type="name"
-                  name="name"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Tên cửa hàng
+                </label>
+                <div className="mt-1">
+                  <input
+                    type="name"
+                    name="name"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Số điện thoại
-              </label>
-              <div className="mt-1">
-                <input
-                  type="number"
-                  name="phone-number"
-                  required
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Số điện thoại
+                </label>
+                <div className="mt-1">
+                  <input
+                    type="number"
+                    name="phone-number"
+                    required
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-               Địa chỉ Email
-              </label>
-              <div className="mt-1">
-                <input
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Địa chỉ Email
+                </label>
+                <div className="mt-1">
+                  <input
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Địa chỉ cửa hàng
-              </label>
-              <div className="mt-1">
-                <input
-                  type="address"
-                  name="address"
-                  required
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Địa chỉ cửa hàng
+                </label>
+                <div className="mt-1">
+                  <input
+                    type="address"
+                    name="address"
+                    required
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* <div>
+              {/* <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
@@ -182,40 +182,40 @@ const ShopCreate = () => {
               </div>
             </div> */}
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Mật khẩu 
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  type={visible ? "text" : "password"}
-                  name="password"
-                  autoComplete="current-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-                {visible ? (
-                  <AiOutlineEye
-                    className="absolute right-2 top-2 cursor-pointer"
-                    size={25}
-                    onClick={() => setVisible(false)}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Mật khẩu
+                </label>
+                <div className="mt-1 relative">
+                  <input
+                    type={visible ? "text" : "password"}
+                    name="password"
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
-                ) : (
-                  <AiOutlineEyeInvisible
-                    className="absolute right-2 top-2 cursor-pointer"
-                    size={25}
-                    onClick={() => setVisible(true)}
-                  />
-                )}
+                  {visible ? (
+                    <AiOutlineEye
+                      className="absolute right-2 top-2 cursor-pointer"
+                      size={25}
+                      onClick={() => setVisible(false)}
+                    />
+                  ) : (
+                    <AiOutlineEyeInvisible
+                      className="absolute right-2 top-2 cursor-pointer"
+                      size={25}
+                      onClick={() => setVisible(true)}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          
-            <div>
+
+              {/* <div>
               <label
                 htmlFor="avatar"
                 className="block text-sm font-medium text-gray-700"
@@ -246,29 +246,30 @@ const ShopCreate = () => {
                   />
                 </label>
               </div>
-            </div>
+            </div> */}
 
-            <div>
-              <button
-                type="submit"
-                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-              >
-                Đăng ký
-              </button>
-            </div>
-            <div className={`${styles.noramlFlex} w-full`}>
-              <h4>Bạn đã trở thành người bán?</h4>
-              <Link to="/shop-login" className="text-blue-600 pl-2">
-                Đăng nhập
-              </Link>
-            </div>
-          </form>
+              <div>
+                <button
+                  type="submit"
+                  className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  ĐĂNG KÝ
+                </button>
+              </div>
+              <div className={`${styles.noramlFlex} w-full`}>
+                <h4>Bạn đã trở thành người bán?</h4>
+                <Link to="/shop-login" className="text-blue-600 pl-2">
+                  Đăng nhập
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  {/* footer */}
 
-  <div className="bg-[#009b49] text-white">
+      {/* footer */}
+
+      <div className="bg-[#009b49] text-white">
         <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16 sm:text-center">
           <ul className="px-5 text-center sm:text-start flex sm:block flex-col items-center">
             <img
@@ -286,7 +287,7 @@ const ShopCreate = () => {
               <li key={index}>
                 <Link
                   className="text-white hover:text-teal-400 duration-300
-                   text-sm cursor-pointer leading-6"
+                    text-sm cursor-pointer leading-6"
                   to={link.link}
                 >
                   {link.name}
@@ -301,7 +302,7 @@ const ShopCreate = () => {
               <li key={index}>
                 <Link
                   className="text-white hover:text-teal-400 duration-300
-                   text-sm cursor-pointer leading-6"
+                    text-sm cursor-pointer leading-6"
                   to={link.link}
                 >
                   {link.name}
@@ -316,7 +317,7 @@ const ShopCreate = () => {
               <li key={index}>
                 <Link
                   className="text-white hover:text-teal-400 duration-300
-                   text-sm cursor-pointer leading-6"
+                    text-sm cursor-pointer leading-6"
                   to={link.link}
                 >
                   {link.name}

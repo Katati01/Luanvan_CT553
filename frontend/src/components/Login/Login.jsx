@@ -71,7 +71,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[url(https://images.unsplash.com/photo-1682713939906-8ba6d9095702?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)] 
+      <div className="bg-[url(https://images.unsplash.com/photo-1681919313941-080179983d9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)] 
         min-h-screen g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div
           class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
@@ -168,7 +168,7 @@ const Login = () => {
                   type="submit"
                   className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
                 >
-                  Submit
+                  ĐĂNG NHẬP
                 </button>
               </div>
               <div className={`${styles.noramlFlex} w-full`}>
