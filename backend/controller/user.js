@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
-const cloudinary = require('cloudinary')
+const cloudinary = require("cloudinary");
 
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
@@ -29,14 +29,13 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
       return next(new ErrorHandler("Người dùng đã tồn tại", 400));
     }
 
-    const filename = req.file.filename;
-    const fileUrl = path.join(filename);
+    // const filename = req.file.filename;
+    // const fileUrl = path.join(filename);
 
     const user = {
       name: name,
       email: email,
       password: password,
-      avatar: fileUrl,
     };
 
     const activationToken = createActivationToken(user);
@@ -83,7 +82,8 @@ router.post(
       if (!newUser) {
         return next(new ErrorHandler("Token không hợp lệ", 400));
       }
-      const { name, email, password, avatar } = newUser;
+      // const { name, email, password, avatar } = newUser;
+      const { name, email, password } = newUser;
 
       let user = await User.findOne({ email });
 
@@ -93,7 +93,7 @@ router.post(
       user = await User.create({
         name,
         email,
-        avatar,
+        // avatar,
         password,
       });
 
@@ -112,7 +112,9 @@ router.post(
       const { email, password } = req.body;
 
       if (!email || !password) {
-        return next(new ErrorHandler("Vui lòng cung cấp tất cả thông tin!", 400));
+        return next(
+          new ErrorHandler("Vui lòng cung cấp tất cả thông tin!", 400)
+        );
       }
 
       const user = await User.findOne({ email }).select("+password");
@@ -328,9 +330,7 @@ router.put(
       }
 
       if (req.body.newPassword !== req.body.confirmPassword) {
-        return next(
-          new ErrorHandler("Mật khẩu không khớp với nhau!", 400)
-        );
+        return next(new ErrorHandler("Mật khẩu không khớp với nhau!", 400));
       }
       user.password = req.body.newPassword;
 

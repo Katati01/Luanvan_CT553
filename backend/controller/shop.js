@@ -29,17 +29,16 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
       return next(new ErrorHandler("Email đã được sử dụng!", 400));
     }
 
-    const filename = req.file.filename;
-    const fileUrl = path.join(filename);
+    // const filename = req.file.filename;
+    // const fileUrl = path.join(filename);
 
     const seller = {
       name: req.body.name,
       email: email,
       password: req.body.password,
-      avatar: fileUrl,
+      // avatar: fileUrl,
       address: req.body.address,
       phoneNumber: req.body.phoneNumber,
-     
     };
 
     const activationToken = createActivationToken(seller);
@@ -86,8 +85,8 @@ router.post(
       if (!newSeller) {
         return next(new ErrorHandler("Token không hợp lệ", 400));
       }
-      const { name, email, password, avatar, address, phoneNumber } =
-        newSeller;
+      // const { name, email, password, avatar, address, phoneNumber } = newSeller;
+      const { name, email, password, address, phoneNumber } = newSeller;
 
       let seller = await Shop.findOne({ email });
 
@@ -98,9 +97,9 @@ router.post(
       seller = await Shop.create({
         name,
         email,
-        avatar,
+        // avatar,
         password,
-       
+
         address,
         phoneNumber,
       });
@@ -120,7 +119,9 @@ router.post(
       const { email, password } = req.body;
 
       if (!email || !password) {
-        return next(new ErrorHandler("Vui lòng điền đầy đủ thông tin đăng nhập!", 400));
+        return next(
+          new ErrorHandler("Vui lòng điền đầy đủ thông tin đăng nhập!", 400)
+        );
       }
 
       const user = await Shop.findOne({ email }).select("+password");
@@ -292,9 +293,7 @@ router.delete(
       const seller = await Shop.findById(req.params.id);
 
       if (!seller) {
-        return next(
-          new ErrorHandler("Người bán không có sẵn với id này", 400)
-        );
+        return next(new ErrorHandler("Người bán không có sẵn với id này", 400));
       }
 
       await Shop.findByIdAndDelete(req.params.id);
@@ -340,7 +339,9 @@ router.delete(
       const seller = await Shop.findById(req.seller._id);
 
       if (!seller) {
-        return next(new ErrorHandler("Không tìm thấy cừa hàng với id này", 400));
+        return next(
+          new ErrorHandler("Không tìm thấy cừa hàng với id này", 400)
+        );
       }
 
       seller.withdrawMethod = null;

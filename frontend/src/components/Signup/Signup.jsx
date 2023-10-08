@@ -1,18 +1,17 @@
+import axios from "axios";
 import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
-import { BiCool } from "react-icons/bi";
-import axios from "axios";
-import { server } from "../../server";
-import { toast } from "react-toastify";
 import { IoIosArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { server } from "../../server";
 import {
-  footercompanyLinks,
   footerProductLinks,
-  footerSupportLinks
+  footerSupportLinks,
+  footercompanyLinks,
 } from "../../static/data";
+import styles from "../../styles/styles";
 
 const Singup = () => {
   const [email, setEmail] = useState("");
@@ -81,16 +80,18 @@ const Singup = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[url(https://images.unsplash.com/photo-1681919313941-080179983d9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)] 
-        min-h-screen g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-        <div
-          class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+      <div
+        className="bg-[url(https://images.unsplash.com/photo-1681919313941-080179983d9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)] 
+        min-h-screen g-6 flex h-full flex-wrap items-center justify-center lg:justify-between"
+      >
+        <div class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
           <img
             src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
             class="w-full"
-            alt="Sample image" />
+            alt="Sample image"
+          />
         </div>
-        
+
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit}>
@@ -225,7 +226,7 @@ const Singup = () => {
           </div>
         </div>
       </div>
-      
+
       {/* footer */}
 
       <div className="bg-[#009b49] text-white">

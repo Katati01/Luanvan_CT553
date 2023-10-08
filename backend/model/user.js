@@ -5,56 +5,56 @@ const jwt = require("jsonwebtoken");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please enter your name!"]
+    required: [true, "Please enter your name!"],
   },
   email: {
     type: String,
-    required: [true, "Please enter your email!"]
+    required: [true, "Please enter your email!"],
   },
   password: {
     type: String,
     required: [true, "Please enter your password"],
     minLength: [4, "Password should be greater than 4 characters"],
-    select: false
+    select: false,
   },
   phoneNumber: {
-    type: Number
+    type: Number,
   },
   addresses: [
     {
       country: {
-        type: String
+        type: String,
       },
       city: {
-        type: String
+        type: String,
       },
       address1: {
-        type: String
+        type: String,
       },
       // address2:{
       //   type: String,
       // },
       zipCode: {
-        type: Number
+        type: Number,
       },
       addressType: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   role: {
     type: String,
-    default: "user"
+    default: "user",
   },
   avatar: {
-    type: String
+    type: String,
   },
   createdAt: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   resetPasswordToken: String,
-  resetPasswordTime: Date
+  resetPasswordTime: Date,
 });
 
 //  Hash password
@@ -69,7 +69,7 @@ userSchema.pre("save", async function (next) {
 // jwt token
 userSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRES
+    expiresIn: process.env.JWT_EXPIRES,
   });
 };
 

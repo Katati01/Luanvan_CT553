@@ -34,11 +34,10 @@ const shopSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    required: true,
+    // required: true,
   },
   zipCode: {
     type: Number,
-    
   },
   withdrawMethod: {
     type: Object,
