@@ -39,7 +39,7 @@ const Categories = () => {
               };
               return (
                 <div
-                  className="w-full h-[100px] flex items-center justify-between hover:text-[#009b49] cursor-pointer overflow-hidden "
+                  className="w-full h-[100px] flex items-center justify-around hover:text-[#009b49] cursor-pointer overflow-hidden"
                   key={i.id}
                   onClick={() => handleSubmit(i)}
                 >

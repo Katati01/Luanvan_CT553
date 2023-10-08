@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { server } from "../../server";
-import { Link } from "react-router-dom";
 import { DataGrid } from "@material-ui/data-grid";
 import { BsPencil } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
@@ -13,12 +12,12 @@ const AllWithdraw = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [withdrawData, setWithdrawData] = useState();
-  const [withdrawStatus,setWithdrawStatus] = useState('Processing');
+  const [withdrawStatus, setWithdrawStatus] = useState("Processing");
 
   useEffect(() => {
     axios
       .get(`${server}/withdraw/get-all-withdraw-request`, {
-        withCredentials: true,
+        withCredentials: true
       })
       .then((res) => {
         setData(res.data.withdraws);
@@ -34,33 +33,33 @@ const AllWithdraw = () => {
       field: "name",
       headerName: "Tên cửa hàng ",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "shopId",
       headerName: "ID cửa hàng",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "amount",
       headerName: "Số tiền",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "status",
       headerName: "Trạng thái",
       type: "text",
       minWidth: 80,
-      flex: 0.5,
+      flex: 0.5
     },
     {
       field: "createdAt",
       headerName: "Thời gian",
       type: "number",
       minWidth: 130,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: " ",
@@ -69,23 +68,28 @@ const AllWithdraw = () => {
       minWidth: 130,
       flex: 0.6,
       renderCell: (params) => {
-
         return (
           <BsPencil
             size={20}
-            className={`${params.row.status !== "Processing" ? 'hidden' : '' } mr-5 cursor-pointer`}
+            className={`${
+              params.row.status !== "Processing" ? "hidden" : ""
+            } mr-5 cursor-pointer`}
             onClick={() => setOpen(true) || setWithdrawData(params.row)}
           />
         );
-      },
-    },
+      }
+    }
   ];
 
   const handleSubmit = async () => {
     await axios
-      .put(`${server}/withdraw/update-withdraw-request/${withdrawData.id}`,{
-        sellerId: withdrawData.shopId,
-      },{withCredentials: true})
+      .put(
+        `${server}/withdraw/update-withdraw-request/${withdrawData.id}`,
+        {
+          sellerId: withdrawData.shopId
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         toast.success("Cập nhật yêu cầu rút tiền thành công!");
         setData(res.data.withdraws);
@@ -102,10 +106,10 @@ const AllWithdraw = () => {
         shopId: item.seller._id,
         name: item.seller.name,
         amount: `${currency.format(item.amount, {
-          code: "VND",
+          code: "VND"
         })}`,
         status: item.status,
-        createdAt: item.createdAt.slice(0, 10),
+        createdAt: item.createdAt.slice(0, 10)
       });
     });
   return (

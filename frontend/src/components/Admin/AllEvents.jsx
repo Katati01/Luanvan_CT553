@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {  AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { server } from "../../server";
 import currency from "currency-formatter";
@@ -10,9 +10,11 @@ import currency from "currency-formatter";
 const AllEvents = () => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-   axios.get(`${server}/event/admin-all-events`, {withCredentials: true}).then((res) =>{
-    setEvents(res.data.events);
-   })
+    axios
+      .get(`${server}/event/admin-all-events`, { withCredentials: true })
+      .then((res) => {
+        setEvents(res.data.events);
+      });
   }, []);
 
   const columns = [
@@ -21,20 +23,20 @@ const AllEvents = () => {
       field: "name",
       headerName: "Tên sản phẩm",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "price",
       headerName: "Giá",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "Stock",
       headerName: "Số lượng",
       type: "number",
       minWidth: 80,
-      flex: 0.5,
+      flex: 0.5
     },
 
     {
@@ -42,7 +44,7 @@ const AllEvents = () => {
       headerName: "Đã bán",
       type: "number",
       minWidth: 130,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "Xem",
@@ -61,8 +63,8 @@ const AllEvents = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -73,10 +75,10 @@ const AllEvents = () => {
         id: item._id,
         name: item.name,
         price: `${currency.format(item.discountPrice, {
-          code: "VND",
+          code: "VND"
         })}`,
         Stock: item.stock,
-        sold: item.sold_out,
+        sold: item.sold_out
       });
     });
 

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styles from "../../styles/styles";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
   AiOutlineShoppingCart
 } from "react-icons/ai";
-import { IoIosArrowForward } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import Navbar from "./Navbar";
+import { IoIosArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { backend_url } from "../../server";
-import Cart from "../cart/Cart";
+import styles from "../../styles/styles";
 import Wishlist from "../Wishlist/Wishlist";
+import Cart from "../cart/Cart";
+import Navbar from "./Navbar";
 
-import { TbAdjustmentsHorizontal, TbArrowBarLeft } from "react-icons/tb";
+import { TbArrowBarLeft } from "react-icons/tb";
 import { BiMenu } from "react-icons/bi";
 
 const Header = ({ activeHeading }) => {
@@ -30,6 +30,9 @@ const Header = ({ activeHeading }) => {
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const searchInputRef = useRef(null);
+  const searchResultsRef = useRef(null);
+
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -41,6 +44,26 @@ const Header = ({ activeHeading }) => {
       );
     setSearchData(filteredProducts);
   };
+
+  const handleDocumentClick = (event) => {
+    // Kiểm tra nếu người dùng không click vào searchBox hoặc searchResult, thì ẩn kết quả tìm kiếm
+    if (
+      !searchInputRef.current.contains(event.target) &&
+      !searchResultsRef.current.contains(event.target)
+    ) {
+      setSearchData(null);
+    }
+  };
+
+  // Sử dụng useEffect để lắng nghe sự kiện "click" trên toàn tài liệu
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+
+    // Clean up khi component unmount
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
 
   window.addEventListener("scroll", () => {
     if (window.scrollY > 70) {
@@ -74,28 +97,36 @@ const Header = ({ activeHeading }) => {
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#009b49] border-[1px] rounded-md"
+              ref={searchInputRef}
             />
             <AiOutlineSearch
               size={30}
               className="absolute right-2 top-1.5 cursor-pointer"
             />
-            {searchData && searchData.length !== 0 ? (
-              <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
-                {searchData &&
-                  searchData.map((i, index) => {
-                    return (
-                      <Link to={`/product/${i._id}`}>
-                        <div className="w-full flex items-start-py-3">
-                          <img
-                            src={`${backend_url}${i.images[0]}`}
-                            alt=""
-                            className="w-[40px] h-[40px] mr-[10px]"
-                          />
-                          <h1>{i.name}</h1>
-                        </div>
-                      </Link>
-                    );
-                  })}
+            {searchTerm && searchData && searchData.length === 0 ? (
+              <div
+                className="absolute min-h-[6vh] bg-slate-50 shadow-sm-2 z-[2] p-4 w-[100%]"
+                ref={searchResultsRef}
+              >
+                <p className="text-red-500">Không tìm thấy sản phẩm</p>
+              </div>
+            ) : searchData && searchData.length !== 0 ? (
+              <div
+                className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4 w-[100%]"
+                ref={searchResultsRef}
+              >
+                {searchData.map((i, index) => (
+                  <Link to={`/product/${i._id}`} key={i._id}>
+                    <div className="w-full flex items-start py-3">
+                      <img
+                        src={`${backend_url}${i.images[0]}`}
+                        alt=""
+                        className="w-[40px] h-[40px] mr-[10px]"
+                      />
+                      <h1>{i.name}</h1>
+                    </div>
+                  </Link>
+                ))}
               </div>
             ) : null}
           </div>
@@ -106,7 +137,9 @@ const Header = ({ activeHeading }) => {
               </span>
             )}
 
-            <div className={`${styles.button}`}>
+            <div
+              className={`${styles.button} mt-5 relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0`}
+            >
               <Link to={`${isSeller ? "/dashboard" : "/shop-login"}`}>
                 <h1 className="text-[#fff] flex items-center">
                   {isSeller ? "Quản lý " : "Đăng nhập"}{" "}
@@ -217,7 +250,7 @@ const Header = ({ activeHeading }) => {
               onClick={() => setOpenCart(true)}
             >
               <AiOutlineShoppingCart size={30} />
-              <span class="absolute right-0 top-0 rounded-full bg-[#db3f59] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
+              <span className="absolute right-0 top-0 rounded-full bg-[#db3f59] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
                 {cart && cart.length}
               </span>
             </div>

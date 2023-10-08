@@ -27,7 +27,15 @@ const Hero = () => {
         </p>
         <div className="flex justify-evenly">
           <Link to="/products">
-            <div className={`${styles.button} mt-5`}>
+            {/* <div className={`${styles.button} mt-5 `}>
+              <span className="text-[#fff] font-[Poppins] text-[18px]">
+                Mua ngay
+              </span>
+            </div> */}
+
+            <div
+              className={`${styles.button} mt-5 relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0`}
+            >
               <span className="text-[#fff] font-[Poppins] text-[18px]">
                 Mua ngay
               </span>
@@ -48,7 +56,9 @@ const Hero = () => {
             </Link> */}
           {isSeller && isSeller ? null : (
             <Link to="/shop-create">
-              <div className={`${styles.button} mt-5`}>
+              <div
+                className={`${styles.button} mt-5 relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0`}
+              >
                 <span className="text-[#fff] font-[Poppins] text-[18px]">
                   Seller
                 </span>
