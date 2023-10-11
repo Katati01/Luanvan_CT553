@@ -48,8 +48,8 @@ const Header = ({ activeHeading }) => {
   const handleDocumentClick = (event) => {
     // Kiểm tra nếu người dùng không click vào searchBox hoặc searchResult, thì ẩn kết quả tìm kiếm
     if (
-      !searchInputRef.current.contains(event.target) &&
-      !searchResultsRef.current.contains(event.target)
+      !searchInputRef.current?.contains(event.target) &&
+      !searchResultsRef.current?.contains(event.target)
     ) {
       setSearchData(null);
     }
@@ -79,11 +79,6 @@ const Header = ({ activeHeading }) => {
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <div>
             <Link to="/">
-              {/* <img
-                src="https://shopo.quomodothemes.website/assets/images/logo.svg"
-                alt=""
-              /> */}
-              {/* <h1>Kiana shop</h1> */}
               <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
                 Kiana shop
               </h1>
