@@ -78,4 +78,11 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// forgot password
+userSchema.methods.generatePasswordResetToken = function () {
+  this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+  this.resetPasswordTime = Date.now() + 3600000; // Token hết hạn sau 1 giờ
+  return this.resetPasswordToken;
+};
+
 module.exports = mongoose.model("User", userSchema);

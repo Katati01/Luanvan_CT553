@@ -1,5 +1,6 @@
 import LoginPage from "../pages/Login";
 import SignupPage from "../pages/SignupPage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ActivationPage from "../pages/ActivationPage";
 import HomePage from "../pages/HomePage";
 import ProductsPage from "../pages/ProductsPage";
@@ -19,9 +20,11 @@ import TrackOrderPage from "../pages/TrackOrderPage";
 import UserInboxPage from "../pages/UserInboxPage";
 import PageNotfound from "../pages/PageNotfound"
 
-export { 
+
+export {
     LoginPage,
     SignupPage,
+    ForgotPasswordPage,
     ActivationPage,
     HomePage,
     ProductsPage,

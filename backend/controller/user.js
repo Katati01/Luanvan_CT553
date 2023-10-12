@@ -410,4 +410,64 @@ router.delete(
   })
 );
 
+
+// forgot password
+
+const nodemailer = require("nodemailer");
+// Bạn cần cấu hình nodemailer để gửi email. Sử dụng tài khoản email của bạn
+
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail", // Sử dụng dịch vụ Gmail
+  auth: {
+    user: "your_gmail_username@gmail.com", // Thay bằng tên người dùng Gmail của bạn
+    pass: "your_gmail_password", // Thay bằng mật khẩu Gmail của bạn
+  },
+});
+
+
+// Gửi yêu cầu đặt lại mật khẩu qua email
+router.post("/forgot-password", async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return next(new ErrorHandler("Vui lòng cung cấp địa chỉ email!", 400));
+    }
+
+    // Tìm người dùng bằng địa chỉ email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return next(new ErrorHandler("Người dùng không tồn tại!", 404));
+    }
+
+    // Tạo và lưu mã đặt lại mật khẩu cho người dùng
+    const resetPasswordToken = createActivationToken({ email });
+    user.resetPasswordToken = resetPasswordToken;
+    await user.save();
+
+    // Gửi email đặt lại mật khẩu với mã
+    const resetPasswordLink = `http://localhost:3000/reset-password/${resetPasswordToken}`;
+    const mailOptions = {
+      from: "your_gmail_username@gmail.com",
+      to: email,
+      subject: "Yêu cầu đặt lại mật khẩu",
+      html: `<p>Chào bạn,</p><p>Để đặt lại mật khẩu của bạn, vui lòng nhấp vào <a href="${resetPasswordLink}">đây</a></p>`,
+    };
+
+    // Gửi email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return next(new ErrorHandler("Không thể gửi email đặt lại mật khẩu!", 500));
+      } else {
+        res.status(200).json({ message: "Email reset mật khẩu đã được gửi!" });
+      }
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
+
 module.exports = router;
