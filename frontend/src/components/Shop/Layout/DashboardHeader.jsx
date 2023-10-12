@@ -12,10 +12,11 @@ const DashboardHeader = () => {
   return (
     <div className="w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
       <div>
-      <Link to="/">
-             
-              <h1 className="text-[33px] font-bold underline decoration-[#db3f59] hover:decoration-4">Kiana shop</h1>
-            </Link>
+        <Link to="/">
+          <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
+            Kiana shop
+          </h1>
+        </Link>
       </div>
       <div className="flex items-center">
         <div className="flex items-center mr-4">
