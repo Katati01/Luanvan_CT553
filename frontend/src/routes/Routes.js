@@ -1,6 +1,7 @@
 import LoginPage from "../pages/Login";
 import SignupPage from "../pages/SignupPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
+import ResetPasswordPage from "../pages/ResetPasswordPage";
 import ActivationPage from "../pages/ActivationPage";
 import HomePage from "../pages/HomePage";
 import ProductsPage from "../pages/ProductsPage";
@@ -25,6 +26,7 @@ export {
     LoginPage,
     SignupPage,
     ForgotPasswordPage,
+    ResetPasswordPage,
     ActivationPage,
     HomePage,
     ProductsPage,

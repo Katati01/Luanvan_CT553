@@ -412,7 +412,6 @@ router.delete(
 
 
 // forgot password
-
 const nodemailer = require("nodemailer");
 // Bạn cần cấu hình nodemailer để gửi email. Sử dụng tài khoản email của bạn
 
@@ -424,7 +423,6 @@ const transporter = nodemailer.createTransport({
     pass: "your_gmail_password", // Thay bằng mật khẩu Gmail của bạn
   },
 });
-
 
 // Gửi yêu cầu đặt lại mật khẩu qua email
 router.post("/forgot-password", async (req, res, next) => {
@@ -443,31 +441,74 @@ router.post("/forgot-password", async (req, res, next) => {
     }
 
     // Tạo và lưu mã đặt lại mật khẩu cho người dùng
-    const resetPasswordToken = createActivationToken({ email });
-    user.resetPasswordToken = resetPasswordToken;
+    const resetPasswordToken = user.generatePasswordResetToken();
     await user.save();
 
     // Gửi email đặt lại mật khẩu với mã
     const resetPasswordLink = `http://localhost:3000/reset-password/${resetPasswordToken}`;
-    const mailOptions = {
-      from: "your_gmail_username@gmail.com",
-      to: email,
-      subject: "Yêu cầu đặt lại mật khẩu",
-      html: `<p>Chào bạn,</p><p>Để đặt lại mật khẩu của bạn, vui lòng nhấp vào <a href="${resetPasswordLink}">đây</a></p>`,
-    };
+    // const mailOptions = {
+    //   from: process.env.SMPT_MAIL, // Sử dụng email của bạn ở đây
+    //   to: email,
+    //   subject: "Yêu cầu đặt lại mật khẩu",
+    //   html: `<p>Chào bạn,</p><p>Để đặt lại mật khẩu của bạn, vui lòng nhấp vào <a href="${resetPasswordLink}">đây</a></p>`,
+    // };
 
     // Gửi email
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return next(new ErrorHandler("Không thể gửi email đặt lại mật khẩu!", 500));
-      } else {
-        res.status(200).json({ message: "Email reset mật khẩu đã được gửi!" });
-      }
-    });
+    try {
+      await sendMail({
+        email: user.email,
+        subject: "Yêu cầu đặt lại mật khẩu",
+        message: `Để đặt lại mặt khẩu, vui lòng nhấp vào ${resetPasswordLink}`,
+      });
+      res.status(201).json({
+        success: true,
+        message: `Vui lòng kiểm tra Email: ${user.email} trong hộp thư`,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 400));
+  }
+});
+router.post("/verify-reset-token", async (req, res, next) => {
+  try {
+    const { reset_password_token } = req.body;
+
+    // Tìm người dùng bằng mã đặt lại mật khẩu
+    const user = await User.findOne({ reset_password_token });
+
+    if (!user) {
+      return next(new ErrorHandler("Mã đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.", 400));
+    }
+
+    // Token hợp lệ, không có lỗi
+    res.status(200).json({ message: "Mã đặt lại mật khẩu hợp lệ." });
   } catch (error) {
     return next(new ErrorHandler(error.message, 500));
   }
 });
+router.post("/reset-password", async (req, res, next) => {
+  try {
+    const { reset_password_token, password } = req.body;
 
+    // Tìm người dùng bằng mã đặt lại mật khẩu
+    const user = await User.findOne({ reset_password_token });
+
+    if (!user) {
+      return next(new ErrorHandler("Mã đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.", 400));
+    }
+
+    // Cập nhật mật khẩu mới cho người dùng
+    user.password = password;
+    user.reset_password_token = null; // Xóa mã đặt lại mật khẩu sau khi đã sử dụng
+
+    await user.save();
+
+    res.status(200).json({ message: "Mật khẩu đã được đặt lại thành công." });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
 
 module.exports = router;
