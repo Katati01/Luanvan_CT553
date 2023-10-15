@@ -81,9 +81,15 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 
 // forgot password
 userSchema.methods.generatePasswordResetToken = function () {
-  this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+  this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
   this.resetPasswordTime = Date.now() + 3600000; // Token hết hạn sau 1 giờ
   return this.resetPasswordToken;
+};
+//update password
+userSchema.methods.updatePassword = function (newPassword) {
+  this.password = newPassword;
+  this.resetPasswordToken = null; // Xóa mã đặt lại mật khẩu sau khi đã sử dụng
+  this.resetPasswordTime = null; // Xóa thời gian đặt lại mật khẩu sau khi đã sử dụng
 };
 
 module.exports = mongoose.model("User", userSchema);
