@@ -16,7 +16,7 @@ const AllOrders = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const columns = [
     { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
@@ -30,14 +30,14 @@ const AllOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
@@ -45,7 +45,7 @@ const AllOrders = () => {
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -65,8 +65,8 @@ const AllOrders = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -77,7 +77,7 @@ const AllOrders = () => {
         id: item._id,
         itemsQty: item.cart.length,
         total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status,
+        status: item.status
       });
     });
 
