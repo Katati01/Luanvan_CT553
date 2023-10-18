@@ -1,15 +1,29 @@
 const multer = require("multer");
 const path = require("path");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-const storage = multer.diskStorage({
-    destination: function (req,res,cb){
-        cb(null, path.join(__dirname, './uploads'));
-    },
-    filename: function (req,file,cb) {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        const filename = file.originalname.split(".")[0];
-        cb(null,filename + "-" + uniqueSuffix + ".png");
-    },
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-exports.upload = multer({storage: storage});
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: "LuanvanCT553", // Thay đổi tên thư mục tải lên theo ý muốn
+        allowed_formats: ["jpg", "jpeg", "png"],
+        transformation: [{ width: 500, height: 500, crop: "limit" }],
+    },
+});
+const upload = multer({ storage: storage });
+
+module.exports = {
+    upload,
+    cloudinary,
+};
+
+// exports.upload = multer({storage: storage});

@@ -10,8 +10,8 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
-const cloudinary = require("cloudinary");
-const crypto = require("crypto");
+// const cloudinary = require("cloudinary");
+
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -226,19 +226,15 @@ router.put(
     try {
       const existsUser = await User.findById(req.user.id);
 
-      const existAvatarPath = `uploads/${existsUser.avatar}`;
+      // Lấy URL của ảnh mới từ req.file.path
+      const fileUrl = req.file.path;
 
-      fs.unlinkSync(existAvatarPath);
-
-      const fileUrl = path.join(req.file.filename);
-
-      const user = await User.findByIdAndUpdate(req.user.id, {
-        avatar: fileUrl,
-      });
+      // Cập nhật avatar của user
+      await User.findByIdAndUpdate(req.user.id, { avatar: fileUrl });
 
       res.status(200).json({
         success: true,
-        user,
+        user: existsUser, // Trả về user thông tin sau khi cập nhật
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -410,7 +406,20 @@ router.delete(
   })
 );
 
-//forgot-password
+// forgot password
+
+const nodemailer = require("nodemailer");
+// Bạn cần cấu hình nodemailer để gửi email. Sử dụng tài khoản email của bạn
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail", // Sử dụng dịch vụ Gmail
+  auth: {
+    user: "your_gmail_username@gmail.com", // Thay bằng tên người dùng Gmail của bạn
+    pass: "your_gmail_password", // Thay bằng mật khẩu Gmail của bạn
+  },
+});
+
+// Gửi yêu cầu đặt lại mật khẩu qua email
 router.post(
   "/forgot-password",
   catchAsyncErrors(async (req, res, next) => {
@@ -447,4 +456,5 @@ router.post(
     }
   })
 );
+
 module.exports = router;

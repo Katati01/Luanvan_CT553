@@ -109,7 +109,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
                 <img
-                  src={`${backend_url}${data.images && data.images[0]}`}
+                  src={`${data.images && data.images[0]}`}
                   alt=""
                 />
                 {/* <div className="flex mt-3">
@@ -132,7 +132,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   <div class="relative flex flex-row md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-[#ffeee8]">
                     <div class="w-full md:w-1/3 bg-[#ffeee8] grid place-items-center">
                       <img
-                        src={`${backend_url}${data?.shop?.avatar}`}
+                        src={`${data?.shop?.avatar}`}
                         alt=""
                         class=" w-[90%] h-[90%] rounded-full object-cover"
                       />

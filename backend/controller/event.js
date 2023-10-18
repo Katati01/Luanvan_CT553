@@ -20,7 +20,7 @@ router.post(
         return next(new ErrorHandler("Id cửa hàng không hợp lệ!", 400));
       } else {
         const files = req.files;
-        const imageUrls = files.map((file) => `${file.filename}`);
+        const imageUrls = files.map((file) => file.path); // Lấy đường dẫn URL của các hình ảnh đã tải lên
 
         const eventData = req.body;
         eventData.images = imageUrls;
@@ -92,7 +92,9 @@ router.delete(
       const event = await Event.findByIdAndDelete(productId);
 
       if (!event) {
-        return next(new ErrorHandler("Không tìm thấy sự kiện với id này!", 500));
+        return next(
+          new ErrorHandler("Không tìm thấy sự kiện với id này!", 500)
+        );
       }
 
       res.status(201).json({

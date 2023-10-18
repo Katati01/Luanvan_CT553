@@ -2,7 +2,7 @@ const Messages = require("../model/messages");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const express = require("express");
-const path = require ("path");
+const path = require("path");
 const { upload } = require("../multer");
 const router = express.Router();
 
@@ -15,8 +15,8 @@ router.post(
       const messageData = req.body;
 
       if (req.file) {
-        const filename = req.file.filename;
-        const fileUrl = path.join(filename);
+        // const filename = req.file.filename;
+        const fileUrl = req.file.path;
         messageData.images = fileUrl;
       }
 
