@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   LoginPage,
   SignupPage,
+  ForgotPasswordPage,
+  ResetPasswordTokenPage,
   ActivationPage,
   HomePage,
   ProductsPage,
@@ -98,6 +100,13 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignupPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route
+          path="/reset-password/:reset_password_token"
+          element={
+            <ResetPasswordTokenPage />
+          }
+        />
         <Route
           path="/activation/:activation_token"
           element={<ActivationPage />}

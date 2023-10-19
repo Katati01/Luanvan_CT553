@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
-const cloudinary = require("cloudinary");
+// const cloudinary = require("cloudinary");
 
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
@@ -226,19 +226,15 @@ router.put(
     try {
       const existsUser = await User.findById(req.user.id);
 
-      const existAvatarPath = `uploads/${existsUser.avatar}`;
+      // Lấy URL của ảnh mới từ req.file.path
+      const fileUrl = req.file.path;
 
-      fs.unlinkSync(existAvatarPath);
-
-      const fileUrl = path.join(req.file.filename);
-
-      const user = await User.findByIdAndUpdate(req.user.id, {
-        avatar: fileUrl,
-      });
+      // Cập nhật avatar của user
+      await User.findByIdAndUpdate(req.user.id, { avatar: fileUrl });
 
       res.status(200).json({
         success: true,
-        user,
+        user: existsUser, // Trả về user thông tin sau khi cập nhật
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -406,6 +402,57 @@ router.delete(
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// forgot password
+
+const nodemailer = require("nodemailer");
+// Bạn cần cấu hình nodemailer để gửi email. Sử dụng tài khoản email của bạn
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail", // Sử dụng dịch vụ Gmail
+  auth: {
+    user: "your_gmail_username@gmail.com", // Thay bằng tên người dùng Gmail của bạn
+    pass: "your_gmail_password", // Thay bằng mật khẩu Gmail của bạn
+  },
+});
+
+// Gửi yêu cầu đặt lại mật khẩu qua email
+router.post(
+  "/forgot-password",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email } = req.body;
+
+      // Tạo mật khẩu ngẫu nhiên
+      const newPassword = crypto.randomBytes(4).toString("hex"); // Đây là mật khẩu ngẫu nhiên gồm 8 ký tự
+
+      // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+      const user = await User.findOne({ email });
+      if (!user) {
+        return next(new ErrorHandler("Người dùng không tồn tại!", 400));
+      }
+
+      user.password = newPassword;
+      await user.save();
+
+      try {
+        await sendMail({
+          email: user.email,
+          subject: "Mật khẩu mới của bạn",
+          message: `Mật khẩu mới của bạn là: ${newPassword}. Hãy đăng nhập và thay đổi mật khẩu ngay lập tức.`,
+        });
+        res.status(201).json({
+          success: true,
+          message: `Vui lòng kiểm tra Email: ${user.email} trong hộp thư`,
+        });
+      } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+      }
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 400));
     }
   })
 );

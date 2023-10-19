@@ -211,11 +211,8 @@ router.put(
     try {
       const existsUser = await Shop.findById(req.seller._id);
 
-      const existAvatarPath = `uploads/${existsUser.avatar}`;
-
-      fs.unlinkSync(existAvatarPath);
-
-      const fileUrl = path.join(req.file.filename);
+      // Lấy URL của ảnh mới từ req.file.path
+      const fileUrl = req.file.path;
 
       const seller = await Shop.findByIdAndUpdate(req.seller._id, {
         avatar: fileUrl,

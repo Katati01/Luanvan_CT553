@@ -21,8 +21,9 @@ router.post(
         return next(new ErrorHandler("Id cửa hàng không hợp lệ!", 400));
       } else {
         const files = req.files;
-        const imageUrls = files.map((file) => `${file.filename}`);
 
+        const imageUrls = files.map((file) => file.path); // Lấy đường dẫn URL của các hình ảnh đã tải lên
+        console.log(imageUrls);
         const productData = req.body;
         productData.images = imageUrls;
         productData.shop = shop;
