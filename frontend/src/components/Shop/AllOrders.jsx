@@ -1,12 +1,12 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
+import currency from "currency-formatter";
 import React, { useEffect } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Loader from "../Layout/Loader";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import currency from "currency-formatter";
+import Loader from "../Layout/Loader";
 
 const AllOrders = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -16,11 +16,15 @@ const AllOrders = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
-  }, [dispatch, seller._id]);
-
+  }, [dispatch]);
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce(
+      (total, item) => total + item.discountPrice * item.qty,
+      0
+    );
+  };
   const columns = [
     { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
-
     {
       field: "status",
       headerName: "Trạng thái",
@@ -30,24 +34,29 @@ const AllOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      }
+      },
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
     },
-
     {
       field: "total",
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8
+      flex: 0.8,
+      valueGetter: (params) => {
+        const orderId = params.getValue(params.id, "id");
+        const order = orders.find((item) => item._id === orderId);
+        return `${currency.format(calculateShopTotalPrice(order.cart), {
+          code: "VND",
+        })}`;
+      },
     },
-
     {
       field: " ",
       flex: 1,
@@ -65,8 +74,8 @@ const AllOrders = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -76,8 +85,7 @@ const AllOrders = () => {
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status
+        status: item.status,
       });
     });
 

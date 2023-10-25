@@ -190,25 +190,5 @@ router.get(
     }
   })
 );
-// Tìm kiếm snar phẩm theo từ khóa
-// router.get(
-//   "/search-products",
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const searchTerm = req.query.searchTerm;
-//       const products = await Product.find({
-//         $or: [
-//           { name: { $regex: searchTerm, $options: "i" } },
-//           { description: { $regex: searchTerm, $option: "i" } },
-//         ],
-//       }).sort({ createdAt: -1 });
-//       res.status(200).json({
-//         success: true,
-//         products,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error, 400));
-//     }
-//   })
-// );
+
 module.exports = router;
