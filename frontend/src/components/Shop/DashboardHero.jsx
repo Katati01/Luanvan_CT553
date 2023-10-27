@@ -10,6 +10,7 @@ import { getAllOrdersOfShop } from "../../redux/actions/order";
 import { getAllProductsShop } from "../../redux/actions/product";
 import styles from "../../styles/styles";
 
+
 const DashboardHero = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.order);
@@ -22,12 +23,18 @@ const DashboardHero = () => {
   }, [dispatch]);
 
   const calculateShopTotalPrice = (cartItems) => {
+<<<<<<< HEAD
+    return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
+  };
+  
+=======
     return cartItems.reduce(
       (total, item) => total + item.discountPrice * item.qty,
       0
     );
   };
 
+>>>>>>> origin/backend
   const availableBalance = seller?.availableBalance.toFixed(2);
 
   const columns = [

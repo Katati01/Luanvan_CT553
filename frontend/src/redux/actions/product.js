@@ -94,3 +94,52 @@ export const getAllProducts = () => async (dispatch) => {
     });
   }
 };
+// update product
+export const updateProduct = (productId, updatedProductData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "updateProductRequest",
+    });
+
+    const { data } = await axios.put(
+      `${server}/product/update-product/${productId}`,
+      updatedProductData,
+    );
+
+    dispatch({
+      type: "updateProductSuccess",
+      payload: data.product,
+    });
+  } catch (error) {
+    dispatch({
+      type: "updateProductFailed",
+      payload: error.response.data.message,
+    });
+  }
+};
+// export const updateProduct = (productId, updatedProductData) => async (dispatch) => {
+//   try {
+//     dispatch({
+//       type: "updateProductRequest",
+//     });
+
+//     const { data } = await axios.put(
+//       `${server}/product/update-product/${productId}`,
+//       updatedProductData, // Đặt dữ liệu cần cập nhật vào đây
+//       {
+//         withCredentials: true, // Nếu cần đăng nhập
+//       }
+//     );
+
+//     dispatch({
+//       type: "updateProductSuccess",
+//       payload: data.message, // Hoặc bạn có thể trả về dữ liệu sản phẩm sau cập nhật
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: "updateProductFailed",
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
+

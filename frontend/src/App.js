@@ -29,6 +29,7 @@ import {
 import {
   ShopDashboardPage,
   ShopCreateProduct,
+  ShopUpdateProduct,
   ShopAllProducts,
   ShopCreateEvents,
   ShopAllEvents,
@@ -64,6 +65,7 @@ import axios from "axios";
 import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+// import ShopUpdateProduct from "./pages/Shop/ShopUpdateProduct";
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -197,6 +199,14 @@ const App = () => {
               <ShopCreateProduct />
             </SellerProtectedRoute>
           }
+        />
+        <Route 
+          path="/dashboard-update-product/:id"
+          element={
+            <SellerProtectedRoute>
+              <ShopUpdateProduct />
+            </SellerProtectedRoute>
+          } 
         />
         <Route
           path="/dashboard-orders"
