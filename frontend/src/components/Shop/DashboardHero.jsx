@@ -13,6 +13,7 @@ import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import currency from "currency-formatter";
 
+
 const DashboardHero = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.order);
@@ -24,6 +25,10 @@ const DashboardHero = () => {
      dispatch(getAllProductsShop(seller._id));
   }, [dispatch]);
 
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
+  };
+  
   const availableBalance = seller?.availableBalance.toFixed(2);
 
   const columns = [
@@ -54,6 +59,14 @@ const DashboardHero = () => {
       type: "number",
       minWidth: 130,
       flex: 0.8,
+      //thêm
+      valueGetter: (params) => {
+        const orderId = params.getValue(params.id, "id");
+        const order = orders.find((item) => item._id === orderId);
+        return `${currency.format(calculateShopTotalPrice(order.cart), {
+          code: "VND",
+        })}`;
+      },
     },
 
     // {
@@ -79,14 +92,23 @@ const DashboardHero = () => {
 
   const row = [];
 
-  orders && orders.forEach((item) => {
-    row.push({
+  // orders && orders.forEach((item) => {
+  //   row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.reduce((acc, item) => acc + item.qty, 0),
+  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+  //       status: item.status,
+  //     });
+  // });
+  //thêm
+  orders &&
+    orders.forEach((item) => {
+      row.push({
         id: item._id,
         itemsQty: item.cart.reduce((acc, item) => acc + item.qty, 0),
-        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
         status: item.status,
       });
-  });
+    });
   return (
     <div className="w-full p-8">
       <h3 className="text-[22px] font-Poppins pb-2">Tổng quan</h3>
