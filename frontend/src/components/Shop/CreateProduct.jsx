@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { createProduct } from "../../redux/actions/product";
 import { categoriesData } from "../../static/data";
-import { toast } from "react-toastify";
 
 const CreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
@@ -37,6 +38,11 @@ const CreateProduct = () => {
 
     let files = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...files]);
+  };
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
   };
 
   console.log(images);
@@ -170,7 +176,7 @@ const CreateProduct = () => {
         <br />
         <div>
           <label className="pb-2">
-           Hình ảnh <span className="text-red-500">*</span>
+            Hình ảnh <span className="text-red-500">*</span>
           </label>
           <input
             type="file"
@@ -185,13 +191,20 @@ const CreateProduct = () => {
               <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
             </label>
             {images &&
-              images.map((i) => (
-                <img
-                  src={URL.createObjectURL(i)}
-                  key={i}
-                  alt=""
-                  className="h-[120px] w-[120px] object-cover m-2"
-                />
+              images.map((image, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt=""
+                    className="h-[120px] w-[120px] object-cover m-2"
+                  />
+                  <button
+                    className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    X
+                  </button>
+                </div>
               ))}
           </div>
           <br />

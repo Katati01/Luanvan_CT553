@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   AiOutlineArrowRight,
   AiOutlineCamera,
-  AiOutlineDelete,
+  AiOutlineDelete
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { backend_url, server } from "../../server";
@@ -16,7 +16,7 @@ import {
   deleteUserAddress,
   loadUser,
   updatUserAddress,
-  updateUserInformation,
+  updateUserInformation
 } from "../../redux/actions/user";
 import { Country, State } from "country-state-city";
 import { useEffect } from "react";
@@ -43,7 +43,7 @@ const ProfileContent = ({ active }) => {
       toast.success(successMessage);
       dispatch({ type: "clearMessages" });
     }
-  }, [error, successMessage]);
+  }, [error, successMessage, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,13 +61,13 @@ const ProfileContent = ({ active }) => {
     await axios
       .put(`${server}/user/update-avatar`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data"
         },
-        withCredentials: true,
+        withCredentials: true
       })
       .then((response) => {
-         dispatch(loadUser());
-         toast.success("avatar updated successfully!");
+        dispatch(loadUser());
+        toast.success("avatar updated successfully!");
       })
       .catch((error) => {
         toast.error(error);
@@ -105,7 +105,9 @@ const ProfileContent = ({ active }) => {
             <form onSubmit={handleSubmit} aria-required={true}>
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Họ và tên (Tên người nhận)</label>
+                  <label className="block pb-2">
+                    Họ và tên (Tên người nhận)
+                  </label>
                   <input
                     type="text"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
@@ -129,7 +131,7 @@ const ProfileContent = ({ active }) => {
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Số điện thoại: (+84)</label>
-                
+
                   <input
                     type="number"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
@@ -141,7 +143,9 @@ const ProfileContent = ({ active }) => {
                 </div>
 
                 <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Nhập mật khẩu để thay đổi thông tin </label>
+                  <label className="block pb-2">
+                    Nhập mật khẩu để thay đổi thông tin{" "}
+                  </label>
                   <input
                     type="password"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
@@ -204,10 +208,9 @@ const AllOrders = () => {
   const { user } = useSelector((state) => state.user);
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
-  }, []);
+  }, [dispatch, user._id]);
 
   const columns = [
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
@@ -221,14 +224,14 @@ const AllOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
@@ -236,7 +239,7 @@ const AllOrders = () => {
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -256,8 +259,8 @@ const AllOrders = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -267,8 +270,8 @@ const AllOrders = () => {
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        total:  `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status,
+        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+        status: item.status
       });
     });
 
@@ -294,7 +297,8 @@ const AllRefundOrders = () => {
     dispatch(getAllOrdersOfUser(user._id));
   }, []);
 
-  const eligibleOrders = orders && orders.filter((item) => item.status === "Processing refund");
+  const eligibleOrders =
+    orders && orders.filter((item) => item.status === "Processing refund");
 
   const columns = [
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
@@ -308,14 +312,14 @@ const AllRefundOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
@@ -323,7 +327,7 @@ const AllRefundOrders = () => {
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -343,20 +347,20 @@ const AllRefundOrders = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
 
   eligibleOrders &&
-   eligibleOrders.forEach((item) => {
+    eligibleOrders.forEach((item) => {
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
         // total: "US$ " + item.totalPrice,
-        total:`${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status,
+        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+        status: item.status
       });
     });
 
@@ -394,14 +398,14 @@ const TrackOrder = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
@@ -409,7 +413,7 @@ const TrackOrder = () => {
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -429,8 +433,8 @@ const TrackOrder = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -441,8 +445,8 @@ const TrackOrder = () => {
         id: item._id,
         itemsQty: item.cart.length,
         // total: "US$ " + item.totalPrice,
-        total:`${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status,
+        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+        status: item.status
       });
     });
 
@@ -549,14 +553,14 @@ const Address = () => {
 
   const addressTypeData = [
     {
-      name: "Mặc định",
+      name: "Mặc định"
     },
     {
-      name: "Nhà, nơi thường trú",
+      name: "Nhà, nơi thường trú"
     },
     {
-      name: "Văn phòng, nơi làm việc",
-    },
+      name: "Văn phòng, nơi làm việc"
+    }
   ];
 
   const handleSubmit = async (e) => {
@@ -603,7 +607,7 @@ const Address = () => {
               />
             </div>
             <h1 className="text-center text-[25px] font-Poppins">
-             Thêm địa chỉ
+              Thêm địa chỉ
             </h1>
             <div className="w-full">
               <form aria-required onSubmit={handleSubmit} className="w-full">
@@ -659,7 +663,10 @@ const Address = () => {
                   </div>
 
                   <div className="w-full pb-2">
-                    <label className="block pb-2">Địa chỉ 1 (Điền đầy đủ: số nhà, tên đường, phường, xóm, huyện, xã, phường thành phố)</label>
+                    <label className="block pb-2">
+                      Địa chỉ 1 (Điền đầy đủ: số nhà, tên đường, phường, xóm,
+                      huyện, xã, phường thành phố)
+                    </label>
                     <input
                       type="address"
                       className={`${styles.input}`}
@@ -700,7 +707,7 @@ const Address = () => {
                       className="w-[95%] border h-[40px] rounded-[5px]"
                     >
                       <option value="" className="block border pb-2">
-                       Chọn loại địa chỉ 
+                        Chọn loại địa chỉ
                       </option>
                       {addressTypeData &&
                         addressTypeData.map((item) => (

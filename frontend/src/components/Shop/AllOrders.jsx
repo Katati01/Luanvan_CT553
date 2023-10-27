@@ -115,13 +115,13 @@
 
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
+import currency from "currency-formatter";
 import React, { useEffect } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Loader from "../Layout/Loader";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import currency from "currency-formatter";
+import Loader from "../Layout/Loader";
 
 const AllOrders = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -133,7 +133,14 @@ const AllOrders = () => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
   const calculateShopTotalPrice = (cartItems) => {
+<<<<<<< HEAD
     return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
+=======
+    return cartItems.reduce(
+      (total, item) => total + item.discountPrice * item.qty,
+      0
+    );
+>>>>>>> origin/backend
   };
   const columns = [
     { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
