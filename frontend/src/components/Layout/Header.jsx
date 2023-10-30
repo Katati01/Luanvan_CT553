@@ -6,7 +6,7 @@ import {
 } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward, IoIosNotificationsOutline } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { backend_url } from "../../server";
 import styles from "../../styles/styles";
@@ -17,14 +17,12 @@ import Navbar from "./Navbar";
 import { TbArrowBarLeft } from "react-icons/tb";
 import { BiMenu } from "react-icons/bi";
 import NotificationBar from "../Notification/NotificationBar";
-
+import { getAllOrdersOfUser } from "../../redux/actions/order";
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
   const { isSeller } = useSelector((state) => state.seller);
   const { wishlist } = useSelector((state) => state.wishlist);
-  // TODO: Test orders
-  const { orders } = useSelector((state) => state.order);
-  console.log(orders);
   const { cart } = useSelector((state) => state.cart);
   const { allProducts } = useSelector((state) => state.products);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,12 +30,26 @@ const Header = ({ activeHeading }) => {
   const [active, setActive] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
-  const [openNotification, setOpenNotification] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
 
   const searchInputRef = useRef(null);
   const searchResultsRef = useRef(null);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      dispatch(getAllOrdersOfUser(user._id));
+    }
+  }, [dispatch, isAuthenticated, user]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -173,21 +185,20 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className="flex">
-            {/* //TODO: Test Notification   */}
             <div className={`${styles.noramlFlex}`}>
               <div
                 className="relative cursor-pointer mr-[15px]"
-                onMouseEnter={() => setOpenNotification(true)}
+                onMouseEnter={handleMouseEnter}
+                // onMouseLeave={handleMouseLeave}
               >
                 <IoIosNotificationsOutline size={35} color="#fff" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
                   {orders && orders.length}
                 </span>
 
-                {/* //Todo: Test open notification */}
-                {openNotification ? (
-                  <div onMouseLeave={() => setOpenNotification(false)}>
-                    <NotificationBar openNotification={openNotification} />
+                {isHovered ? (
+                  <div onMouseLeave={handleMouseLeave}>
+                    <NotificationBar openNotification={isHovered} />
                   </div>
                 ) : null}
               </div>
