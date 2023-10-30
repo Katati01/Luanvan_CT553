@@ -193,7 +193,7 @@ const Header = ({ activeHeading }) => {
               >
                 <IoIosNotificationsOutline size={35} color="#fff" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
-                  {orders && orders.length}
+                  {orders ? orders.length : 0}
                 </span>
 
                 {isHovered ? (
