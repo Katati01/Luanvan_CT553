@@ -148,7 +148,7 @@ const Header = ({ activeHeading }) => {
                 Đăng nhập vào cửa hàng
               </span>
             )} */}
-
+            {!isAuthenticated && (
             <div
               className={`${styles.button} mt-5 relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0`}
             >
@@ -168,6 +168,7 @@ const Header = ({ activeHeading }) => {
             </Link>
             )} */}
             </div>
+            )}
           </div>
         </div>
       </div>
@@ -353,7 +354,7 @@ const Header = ({ activeHeading }) => {
               <div className={`${styles.button} ml-4 !rounded-[4px]`}>
                 <Link to="/shop-create">
                   <h1 className="text-[#fff] flex items-center">
-                    Seller <IoIosArrowForward className="ml-1" />
+                    Tạo cửa hàng <IoIosArrowForward className="ml-1" />
                   </h1>
                 </Link>
               </div>
