@@ -10,7 +10,7 @@ import currency from "currency-formatter";
 
 const AllProducts = () => {
   const [data, setData] = useState([]);
-
+  const [selectedProduct, setSelectedProduct] = useState(null);
   useEffect(() => {
     axios
       .get(`${server}/product/admin-all-products`, { withCredentials: true })

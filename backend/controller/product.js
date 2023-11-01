@@ -191,115 +191,74 @@ router.get(
     }
   })
 );
-<<<<<<< HEAD
-// Tìm kiếm snar phẩm theo từ khóa
-// router.get(
-//   "/search-products",
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const searchTerm = req.query.searchTerm;
-//       const products = await Product.find({
-//         $or: [
-//           { name: { $regex: searchTerm, $options: "i" } },
-//           { description: { $regex: searchTerm, $option: "i" } },
-//         ],
-//       }).sort({ createdAt: -1 });
-//       res.status(200).json({
-//         success: true,
-//         products,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error, 400));
-//     }
-//   })
-// );
-// router.put(
-//   "/update-product/:id",
-//   isSeller, // Middleware to ensure the user is authenticated
-//   upload.array("images"),
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       // const productId = req.params.id;
-//       const productId = mongoose.Types.ObjectId(req.params.id);
-//       const product = await Product.findById(productId);
 
-//       if (!product) {
-//         return next(new ErrorHandler("Không tìm thấy sản phẩm với ID này!", 404));
-//       }
 
-//       // Kiểm tra xem người dùng có quyền cập nhật sản phẩm (vd. kiểm tra xem họ là người bán hàng)
-//       // Đặt điều kiện phù hợp với hệ thống của bạn, ví dụ:
-//       if (product.shop.toString() !== req.user.shopId) {
-//         return next(new ErrorHandler("Bạn không có quyền cập nhật sản phẩm này", 403));
-//       }
+router.get(
+  "/get-product/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const productId = req.params.id;
 
-//       const shopId = req.body.shopId;
-//       const shop = await Shop.findById(shopId);
+      const product = await Product.findById(productId);
 
-//       if (!shop) {
-//         return next(new ErrorHandler("Id cửa hàng không hợp lệ!", 400));
-//       } else {
-//         const files = req.files;
+      if (!product) {
+        return next(
+          new ErrorHandler("Không tìm thấy sản phẩm với ID này!", 404)
+        );
+      }
 
-//         const imageUrls = files.map((file) => file.path);
-//         console.log(imageUrls);
-        
-//         const productData = req.body;
-//         productData.images = imageUrls;
-//         productData.shop = shop;
+      res.status(200).json({
+        success: true,
+        product,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+// Update product by ID
+router.put(
+  "/update-product/:id",
+  isSeller, // Chắc chắn rằng chỉ người bán có quyền cập nhật sản phẩm
+  upload.array("images"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const productId = req.params.id;
+      const productData = req.body;
 
-//         // Cập nhật thông tin sản phẩm với dữ liệu mới
-//         await Product.findByIdAndUpdate(productId, productData);
+      // Kiểm tra xem sản phẩm có tồn tại không
+      const product = await Product.findById(productId);
+      if (!product) {
+        return next(
+          new ErrorHandler("Không tìm thấy sản phẩm với ID này!", 404)
+        );
+      }
 
-//         res.status(200).json({
-//           success: true,
-//           message: "Cập nhật sản phẩm thành công!",
-//         });
-//       }
-//     } catch (error) {
-//       return next(new ErrorHandler(error, 400));
-//     }
-//   })
-// );
-// router.put(
-//   "/update-product/:id",
-//   isSeller, // Add middleware for seller authentication if needed
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const productId = req.params.id;
-//       const productData = req.body;
+      // Kiểm tra xem người dùng có quyền chỉnh sửa sản phẩm này không
+      // if (product.shop.toString() !== req.user.shop) {
+      //   return next(
+      //     new ErrorHandler("Bạn không có quyền chỉnh sửa sản phẩm này!", 403)
+      //   );
+      // }
 
-//       // Ensure that the seller is allowed to update this product, for example, by checking if they own the shop associated with the product
-//       const product = await Product.findById(productId);
-//       if (!product) {
-//         return next(new ErrorHandler("Product not found", 404));
-//       }
+      // Xử lý hình ảnh nếu có
+      if (req.files) {
+        const files = req.files;
+        const imageUrls = files.map((file) => file.path);
+        productData.images = imageUrls;
+      }
 
-//       // Check if the seller owns the shop associated with the product
-//       if (product.shop.toString() !== req.seller.id) {
-//         return next(new ErrorHandler("You don't have permission to update this product", 403));
-//       }
+      // Cập nhật thông tin sản phẩm
+      await Product.findByIdAndUpdate(productId, productData, { new: true });
 
-//       // Dynamically update product attributes based on req.body
-//       for (const key in productData) {
-//         if (Object.prototype.hasOwnProperty.call(productData, key)) {
-//           product[key] = productData[key];
-//         }
-//       }
+      res.status(200).json({
+        success: true,
+        message: "Sản phẩm đã được cập nhật thành công!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
 
-//       // Save the updated product
-//       const updatedProduct = await product.save();
-
-//       res.status(200).json({
-//         success: true,
-//         product: updatedProduct,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error, 400));
-//     }
-//   })
-// );
-// =======
-
->>>>>>> origin/backend
 module.exports = router;
