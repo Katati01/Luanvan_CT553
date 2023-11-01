@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

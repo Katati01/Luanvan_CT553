@@ -23,18 +23,14 @@ const DashboardHero = () => {
   }, [dispatch]);
 
   const calculateShopTotalPrice = (cartItems) => {
-<<<<<<< HEAD
-    return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
-  };
-  
-=======
+
     return cartItems.reduce(
       (total, item) => total + item.discountPrice * item.qty,
       0
     );
   };
 
->>>>>>> origin/backend
+
   const availableBalance = seller?.availableBalance.toFixed(2);
 
   const columns = [

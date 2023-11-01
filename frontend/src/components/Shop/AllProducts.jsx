@@ -135,6 +135,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllProductsShop } from "../../redux/actions/product";
 import { deleteProduct } from "../../redux/actions/product";
+import { updateProduct } from "../../redux/actions/product";
 import Loader from "../Layout/Loader";
 import currency from "currency-formatter";
 
@@ -155,13 +156,17 @@ const AllProducts = () => {
   };
 
   const handleUpdate = (id) => {
-    // Implement your update logic here
-    // For example, you can set the selectedProduct state with the product details
+    // Find the product to update
     const productToUpdate = products.find((product) => product._id === id);
+  
+    // Set the selectedProduct state with the product details
     setSelectedProduct(productToUpdate);
+  
     // Then, you can display a modal or navigate to a page for updating the product
     // You can use libraries like Material-UI Dialog or create your own modal component
   };
+
+
 
   const columns = [
     { field: "id", headerName: "ID SP", minWidth: 150, flex: 0.7 },

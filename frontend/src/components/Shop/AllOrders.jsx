@@ -133,14 +133,12 @@ const AllOrders = () => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
   const calculateShopTotalPrice = (cartItems) => {
-<<<<<<< HEAD
-    return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
-=======
+
     return cartItems.reduce(
       (total, item) => total + item.discountPrice * item.qty,
       0
     );
->>>>>>> origin/backend
+
   };
   const columns = [
     { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
