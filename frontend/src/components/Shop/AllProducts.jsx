@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import React, { useEffect } from "react";
+import styles from "../../styles/styles";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,7 +18,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     dispatch(getAllProductsShop(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const handleDelete = (id) => {
     dispatch(deleteProduct(id));
@@ -30,20 +31,20 @@ const AllProducts = () => {
       field: "name",
       headerName: "Tên sản phẩm",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "price",
       headerName: "Giá",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "Stock",
       headerName: "Số lượng",
       type: "number",
       minWidth: 80,
-      flex: 0.5,
+      flex: 0.5
     },
 
     {
@@ -51,7 +52,7 @@ const AllProducts = () => {
       headerName: "Đã bán",
       type: "number",
       minWidth: 130,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "Xem",
@@ -70,7 +71,7 @@ const AllProducts = () => {
             </Link>
           </>
         );
-      },
+      }
     },
     {
       field: "Xóa",
@@ -87,8 +88,8 @@ const AllProducts = () => {
             </Button>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -98,11 +99,11 @@ const AllProducts = () => {
       row.push({
         id: item._id,
         name: item.name,
-        price:`${currency.format(item.discountPrice, {
-          code: "VND",
+        price: `${currency.format(item.discountPrice, {
+          code: "VND"
         })}`,
         Stock: item.stock,
-        sold: item?.sold_out,
+        sold: item?.sold_out
       });
     });
 
@@ -112,6 +113,16 @@ const AllProducts = () => {
         <Loader />
       ) : (
         <div className="w-full mx-8 pt-1 mt-10 bg-white">
+          <Link
+            to={"/dashboard-create-product"}
+            className="w-full flex justify-end"
+          >
+            <div
+              className={`${styles.button} !w-max !h-[45px] px-3 !rounded-[5px] mr-3 mb-3`}
+            >
+              <span className="text-white">Thêm mã sản phẩm</span>
+            </div>
+          </Link>
           <DataGrid
             rows={row}
             columns={columns}
