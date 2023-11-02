@@ -22,18 +22,6 @@ const OrderDetails = () => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
 
-  // Hàm tính tổng giá trị theo cửa hàng
-  const calculateShopTotalPrice = (cartItems) => {
-
-    // return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
-
-    return cartItems.reduce(
-      (total, item) => total + item.discountPrice * item.qty,
-      0
-    );
-
-  };
-
   const data = orders && orders.find((item) => item._id === id);
 
   const orderUpdateHandler = async (e) => {
@@ -65,6 +53,7 @@ const OrderDetails = () => {
       )
       .then((res) => {
         toast.success("Đơn hàng đã được cập nhật!");
+
         dispatch(getAllOrdersOfShop(seller._id));
       })
       .catch((error) => {
@@ -81,7 +70,7 @@ const OrderDetails = () => {
         </div>
         <Link to="/dashboard-orders">
           <div
-            className={`${styles.button} !bg-[#fce1e6] !rounded-[4px] text-[#e94560] font-[600] !h-[45px] text-[18px]`}
+            className={`${styles.button} !bg-[#000] !rounded-[4px] text-[#fff] font-[600] !h-[45px] text-[18px]`}
           >
             Quay lại
           </div>
@@ -98,6 +87,7 @@ const OrderDetails = () => {
       </div>
 
       {/* Các mặt hàng trong đơn hàng */}
+
       <br />
       <br />
       {data &&
@@ -120,17 +110,12 @@ const OrderDetails = () => {
 
       <div className="border-t w-full text-right">
         <h5 className="pt-3 text-[18px]">
-
-
           Tổng tiền:{" "}
           <strong>
             {data
-              ? `${currency.format(calculateShopTotalPrice(data.cart), {
-                  code: "VND",
-                })}`
+              ? `${currency.format(data.totalPrice, { code: "VND" })}`
               : null}
           </strong>
-
         </h5>
       </div>
       <br />
@@ -145,11 +130,12 @@ const OrderDetails = () => {
             Địa chỉ: {data?.shippingAddress.address1},{" "}
             {data?.shippingAddress.city}
           </h4>
+          {/* <h4 className=" text-[20px]">{data?.shippingAddress.country}</h4> */}
+          {/* <h4 className=" text-[20px]">{data?.shippingAddress.city}</h4> */}
           <h4 className=" text-[20px]">
             {" "}
             Số điện thoại: +(84) {data?.user?.phoneNumber}
           </h4>
-
         </div>
         <div className="w-full 800px:w-[40%]">
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
@@ -213,10 +199,10 @@ const OrderDetails = () => {
               </option>
             ))}
         </select>
-
       ) : null}
+
       <div
-        className={`${styles.button} mt-5 !bg-[#0454ffee] !rounded-[4px] text-[#ffffff] font-[600] !h-[45px] text-[18px]`}
+        className={`${styles.button} mt-5 !bg-[#000] !rounded-[4px] text-[#ffffff] font-[600] !h-[45px] text-[18px]`}
         onClick={
           data?.status !== "Processing refund"
             ? orderUpdateHandler

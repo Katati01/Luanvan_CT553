@@ -2,29 +2,26 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward, IoIosNotificationsOutline } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { backend_url } from "../../server";
 import styles from "../../styles/styles";
 import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
 
-import { TbArrowBarLeft } from "react-icons/tb";
 import { BiMenu } from "react-icons/bi";
+import { TbArrowBarLeft } from "react-icons/tb";
+import { getAllOrdersOfUser } from "../../redux/actions/order";
 import NotificationBar from "../Notification/NotificationBar";
-
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
   const { isSeller } = useSelector((state) => state.seller);
   const { wishlist } = useSelector((state) => state.wishlist);
-  // TODO: Test orders
-  const { orders } = useSelector((state) => state.order);
-  console.log(orders);
   const { cart } = useSelector((state) => state.cart);
   const { allProducts } = useSelector((state) => state.products);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,12 +29,26 @@ const Header = ({ activeHeading }) => {
   const [active, setActive] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
-  const [openNotification, setOpenNotification] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
 
   const searchInputRef = useRef(null);
   const searchResultsRef = useRef(null);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      dispatch(getAllOrdersOfUser(user._id));
+    }
+  }, [dispatch, isAuthenticated, user]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -85,7 +96,7 @@ const Header = ({ activeHeading }) => {
           <div>
             <Link to="/">
               <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-                Kiana shop
+                NÔNG NGHIỆP XANH
               </h1>
             </Link>
           </div>
@@ -93,7 +104,7 @@ const Header = ({ activeHeading }) => {
           <div className="w-[50%] relative">
             <input
               type="text"
-              placeholder="Search Product..."
+              placeholder="Tìm kiếm sản phẩm..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#009b49] border-[1px] rounded-md"
@@ -131,22 +142,20 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
           <div className="flex items-center">
-            {isSeller ? null : (
+            {/* {isSeller ? null : (
               <span className="font-medium mt-1 mr-2 pr-2">
                 Đăng nhập vào cửa hàng
               </span>
-            )}
-
-            <div
-              className={`${styles.button} mt-5 relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0`}
-            >
-              <Link to={`${isSeller ? "/dashboard" : "/shop-login"}`}>
-                <h1 className="text-[#fff] flex items-center">
-                  {isSeller ? "Quản lý " : "Đăng nhập"}{" "}
-                  <IoIosArrowForward className="ml-1" />
-                </h1>
-              </Link>
-              {/* {isSeller && isSeller ? null : (
+            )} */}
+            {!isAuthenticated && (
+              <div className={`${styles.button}`}>
+                <Link to={`${isSeller ? "/dashboard" : "/login"}`}>
+                  <h1 className="text-[#fff] flex items-center">
+                    {isSeller ? "Quản lý " : "Đăng nhập"}{" "}
+                    <IoIosArrowForward className="ml-1" />
+                  </h1>
+                </Link>
+                {/* {isSeller && isSeller ? null : (
             <Link to="/shop-create">
               <div className={`${styles.button} mt-5`}>
                 <span className="text-[#fff] font-[Poppins] text-[18px]">
@@ -154,8 +163,9 @@ const Header = ({ activeHeading }) => {
                 </span>
               </div>
             </Link>
-          )} */}
-            </div>
+            )} */}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -173,21 +183,20 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className="flex">
-            {/* //TODO: Test Notification   */}
             <div className={`${styles.noramlFlex}`}>
               <div
                 className="relative cursor-pointer mr-[15px]"
-                onMouseEnter={() => setOpenNotification(true)}
+                onMouseEnter={handleMouseEnter}
+                // onMouseLeave={handleMouseLeave}
               >
                 <IoIosNotificationsOutline size={35} color="#fff" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
-                  {orders && orders.length}
+                  {orders ? orders.length : 0}
                 </span>
 
-                {/* //Todo: Test open notification */}
-                {openNotification ? (
-                  <div onMouseLeave={() => setOpenNotification(false)}>
-                    <NotificationBar openNotification={openNotification} />
+                {isHovered ? (
+                  <div onMouseLeave={handleMouseLeave}>
+                    <NotificationBar openNotification={isHovered} />
                   </div>
                 ) : null}
               </div>
@@ -260,7 +269,7 @@ const Header = ({ activeHeading }) => {
           <div>
             <Link to="/">
               <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-                Kiana shop
+                NÔNG NGHIỆP XANH
               </h1>
             </Link>
           </div>
@@ -342,7 +351,7 @@ const Header = ({ activeHeading }) => {
               <div className={`${styles.button} ml-4 !rounded-[4px]`}>
                 <Link to="/shop-create">
                   <h1 className="text-[#fff] flex items-center">
-                    Seller <IoIosArrowForward className="ml-1" />
+                    Tạo cửa hàng <IoIosArrowForward className="ml-1" />
                   </h1>
                 </Link>
               </div>

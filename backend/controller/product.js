@@ -182,7 +182,7 @@ router.get(
       const products = await Product.find().sort({
         createdAt: -1,
       });
-      res.status(201).json({  
+      res.status(201).json({
         success: true,
         products,
       });
@@ -191,7 +191,6 @@ router.get(
     }
   })
 );
-
 
 router.get(
   "/get-product/:id",
@@ -245,7 +244,8 @@ router.put(
       if (req.files) {
         const files = req.files;
         const imageUrls = files.map((file) => file.path);
-        productData.images = imageUrls;
+        // productData.images = imageUrls;
+        productData.images = [...product.images, ...imageUrls];
       }
 
       // Cập nhật thông tin sản phẩm
@@ -258,6 +258,44 @@ router.put(
     } catch (error) {
       return next(new ErrorHandler(error, 400));
     }
+  })
+);
+// Thêm route để tải lên hình ảnh mới
+router.post(
+  "/upload-images",
+  isSeller, // Đảm bảo người bán mới có quyền tải lên hình ảnh
+  upload.array("images"), // Đặt tên field là "images"
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const files = req.files;
+
+      const imageUrls = files.map((file) => file.path); // Lấy đường dẫn URL của các hình ảnh đã tải lên
+
+      res.status(200).json({
+        success: true,
+        imageUrls,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+// ...
+
+// Lấy danh sách sản phẩm có tags
+router.get(
+  "/products/tag/:tag",
+  catchAsyncErrors(async (req, res, next) => {
+    const tag = req.params.tag;
+
+    // Tìm các sản phẩm có tags tương ứng trong cơ sở dữ liệu
+    const products = await Product.find({ tags: tag });
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
   })
 );
 

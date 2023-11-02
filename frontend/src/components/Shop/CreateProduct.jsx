@@ -105,7 +105,7 @@ const CreateProduct = () => {
         <br />
         <div>
           <label className="pb-2">
-            Thể loại <span className="text-red-500">*</span>
+            Danh mục <span className="text-red-500">*</span>
           </label>
           <select
             className="w-full mt-2 border h-[35px] rounded-[5px]"
@@ -199,10 +199,10 @@ const CreateProduct = () => {
                     className="h-[120px] w-[120px] object-cover m-2"
                   />
                   <button
-                    className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
                     onClick={() => handleRemoveImage(index)}
+                    className="bg-red-500 text-white rounded-md p-1 m-2"
                   >
-                    X
+                    Xóa
                   </button>
                 </div>
               ))}
