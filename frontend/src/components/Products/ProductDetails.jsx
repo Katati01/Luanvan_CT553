@@ -4,16 +4,16 @@ import {
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineMessage,
-  AiOutlineShoppingCart,
+  AiOutlineShoppingCart
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllProductsShop } from "../../redux/actions/product";
-import { backend_url, server } from "../../server";
+import { server } from "../../server";
 import styles from "../../styles/styles";
 import {
   addToWishlist,
-  removeFromWishlist,
+  removeFromWishlist
 } from "../../redux/actions/wishlist";
 import { addTocart } from "../../redux/actions/cart";
 import { toast } from "react-toastify";
@@ -37,7 +37,7 @@ const ProductDetails = ({ data }) => {
     } else {
       setClick(false);
     }
-  }, [data, wishlist]);
+  }, [data, wishlist, dispatch]);
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -99,7 +99,7 @@ const ProductDetails = ({ data }) => {
         .post(`${server}/conversation/create-new-conversation`, {
           groupTitle,
           userId,
-          sellerId,
+          sellerId
         })
         .then((res) => {
           navigate(`/inbox?${res.data.conversation._id}`);
@@ -111,7 +111,6 @@ const ProductDetails = ({ data }) => {
       toast.error("Vui lòng đăng nhập để nhắn tin");
     }
   };
-
 
   return (
     <div className="bg-white">
@@ -151,21 +150,27 @@ const ProductDetails = ({ data }) => {
               <div className="w-full 800px:w-[50%] pt-5">
                 <h1 className={`${styles.productTitle}`}>{data.name}</h1>
                 <div className="flex">
-                <p>Tag: #<i className="text-[#242e8a] mr-4 ">{data.tags}</i></p>
-                <p>Thể loại: <i className="text-[#8a2424] ">{data.category}</i></p>
+                  <p>
+                    Tag: #<i className="text-[#242e8a] mr-4 ">{data.tags}</i>
+                  </p>
+                  <p>
+                    Thể loại: <i className="text-[#8a2424] ">{data.category}</i>
+                  </p>
                 </div>
-                
-                 <span className="font-[500] text-[17px] text-[#f1055c]">
-              {data?.sold_out} đã bán
-            </span>
+
+                <span className="font-[500] text-[17px] text-[#f1055c]">
+                  {data?.sold_out} đã bán
+                </span>
                 <div className="flex pt-3">
-                  <h4 className={`${styles.productDiscountPrice} mt-5 !text-3xl font-bol `}>
+                  <h4
+                    className={`${styles.productDiscountPrice} mt-5 !text-3xl font-bol `}
+                  >
                     {`${currency.format(data.discountPrice, { code: "VND" })}`}
                   </h4>
                   <h3 className={`${styles.price}`}>
                     {data.originalPrice
                       ? `${currency.format(data.originalPrice, {
-                          code: "VND",
+                          code: "VND"
                         })}`
                       : null}
                   </h3>
@@ -209,17 +214,20 @@ const ProductDetails = ({ data }) => {
                     )}
                   </div> */}
                   <div className="counter flex items-center text-2xl justify-start">
-                 
                     <div className="ml-5 shadow-md flex">
-                      <div className="bg-[#0b9780] text-white w-10 flex items-center justify-center rounded-l-lg cursor-pointer"
-                      onClick={decrementCount}>
+                      <div
+                        className="bg-[#0b9780] text-white w-10 flex items-center justify-center rounded-l-lg cursor-pointer"
+                        onClick={decrementCount}
+                      >
                         -
                       </div>
                       <div className="w-9 flex items-center justify-center border-[1px] border-[#8a4af3]">
-                      {count}
+                        {count}
                       </div>
-                      <div className="bg-[#0b9780] text-white w-10 flex items-center justify-center rounded-r-lg cursor-pointer"
-                      onClick={incrementCount}>
+                      <div
+                        className="bg-[#0b9780] text-white w-10 flex items-center justify-center rounded-r-lg cursor-pointer"
+                        onClick={incrementCount}
+                      >
                         +
                       </div>
                     </div>
@@ -236,25 +244,26 @@ const ProductDetails = ({ data }) => {
                     </span>
                   </div>
                   <div className="!mt-3 !h-11 flex items-center ">
-                    {click ? (<>
-                      <AiFillHeart
-                        size={40}
-                        className="cursor-pointer"
-                        onClick={() => removeFromWishlistHandler(data)}
-                        color={click ? "red" : "#333"}
-                        title="Xóa khỏi mục yêu thích"
-                      />
-                      <span className="text-xl font-semibold">Đã thích </span>
+                    {click ? (
+                      <>
+                        <AiFillHeart
+                          size={40}
+                          className="cursor-pointer"
+                          onClick={() => removeFromWishlistHandler(data)}
+                          color={click ? "red" : "#333"}
+                          title="Xóa khỏi mục yêu thích"
+                        />
+                        <span className="text-xl font-semibold">Đã thích </span>
                       </>
-                    ) : (<>
-                      <AiOutlineHeart
-                        size={40}
-                        className="cursor-pointer"
-                        onClick={() => addToWishlistHandler(data)}
-                        color={click ? "red" : "#333"}
-                        title="Thêm vào mục yêu thích"
-                      />
-                      
+                    ) : (
+                      <>
+                        <AiOutlineHeart
+                          size={40}
+                          className="cursor-pointer"
+                          onClick={() => addToWishlistHandler(data)}
+                          color={click ? "red" : "#333"}
+                          title="Thêm vào mục yêu thích"
+                        />
                       </>
                     )}
                   </div>
@@ -310,7 +319,7 @@ const ProductDetailsInfo = ({
   data,
   products,
   totalReviewsLength,
-  averageRating,
+  averageRating
 }) => {
   const [active, setActive] = useState(1);
 
@@ -337,7 +346,7 @@ const ProductDetailsInfo = ({
             }
             onClick={() => setActive(2)}
           >
-            Đánh giá 
+            Đánh giá
           </h5>
           {active === 2 ? (
             <div className={`${styles.active_indicator}`} />
@@ -350,7 +359,7 @@ const ProductDetailsInfo = ({
             }
             onClick={() => setActive(3)}
           >
-           Cửa hàng
+            Cửa hàng
           </h5>
           {active === 3 ? (
             <div className={`${styles.active_indicator}`} />
@@ -377,11 +386,15 @@ const ProductDetailsInfo = ({
                 />
                 <div className="pl-2">
                   <div className="w-full flex items-center">
-                    <h1 className="font-[500] text-xl mr-3">{item.user.name}</h1>
+                    <h1 className="font-[500] text-xl mr-3">
+                      {item.user.name}
+                    </h1>
                     <Ratings rating={data?.ratings} />
                   </div>
-                  <div className="items-center py-3 p-2 ml-2"> <p className="font-[500] text-base">{item.comment}</p></div>
-                 
+                  <div className="items-center py-3 p-2 ml-2">
+                    {" "}
+                    <p className="font-[500] text-base">{item.comment}</p>
+                  </div>
                 </div>
               </div>
             ))}

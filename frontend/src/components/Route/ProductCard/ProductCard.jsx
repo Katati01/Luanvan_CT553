@@ -2,27 +2,24 @@ import React, { useState } from "react";
 import currency from "currency-formatter";
 import {
   AiFillHeart,
-  AiFillStar,
   AiOutlineEye,
   AiOutlineHeart,
-  AiOutlineShoppingCart,
-  AiOutlineStar,
+  AiOutlineShoppingCart
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { backend_url } from "../../../server";
 import styles from "../../../styles/styles";
 import { useDispatch, useSelector } from "react-redux";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 import {
   addToWishlist,
-  removeFromWishlist,
+  removeFromWishlist
 } from "../../../redux/actions/wishlist";
 import { useEffect } from "react";
 import { addTocart } from "../../../redux/actions/cart";
 import { toast } from "react-toastify";
 import Ratings from "../../Products/Ratings";
 
-const ProductCard = ({ data,isEvent }) => {
+const ProductCard = ({ data, isEvent }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
   const [click, setClick] = useState(false);
@@ -35,7 +32,7 @@ const ProductCard = ({ data,isEvent }) => {
     } else {
       setClick(false);
     }
-  }, [wishlist]);
+  }, [wishlist, data._id]);
 
   const removeFromWishlistHandler = (data) => {
     setClick(!click);
@@ -66,7 +63,13 @@ const ProductCard = ({ data,isEvent }) => {
     <>
       <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
-        <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+        <Link
+          to={`${
+            isEvent === true
+              ? `/product/${data._id}?isEvent=true`
+              : `/product/${data._id}`
+          }`}
+        >
           <img
             src={`${data.images && data.images[0]}`}
             alt=""
@@ -74,28 +77,39 @@ const ProductCard = ({ data,isEvent }) => {
           />
         </Link>
         <Link to={`/shop/preview/${data?.shop._id}`}>
-          <h5 className={`${styles.shop_name}`}>  {data.shop.name.length > 20 ? data.shop.name.slice(0, 15) + "..." : data.shop.name}</h5>
+          <h5 className={`${styles.shop_name}`}>
+            {" "}
+            {data.shop.name.length > 20
+              ? data.shop.name.slice(0, 15) + "..."
+              : data.shop.name}
+          </h5>
         </Link>
-        <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+        <Link
+          to={`${
+            isEvent === true
+              ? `/product/${data._id}?isEvent=true`
+              : `/product/${data._id}`
+          }`}
+        >
           <h4 className="pb-3 font-[500]">
             {data.name.length > 35 ? data.name.slice(0, 27) + "..." : data.name}
           </h4>
 
           <div className="flex">
-          <Ratings rating={data?.ratings} />
+            <Ratings rating={data?.ratings} />
           </div>
 
           <div className="py-2 flex items-center justify-between">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
                 {data.originalPrice === 0
-                  ?  `${currency.format(data.originalPrice , {code:"VND"})}`
-                  :`${currency.format(data.discountPrice , {code:"VND"})}`}
-               
+                  ? `${currency.format(data.originalPrice, { code: "VND" })}`
+                  : `${currency.format(data.discountPrice, { code: "VND" })}`}
               </h5>
               <h4 className={`${styles.price}`}>
-                {data.originalPrice ? `${currency.format(data.originalPrice , {code:"VND"})}` : null}
-               
+                {data.originalPrice
+                  ? `${currency.format(data.originalPrice, { code: "VND" })}`
+                  : null}
               </h4>
             </div>
             {/* <span className="font-[400] text-[17px] text-[#68d284]">
