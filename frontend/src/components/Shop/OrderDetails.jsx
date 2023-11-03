@@ -29,7 +29,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/update-order-status/${id}`,
         {
-          status
+          status,
         },
         { withCredentials: true }
       )
@@ -44,23 +44,22 @@ const OrderDetails = () => {
 
   const refundOrderUpdateHandler = async (e) => {
     await axios
-    .put(
-      `${server}/order/order-refund-success/${id}`,
-      {
-        status,
-      },
-      { withCredentials: true }
-    )
-    .then((res) => {
-      toast.success("Đơn hàng đã được cập nhật!");
-      dispatch(getAllOrdersOfShop(seller._id));
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message);
-    });
-  }
+      .put(
+        `${server}/order/order-refund-success/${id}`,
+        {
+          status,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        toast.success("Đơn hàng đã được cập nhật!");
 
-
+        dispatch(getAllOrdersOfShop(seller._id));
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
+  };
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>
@@ -87,7 +86,8 @@ const OrderDetails = () => {
         </h5>
       </div>
 
-      {/* order items */}
+      {/* Các mặt hàng trong đơn hàng */}
+
       <br />
       <br />
       {data &&
@@ -114,7 +114,7 @@ const OrderDetails = () => {
           <strong>
             {data
               ? `${currency.format(data.totalPrice, { code: "VND" })}`
-              : null}{" "}
+              : null}
           </strong>
         </h5>
       </div>
@@ -163,7 +163,7 @@ const OrderDetails = () => {
               "Shipping",
               "Received",
               "On the way",
-              "Delivered"
+              "Delivered",
             ]
               .slice(
                 [
@@ -172,7 +172,7 @@ const OrderDetails = () => {
                   "Shipping",
                   "Received",
                   "On the way",
-                  "Delivered"
+                  "Delivered",
                 ].indexOf(data?.status)
               )
               .map((option, index) => (

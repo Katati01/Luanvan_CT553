@@ -30,6 +30,12 @@ const ProductDetails = ({ data }) => {
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Hàm xử lý khi click vào danh mục
+  const handleCategoryClick = (category) => {
+    navigate(`/products?category=${category}`);
+  };
+
   useEffect(() => {
     dispatch(getAllProductsShop(data && data?.shop._id));
     if (wishlist && wishlist.find((i) => i._id === data?._id)) {
@@ -150,11 +156,21 @@ const ProductDetails = ({ data }) => {
               <div className="w-full 800px:w-[50%] pt-5">
                 <h1 className={`${styles.productTitle}`}>{data.name}</h1>
                 <div className="flex">
-                  <p>
+                  {/* <p>
                     Tag: #<i className="text-[#242e8a] mr-4 ">{data.tags}</i>
                   </p>
                   <p>
-                    Thể loại: <i className="text-[#8a2424] ">{data.category}</i>
+                    Danh mục: <i className="text-[#8a2424] ">{data.category}</i>
+                  </p> */}
+
+                  <p>
+                    Danh mục:{" "}
+                    <i
+                      className="text-[#8a2424] cursor-pointer"
+                      onClick={() => handleCategoryClick(data.category)}
+                    >
+                      {data.category}
+                    </i>
                   </p>
                 </div>
 
@@ -165,15 +181,31 @@ const ProductDetails = ({ data }) => {
                   <h4
                     className={`${styles.productDiscountPrice} mt-5 !text-3xl font-bol `}
                   >
-                    {`${currency.format(data.discountPrice, { code: "VND" })}`}
-                  </h4>
-                  <h3 className={`${styles.price}`}>
-                    {data.originalPrice
+                    {data.discountPrice === 0
                       ? `${currency.format(data.originalPrice, {
                           code: "VND",
                         })}`
-                      : null}
-                  </h3>
+                      : `${currency.format(data.discountPrice, {
+                          code: "VND",
+                        })}`}
+                  </h4>
+                  {data.discountPrice !== 0 && (
+                    <h3 className={`${styles.price}`}>
+                      {`${currency.format(data.originalPrice, {
+                        code: "VND",
+                      })}`}
+                    </h3>
+                  )}
+
+                  <div className="ml-5">
+                    <p
+                      className={`${
+                        data.stock > 0 ? "text-[#008000]" : "text-[#FF0000]"
+                      }`}
+                    >
+                      {data.stock > 0 ? "Còn hàng" : "Hết hàng"}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="flex items-center mt-12 justify-between pr-3">
@@ -234,15 +266,21 @@ const ProductDetails = ({ data }) => {
                   </div>
                 </div>
                 <div className="flex items-center pt-8">
-                  {" "}
-                  <div
-                    className={`${styles.button} !mt-6 !rounded !h-11 flex items-center mr-7`}
-                    onClick={() => addToCartHandler(data._id)}
-                  >
-                    <span className="text-white flex items-center">
-                      Thêm vào giỏ <AiOutlineShoppingCart className="ml-1" />
-                    </span>
-                  </div>
+                  {/* {" "} */}
+                  {data.stock > 0 ? (
+                    <div
+                      className={`${styles.button} !mt-6 !rounded !h-11 flex items-center mr-7`}
+                      onClick={() => addToCartHandler(data._id)}
+                    >
+                      <span className="text-white flex items-center">
+                        Thêm vào giỏ <AiOutlineShoppingCart className="ml-1" />
+                      </span>
+                    </div>
+                  ) : (
+                    <p className="text-[#FF0000] mt-6 !text-lg">
+                      Sản phẩm đã hết hàng
+                    </p>
+                  )}
                   <div className="!mt-3 !h-11 flex items-center ">
                     {click ? (
                       <>

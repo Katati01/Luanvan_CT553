@@ -2,22 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward, IoIosNotificationsOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { backend_url } from "../../server";
 import styles from "../../styles/styles";
 import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
 
-import { TbArrowBarLeft } from "react-icons/tb";
 import { BiMenu } from "react-icons/bi";
-import NotificationBar from "../Notification/NotificationBar";
+import { TbArrowBarLeft } from "react-icons/tb";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
+import NotificationBar from "../Notification/NotificationBar";
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const { orders } = useSelector((state) => state.order);
@@ -97,7 +96,7 @@ const Header = ({ activeHeading }) => {
           <div>
             <Link to="/">
               <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-                Kiana shop
+                NÔNG NGHIỆP XANH
               </h1>
             </Link>
           </div>
@@ -105,7 +104,7 @@ const Header = ({ activeHeading }) => {
           <div className="w-[50%] relative">
             <input
               type="text"
-              placeholder="Search Product..."
+              placeholder="Tìm kiếm sản phẩm..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#009b49] border-[1px] rounded-md"
@@ -149,16 +148,14 @@ const Header = ({ activeHeading }) => {
               </span>
             )} */}
             {!isAuthenticated && (
-            <div
-              className={`${styles.button}`}
-            >
-              <Link to={`${isSeller ? "/dashboard" : "/login"}`}>
-                <h1 className="text-[#fff] flex items-center">
-                  {isSeller ? "Quản lý " : "Đăng nhập"}{" "}
-                  <IoIosArrowForward className="ml-1" />
-                </h1>
-              </Link>
-              {/* {isSeller && isSeller ? null : (
+              <div className={`${styles.button}`}>
+                <Link to={`${isSeller ? "/dashboard" : "/login"}`}>
+                  <h1 className="text-[#fff] flex items-center">
+                    {isSeller ? "Quản lý " : "Đăng nhập"}{" "}
+                    <IoIosArrowForward className="ml-1" />
+                  </h1>
+                </Link>
+                {/* {isSeller && isSeller ? null : (
             <Link to="/shop-create">
               <div className={`${styles.button} mt-5`}>
                 <span className="text-[#fff] font-[Poppins] text-[18px]">
@@ -167,7 +164,7 @@ const Header = ({ activeHeading }) => {
               </div>
             </Link>
             )} */}
-            </div>
+              </div>
             )}
           </div>
         </div>
@@ -272,7 +269,7 @@ const Header = ({ activeHeading }) => {
           <div>
             <Link to="/">
               <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-                Kiana shop
+                NÔNG NGHIỆP XANH
               </h1>
             </Link>
           </div>

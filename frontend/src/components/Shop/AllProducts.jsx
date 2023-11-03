@@ -128,16 +128,13 @@
 // export default AllProducts;
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
+import currency from "currency-formatter";
 import React, { useEffect, useState } from "react";
-// import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
-import { AiOutlineDelete, AiOutlineEye, AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAllProductsShop } from "../../redux/actions/product";
-import { deleteProduct } from "../../redux/actions/product";
-import { updateProduct } from "../../redux/actions/product";
+import { deleteProduct, getAllProductsShop } from "../../redux/actions/product";
 import Loader from "../Layout/Loader";
-import currency from "currency-formatter";
 
 const AllProducts = () => {
   const { products, isLoading } = useSelector((state) => state.products);
@@ -158,15 +155,13 @@ const AllProducts = () => {
   const handleUpdate = (id) => {
     // Find the product to update
     const productToUpdate = products.find((product) => product._id === id);
-  
+
     // Set the selectedProduct state with the product details
     setSelectedProduct(productToUpdate);
-  
+
     // Then, you can display a modal or navigate to a page for updating the product
     // You can use libraries like Material-UI Dialog or create your own modal component
   };
-
-
 
   const columns = [
     { field: "id", headerName: "ID SP", minWidth: 150, flex: 0.7 },
@@ -180,6 +175,12 @@ const AllProducts = () => {
       field: "price",
       headerName: "Giá",
       minWidth: 100,
+      flex: 0.6,
+    },
+    {
+      field: "discountPrice",
+      headerName: "Giá khuyến mãi",
+      minWidth: 120,
       flex: 0.6,
     },
     {
@@ -225,7 +226,9 @@ const AllProducts = () => {
       renderCell: (params) => {
         return (
           <>
-             <Link to={`/dashboard-update-product/${params.id}`}> {/* Thay đổi đường dẫn */}
+            <Link to={`/dashboard-update-product/${params.id}`}>
+              {" "}
+              {/* Thay đổi đường dẫn */}
               <Button onClick={() => handleUpdate(params.id)}>
                 <AiOutlineEdit size={20} />
               </Button>
@@ -260,7 +263,10 @@ const AllProducts = () => {
       row.push({
         id: item._id,
         name: item.name,
-        price: `${currency.format(item.discountPrice, {
+        price: `${currency.format(item.originalPrice, {
+          code: "VND",
+        })}`,
+        discountPrice: `${currency.format(item.discountPrice, {
           code: "VND",
         })}`,
         Stock: item.stock,
@@ -286,6 +292,5 @@ const AllProducts = () => {
     </>
   );
 };
-
 
 export default AllProducts;

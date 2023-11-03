@@ -57,7 +57,7 @@ export const productReducer = createReducer(initialState, {
     state.isLoading = false;
     state.error = action.payload;
   },
-  
+
   clearErrors: (state) => {
     state.error = null;
   },
@@ -74,6 +74,4 @@ export const productReducer = createReducer(initialState, {
     state.error = action.payload;
     state.success = false;
   },
-
-  
 });

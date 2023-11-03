@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineHeart,
-  AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 // import { backend_url } from "../../../server";
-import styles from "../../../styles/styles";
+import axios from "axios";
+import currency from "currency-formatter";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart";
@@ -16,9 +16,8 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "../../../redux/actions/wishlist";
-import currency from "currency-formatter";
-import axios from "axios";
-import { backend_url, server } from "../../../server";
+import { server } from "../../../server";
+import styles from "../../../styles/styles";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const { cart } = useSelector((state) => state.cart);
@@ -108,10 +107,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
-                <img
-                  src={`${data.images && data.images[0]}`}
-                  alt=""
-                />
+                <img src={`${data.images && data.images[0]}`} alt="" />
                 {/* <div className="flex mt-3">
                   <Link to={`/shop/preview/${data.shop._id}`} className="flex">
                     <img
@@ -128,7 +124,6 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   </Link>
                 </div> */}
                 <div class="flex flex-row justify-center mt-4">
-                
                   <div class="relative flex flex-row md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-[#ffeee8]">
                     <div class="w-full md:w-1/3 bg-[#ffeee8] grid place-items-center">
                       <img
@@ -164,12 +159,12 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                         </div>
                       </div>
                       <Link to={`/shop/preview/${data.shop._id}`}>
-                      <h3 class="font-black text-gray-800 md:text-2xl text-xl">
-                        {data.shop.name}
-                      </h3>
+                        <h3 class="font-black text-gray-800 md:text-2xl text-xl">
+                          {data.shop.name}
+                        </h3>
                       </Link>
-                     
-                        {/* <div
+
+                      {/* <div
                           className={`${styles.button} bg-[#000] mt-4 rounded-[4px] h-11`}
                           onClick={handleMessageSubmit}
                         >
@@ -177,7 +172,6 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                             Gửi tin nhắn <AiOutlineMessage className="ml-1" />
                           </span>
                         </div> */}
-                     
                     </div>
                   </div>
                 </div>
@@ -190,7 +184,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   {data.name}
                 </h1>
 
-                <div className="flex pt-3 px-5">
+                {/* <div className="flex pt-3 px-5">
                   <h4 className={`${styles.productDiscountPrice} text-2xl`}>
                     {currency.format(data.discountPrice, { code: "VND" })}
                   </h4>
@@ -201,6 +195,22 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                         })}`
                       : null}
                   </h3>
+                </div> */}
+                <div className="flex pt-3 px-5">
+                  {data.discountPrice ? (
+                    <>
+                      <h4 className={`${styles.productDiscountPrice} text-2xl`}>
+                        {currency.format(data.discountPrice, { code: "VND" })}
+                      </h4>
+                      <del className={`${styles.price} ml-2`}>
+                        {currency.format(data.originalPrice, { code: "VND" })}
+                      </del>
+                    </>
+                  ) : (
+                    <h4 className={`${styles.productDiscountPrice} text-2xl`}>
+                      {currency.format(data.originalPrice, { code: "VND" })}
+                    </h4>
+                  )}
                 </div>
                 {
                   /* <p className="py-2 text-[18px] leading-8 pb-10 px-5 whitespace-pre-line">

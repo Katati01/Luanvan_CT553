@@ -174,7 +174,7 @@ const AllCoupons = () => {
                   <br />
                   <div>
                     <label className="pb-2">
-                      Số lượng giảm (%) <span className="text-red-500">*</span>
+                      Phần trăm giảm (%) <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -190,7 +190,7 @@ const AllCoupons = () => {
                   {/* Số lượng mã giảm giá */}
                   <div>
                     <label className="pb-2">
-                      Số lượng <span className="text-red-500">*</span>
+                      Số lượng mã giảm <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"

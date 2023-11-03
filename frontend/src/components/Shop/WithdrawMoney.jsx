@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllOrdersOfShop } from "../../redux/actions/order";
-import styles from "../../styles/styles";
-import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
-import { server } from "../../server";
-import { toast } from "react-toastify";
-import { loadSeller } from "../../redux/actions/user";
-import { AiOutlineDelete } from "react-icons/ai";
 import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+import { RxCross1 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { getAllOrdersOfShop } from "../../redux/actions/order";
+import { loadSeller } from "../../redux/actions/user";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const WithdrawMoney = () => {
   const [open, setOpen] = useState(false);
@@ -106,7 +106,10 @@ const WithdrawMoney = () => {
     <div className="w-full h-[90vh] p-8">
       <div className="w-full bg-white h-full rounded flex items-center justify-center flex-col">
         <h5 className="text-[20px] pb-4">
-        <h4>Số dư khả dụng: {`${currency.format(availableBalance, { code: "VND" })}`}</h4>
+          <h4>
+            Số dư khả dụng:{" "}
+            {`${currency.format(availableBalance, { code: "VND" })}`}
+          </h4>
         </h5>
         <div
           className={`${styles.button} text-white !h-[42px] !rounded`}
@@ -137,7 +140,7 @@ const WithdrawMoney = () => {
                 <form onSubmit={handleSubmit}>
                   <div>
                     <label>
-                     Tên ngân hàng <span className="text-red-500">*</span>
+                      Tên ngân hàng <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -195,8 +198,7 @@ const WithdrawMoney = () => {
 
                   <div className="pt-2">
                     <label>
-                      Số tài khoản{" "}
-                      <span className="text-red-500">*</span>
+                      Số tài khoản <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="number"
@@ -237,7 +239,8 @@ const WithdrawMoney = () => {
 
                   <div className="pt-2">
                     <label>
-                      Địa chỉ đăng ký ngân hàng <span className="text-red-500">*</span>
+                      Địa chỉ đăng ký ngân hàng{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -281,7 +284,9 @@ const WithdrawMoney = () => {
                           ) +
                             seller?.withdrawMethod.bankAccountNumber.slice(-3)}
                         </h5>
-                        <h5>Tên ngân hàng: {seller?.withdrawMethod.bankName}</h5>
+                        <h5>
+                          Tên ngân hàng: {seller?.withdrawMethod.bankName}
+                        </h5>
                       </div>
                       <div className="800px:w-[50%]">
                         <AiOutlineDelete
@@ -292,32 +297,39 @@ const WithdrawMoney = () => {
                       </div>
                     </div>
                     <br />
-                    <h4>Số dư khả dụng: {`${currency.format(availableBalance, { code: "VND" })}`}</h4>
+                    <h4>
+                      Số dư khả dụng:{" "}
+                      {`${currency.format(availableBalance, { code: "VND" })}`}
+                    </h4>
                     <br />
-                    <span>Nhập số tiền cần rút: (Số dư khả dụng tối thiểu {'>'} 200.000 VND)</span>
+                    <span>
+                      Nhập số tiền cần rút: (Số dư khả dụng tối thiểu {">"}{" "}
+                      200.000 VND)
+                    </span>
                     <div className="800px:flex w-full items-center">
                       <input
                         type="number"
-                        placeholder="Amount..."
+                        placeholder="Tổng cộng..."
                         value={withdrawAmount}
                         onChange={(e) => setWithdrawAmount(e.target.value)}
                         className="800px:w-[100px] w-[full] border 800px:mr-3 p-1 rounded"
-                      /><span className='mr-4'>VND </span>
-                      
+                      />
+                      <span className="mr-4">VND </span>
+
                       {/* <div
                         className={`${styles.button} !h-[42px] text-white`}
                         onClick={withdrawHandler}
                       >
                         Rút tiền
                       </div> */}
-                      {availableBalance && availableBalance>200000 ?(
-                         <div
-                         className={`${styles.button} !h-[42px] text-white`}
-                         onClick={withdrawHandler}
-                       >
-                         Rút tiền
-                       </div>
-                      ):( null)}
+                      {availableBalance && availableBalance > 200000 ? (
+                        <div
+                          className={`${styles.button} !h-[42px] text-white`}
+                          onClick={withdrawHandler}
+                        >
+                          Rút tiền
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 ) : (
