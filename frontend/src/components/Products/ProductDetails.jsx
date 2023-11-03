@@ -181,15 +181,22 @@ const ProductDetails = ({ data }) => {
                   <h4
                     className={`${styles.productDiscountPrice} mt-5 !text-3xl font-bol `}
                   >
-                    {`${currency.format(data.discountPrice, { code: "VND" })}`}
-                  </h4>
-                  <h3 className={`${styles.price}`}>
-                    {data.originalPrice
+                    {data.discountPrice === 0
                       ? `${currency.format(data.originalPrice, {
                           code: "VND",
                         })}`
-                      : null}
-                  </h3>
+                      : `${currency.format(data.discountPrice, {
+                          code: "VND",
+                        })}`}
+                  </h4>
+                  {data.discountPrice !== 0 && (
+                    <h3 className={`${styles.price}`}>
+                      {`${currency.format(data.originalPrice, {
+                        code: "VND",
+                      })}`}
+                    </h3>
+                  )}
+
                   <div className="ml-5">
                     <p
                       className={`${

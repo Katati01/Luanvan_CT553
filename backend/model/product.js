@@ -18,11 +18,13 @@ const productSchema = new mongoose.Schema({
   },
   originalPrice: {
     type: Number,
+    required: [true, "Nhập giá sản phẩm vào!"],
   },
+
   discountPrice: {
     type: Number,
-    // required: [true, "Please enter your product price!"],
   },
+
   stock: {
     type: Number,
     required: [true, "Nhập số lượng sản phẩm!"],
