@@ -5,23 +5,23 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { server } from "../../server";
 import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
-import { server } from "../../server";
-import { toast } from "react-toastify";
 
 const AllCoupons = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [coupouns,setCoupouns] = useState([]);
+  const [coupouns, setCoupouns] = useState([]);
   const [minAmount, setMinAmout] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [value, setValue] = useState(null);
   const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products);
-
+  const [quantity, setQuantity] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,9 +40,11 @@ const AllCoupons = () => {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    axios.delete(`${server}/coupon/delete-coupon/${id}`,{withCredentials: true}).then((res) => {
-      toast.success("Coupon code deleted succesfully!")
-    })
+    axios
+      .delete(`${server}/coupon/delete-coupon/${id}`, { withCredentials: true })
+      .then((res) => {
+        toast.success("Coupon code deleted succesfully!");
+      });
     window.location.reload();
   };
 
@@ -58,14 +60,15 @@ const AllCoupons = () => {
           maxAmount,
           selectedProducts,
           value,
+          quantity,
           shopId: seller._id,
         },
         { withCredentials: true }
       )
       .then((res) => {
-       toast.success("Đã tạo mã giảm giá thành công!");
-       setOpen(false);
-       window.location.reload();
+        toast.success("Đã tạo mã giảm giá thành công!");
+        setOpen(false);
+        window.location.reload();
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -108,7 +111,7 @@ const AllCoupons = () => {
   const row = [];
 
   coupouns &&
-  coupouns.forEach((item) => {
+    coupouns.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
@@ -140,7 +143,7 @@ const AllCoupons = () => {
           />
           {open && (
             <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
-              <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4">
+              <div className="w-[90%] 800px:w-[40%] h-[80vh] overflow-y-scroll [&::-webkit-scrollbar]:hidden bg-white rounded-md shadow p-4">
                 <div className="w-full flex justify-end">
                   <RxCross1
                     size={30}
@@ -149,7 +152,7 @@ const AllCoupons = () => {
                   />
                 </div>
                 <h5 className="text-[30px] font-Poppins text-center">
-                 Thêm mã giảm giá
+                  Thêm mã giảm giá
                 </h5>
                 {/* create coupoun code */}
                 <form onSubmit={handleSubmit} aria-required={true}>
@@ -171,8 +174,7 @@ const AllCoupons = () => {
                   <br />
                   <div>
                     <label className="pb-2">
-                     Số lượng giảm (%){" "}
-                      <span className="text-red-500">*</span>
+                      Số lượng giảm (%) <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -182,6 +184,22 @@ const AllCoupons = () => {
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setValue(e.target.value)}
                       placeholder="Nhập % giảm giá (% < 100%)..."
+                    />
+                  </div>
+                  <br />
+                  {/* Số lượng mã giảm giá */}
+                  <div>
+                    <label className="pb-2">
+                      Số lượng <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="value"
+                      value={quantity}
+                      required
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      onChange={(e) => setQuantity(e.target.value)}
+                      placeholder="Nhập số lượng mã giảm giá..."
                     />
                   </div>
                   <br />
@@ -210,7 +228,9 @@ const AllCoupons = () => {
                   </div>
                   <br />
                   <div>
-                    <label className="pb-2">Chọn sản phẩm có thể áp dụng mã giảm giá</label>
+                    <label className="pb-2">
+                      Chọn sản phẩm có thể áp dụng mã giảm giá
+                    </label>
                     <select
                       className="w-full mt-2 border h-[35px] rounded-[5px]"
                       value={selectedProducts}
@@ -219,8 +239,7 @@ const AllCoupons = () => {
                       <option value="Choose your selected products">
                         Chọn sản phẩm
                       </option>
-                      {products &&
-                        products.map((i) => (
+                      {products &&products.map((i) => (
                           <option value={i.name} key={i.name}>
                             {i.name}
                           </option>

@@ -1,13 +1,13 @@
-import axios from "axios";
-import currency from "currency-formatter";
 import React, { useEffect, useState } from "react";
-import { BsFillBagFill } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { server } from "../../server";
 import styles from "../../styles/styles";
+import { BsFillBagFill } from "react-icons/bs";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrdersOfShop } from "../../redux/actions/order";
+import { backend_url, server } from "../../server";
+import axios from "axios";
+import { toast } from "react-toastify";
+import currency from "currency-formatter";
 
 const OrderDetails = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -22,18 +22,6 @@ const OrderDetails = () => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
 
-  // Hàm tính tổng giá trị theo cửa hàng
-  const calculateShopTotalPrice = (cartItems) => {
-
-    // return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
-
-    return cartItems.reduce(
-      (total, item) => total + item.discountPrice * item.qty,
-      0
-    );
-
-  };
-
   const data = orders && orders.find((item) => item._id === id);
 
   const orderUpdateHandler = async (e) => {
@@ -41,7 +29,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/update-order-status/${id}`,
         {
-          status,
+          status
         },
         { withCredentials: true }
       )
@@ -56,21 +44,23 @@ const OrderDetails = () => {
 
   const refundOrderUpdateHandler = async (e) => {
     await axios
-      .put(
-        `${server}/order/order-refund-success/${id}`,
-        {
-          status,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success("Đơn hàng đã được cập nhật!");
-        dispatch(getAllOrdersOfShop(seller._id));
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
-  };
+    .put(
+      `${server}/order/order-refund-success/${id}`,
+      {
+        status,
+      },
+      { withCredentials: true }
+    )
+    .then((res) => {
+      toast.success("Đơn hàng đã được cập nhật!");
+      dispatch(getAllOrdersOfShop(seller._id));
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+    });
+  }
+
+
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>
@@ -81,7 +71,7 @@ const OrderDetails = () => {
         </div>
         <Link to="/dashboard-orders">
           <div
-            className={`${styles.button} !bg-[#fce1e6] !rounded-[4px] text-[#e94560] font-[600] !h-[45px] text-[18px]`}
+            className={`${styles.button} !bg-[#000] !rounded-[4px] text-[#fff] font-[600] !h-[45px] text-[18px]`}
           >
             Quay lại
           </div>
@@ -97,12 +87,12 @@ const OrderDetails = () => {
         </h5>
       </div>
 
-      {/* Các mặt hàng trong đơn hàng */}
+      {/* order items */}
       <br />
       <br />
       {data &&
         data?.cart.map((item, index) => (
-          <div className="w-full flex items-start mb-5" key={item._id}>
+          <div className="w-full flex items-start mb-5">
             <img
               src={`${item.images[0]}`}
               alt=""
@@ -120,17 +110,12 @@ const OrderDetails = () => {
 
       <div className="border-t w-full text-right">
         <h5 className="pt-3 text-[18px]">
-
-
           Tổng tiền:{" "}
           <strong>
             {data
-              ? `${currency.format(calculateShopTotalPrice(data.cart), {
-                  code: "VND",
-                })}`
-              : null}
+              ? `${currency.format(data.totalPrice, { code: "VND" })}`
+              : null}{" "}
           </strong>
-
         </h5>
       </div>
       <br />
@@ -145,11 +130,12 @@ const OrderDetails = () => {
             Địa chỉ: {data?.shippingAddress.address1},{" "}
             {data?.shippingAddress.city}
           </h4>
+          {/* <h4 className=" text-[20px]">{data?.shippingAddress.country}</h4> */}
+          {/* <h4 className=" text-[20px]">{data?.shippingAddress.city}</h4> */}
           <h4 className=" text-[20px]">
             {" "}
             Số điện thoại: +(84) {data?.user?.phoneNumber}
           </h4>
-
         </div>
         <div className="w-full 800px:w-[40%]">
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
@@ -177,7 +163,7 @@ const OrderDetails = () => {
               "Shipping",
               "Received",
               "On the way",
-              "Delivered",
+              "Delivered"
             ]
               .slice(
                 [
@@ -186,7 +172,7 @@ const OrderDetails = () => {
                   "Shipping",
                   "Received",
                   "On the way",
-                  "Delivered",
+                  "Delivered"
                 ].indexOf(data?.status)
               )
               .map((option, index) => (
@@ -213,10 +199,10 @@ const OrderDetails = () => {
               </option>
             ))}
         </select>
-
       ) : null}
+
       <div
-        className={`${styles.button} mt-5 !bg-[#0454ffee] !rounded-[4px] text-[#ffffff] font-[600] !h-[45px] text-[18px]`}
+        className={`${styles.button} mt-5 !bg-[#000] !rounded-[4px] text-[#ffffff] font-[600] !h-[45px] text-[18px]`}
         onClick={
           data?.status !== "Processing refund"
             ? orderUpdateHandler
