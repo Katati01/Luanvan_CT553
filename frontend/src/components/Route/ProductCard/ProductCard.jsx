@@ -4,7 +4,7 @@ import {
   AiFillHeart,
   AiOutlineEye,
   AiOutlineHeart,
-  AiOutlineShoppingCart,
+  AiOutlineShoppingCart
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -125,7 +125,7 @@ const ProductCard = ({ data, isEvent }) => {
                   </h5>
                   <h4 className={`${styles.price}`}>
                     <del>{`${currency.format(data.originalPrice, {
-                      code: "VND",
+                      code: "VND"
                     })}`}</del>
                   </h4>
                 </>

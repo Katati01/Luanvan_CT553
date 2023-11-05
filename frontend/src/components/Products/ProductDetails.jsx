@@ -186,16 +186,13 @@ const ProductDetails = ({ data }) => {
                           code: "VND"
                         })}`
                       : `${currency.format(data.discountPrice, {
-                          code: "VND",
-                        })}`
-                      : `${currency.format(data.discountPrice, {
-                          code: "VND",
+                          code: "VND"
                         })}`}
                   </h4>
                   {data.discountPrice !== 0 && (
                     <h3 className={`${styles.price}`}>
                       {`${currency.format(data.originalPrice, {
-                        code: "VND",
+                        code: "VND"
                       })}`}
                     </h3>
                   )}
