@@ -60,7 +60,7 @@ const CreateProduct = () => {
     newForm.append("category", category);
     newForm.append("tags", tags);
     newForm.append("originalPrice", originalPrice);
-    newForm.append("discountPrice", discountPrice);
+    // newForm.append("discountPrice", discountPrice);
     newForm.append("stock", stock);
     newForm.append("shopId", seller._id);
     dispatch(createProduct(newForm));
@@ -148,7 +148,7 @@ const CreateProduct = () => {
           />
         </div>
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">Giá khuyến mãi</label>
           <input
             type="number"
@@ -159,7 +159,7 @@ const CreateProduct = () => {
             placeholder="Giá sản phẩm sau khi áp dụng khuyễn mãi..."
           />
         </div>
-        <br />
+        <br /> */}
         <div>
           <label className="pb-2">
             Số lượng sản phẩm <span className="text-red-500">*</span>
