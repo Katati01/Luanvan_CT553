@@ -8,6 +8,7 @@ const Shop = require("../model/shop");
 const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
 const fs = require("fs");
+const mongoose = require("mongoose");
 
 // create product
 router.post(
@@ -190,25 +191,112 @@ router.get(
     }
   })
 );
-// Tìm kiếm snar phẩm theo từ khóa
-// router.get(
-//   "/search-products",
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const searchTerm = req.query.searchTerm;
-//       const products = await Product.find({
-//         $or: [
-//           { name: { $regex: searchTerm, $options: "i" } },
-//           { description: { $regex: searchTerm, $option: "i" } },
-//         ],
-//       }).sort({ createdAt: -1 });
-//       res.status(200).json({
-//         success: true,
-//         products,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error, 400));
-//     }
-//   })
-// );
+
+router.get(
+  "/get-product/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const productId = req.params.id;
+
+      const product = await Product.findById(productId);
+
+      if (!product) {
+        return next(
+          new ErrorHandler("Không tìm thấy sản phẩm với ID này!", 404)
+        );
+      }
+
+      res.status(200).json({
+        success: true,
+        product,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+// Update product by ID
+router.put(
+  "/update-product/:id",
+  isSeller, // Chắc chắn rằng chỉ người bán có quyền cập nhật sản phẩm
+  upload.array("images"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const productId = req.params.id;
+      const productData = req.body;
+
+      // Kiểm tra xem sản phẩm có tồn tại không
+      const product = await Product.findById(productId);
+      if (!product) {
+        return next(
+          new ErrorHandler("Không tìm thấy sản phẩm với ID này!", 404)
+        );
+      }
+
+      // Kiểm tra xem người dùng có quyền chỉnh sửa sản phẩm này không
+      // if (product.shop.toString() !== req.user.shop) {
+      //   return next(
+      //     new ErrorHandler("Bạn không có quyền chỉnh sửa sản phẩm này!", 403)
+      //   );
+      // }
+
+      // Xử lý hình ảnh nếu có
+      if (req.files) {
+        const files = req.files;
+        const imageUrls = files.map((file) => file.path);
+        // productData.images = imageUrls;
+        productData.images = [...product.images, ...imageUrls];
+      }
+
+      // Cập nhật thông tin sản phẩm
+      await Product.findByIdAndUpdate(productId, productData, { new: true });
+
+      res.status(200).json({
+        success: true,
+        message: "Sản phẩm đã được cập nhật thành công!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+// Thêm route để tải lên hình ảnh mới
+router.post(
+  "/upload-images",
+  isSeller, // Đảm bảo người bán mới có quyền tải lên hình ảnh
+  upload.array("images"), // Đặt tên field là "images"
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const files = req.files;
+
+      const imageUrls = files.map((file) => file.path); // Lấy đường dẫn URL của các hình ảnh đã tải lên
+
+      res.status(200).json({
+        success: true,
+        imageUrls,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+// ...
+
+// Lấy danh sách sản phẩm có tags
+router.get(
+  "/products/tag/:tag",
+  catchAsyncErrors(async (req, res, next) => {
+    const tag = req.params.tag;
+
+    // Tìm các sản phẩm có tags tương ứng trong cơ sở dữ liệu
+    const products = await Product.find({ tags: tag });
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  })
+);
+
 module.exports = router;

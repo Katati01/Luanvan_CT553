@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import styles from "../../styles/styles";
-import { BsFillBagFill } from "react-icons/bs";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { backend_url, server } from "../../server";
 import axios from "axios";
-import { toast } from "react-toastify";
 import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
+import { BsFillBagFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getAllOrdersOfShop } from "../../redux/actions/order";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const OrderDetails = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -29,12 +29,12 @@ const OrderDetails = () => {
       .put(
         `${server}/order/update-order-status/${id}`,
         {
-          status
+          status,
         },
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success("Order updated!");
+        toast.success("Đơn hàng đã được cập nhật!");
         navigate("/dashboard-orders");
       })
       .catch((error) => {
@@ -47,12 +47,13 @@ const OrderDetails = () => {
       .put(
         `${server}/order/order-refund-success/${id}`,
         {
-          status
+          status,
         },
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success("Order updated!");
+        toast.success("Đơn hàng đã được cập nhật!");
+
         dispatch(getAllOrdersOfShop(seller._id));
       })
       .catch((error) => {
@@ -85,12 +86,13 @@ const OrderDetails = () => {
         </h5>
       </div>
 
-      {/* order items */}
+      {/* Các mặt hàng trong đơn hàng */}
+
       <br />
       <br />
       {data &&
         data?.cart.map((item, index) => (
-          <div className="w-full flex items-start mb-5">
+          <div className="w-full flex items-start mb-5" key={item._id}>
             <img
               src={`${item.images[0]}`}
               alt=""
@@ -112,7 +114,7 @@ const OrderDetails = () => {
           <strong>
             {data
               ? `${currency.format(data.totalPrice, { code: "VND" })}`
-              : null}{" "}
+              : null}
           </strong>
         </h5>
       </div>
@@ -161,7 +163,7 @@ const OrderDetails = () => {
               "Shipping",
               "Received",
               "On the way",
-              "Delivered"
+              "Delivered",
             ]
               .slice(
                 [
@@ -170,7 +172,7 @@ const OrderDetails = () => {
                   "Shipping",
                   "Received",
                   "On the way",
-                  "Delivered"
+                  "Delivered",
                 ].indexOf(data?.status)
               )
               .map((option, index) => (

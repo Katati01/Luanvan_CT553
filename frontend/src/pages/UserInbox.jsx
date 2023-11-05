@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import Header from "../components/Layout/Header";
-import { useSelector } from "react-redux";
-import socketIO from "socket.io-client";
-import { format } from "timeago.js";
-import { backend_url, server } from "../server";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
+import React, { useEffect, useRef, useState } from "react";
+import { AiOutlineSend } from "react-icons/ai";
 import { BsArrow90DegLeft } from "react-icons/bs";
 import { TfiGallery } from "react-icons/tfi";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import socketIO from "socket.io-client";
+import { format } from "timeago.js";
+import { server } from "../server";
 import styles from "../styles/styles";
 const ENDPOINT = "https://socket-ecommerce-tu68.onrender.com/";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
@@ -205,12 +204,10 @@ const UserInbox = () => {
 
   return (
     <div className="w-full">
-     
       {!open && (
         <>
-        
           <h1 className="text-center text-[30px] py-3 font-Poppins">
-           Tất cả tin nhắn
+            Tất cả tin nhắn
           </h1>
           {/* All messages list */}
           {conversations &&
@@ -248,40 +245,38 @@ const UserInbox = () => {
       )} */}
       {open && (
         <div className="flex items-start ">
-        <div className="w-[80px] 800px:w-[330px]">
-        {conversations &&
-            conversations.map((item, index) => (
-              <MessageList
-                data={item}
-                key={index}
-                index={index}
-                setOpen={setOpen}
-                setCurrentChat={setCurrentChat}
-                me={user?._id}
-                setUserData={setUserData}
-                userData={userData}
-                online={onlineCheck(item)}
-                setActiveStatus={setActiveStatus}
-              />
-            ))}
+          <div className="w-[80px] 800px:w-[330px]">
+            {conversations &&
+              conversations.map((item, index) => (
+                <MessageList
+                  data={item}
+                  key={index}
+                  index={index}
+                  setOpen={setOpen}
+                  setCurrentChat={setCurrentChat}
+                  me={user?._id}
+                  setUserData={setUserData}
+                  userData={userData}
+                  online={onlineCheck(item)}
+                  setActiveStatus={setActiveStatus}
+                />
+              ))}
+          </div>
+          <div className="w-full bg-[#dadadaee] rounded-md">
+            <SellerInbox
+              setOpen={setOpen}
+              newMessage={newMessage}
+              setNewMessage={setNewMessage}
+              sendMessageHandler={sendMessageHandler}
+              messages={messages}
+              sellerId={user._id}
+              userData={userData}
+              activeStatus={activeStatus}
+              scrollRef={scrollRef}
+              handleImageUpload={handleImageUpload}
+            />
+          </div>
         </div>
-        <div className="w-full bg-[#dadadaee] rounded-md">
-        <SellerInbox
-          setOpen={setOpen}
-          newMessage={newMessage}
-          setNewMessage={setNewMessage}
-          sendMessageHandler={sendMessageHandler}
-          messages={messages}
-          sellerId={user._id}
-          userData={userData}
-          activeStatus={activeStatus}
-          scrollRef={scrollRef}
-          handleImageUpload={handleImageUpload}
-        />
-        </div>
-       
-      </div>
-        
       )}
     </div>
   );
@@ -456,7 +451,7 @@ const SellerInbox = ({
           <input
             type="text"
             required
-            placeholder="Enter your message..."
+            placeholder="Nhập nội dung tin nhắn..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className={`${styles.input} pb-4`}

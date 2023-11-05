@@ -5,7 +5,6 @@ import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { backend_url } from "../../server";
 
 const AdminHeader = () => {
   const { user } = useSelector((state) => state.user);
@@ -15,7 +14,7 @@ const AdminHeader = () => {
       <div>
         <Link to="/">
           <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-            Kiana shop
+            Nông nghiệp xanh
           </h1>
         </Link>
       </div>

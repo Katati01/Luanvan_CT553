@@ -94,3 +94,30 @@ export const getAllProducts = () => async (dispatch) => {
     });
   }
 };
+// update product
+export const updateProduct =
+  (productId, updatedProductData) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "updateProductRequest",
+      });
+
+      const { data } = await axios.put(
+        `${server}/product/update-product/${productId}`,
+        updatedProductData,
+        {
+          withCredentials: true, // Nếu cần đăng nhập
+        }
+      );
+
+      dispatch({
+        type: "updateProductSuccess",
+        payload: data.product,
+      });
+    } catch (error) {
+      dispatch({
+        type: "updateProductFailed",
+        payload: error.response.data.message,
+      });
+    }
+  };

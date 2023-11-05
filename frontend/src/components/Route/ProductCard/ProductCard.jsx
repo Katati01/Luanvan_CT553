@@ -1,23 +1,22 @@
-import React, { useState } from "react";
 import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineEye,
   AiOutlineHeart,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import styles from "../../../styles/styles";
 import { useDispatch, useSelector } from "react-redux";
-import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { addTocart } from "../../../redux/actions/cart";
 import {
   addToWishlist,
   removeFromWishlist
 } from "../../../redux/actions/wishlist";
-import { useEffect } from "react";
-import { addTocart } from "../../../redux/actions/cart";
-import { toast } from "react-toastify";
+import styles from "../../../styles/styles";
 import Ratings from "../../Products/Ratings";
+import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 
 const ProductCard = ({ data, isEvent }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -99,7 +98,7 @@ const ProductCard = ({ data, isEvent }) => {
             <Ratings rating={data?.ratings} />
           </div>
 
-          <div className="py-2 flex items-center justify-between">
+          {/* <div className="py-2 flex items-center justify-between">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
                 {data.originalPrice === 0
@@ -112,9 +111,30 @@ const ProductCard = ({ data, isEvent }) => {
                   : null}
               </h4>
             </div>
+
             {/* <span className="font-[400] text-[17px] text-[#68d284]">
               {data?.sold_out} sold
             </span> */}
+
+          <div className="py-2 flex items-center justify-between">
+            <div className="flex">
+              {data.discountPrice > 0 ? ( // Kiểm tra nếu có giá khuyến mãi
+                <>
+                  <h5 className={`${styles.productDiscountPrice}`}>
+                    {`${currency.format(data.discountPrice, { code: "VND" })}`}
+                  </h5>
+                  <h4 className={`${styles.price}`}>
+                    <del>{`${currency.format(data.originalPrice, {
+                      code: "VND",
+                    })}`}</del>
+                  </h4>
+                </>
+              ) : (
+                <h5 className={`${styles.productDiscountPrice}`}>
+                  {`${currency.format(data.originalPrice, { code: "VND" })}`}
+                </h5>
+              )}
+            </div>
           </div>
         </Link>
 

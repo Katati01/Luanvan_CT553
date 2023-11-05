@@ -1,7 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "../../../styles/styles";
-import { useSelector } from "react-redux";
 
 const Hero = () => {
   const { isSeller } = useSelector((state) => state.seller);
@@ -10,14 +10,15 @@ const Hero = () => {
       className={`relative min-h-[70vh] 800px:min-h-[80vh] w-full bg-no-repeat ${styles.noramlFlex}`}
       style={{
         backgroundImage:
-          "url(https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)"
+          "url(https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)",
       }}
     >
       <div className={`${styles.section} w-[90%] 800px:w-[60%]`}>
         <h1
           className={`text-[35px] leading-[1.2] 800px:text-[60px] text-[#fff] font-[600] capitalize`}
         >
-          Kiana shop <br />
+          NÔNG NGHIỆP XANH
+          <br />
         </h1>
         <p className="pt-5 text-[18px] font-[Poppins] font-[500] text-[#fff]">
           Chào mừng bạn đến với chúng tôi! Ở đây, chúng tôi mang đến một trải

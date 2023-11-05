@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { RxCross1 } from "react-icons/rx";
-import { IoBagHandleOutline } from "react-icons/io5";
-import { HiOutlineMinus, HiPlus } from "react-icons/hi";
-import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
-import { backend_url } from "../../server";
-import { useDispatch, useSelector } from "react-redux";
-import { addTocart, removeFromCart } from "../../redux/actions/cart";
-import { toast } from "react-toastify";
 import currency from "currency-formatter";
+import React, { useState } from "react";
+import { HiOutlineMinus, HiPlus } from "react-icons/hi";
+import { IoBagHandleOutline } from "react-icons/io5";
+import { RxCross1 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { addTocart, removeFromCart } from "../../redux/actions/cart";
+import styles from "../../styles/styles";
 
 const Cart = ({ setOpenCart }) => {
   const { cart } = useSelector((state) => state.cart);
@@ -101,9 +100,11 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const [value, setValue] = useState(data.qty);
   const totalPrice = data.discountPrice * value;
 
+  const remainingStock = data.stock; // Lấy số lượng sản phẩm còn lại
+
   const increment = (data) => {
-    if (data.stock < value) {
-      toast.error("Product stock limited!");
+    if (remainingStock < value + 1) {
+      toast.error("Sản phẩm không đủ số lượng!");
     } else {
       setValue(value + 1);
       const updateCartData = { ...data, qty: value + 1 };

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+// import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { createProduct } from "../../redux/actions/product";
 import { categoriesData } from "../../static/data";
-import { toast } from "react-toastify";
 
 const CreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
@@ -38,6 +39,11 @@ const CreateProduct = () => {
     let files = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...files]);
   };
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
+  };
 
   console.log(images);
 
@@ -54,7 +60,7 @@ const CreateProduct = () => {
     newForm.append("category", category);
     newForm.append("tags", tags);
     newForm.append("originalPrice", originalPrice);
-    newForm.append("discountPrice", discountPrice);
+    // newForm.append("discountPrice", discountPrice);
     newForm.append("stock", stock);
     newForm.append("shopId", seller._id);
     dispatch(createProduct(newForm));
@@ -99,7 +105,7 @@ const CreateProduct = () => {
         <br />
         <div>
           <label className="pb-2">
-            Thể loại <span className="text-red-500">*</span>
+            Danh mục <span className="text-red-500">*</span>
           </label>
           <select
             className="w-full mt-2 border h-[35px] rounded-[5px]"
@@ -129,7 +135,9 @@ const CreateProduct = () => {
         </div>
         <br />
         <div>
-          <label className="pb-2">Giá gốc</label>
+          <label className="pb-2">
+            Giá gốc <span className="text-red-500">*</span>
+          </label>
           <input
             type="number"
             name="price"
@@ -140,10 +148,8 @@ const CreateProduct = () => {
           />
         </div>
         <br />
-        <div>
-          <label className="pb-2">
-            Giá khuyến mãi <span className="text-red-500">*</span>
-          </label>
+        {/* <div>
+          <label className="pb-2">Giá khuyến mãi</label>
           <input
             type="number"
             name="price"
@@ -153,7 +159,7 @@ const CreateProduct = () => {
             placeholder="Giá sản phẩm sau khi áp dụng khuyễn mãi..."
           />
         </div>
-        <br />
+        <br /> */}
         <div>
           <label className="pb-2">
             Số lượng sản phẩm <span className="text-red-500">*</span>
@@ -170,7 +176,7 @@ const CreateProduct = () => {
         <br />
         <div>
           <label className="pb-2">
-           Hình ảnh <span className="text-red-500">*</span>
+            Hình ảnh <span className="text-red-500">*</span>
           </label>
           <input
             type="file"
@@ -185,13 +191,20 @@ const CreateProduct = () => {
               <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
             </label>
             {images &&
-              images.map((i) => (
-                <img
-                  src={URL.createObjectURL(i)}
-                  key={i}
-                  alt=""
-                  className="h-[120px] w-[120px] object-cover m-2"
-                />
+              images.map((image, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt=""
+                    className="h-[120px] w-[120px] object-cover m-2"
+                  />
+                  <button
+                    onClick={() => handleRemoveImage(index)}
+                    className="bg-red-500 text-white rounded-md p-1 m-2"
+                  >
+                    Xóa
+                  </button>
+                </div>
               ))}
           </div>
           <br />

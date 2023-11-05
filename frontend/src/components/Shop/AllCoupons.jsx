@@ -5,10 +5,10 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { server } from "../../server";
 import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
-import { server } from "../../server";
-import { toast } from "react-toastify";
 
 const AllCoupons = () => {
   const [open, setOpen] = useState(false);
@@ -22,14 +22,14 @@ const AllCoupons = () => {
   const [quantity, setQuantity] = useState(null);
   const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products);
-
+  const [quantity, setQuantity] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoading(true);
     axios
       .get(`${server}/coupon/get-coupon/${seller._id}`, {
-        withCredentials: true
+        withCredentials: true,
       })
       .then((res) => {
         setIsLoading(false);
@@ -82,11 +82,17 @@ const AllCoupons = () => {
       field: "name",
       headerName: "Mã giảm giá",
       minWidth: 180,
-      flex: 1.4
+      flex: 1.4,
     },
     {
       field: "price",
       headerName: "Giá trị",
+      minWidth: 100,
+      flex: 0.6,
+    },
+    {
+      field: "quantity",
+      headerName: "Số lượng",
       minWidth: 100,
       flex: 0.6
     },
@@ -111,8 +117,8 @@ const AllCoupons = () => {
             </Button>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -124,7 +130,7 @@ const AllCoupons = () => {
         name: item.name,
         quantity: item.quantity,
         price: item.value + " %",
-        sold: 10
+        sold: 10,
       });
     });
 
@@ -182,7 +188,7 @@ const AllCoupons = () => {
                   <br />
                   <div>
                     <label className="pb-2">
-                      Số lượng giảm (%) <span className="text-red-500">*</span>
+                      Phần trăm giảm (%) <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -198,7 +204,7 @@ const AllCoupons = () => {
                   {/* Số lượng mã giảm giá */}
                   <div>
                     <label className="pb-2">
-                      Số lượng <span className="text-red-500">*</span>
+                      Số lượng mã giảm <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
