@@ -58,9 +58,7 @@ const ProductCard = ({ data, isEvent }) => {
       }
     }
   };
-  const handleProductClick = () => {
-    window.location.reload();
-  };
+
   return (
     <>
       <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
