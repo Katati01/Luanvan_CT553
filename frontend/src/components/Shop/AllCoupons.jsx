@@ -248,8 +248,7 @@ const AllCoupons = () => {
                       <option value="Choose your selected products">
                         Chọn sản phẩm
                       </option>
-                      {products &&
-                        products.map((i) => (
+                      {products &&products.map((i) => (
                           <option value={i.name} key={i.name}>
                             {i.name}
                           </option>

@@ -6,7 +6,7 @@ import {
   AiOutlineHeart,
   AiOutlineShoppingCart
 } from "react-icons/ai";
-import { VscLocation } from 'react-icons/vsc';
+import { VscLocation } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -58,16 +58,19 @@ const ProductCard = ({ data, isEvent }) => {
       }
     }
   };
-
+  const handleProductClick = () => {
+    window.location.reload();
+  };
   return (
     <>
       <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
         <Link
-          to={`${isEvent === true
-            ? `/product/${data._id}?isEvent=true`
-            : `/product/${data._id}`
-            }`}
+          to={`${
+            isEvent === true
+              ? `/product/${data._id}?isEvent=true`
+              : `/product/${data._id}`
+          }`}
         >
           <img
             src={`${data.images && data.images[0]}`}
@@ -84,10 +87,11 @@ const ProductCard = ({ data, isEvent }) => {
           </h5>
         </Link>
         <Link
-          to={`${isEvent === true
-            ? `/product/${data._id}?isEvent=true`
-            : `/product/${data._id}`
-            }`}
+          to={`${
+            isEvent === true
+              ? `/product/${data._id}?isEvent=true`
+              : `/product/${data._id}`
+          }`}
         >
           <h4 className="pb-3 font-[500] ">
             {data.name.length > 35 ? data.name.slice(0, 27) + "..." : data.name}
@@ -136,8 +140,10 @@ const ProductCard = ({ data, isEvent }) => {
             </div>
           </div>
           <div className="flex items-center">
-            <VscLocation className=" text-red-400 h-6 w-6 mr-2"/>
-            <p className="text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap">{data?.shop?.address}</p>
+            <VscLocation className=" text-red-400 h-6 w-6 mr-2" />
+            <p className="text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap">
+              {data?.shop?.address}
+            </p>
           </div>
         </Link>
 

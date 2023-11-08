@@ -111,7 +111,7 @@ const ShopProfileData = ({ isOwner }) => {
                   data={i}
                   key={index}
                   isShop={true}
-                  isEvent={true}
+                  // isEvent={true}
                 />
               ))}
           </div>

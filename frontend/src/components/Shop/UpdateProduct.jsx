@@ -37,7 +37,7 @@ const UpdateProduct = () => {
         setOriginalPrice(product.originalPrice);
         setDiscountPrice(product.discountPrice);
         setStock(product.stock);
-        setImages(product.images.map((item) => item)); // Cập nhật danh sách hình ảnh từ JSON
+        setImages(product.images); // Cập nhật danh sách hình ảnh từ MongoDB
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu sản phẩm:", error);
       }
@@ -96,9 +96,52 @@ const UpdateProduct = () => {
   const handleRemoveImage = (index) => {
     const updatedImages = [...images];
     updatedImages.splice(index, 1);
-    setImages(updatedImages); // Loại bỏ hình ảnh khỏi danh sách hình ảnh
+    setImages(updatedImages);
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const updatedProductData = new FormData();
+  //   updatedProductData.append('name', name);
+  //   updatedProductData.append('description', description);
+  //   updatedProductData.append('category', category);
+  //   updatedProductData.append('tags', tags);
+  //   updatedProductData.append('originalPrice', originalPrice);
+  //   updatedProductData.append('discountPrice', discountPrice);
+  //   updatedProductData.append('stock', stock);
+  //   updatedProductData.append('shopId', seller._id);
+
+  //   // Thêm hình ảnh vào FormData
+  //   images.forEach((image, index) => {
+  //     if (typeof image === 'string') {
+  //       updatedProductData.append(`images[${index}]`, image);
+  //     } else {
+  //       updatedProductData.append(`images[${index}]`, image, image.name);
+  //     }
+  //   });
+
+  //   try {
+  //     const response = await axios.put(
+  //       `${server}/product/update-product/${id}`,
+  //       updatedProductData,
+  //       {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data',
+  //         },
+  //       }
+  //     );
+
+  //     if (response.data.success) {
+  //       toast.success("Sản phẩm đã được cập nhật thành công");
+  //       dispatch(updateProduct(id, updatedProductData));
+  //       navigate("/dashboard-products");
+  //     } else {
+  //       toast.error("Có lỗi xảy ra khi cập nhật sản phẩm");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Có lỗi xảy ra khi x cập nhật sản phẩm");
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedProductData = {
@@ -109,9 +152,9 @@ const UpdateProduct = () => {
       originalPrice,
       discountPrice,
       stock,
-      images,
       shopId: seller._id,
     };
+
 
     try {
       const response = await axios.put(
@@ -119,6 +162,7 @@ const UpdateProduct = () => {
         updatedProductData,
         { withCredentials: true }
       );
+
 
       if (response.data.success) {
         toast.success("Sản phẩm đã được cập nhật thành công");
@@ -140,9 +184,7 @@ const UpdateProduct = () => {
       <form onSubmit={handleSubmit}>
         <br />
         <div>
-          <label className="pb-2">
-            Tên sản phẩm <span className="text-red-500">*</span>
-          </label>
+          <label className="pb-2">Tên sản phẩm <span className="text-red-500">*</span></label>
           <input
             type="text"
             name="name"
@@ -242,12 +284,21 @@ const UpdateProduct = () => {
         </div>
         <br />
         <div>
-          <label className="pb-2">
-            Hình ảnh <span className="text-red-500">*</span>
-          </label>
+          <label className="pb-2">Số lượng sản phẩm <span className="text-red-500">*</span></label>
+          <input
+            type="number"
+            name="stock"
+            value={stock}
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            onChange={(e) => setStock(e.target.value)}
+            placeholder="Nhập số lượng sản phẩm..."
+          />
+        </div>
+        <div>
+          <label className="pb-2">Hình ảnh <span className="text-red-500">*</span></label>
           <input
             type="file"
-            name=""
+            name="images"
             id="upload"
             className="hidden"
             multiple
@@ -257,22 +308,23 @@ const UpdateProduct = () => {
             <label htmlFor="upload">
               <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
             </label>
-            {images.map((image, index) => (
-              <div key={index}>
-                <img
-                  // src={image.url} // Sử dụng URL hình ảnh từ JSON và định dạng nó theo đúng cấu trúc URL của server
-                  src={image}
-                  alt=""
-                  className="h-[120px] w-[120px] object-cover m-2"
-                />
-                <button
-                  onClick={() => handleRemoveImage(index)}
-                  className="bg-red-500 text-white rounded-md p-1 m-2"
-                >
-                  Xóa
-                </button>
-              </div>
-            ))}
+            {images &&
+              images.map((image, index) => (
+                <div key={index} >
+                  <img
+                    src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                    alt=""
+                    className="h-[120px] w-[120px] object-cover m-2"
+                  />
+                  <button
+                    className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+
           </div>
         </div>
         <br />
