@@ -92,9 +92,9 @@ const Header = ({ activeHeading }) => {
 
   return (
     <>
-      <div className={`w-full bg-green-300 ${styles.section}`}>
+      <div className={`w-full bg-[#009b49] ${styles.section}`}>
         <div className="w-11/12 mx-auto">
-          <div className="mx-auto null transition hidden 800px:flex items-center justify-between w-full bg-green-300 h-[70px]">
+          <div className="mx-auto null transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]">
             <div>
               <Link to="/">
                 <h1 className="whitespace-nowrap self-center p-3 text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
@@ -148,40 +148,45 @@ const Header = ({ activeHeading }) => {
                 <div className="p-3 flex items-center text-black">
                   <Link to="/login" className="text-black flex items-center">
                     <AiOutlineUser className="text-black mr-1 text-xl" />
-                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">Đăng nhập</h1>
+                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
+                      Đăng nhập
+                    </h1>
                   </Link>
                   <span className="text-black mx-2">/</span>
                   <Link to="/sign-up" className="text-black">
-                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">Đăng ký</h1>
+                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
+                      Đăng ký
+                    </h1>
                   </Link>
                 </div>
               )}
               {isAuthenticated && (
                 <div className={`${styles.noramlFlex}`}>
-                <div className="relative cursor-pointer mr-[20px]">
-                  {isAuthenticated ? (
-                    <Link to="/profile">
-                      <img
-                        src={`${user?.avatar}`}
-                        className="w-[50px] h-[50px] rounded-full"
-                        alt=""
-                      />
-                    </Link>
-                  ) : (
-                    <Link to="/login">
-                      <CgProfile size={35} color="#de650a" />
-                    </Link>
-                  )}
+                  <div className="relative cursor-pointer mr-[20px]">
+                    {isAuthenticated ? (
+                      <Link to="/profile">
+                        <img
+                          src={`${user?.avatar}`}
+                          className="w-[50px] h-[50px] rounded-full"
+                          alt=""
+                        />
+                      </Link>
+                    ) : (
+                      <Link to="/login">
+                        <CgProfile size={35} color="#de650a" />
+                      </Link>
+                    )}
+                  </div>
                 </div>
-              </div>
               )}
             </div>
           </div>
         </div>
       </div>
       <div
-        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-          } transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]`}
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+        } transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]`}
       >
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
@@ -196,7 +201,7 @@ const Header = ({ activeHeading }) => {
               <div
                 className="relative cursor-pointer mr-[15px]"
                 onMouseEnter={handleMouseEnter}
-              // onMouseLeave={handleMouseLeave}
+                // onMouseLeave={handleMouseLeave}
               >
                 <IoIosNotificationsOutline size={35} color="#fff" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
@@ -266,8 +271,9 @@ const Header = ({ activeHeading }) => {
 
       {/* mobile header */}
       <div
-        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-          }
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+        }
       w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
         <div className="w-full flex items-center justify-between">
