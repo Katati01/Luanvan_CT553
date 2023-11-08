@@ -58,11 +58,11 @@ const EventCard = ({ active, data }) => {
         <CountDown data={data} />
         <br />
         <div className="flex items-center">
-          <Link to={`/product/${data._id}?isEvent=true`}>
-          {/* <Link to={`/event/${data._id}`}> */}
-            <div className={`${styles.button} text-[#fff]`}>See Details</div>
+          {/* <Link to={`/product/${data._id}?isEvent=true`}> */}
+          <Link to={`/event/${data._id}`}>
+            <div className={`${styles.button} text-[#fff]`}>Xem chi tiết</div>
           </Link>
-          <div className={`${styles.button} text-[#fff] ml-5`} onClick={() => addToCartHandler(data)}>Add to cart</div>
+          {/* <div className={`${styles.button} text-[#fff] ml-5`} onClick={() => addToCartHandler(data)}>Add to cart</div> */}
         </div>
       </div>
     </div>
