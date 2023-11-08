@@ -94,10 +94,10 @@ const Header = ({ activeHeading }) => {
     <>
       <div className={`w-full bg-green-300 ${styles.section}`}>
         <div className="w-11/12 mx-auto">
-          <div className="null transition hidden 800px:flex items-center justify-between w-full bg-green-300 h-[70px]">
+          <div className="mx-auto null transition hidden 800px:flex items-center justify-between w-full bg-green-300 h-[70px]">
             <div>
               <Link to="/">
-                <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
+                <h1 className="whitespace-nowrap self-center p-3 text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
                   NÔNG NGHIỆP XANH
                 </h1>
               </Link>
@@ -145,14 +145,14 @@ const Header = ({ activeHeading }) => {
             </div>
             <div className="flex items-center">
               {!isAuthenticated && (
-                <div className="flex items-center text-black">
+                <div className="p-3 flex items-center text-black">
                   <Link to="/login" className="text-black flex items-center">
                     <AiOutlineUser className="text-black mr-1 text-xl" />
-                    <h1>Đăng nhập</h1>
+                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">Đăng nhập</h1>
                   </Link>
                   <span className="text-black mx-2">/</span>
                   <Link to="/sign-up" className="text-black">
-                    <h1>Đăng ký</h1>
+                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">Đăng ký</h1>
                   </Link>
                 </div>
               )}
@@ -276,7 +276,7 @@ const Header = ({ activeHeading }) => {
           </div>
           <div>
             <Link to="/">
-              <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
+              <h1 className="whitespace-nowrap self-center text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
                 NÔNG NGHIỆP XANH
               </h1>
             </Link>
