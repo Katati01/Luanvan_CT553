@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     try {
       // Gửi yêu cầu đặt lại mật khẩu tới email đã nhập
       await axios.post(`${server}/user/forgot-password`, {
-        email,
+        email
       });
 
       // Hiển thị thông báo cho người dùng
@@ -32,9 +32,7 @@ const ForgotPassword = () => {
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-              NÔNG NGHIỆP XANH
-            </h1>
+            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
           </Link>
         </div>
       </div>

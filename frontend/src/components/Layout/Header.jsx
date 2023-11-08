@@ -97,7 +97,7 @@ const Header = ({ activeHeading }) => {
           <div className="mx-auto null transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]">
             <div>
               <Link to="/">
-                <h1 className="whitespace-nowrap self-center p-3 text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
+                <h1 className="whitespace-nowrap self-center p-3 text-[33px] font-bold">
                   NÔNG NGHIỆP XANH
                 </h1>
               </Link>
@@ -282,7 +282,7 @@ const Header = ({ activeHeading }) => {
           </div>
           <div>
             <Link to="/">
-              <h1 className="whitespace-nowrap self-center text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
+              <h1 className="whitespace-nowrap self-center text-[33px] font-bold">
                 NÔNG NGHIỆP XANH
               </h1>
             </Link>
