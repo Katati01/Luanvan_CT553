@@ -64,7 +64,6 @@ const AllEvents = () => {
       renderCell: (params) => {
         // const d = params.row.name;
         // const product_name = d.replace(/\s+/g, "-");
-        // const event_name = d.replace(/\s+/g, "-");
         return (
           <>
             {/* <Link to={`/product/${product_name}`}> */}
