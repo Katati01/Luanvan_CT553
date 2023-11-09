@@ -7,7 +7,7 @@ import { server } from "../../server";
 import {
   footerProductLinks,
   footerSupportLinks,
-  footercompanyLinks,
+  footercompanyLinks
 } from "../../static/data";
 import styles from "../../styles/styles";
 
@@ -62,9 +62,7 @@ const ShopCreate = () => {
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-              NÔNG NGHIỆP XANH
-            </h1>
+            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
           </Link>
         </div>
       </div>

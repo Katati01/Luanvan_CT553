@@ -5,7 +5,7 @@ import {
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineMessage,
-  AiOutlineShoppingCart,
+  AiOutlineShoppingCart
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import { addTocart } from "../../redux/actions/cart";
 import { getAllProductsShop } from "../../redux/actions/product";
 import {
   addToWishlist,
-  removeFromWishlist,
+  removeFromWishlist
 } from "../../redux/actions/wishlist";
 import { server } from "../../server";
 import styles from "../../styles/styles";
@@ -43,7 +43,7 @@ const ProductDetails = ({ data }) => {
     } else {
       setClick(false);
     }
-  }, [data, wishlist]);
+  }, [data, wishlist, dispatch]);
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -105,7 +105,7 @@ const ProductDetails = ({ data }) => {
         .post(`${server}/conversation/create-new-conversation`, {
           groupTitle,
           userId,
-          sellerId,
+          sellerId
         })
         .then((res) => {
           navigate(`/inbox?${res.data.conversation._id}`);
@@ -183,16 +183,16 @@ const ProductDetails = ({ data }) => {
                   >
                     {data.discountPrice === 0
                       ? `${currency.format(data.originalPrice, {
-                          code: "VND",
+                          code: "VND"
                         })}`
                       : `${currency.format(data.discountPrice, {
-                          code: "VND",
+                          code: "VND"
                         })}`}
                   </h4>
                   {data.discountPrice !== 0 && (
                     <h3 className={`${styles.price}`}>
                       {`${currency.format(data.originalPrice, {
-                        code: "VND",
+                        code: "VND"
                       })}`}
                     </h3>
                   )}
@@ -357,7 +357,7 @@ const ProductDetailsInfo = ({
   data,
   products,
   totalReviewsLength,
-  averageRating,
+  averageRating
 }) => {
   const [active, setActive] = useState(1);
 

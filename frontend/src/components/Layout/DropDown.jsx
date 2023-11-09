@@ -15,7 +15,7 @@ const DropDown = ({ categoriesData, setDropDown }) => {
     // window.location.reload();
   };
   return (
-    <div className="pb-4 w-[370px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm ">
+    <div className="pb-4 w-[370px] bg-[#f9f9f9] absolute z-30 rounded-b-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
       <div
         className={`${styles.noramlFlex}`}
         onClick={() => submitAllProduct()}

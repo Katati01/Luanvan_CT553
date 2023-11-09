@@ -19,16 +19,17 @@ const AllCoupons = () => {
   const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [value, setValue] = useState(null);
+  const [quantity, setQuantity] = useState(null);
   const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products);
-  const [quantity, setQuantity] = useState([]);
+  // const [quantity, setQuantity] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoading(true);
     axios
       .get(`${server}/coupon/get-coupon/${seller._id}`, {
-        withCredentials: true,
+        withCredentials: true
       })
       .then((res) => {
         setIsLoading(false);
@@ -37,7 +38,7 @@ const AllCoupons = () => {
       .catch((error) => {
         setIsLoading(false);
       });
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const handleDelete = async (id) => {
     axios
@@ -61,7 +62,7 @@ const AllCoupons = () => {
           selectedProducts,
           value,
           quantity,
-          shopId: seller._id,
+          shopId: seller._id
         },
         { withCredentials: true }
       )
@@ -81,13 +82,19 @@ const AllCoupons = () => {
       field: "name",
       headerName: "Mã giảm giá",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "price",
       headerName: "Giá trị",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
+    },
+    {
+      field: "quantity",
+      headerName: "Số lượng mã giảm giá",
+      minWidth: 120,
+      flex: 0.8
     },
     {
       field: "Xóa",
@@ -104,8 +111,8 @@ const AllCoupons = () => {
             </Button>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -115,8 +122,9 @@ const AllCoupons = () => {
       row.push({
         id: item._id,
         name: item.name,
+        quantity: item.quantity,
         price: item.value + " %",
-        sold: 10,
+        sold: 10
       });
     });
 
@@ -190,11 +198,12 @@ const AllCoupons = () => {
                   {/* Số lượng mã giảm giá */}
                   <div>
                     <label className="pb-2">
-                      Số lượng mã giảm <span className="text-red-500">*</span>
+                      Số lượng mã giảm giá{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
-                      name="value"
+                      name="quantity"
                       value={quantity}
                       required
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
