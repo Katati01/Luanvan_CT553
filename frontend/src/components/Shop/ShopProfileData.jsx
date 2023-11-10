@@ -7,6 +7,7 @@ import ProductCard from "../Route/ProductCard/ProductCard";
 import { backend_url } from "../../server";
 import Ratings from "../Products/Ratings";
 import { getAllEventsShop } from "../../redux/actions/event";
+import EventCard from "../Events/EventCard"
 
 import Lottie from "react-lottie";
 import animationData from "../../Assests/animations/searchNotFound.json";
@@ -65,7 +66,7 @@ const ShopProfileData = ({ isOwner }) => {
                 active === 2 ? "text-red-500 font-[650]" : "text-[#333]"
               } cursor-pointer pr-[20px]`}
             >
-              Sự kiện của cửa hàng
+              Sự kiện của x cửa hàng
             </h5>
           </div>
 
@@ -107,7 +108,7 @@ const ShopProfileData = ({ isOwner }) => {
           <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] xl:grid-cols-4 xl:gap-[20px] mb-12 border-0">
             {events &&
               events.map((i, index) => (
-                <ProductCard
+                <EventCard
                   data={i}
                   key={index}
                   isShop={true}

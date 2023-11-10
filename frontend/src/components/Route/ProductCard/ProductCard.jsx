@@ -64,12 +64,15 @@ const ProductCard = ({ data, isEvent }) => {
       <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
         <Link
+          to={`/product/${data._id}`}
+        >
+        {/* <Link
           to={`${
             isEvent === true
               ? `/product/${data._id}?isEvent=true`
               : `/product/${data._id}`
           }`}
-        >
+        > */}
           <img
             src={`${data.images && data.images[0]}`}
             alt=""
@@ -85,12 +88,15 @@ const ProductCard = ({ data, isEvent }) => {
           </h5>
         </Link>
         <Link
+          to={`/product/${data._id}`}
+        >
+        {/* <Link
           to={`${
             isEvent === true
               ? `/product/${data._id}?isEvent=true`
               : `/product/${data._id}`
           }`}
-        >
+        > */}
           <h4 className="pb-3 font-[500] ">
             {data.name.length > 35 ? data.name.slice(0, 27) + "..." : data.name}
           </h4>
