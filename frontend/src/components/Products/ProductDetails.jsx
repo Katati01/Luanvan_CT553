@@ -134,9 +134,8 @@ const ProductDetails = ({ data }) => {
                   {data &&
                     data.images.map((i, index) => (
                       <div
-                        className={`${
-                          select === 0 ? "border" : "null"
-                        } cursor-pointer`}
+                        className={`${select === 0 ? "border" : "null"
+                          } cursor-pointer`}
                       >
                         <img
                           src={`${i}`}
@@ -147,9 +146,8 @@ const ProductDetails = ({ data }) => {
                       </div>
                     ))}
                   <div
-                    className={`${
-                      select === 1 ? "border" : "null"
-                    } cursor-pointer`}
+                    className={`${select === 1 ? "border" : "null"
+                      } cursor-pointer`}
                   ></div>
                 </div>
               </div>
@@ -183,11 +181,11 @@ const ProductDetails = ({ data }) => {
                   >
                     {data.discountPrice === 0
                       ? `${currency.format(data.originalPrice, {
-                          code: "VND"
-                        })}`
+                        code: "VND"
+                      })}`
                       : `${currency.format(data.discountPrice, {
-                          code: "VND"
-                        })}`}
+                        code: "VND"
+                      })}`}
                   </h4>
                   {data.discountPrice !== 0 && (
                     <h3 className={`${styles.price}`}>
@@ -199,9 +197,8 @@ const ProductDetails = ({ data }) => {
 
                   <div className="ml-5">
                     <p
-                      className={`${
-                        data.stock > 0 ? "text-[#008000]" : "text-[#FF0000]"
-                      }`}
+                      className={`${data.stock > 0 ? "text-[#008000]" : "text-[#FF0000]"
+                        }`}
                     >
                       {data.stock > 0 ? "Còn hàng" : "Hết hàng"}
                     </p>
@@ -322,6 +319,9 @@ const ProductDetails = ({ data }) => {
                       >
                         {data.shop.name}
                       </h3>
+                      <p className="text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap">
+                        {data.shop.address}
+                      </p>
                     </Link>
                     <h5 className="pb-3 text-[18px]">
                       ({averageRating}/5 ⭐) Đánh giá
