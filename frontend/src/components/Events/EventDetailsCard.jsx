@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { AiFillHeart, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import {
+  AiFillHeart,
+  AiOutlineHeart,
+  AiOutlineShoppingCart
+} from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import currency from "currency-formatter";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addTocart } from "../../redux/actions/cart";
-import { addToWishlist, removeFromWishlist } from "../../redux/actions/wishlist";
+import {
+  addToWishlist,
+  removeFromWishlist
+} from "../../redux/actions/wishlist";
 import styles from "../../styles/styles";
 import { server } from "../../server";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,6 +44,7 @@ const EventDetailsCard = ({ setOpen }) => {
 
     fetchEventData();
   }, [id]);
+  console.log(eventData);
 
   useEffect(() => {
     if (wishlist && wishlist.find((i) => i._id === id)) {
@@ -48,8 +56,6 @@ const EventDetailsCard = ({ setOpen }) => {
   const handleCategoryClick = (category) => {
     navigate(`/products?category=${category}`);
   };
-
-
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -86,8 +92,6 @@ const EventDetailsCard = ({ setOpen }) => {
     }
   };
 
-
-
   const handleMessageSubmit = async () => {
     if (isAuthenticated) {
       const groupTitle = eventData._id + user._id;
@@ -97,7 +101,7 @@ const EventDetailsCard = ({ setOpen }) => {
         .post(`${server}/conversation/create-new-conversation`, {
           groupTitle,
           userId,
-          sellerId,
+          sellerId
         })
         .then((res) => {
           navigate(`/inbox?${res.eventData.conversation._id}`);
@@ -115,15 +119,17 @@ const EventDetailsCard = ({ setOpen }) => {
         <div className={`${styles.section} 800px:w-[80%] mx-auto`}>
           <div className="w-full flex items-center">
             <div className="w-full items-center">
-              <h1 className={`${styles.productTitle} text-center `}>{eventData.name}</h1>
+              <h1
+                className={`${styles.productTitle} text-center my-4 uppercase`}
+              >
+                {eventData.name}
+              </h1>
               <div className="mx-auto flex items-center">
-
                 <img
                   src={`${eventData && eventData.images[select]}`}
                   alt=""
                   className="flex items-center rounded-[8px] mb-3 w-full"
                 />
-                
               </div>
               {/* <div className="w-full flex flex-wrap">
                   {eventData &&
@@ -245,8 +251,6 @@ const EventDetailsCard = ({ setOpen }) => {
       ) : null}
     </div>
   );
-
 };
-
 
 export default EventDetailsCard;
