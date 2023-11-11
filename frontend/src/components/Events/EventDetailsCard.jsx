@@ -113,25 +113,79 @@ const EventDetailsCard = ({ setOpen }) => {
       toast.error("Vui lòng đăng nhập để nhắn tin");
     }
   };
+
+  const formatDate = (date) => {
+    const inputDate = typeof date === "string" ? new Date(date) : date;
+
+    if (
+      Object.prototype.toString.call(inputDate) !== "[object Date]" ||
+      isNaN(inputDate.getTime())
+    ) {
+      return "Invalid Date";
+    }
+
+    const day = inputDate.getUTCDate();
+    const month = inputDate.getUTCMonth() + 1;
+    const year = inputDate.getUTCFullYear();
+
+    const formattedDate = `${day < 10 ? "0" : ""}${day}-${
+      month < 10 ? "0" : ""
+    }${month}-${year}`;
+
+    return formattedDate;
+  };
+
+  const startDate = eventData ? formatDate(eventData.start_Date) : "";
+  const finishDate = eventData ? formatDate(eventData.Finish_Date) : "";
+
   return (
     <div className="flex items-center bg-white">
       {eventData ? (
         <div className={`${styles.section} 800px:w-[80%] mx-auto`}>
-          <div className="w-full flex items-center">
-            <div className="w-full items-center">
-              <h1
-                className={`${styles.productTitle} text-center my-4 uppercase`}
-              >
-                {eventData.name}
-              </h1>
-              <div className="mx-auto flex items-center">
+          <div className="w-full flex items-center flex-col">
+            <h1
+              className={`${styles.productTitle} text-[30px] text-center my-4 mt-8 uppercase`}
+            >
+              {eventData.name}
+            </h1>
+
+            <div className="w-full flex items-center flex-col gap-2 p-4 px-8">
+              <div className="font-semibold text-[#1b4462]">
+                Sự kiện được tạo bởi:
+                <span className="text-[#c96665]">
+                  {" " + eventData.shop.name}
+                </span>
+              </div>
+
+              <div className="font-semibold">
+                Thời gian diễn ra sự kiện: Từ{" "}
+                <span className="text-[#c96665]">{" " + startDate}</span> đến{" "}
+                <span className="text-[#c96665]">{" " + finishDate}</span>
+              </div>
+            </div>
+
+            <div className="mx-auto flex items-center">
+              <div class="p-8 pt-0">
+                <p className="text-[18px] text-[#1b4462] text-justify leading-8">
+                  {eventData.description}
+                </p>
                 <img
                   src={`${eventData && eventData.images[select]}`}
-                  alt=""
-                  className="flex items-center rounded-[8px] mb-3 w-full"
+                  alt="Event"
+                  className="rounded-[8px] my-6 mx-auto w-[80%] h-[80%]"
                 />
               </div>
-              {/* <div className="w-full flex flex-wrap">
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+export default EventDetailsCard;
+
+/* <div className="w-full flex flex-wrap">
                   {eventData &&
                     eventData.images.map((i, index) => (
                       <div
@@ -150,9 +204,9 @@ const EventDetailsCard = ({ setOpen }) => {
                     className={`${select === 1 ? "border" : "null"
                       } cursor-pointer`}
                   ></div>
-                </div> */}
+                </div> */
 
-              {/* <div className="w-full 800px:w-[50%] pt-5">
+/* <div className="w-full 800px:w-[50%] pt-5">
                 <h1 className={`${styles.productTitle}`}>{eventData.name}</h1>
                 <div className="flex">
                   <p>
@@ -244,13 +298,4 @@ const EventDetailsCard = ({ setOpen }) => {
                     )}
                   </div>
                 </div>
-              </div> */}
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
-  );
-};
-
-export default EventDetailsCard;
+              </div> */
