@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteProduct, getAllProductsShop } from "../../redux/actions/product";
 import Loader from "../Layout/Loader";
+import styles from "../../styles/styles";
 
 const AllProducts = () => {
   const { products, isLoading } = useSelector((state) => state.products);
@@ -152,6 +153,14 @@ const AllProducts = () => {
         <Loader />
       ) : (
         <div className="w-full mx-8 pt-1 mt-10 bg-white">
+          <div className="w-full flex justify-end">
+            <Link
+              to={"/dashboard-create-product"}
+              className={`${styles.button} !w-max !h-[45px] px-3 !rounded-[5px] mr-3 mb-3 bg-[#f61d1deb]`}
+            >
+              <span className="text-white">Thêm sản phẩm</span>
+            </Link>
+          </div>
           <DataGrid
             rows={row}
             columns={columns}

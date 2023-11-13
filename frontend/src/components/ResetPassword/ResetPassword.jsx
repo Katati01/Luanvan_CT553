@@ -17,7 +17,7 @@ const ResetPasswordTokenPage = () => {
       axios
         .post(`${server}/user/verify-reset-token`, {
           // reset_password_token,
-          resetPasswordToken,
+          resetPasswordToken
         })
         .then((res) => {
           // Token hợp lệ, không có lỗi
@@ -36,7 +36,7 @@ const ResetPasswordTokenPage = () => {
       axios
         .post(`${server}/user/reset-password`, {
           resetPasswordToken,
-          password,
+          password
         })
         .then((res) => {
           setMessage("Mật khẩu của bạn đã được đặt lại thành công!");
@@ -60,9 +60,7 @@ const ResetPasswordTokenPage = () => {
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-[33px] font-bold underline decoration-[#009b49] hover:decoration-4">
-              NÔNG NGHIỆP XANH
-            </h1>
+            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
           </Link>
         </div>
       </div>
