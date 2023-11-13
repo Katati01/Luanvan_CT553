@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { RxCross1 } from "react-icons/rx";
-import { BsCartPlus } from "react-icons/bs";
-import styles from "../../styles/styles";
-import { AiOutlineHeart } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { removeFromWishlist } from "../../redux/actions/wishlist";
-import { backend_url } from "../../server";
-import { addTocart } from "../../redux/actions/cart";
 import currency from "currency-formatter";
+import React, { useState } from "react";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BsCartPlus } from "react-icons/bs";
+import { RxCross1 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { addTocart } from "../../redux/actions/cart";
+import { removeFromWishlist } from "../../redux/actions/wishlist";
+import styles from "../../styles/styles";
 
 const Wishlist = ({ setOpenWishlist }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -78,7 +77,10 @@ const Wishlist = ({ setOpenWishlist }) => {
 
 const CartSingle = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
   const [value, setValue] = useState(1);
-  const totalPrice = data.discountPrice * value;
+  // const totalPrice = data.discountPrice * value;
+  const itemPrice =
+    data.discountPrice !== 0 ? data.discountPrice : data.originalPrice;
+  const totalPrice = itemPrice * value;
 
   return (
     <div className="border-b p-4">

@@ -17,10 +17,16 @@ const Cart = ({ setOpenCart }) => {
     dispatch(removeFromCart(data));
   };
 
-  const totalPrice = cart.reduce(
-    (acc, item) => acc + item.qty * item.discountPrice,
-    0
-  );
+  // const totalPrice = cart.reduce(
+  //   (acc, item) => acc + item.qty * item.discountPrice,
+  //   0
+
+  // );
+  const totalPrice = cart.reduce((acc, item) => {
+    const itemPrice =
+      item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+    return acc + item.qty * itemPrice;
+  }, 0);
 
   const quantityChangeHandler = (data) => {
     dispatch(addTocart(data));
@@ -98,7 +104,9 @@ const Cart = ({ setOpenCart }) => {
 
 const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const [value, setValue] = useState(data.qty);
-  const totalPrice = data.discountPrice * value;
+  const itemPrice =
+    data.discountPrice !== 0 ? data.discountPrice : data.originalPrice;
+  const totalPrice = itemPrice * value;
 
   const remainingStock = data.stock; // Lấy số lượng sản phẩm còn lại
 
@@ -144,12 +152,9 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         <div className="pl-[5px] w-[90%]">
           <h1>{data.name}</h1>
           <h4 className="font-[400] text-[15px] text-[#00000082]">
-            {/* ${data.discountPrice} * {value} */}
-            {`${currency.format(data.discountPrice, { code: "VND" })}`} *{" "}
-            {value}
+            {`${currency.format(itemPrice, { code: "VND" })}`} * {value}
           </h4>
           <h4 className="font-[600] text-[17px] pt-[3px] text-[#d02222] font-Roboto">
-            {/* US${totalPrice} */}
             {`${currency.format(totalPrice, { code: "VND" })}`}
           </h4>
         </div>

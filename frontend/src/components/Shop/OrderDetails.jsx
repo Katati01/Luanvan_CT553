@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import styles from "../../styles/styles";
-import { BsFillBagFill } from "react-icons/bs";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { backend_url, server } from "../../server";
 import axios from "axios";
-import { toast } from "react-toastify";
 import currency from "currency-formatter";
-
+import React, { useEffect, useState } from "react";
+import { BsFillBagFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getAllOrdersOfShop } from "../../redux/actions/order";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const OrderDetails = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -17,24 +16,28 @@ const OrderDetails = () => {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
-
   const { id } = useParams();
-
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
 
   // Hàm tính tổng giá trị theo cửa hàng
+  // const calculateShopTotalPrice = (cartItems) => {
+  //   return cartItems.reduce(
+  //     (total, item) => total + item.discountPrice * item.qty,
+  //     0
+  //   );
+  // };
   const calculateShopTotalPrice = (cartItems) => {
-    return cartItems.reduce(
-      (total, item) => total + item.discountPrice * item.qty,
-      0
-    );
+    return cartItems.reduce((total, item) => {
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      return total + itemPrice * item.qty;
+    }, 0);
   };
 
   const data = orders && orders.find((item) => item._id === id);
-
 
   const orderUpdateHandler = async (e) => {
     await axios
@@ -54,7 +57,6 @@ const OrderDetails = () => {
       });
   };
 
-
   const refundOrderUpdateHandler = async (e) => {
     await axios
       .put(
@@ -73,7 +75,6 @@ const OrderDetails = () => {
       });
   };
 
-
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>
       <div className="w-full flex items-center justify-between">
@@ -90,7 +91,6 @@ const OrderDetails = () => {
         </Link>
       </div>
 
-
       <div className="w-full flex items-center justify-between pt-6">
         <h5 className="text-[#00000084]">
           ID đơn hàng: <span>#{data?._id?.slice(0, 8)}</span>
@@ -99,7 +99,6 @@ const OrderDetails = () => {
           Thời gian: <span>{data?.createdAt?.slice(0, 10)}</span>
         </h5>
       </div>
-
 
       {/* Các mặt hàng trong đơn hàng */}
       <br />
@@ -115,12 +114,12 @@ const OrderDetails = () => {
             <div className="w-full">
               <h5 className="pl-3 text-[20px]">{item.name}</h5>
               <h5 className="pl-3 text-[20px] text-[#00000091]">
-                {currency.format(item.discountPrice, { code: "VND" })} x {item.qty}
+                {currency.format(item.discountPrice, { code: "VND" })} x{" "}
+                {item.qty}
               </h5>
             </div>
           </div>
         ))}
-
 
       <div className="border-t w-full text-right">
         <h5 className="pt-3 text-[18px]">
@@ -143,7 +142,8 @@ const OrderDetails = () => {
             Tên khách hàng: {data?.shippingAddress?.name}
           </h4>
           <h4 className="pt-3 text-[20px]">
-            Địa chỉ: {data?.shippingAddress.address1}, {data?.shippingAddress.city}
+            Địa chỉ: {data?.shippingAddress.address1},{" "}
+            {data?.shippingAddress.city}
           </h4>
           <h4 className=" text-[20px]">
             {" "}
@@ -154,45 +154,49 @@ const OrderDetails = () => {
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
           <h4>
             Trạng thái:{" "}
-            {data?.paymentInfo?.status ? data?.paymentInfo?.status : "Chưa thanh toán"}
+            {data?.paymentInfo?.status
+              ? data?.paymentInfo?.status
+              : "Chưa thanh toán"}
           </h4>
         </div>
       </div>
       <br />
       <br />
       <h4 className="pt-3 text-[20px] font-[600]">Trạng thái đơn hàng:</h4>
-      {data?.status !== "Processing refund" && data?.status !== "Refund Success" && (
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
-        >
-          {[
-            "Processing",
-            "Transferred to delivery partner",
-            "Shipping",
-            "Received",
-            "On the way",
-            "Delivered",
-          ]
-            .slice(
-              [
-                "Processing",
-                "Transferred to delivery partner",
-                "Shipping",
-                "Received",
-                "On the way",
-                "Delivered",
-              ].indexOf(data?.status)
-            )
-            .map((option, index) => (
-              <option value={option} key={index}>
-                {option}
-              </option>
-            ))}
-        </select>
-      )}
-      {data?.status === "Processing refund" || data?.status === "Refund Success" ? (
+      {data?.status !== "Processing refund" &&
+        data?.status !== "Refund Success" && (
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
+          >
+            {[
+              "Processing",
+              "Transferred to delivery partner",
+              "Shipping",
+              "Received",
+              "On the way",
+              "Delivered",
+            ]
+              .slice(
+                [
+                  "Processing",
+                  "Transferred to delivery partner",
+                  "Shipping",
+                  "Received",
+                  "On the way",
+                  "Delivered",
+                ].indexOf(data?.status)
+              )
+              .map((option, index) => (
+                <option value={option} key={index}>
+                  {option}
+                </option>
+              ))}
+          </select>
+        )}
+      {data?.status === "Processing refund" ||
+      data?.status === "Refund Success" ? (
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
@@ -222,6 +226,5 @@ const OrderDetails = () => {
     </div>
   );
 };
-
 
 export default OrderDetails;

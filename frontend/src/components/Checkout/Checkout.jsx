@@ -65,10 +65,15 @@ const Checkout = () => {
     }
   };
 
-  const subTotalPrice = cart.reduce(
-    (acc, item) => acc + item.qty * item.discountPrice,
-    0
-  );
+  // const subTotalPrice = cart.reduce(
+  //   (acc, item) => acc + item.qty * item.discountPrice,
+  //   0
+  // );
+  const subTotalPrice = cart.reduce((acc, item) => {
+    const itemPrice =
+      item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+    return acc + item.qty * itemPrice;
+  }, 0);
 
   // this is shipping cost variable
   // const shipping = subTotalPrice * 0.02;

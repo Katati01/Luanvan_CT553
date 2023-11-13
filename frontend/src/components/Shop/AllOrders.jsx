@@ -1,16 +1,14 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import React, { useEffect, useState, useRef } from "react";
+import currency from "currency-formatter";
+import React, { useEffect, useRef, useState } from "react";
+import { AiFillFileExcel, AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { backend_url } from "../../server";
-import Loader from "../Layout/Loader";
-import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { AiFillFileExcel } from "react-icons/ai";
 import * as XLSX from "xlsx";
+import { getAllOrdersOfShop } from "../../redux/actions/order";
+import Loader from "../Layout/Loader";
 import ChartComponentShop from "./ChartComponentShop";
-import currency from "currency-formatter";
 
 const AllOrders = () => {
   const [valStartDay, setValStartDay] = useState("");
@@ -41,18 +39,26 @@ const AllOrders = () => {
     setValStartDay("");
     setStatistic(false);
   };
-  
+
   const handleStatistic = () => {
     setStatistic(true);
   };
 
-  const calculateShopTotalPrice = (cartItems) => {
-    return cartItems.reduce(
-      (total, item) => total + item.discountPrice * item.qty,
-      0
-    );
+  // const calculateShopTotalPrice = (cartItems) => {
+  //   return cartItems.reduce(
+  //     (total, item) => total + item.discountPrice * item.qty,
+  //     0
+  //   );
 
+  // };
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => {
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      return total + itemPrice * item.qty;
+    }, 0);
   };
+
   //export excel
 
   const generateProductColumns = (allOrder) => {
@@ -142,7 +148,6 @@ const AllOrders = () => {
       flex: 0.7,
     },
 
-
     {
       field: "total",
       headerName: "Tổng tiền",
@@ -210,7 +215,7 @@ const AllOrders = () => {
         }),
       });
     });
-    orders &&
+  orders &&
     getAllOrders.forEach((item) => {
       row1.push({
         id: item._id,
@@ -246,31 +251,36 @@ const AllOrders = () => {
           />
           <button
             onClick={handleExport}
-            className="text-green-500 px-4 py-2 rounded-lg hover:text-red-500 flex items-center ml-auto">
+            className="text-green-500 px-4 py-2 rounded-lg hover:text-red-500 flex items-center ml-auto"
+          >
             <AiFillFileExcel className="mr-2" /> {/* Thêm biểu tượng Excel */}
             Export Excel
           </button>
-          <br/>
+          <br />
           <div
             style={{
               padding: "20px",
               background: "#F5F5DC",
-            }}>
+            }}
+          >
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-              }}>
-              <h1 style={{
-                  fontSize: '25px',
-                  fontFamily: 'Roboto',
-                  color: ' #ccc',
-                  lineHeight: '1.25', 
-                  fontSize: '18px', 
-                  fontWeight: '500',
-                  color: '#00000085',
-                }}>
-                Thống kê đơn hàng 
+              }}
+            >
+              <h1
+                style={{
+                  fontSize: "25px",
+                  fontFamily: "Roboto",
+                  color: " #ccc",
+                  lineHeight: "1.25",
+                  fontSize: "18px",
+                  fontWeight: "500",
+                  color: "#00000085",
+                }}
+              >
+                Thống kê đơn hàng
               </h1>
               <div>
                 <label>Ngày bắt đầu: </label>
@@ -279,7 +289,8 @@ const AllOrders = () => {
                   value={valStartDay}
                   ref={clearRef}
                   type="date"
-                  onChange={handleStartDayChange}></input>
+                  onChange={handleStartDayChange}
+                ></input>
                 <label style={{ marginLeft: "50px" }}>Ngày kết thúc: </label>
                 <input
                   style={{ border: "1px solid black" }}
@@ -287,7 +298,8 @@ const AllOrders = () => {
                   type="date"
                   value={valEndDay}
                   ref={clearRef}
-                  onChange={handleEndDayChange}></input>
+                  onChange={handleEndDayChange}
+                ></input>
                 {/* <button onClick={handleSubmit}>Thống kê</button> */}
               </div>
             </div>
@@ -300,7 +312,8 @@ const AllOrders = () => {
                   display: "flex",
                   justifyContent: "center",
                   width: "100%",
-                }}>
+                }}
+              >
                 Tiếp tục thống kê
               </button>
             ) : (
@@ -315,7 +328,8 @@ const AllOrders = () => {
                   display: statistic ? "none" : "flex",
                   justifyContent: "center",
                   width: "100%",
-                }}>
+                }}
+              >
                 Thống kê
               </button>
             ) : (
@@ -338,17 +352,19 @@ const AllOrders = () => {
                   fontWeight: "700",
                   padding: "50px",
                   float: "right",
-                }}>
+                }}
+              >
                 <span>Tổng đơn hàng: </span>
                 <span style={{ color: "#294fff" }}>{totalOrders}</span>
               </div>
             </>
           )}
-         
+
           {statistic && (
             <ChartComponentShop
               arrData={deliveredOrdersInfo && deliveredOrdersInfo}
-              name=" đơn hàng"></ChartComponentShop>
+              name=" đơn hàng"
+            ></ChartComponentShop>
           )}
         </div>
       )}
