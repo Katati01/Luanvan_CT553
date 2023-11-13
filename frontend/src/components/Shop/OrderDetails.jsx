@@ -9,6 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import currency from "currency-formatter";
 
+
 const OrderDetails = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
   const { seller } = useSelector((state) => state.seller);
@@ -16,13 +17,23 @@ const OrderDetails = () => {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
+
   const { id } = useParams();
+
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
 
+
+  // Hàm tính tổng giá trị theo cửa hàng
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
+  };
+
+
   const data = orders && orders.find((item) => item._id === id);
+
 
   const orderUpdateHandler = async (e) => {
     await axios
@@ -42,6 +53,7 @@ const OrderDetails = () => {
       });
   };
 
+
   const refundOrderUpdateHandler = async (e) => {
     await axios
       .put(
@@ -53,13 +65,13 @@ const OrderDetails = () => {
       )
       .then((res) => {
         toast.success("Đơn hàng đã được cập nhật!");
-
         dispatch(getAllOrdersOfShop(seller._id));
       })
       .catch((error) => {
         toast.error(error.response.data.message);
       });
   };
+
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>
@@ -70,12 +82,13 @@ const OrderDetails = () => {
         </div>
         <Link to="/dashboard-orders">
           <div
-            className={`${styles.button} !bg-[#000] !rounded-[4px] text-[#fff] font-[600] !h-[45px] text-[18px]`}
+            className={`${styles.button} !bg-[#fce1e6] !rounded-[4px] text-[#e94560] font-[600] !h-[45px] text-[18px]`}
           >
             Quay lại
           </div>
         </Link>
       </div>
+
 
       <div className="w-full flex items-center justify-between pt-6">
         <h5 className="text-[#00000084]">
@@ -86,13 +99,13 @@ const OrderDetails = () => {
         </h5>
       </div>
 
-      {/* Các mặt hàng trong đơn hàng */}
 
+      {/* Các mặt hàng trong đơn hàng */}
       <br />
       <br />
       {data &&
         data?.cart.map((item, index) => (
-          <div className="w-full flex items-start mb-5">
+          <div className="w-full flex items-start mb-5" key={item._id}>
             <img
               src={`${item.images[0]}`}
               alt=""
@@ -101,21 +114,16 @@ const OrderDetails = () => {
             <div className="w-full">
               <h5 className="pl-3 text-[20px]">{item.name}</h5>
               <h5 className="pl-3 text-[20px] text-[#00000091]">
-                {currency.format(item.discountPrice, { code: "VND" })} x{" "}
-                {item.qty}
+                {currency.format(item.discountPrice, { code: "VND" })} x {item.qty}
               </h5>
             </div>
           </div>
         ))}
 
+
       <div className="border-t w-full text-right">
         <h5 className="pt-3 text-[18px]">
-          Tổng tiền:{" "}
-          <strong>
-            {data
-              ? `${currency.format(data.totalPrice, { code: "VND" })}`
-              : null}
-          </strong>
+          Tổng tiền: <strong>{data ? `${currency.format(calculateShopTotalPrice(data.cart), { code: "VND" })}` : null}</strong>
         </h5>
       </div>
       <br />
@@ -127,63 +135,53 @@ const OrderDetails = () => {
             Tên khách hàng: {data?.user?.name}
           </h4>
           <h4 className="pt-3 text-[20px]">
-            Địa chỉ: {data?.shippingAddress.address1},{" "}
-            {data?.shippingAddress.city}
+            Địa chỉ: {data?.shippingAddress.address1}, {data?.shippingAddress.city}
           </h4>
-          {/* <h4 className=" text-[20px]">{data?.shippingAddress.country}</h4> */}
-          {/* <h4 className=" text-[20px]">{data?.shippingAddress.city}</h4> */}
-          <h4 className=" text-[20px]">
-            {" "}
-            Số điện thoại: +(84) {data?.user?.phoneNumber}
-          </h4>
+          <h4 className=" text-[20px]"> Số điện thoại: +(84) {data?.user?.phoneNumber}</h4>
         </div>
         <div className="w-full 800px:w-[40%]">
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
           <h4>
             Trạng thái:{" "}
-            {data?.paymentInfo?.status
-              ? data?.paymentInfo?.status
-              : "Chưa thanh toán"}
+            {data?.paymentInfo?.status ? data?.paymentInfo?.status : "Chưa thanh toán"}
           </h4>
         </div>
       </div>
       <br />
       <br />
       <h4 className="pt-3 text-[20px] font-[600]">Trạng thái đơn hàng:</h4>
-      {data?.status !== "Processing refund" &&
-        data?.status !== "Refund Success" && (
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
-          >
-            {[
-              "Processing",
-              "Transferred to delivery partner",
-              "Shipping",
-              "Received",
-              "On the way",
-              "Delivered",
-            ]
-              .slice(
-                [
-                  "Processing",
-                  "Transferred to delivery partner",
-                  "Shipping",
-                  "Received",
-                  "On the way",
-                  "Delivered",
-                ].indexOf(data?.status)
-              )
-              .map((option, index) => (
-                <option value={option} key={index}>
-                  {option}
-                </option>
-              ))}
-          </select>
-        )}
-      {data?.status === "Processing refund" ||
-      data?.status === "Refund Success" ? (
+      {data?.status !== "Processing refund" && data?.status !== "Refund Success" && (
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
+        >
+          {[
+            "Processing",
+            "Transferred to delivery partner",
+            "Shipping",
+            "Received",
+            "On the way",
+            "Delivered",
+          ]
+            .slice(
+              [
+                "Processing",
+                "Transferred to delivery partner",
+                "Shipping",
+                "Received",
+                "On the way",
+                "Delivered",
+              ].indexOf(data?.status)
+            )
+            .map((option, index) => (
+              <option value={option} key={index}>
+                {option}
+              </option>
+            ))}
+        </select>
+      )}
+      {data?.status === "Processing refund" || data?.status === "Refund Success" ? (
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
@@ -200,9 +198,8 @@ const OrderDetails = () => {
             ))}
         </select>
       ) : null}
-
       <div
-        className={`${styles.button} mt-5 !bg-[#000] !rounded-[4px] text-[#ffffff] font-[600] !h-[45px] text-[18px]`}
+        className={`${styles.button} mt-5 !bg-[#0454ffee] !rounded-[4px] text-[#ffffff] font-[600] !h-[45px] text-[18px]`}
         onClick={
           data?.status !== "Processing refund"
             ? orderUpdateHandler
@@ -214,5 +211,6 @@ const OrderDetails = () => {
     </div>
   );
 };
+
 
 export default OrderDetails;
