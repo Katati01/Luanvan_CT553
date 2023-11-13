@@ -175,6 +175,49 @@ router.put(
 );
 
 // accept the refund ---- seller
+// router.put(
+//   "/order-refund-success/:id",
+//   isSeller,
+//   catchAsyncErrors(async (req, res, next) => {
+//     try {
+//       const order = await Order.findById(req.params.id);
+
+//       if (!order) {
+//         return next(
+//           new ErrorHandler("Không tìm thấy đơn đặt hàng với id này", 400)
+//         );
+//       }
+
+//       order.status = req.body.status;
+
+//       await order.save();
+
+//       res.status(200).json({
+//         success: true,
+//         message: "Hoàn tiền đặt hàng thành công!",
+//       });
+
+//       if (req.body.status === "Refund Success") {
+//         order.cart.forEach(async (o) => {
+//           await updateOrder(o._id, o.qty);
+//         });
+//       }
+
+//       async function updateOrder(id, qty) {
+//         const product = await Product.findById(id);
+
+//         product.stock += qty;
+//         product.sold_out -= qty;
+
+//         await product.save({ validateBeforeSave: false });
+//       }
+//     } catch (error) {
+//       return next(new ErrorHandler(error.message, 500));
+//     }
+//   })
+// );
+
+// accept the refund ---- seller
 router.put(
   "/order-refund-success/:id",
   isSeller,
@@ -188,6 +231,16 @@ router.put(
         );
       }
 
+      // Kiểm tra trạng thái của đơn hàng
+      // if (order.status !== "Refund Success") {
+      //   return next(
+      //     new ErrorHandler(
+      //       "Đơn hàng không ở trạng thái hoàn tiền thành công",
+      //       400
+      //     )
+      //   );
+      // }
+
       order.status = req.body.status;
 
       await order.save();
@@ -197,19 +250,19 @@ router.put(
         message: "Hoàn tiền đặt hàng thành công!",
       });
 
-      if (req.body.status === "Refund Success") {
-        order.cart.forEach(async (o) => {
-          await updateOrder(o._id, o.qty);
-        });
-      }
+      // Tính toán và trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
+      const refundAmount = order.totalPrice;
+      await updateSellerInfo(-refundAmount);
 
-      async function updateOrder(id, qty) {
-        const product = await Product.findById(id);
+      // Hàm cập nhật thông tin cửa hàng
+      async function updateSellerInfo(amount) {
+        const seller = await Shop.findById(req.seller.id);
 
-        product.stock += qty;
-        product.sold_out -= qty;
+        // Trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
+        seller.availableBalance += amount;
 
-        await product.save({ validateBeforeSave: false });
+        // Lưu thông tin cửa hàng sau khi cập nhật
+        await seller.save();
       }
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

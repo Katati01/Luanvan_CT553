@@ -18,7 +18,6 @@
 //     dispatch(getAllOrdersOfShop(seller._id));
 //   }, [dispatch]);
 
-
 //   const columns = [
 //     { field: "id", headerName: "ID đơn x hàng", minWidth: 150, flex: 0.7 },
 
@@ -122,7 +121,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
 import Loader from "../Layout/Loader";
-
+// import ShopRevenueStatistics from "./ShopRevenueStatistics";
 const AllOrders = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
   const { seller } = useSelector((state) => state.seller);
@@ -132,13 +131,12 @@ const AllOrders = () => {
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
-  const calculateShopTotalPrice = (cartItems) => {
 
+  const calculateShopTotalPrice = (cartItems) => {
     return cartItems.reduce(
       (total, item) => total + item.discountPrice * item.qty,
       0
     );
-
   };
   const columns = [
     { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
@@ -160,6 +158,7 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.7,
     },
+
     {
       field: "total",
       headerName: "Tổng cộng",
@@ -174,6 +173,7 @@ const AllOrders = () => {
         })}`;
       },
     },
+
     {
       field: " ",
       flex: 1,
@@ -203,6 +203,9 @@ const AllOrders = () => {
         id: item._id,
         itemsQty: item.cart.length,
         status: item.status,
+        total: `${currency.format(calculateShopTotalPrice(item.cart), {
+          code: "VND",
+        })}`,
       });
     });
 
@@ -212,6 +215,7 @@ const AllOrders = () => {
         <Loader />
       ) : (
         <div className="w-full mx-8 pt-1 mt-10 bg-white">
+          {/* <ShopRevenueStatistics orders={orders} /> */}
           <DataGrid
             rows={row}
             columns={columns}
