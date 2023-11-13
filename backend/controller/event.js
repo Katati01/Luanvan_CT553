@@ -126,5 +126,25 @@ router.get(
     }
   })
 );
+router.get(
+  "/get-event/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const event = await Event.findById(eventId);
+
+      if (!event) {
+        return next(new ErrorHandler("Không tìm thấy sự kiện với ID này!", 404));
+      }
+
+      res.status(200).json({
+        success: true,
+        event,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
 
 module.exports = router;

@@ -10,6 +10,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const fs = require("fs");
 const mongoose = require("mongoose");
 
+
 // create product
 router.post(
   "/create-product",
@@ -23,13 +24,16 @@ router.post(
       } else {
         const files = req.files;
 
+
         const imageUrls = files.map((file) => file.path); // Lấy đường dẫn URL của các hình ảnh đã tải lên
         console.log(imageUrls);
         const productData = req.body;
         productData.images = imageUrls;
         productData.shop = shop;
 
+
         const product = await Product.create(productData);
+
 
         res.status(201).json({
           success: true,
@@ -42,12 +46,14 @@ router.post(
   })
 );
 
+
 // get all products of a shop
 router.get(
   "/get-all-products-shop/:id",
   catchAsyncErrors(async (req, res, next) => {
     try {
       const products = await Product.find({ shopId: req.params.id });
+
 
       res.status(201).json({
         success: true,
@@ -59,6 +65,7 @@ router.get(
   })
 );
 
+
 // delete product of a shop
 router.delete(
   "/delete-shop-product/:id",
@@ -67,11 +74,14 @@ router.delete(
     try {
       const productId = req.params.id;
 
+
       const productData = await Product.findById(productId);
+
 
       productData.images.forEach((imageUrl) => {
         const filename = imageUrl;
         const filePath = `uploads/${filename}`;
+
 
         fs.unlink(filePath, (err) => {
           if (err) {
@@ -80,13 +90,16 @@ router.delete(
         });
       });
 
+
       const product = await Product.findByIdAndDelete(productId);
+
 
       if (!product) {
         return next(
           new ErrorHandler("Không tìm thấy sản phẩm với ID này!", 500)
         );
       }
+
 
       res.status(201).json({
         success: true,
@@ -98,12 +111,14 @@ router.delete(
   })
 );
 
+
 // get all products
 router.get(
   "/get-all-products",
   catchAsyncErrors(async (req, res, next) => {
     try {
       const products = await Product.find().sort({ createdAt: -1 });
+
 
       res.status(201).json({
         success: true,
@@ -115,6 +130,7 @@ router.get(
   })
 );
 
+
 // review for a product
 router.put(
   "/create-new-review",
@@ -123,7 +139,9 @@ router.put(
     try {
       const { user, rating, comment, productId, orderId } = req.body;
 
+
       const product = await Product.findById(productId);
+
 
       const review = {
         user,
@@ -132,9 +150,11 @@ router.put(
         productId,
       };
 
+
       const isReviewed = product.reviews.find(
         (rev) => rev.user._id === req.user._id
       );
+
 
       if (isReviewed) {
         product.reviews.forEach((rev) => {
@@ -146,21 +166,27 @@ router.put(
         product.reviews.push(review);
       }
 
+
       let avg = 0;
+
 
       product.reviews.forEach((rev) => {
         avg += rev.rating;
       });
 
+
       product.ratings = avg / product.reviews.length;
 
+
       await product.save({ validateBeforeSave: false });
+
 
       await Order.findByIdAndUpdate(
         orderId,
         { $set: { "cart.$[elem].isReviewed": true } },
         { arrayFilters: [{ "elem._id": productId }], new: true }
       );
+
 
       res.status(200).json({
         success: true,
@@ -171,6 +197,7 @@ router.put(
     }
   })
 );
+
 
 // all products --- for admin
 router.get(
@@ -198,13 +225,16 @@ router.get(
     try {
       const productId = req.params.id;
 
+
       const product = await Product.findById(productId);
+
 
       if (!product) {
         return next(
           new ErrorHandler("Không tìm thấy sản phẩm với ID này!", 404)
         );
       }
+
 
       res.status(200).json({
         success: true,
@@ -225,6 +255,7 @@ router.put(
       const productId = req.params.id;
       const productData = req.body;
 
+
       // Kiểm tra xem sản phẩm có tồn tại không
       const product = await Product.findById(productId);
       if (!product) {
@@ -233,12 +264,14 @@ router.put(
         );
       }
 
+
       // Kiểm tra xem người dùng có quyền chỉnh sửa sản phẩm này không
       // if (product.shop.toString() !== req.user.shop) {
-      //   return next(
-      //     new ErrorHandler("Bạn không có quyền chỉnh sửa sản phẩm này!", 403)
-      //   );
+      // return next(
+      // new ErrorHandler("Bạn không có quyền chỉnh sửa sản phẩm này!", 403)
+      // );
       // }
+
 
       // Xử lý hình ảnh nếu có
       if (req.files) {
@@ -248,8 +281,10 @@ router.put(
         productData.images = [...product.images, ...imageUrls];
       }
 
+
       // Cập nhật thông tin sản phẩm
       await Product.findByIdAndUpdate(productId, productData, { new: true });
+
 
       res.status(200).json({
         success: true,
@@ -281,8 +316,6 @@ router.post(
   })
 );
 
-// ...
-
 // Lấy danh sách sản phẩm có tags
 router.get(
   "/products/tag/:tag",
@@ -296,6 +329,27 @@ router.get(
       success: true,
       products,
     });
+  })
+);
+
+router.get(
+  "/get-event/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const event = await Event.findById(eventId);
+
+      if (!event) {
+        return next(new ErrorHandler("Không tìm thấy sự kiện với ID này!", 404));
+      }
+
+      res.status(200).json({
+        success: true,
+        event,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
   })
 );
 

@@ -22,13 +22,13 @@ const AllEvents = () => {
     {
       field: "name",
       headerName: "Tên sản phẩm",
-      minWidth: 180,
+      minWidth: 150,
       flex: 1.4
     },
     {
       field: "price",
       headerName: "Giá",
-      minWidth: 100,
+      minWidth: 80,
       flex: 0.6
     },
     {
@@ -43,20 +43,20 @@ const AllEvents = () => {
       field: "sold",
       headerName: "Đã bán",
       type: "number",
-      minWidth: 130,
+      minWidth: 80,
       flex: 0.6
     },
     {
       field: "Xem",
       flex: 0.8,
-      minWidth: 100,
+      minWidth: 80,
       headerName: "",
       type: "number",
       sortable: false,
       renderCell: (params) => {
         return (
-          <>
-            <Link to={`/product/${params.id}?isEvent=true`}>
+          <>  
+            <Link to={`/event/${params.id}`}>
               <Button>
                 <AiOutlineEye size={20} />
               </Button>

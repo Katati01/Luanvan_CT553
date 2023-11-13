@@ -4,16 +4,16 @@ import {
   AiFillHeart,
   AiOutlineEye,
   AiOutlineHeart,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { VscLocation } from 'react-icons/vsc';
+import { VscLocation } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart";
 import {
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
 } from "../../../redux/actions/wishlist";
 import styles from "../../../styles/styles";
 import Ratings from "../../Products/Ratings";
@@ -58,17 +58,20 @@ const ProductCard = ({ data, isEvent }) => {
       }
     }
   };
-
+  const handleProductClick = () => {
+    window.location.reload();
+  };
   return (
     <>
       <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
-        <Link
-          to={`${isEvent === true
-            ? `/product/${data._id}?isEvent=true`
-            : `/product/${data._id}`
-            }`}
-        >
+        <Link to={`/product/${data._id}`}>
+          {/* <Link
+            to={`${isEvent === true
+                ? `/product/${data._id}?isEvent=true`
+                : `/product/${data._id}`
+              }`}
+          > */}
           <img
             src={`${data.images && data.images[0]}`}
             alt=""
@@ -83,13 +86,15 @@ const ProductCard = ({ data, isEvent }) => {
               : data.shop.name}
           </h5>
         </Link>
-        <Link
-          to={`${isEvent === true
-            ? `/product/${data._id}?isEvent=true`
-            : `/product/${data._id}`
-            }`}
-        >
-          <h4 className="pb-3 font-[500] ">
+        <Link to={`/product/${data._id}`}>
+          {/* <Link
+          to={`${
+            isEvent === true
+              ? `/product/${data._id}?isEvent=true`
+              : `/product/${data._id}`
+          }`}
+        > */}
+          <h4 className="pb-3 font-[500]" onClick={handleProductClick}>
             {data.name.length > 35 ? data.name.slice(0, 27) + "..." : data.name}
           </h4>
 
@@ -124,7 +129,7 @@ const ProductCard = ({ data, isEvent }) => {
                   </h5>
                   <h4 className={`${styles.price}`}>
                     <del>{`${currency.format(data.originalPrice, {
-                      code: "VND"
+                      code: "VND",
                     })}`}</del>
                   </h4>
                 </>
@@ -136,8 +141,10 @@ const ProductCard = ({ data, isEvent }) => {
             </div>
           </div>
           <div className="flex items-center">
-            <VscLocation className=" text-red-400 h-6 w-6 mr-2"/>
-            <p className="text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap">{data?.shop?.address}</p>
+            <VscLocation className=" text-red-400 h-6 w-6 mr-2" />
+            <p className="text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap">
+              {data?.shop?.address}
+            </p>
           </div>
         </Link>
 

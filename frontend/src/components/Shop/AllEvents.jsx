@@ -26,7 +26,7 @@ const AllEvents = () => {
   }
 
   const columns = [
-    { field: "id", headerName: "ID SP", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID X SP", minWidth: 150, flex: 0.7 },
     {
       field: "name",
       headerName: "Tên sản phẩm",
@@ -62,11 +62,13 @@ const AllEvents = () => {
       type: "number",
       sortable: false,
       renderCell: (params) => {
-        const d = params.row.name;
-        const product_name = d.replace(/\s+/g, "-");
+        // const d = params.row.name;
+        // const product_name = d.replace(/\s+/g, "-");
+        // const event_name = d.replace(/\s+/g, "-");
         return (
           <>
-            <Link to={`/product/${product_name}`}>
+            {/* <Link to={`/product/${product_name}`}> */}
+            <Link to={`/event/${params.id}`}>
               <Button>
                 <AiOutlineEye size={20} />
               </Button>
