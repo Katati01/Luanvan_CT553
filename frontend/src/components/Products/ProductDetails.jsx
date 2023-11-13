@@ -5,7 +5,7 @@ import {
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineMessage,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import { addTocart } from "../../redux/actions/cart";
 import { getAllProductsShop } from "../../redux/actions/product";
 import {
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
 } from "../../redux/actions/wishlist";
 import { server } from "../../server";
 import styles from "../../styles/styles";
@@ -105,7 +105,7 @@ const ProductDetails = ({ data }) => {
         .post(`${server}/conversation/create-new-conversation`, {
           groupTitle,
           userId,
-          sellerId
+          sellerId,
         })
         .then((res) => {
           navigate(`/inbox?${res.data.conversation._id}`);
@@ -134,8 +134,9 @@ const ProductDetails = ({ data }) => {
                   {data &&
                     data.images.map((i, index) => (
                       <div
-                        className={`${select === 0 ? "border" : "null"
-                          } cursor-pointer`}
+                        className={`${
+                          select === 0 ? "border" : "null"
+                        } cursor-pointer`}
                       >
                         <img
                           src={`${i}`}
@@ -146,8 +147,9 @@ const ProductDetails = ({ data }) => {
                       </div>
                     ))}
                   <div
-                    className={`${select === 1 ? "border" : "null"
-                      } cursor-pointer`}
+                    className={`${
+                      select === 1 ? "border" : "null"
+                    } cursor-pointer`}
                   ></div>
                 </div>
               </div>
@@ -181,24 +183,25 @@ const ProductDetails = ({ data }) => {
                   >
                     {data.discountPrice === 0
                       ? `${currency.format(data.originalPrice, {
-                        code: "VND"
-                      })}`
+                          code: "VND",
+                        })}`
                       : `${currency.format(data.discountPrice, {
-                        code: "VND"
-                      })}`}
+                          code: "VND",
+                        })}`}
                   </h4>
                   {data.discountPrice !== 0 && (
                     <h3 className={`${styles.price}`}>
                       {`${currency.format(data.originalPrice, {
-                        code: "VND"
+                        code: "VND",
                       })}`}
                     </h3>
                   )}
 
                   <div className="ml-5">
                     <p
-                      className={`${data.stock > 0 ? "text-[#008000]" : "text-[#FF0000]"
-                        }`}
+                      className={`${
+                        data.stock > 0 ? "text-[#008000]" : "text-[#FF0000]"
+                      }`}
                     >
                       {data.stock > 0 ? "Còn hàng" : "Hết hàng"}
                     </p>
@@ -357,7 +360,7 @@ const ProductDetailsInfo = ({
   data,
   products,
   totalReviewsLength,
-  averageRating
+  averageRating,
 }) => {
   const [active, setActive] = useState(1);
 
@@ -404,11 +407,13 @@ const ProductDetailsInfo = ({
           ) : null}
         </div>
       </div>
+
       {active === 1 ? (
         <>
-          <p className="py-2 text-[18px] leading-8 pb-10 whitespace-pre-line">
-            {data.description}
-          </p>
+          <p
+            className="py-2 text-[18px] leading-8 pb-10 whitespace-pre-line"
+            dangerouslySetInnerHTML={{ __html: data.description }}
+          />
         </>
       ) : null}
 

@@ -1,20 +1,17 @@
+import currency from "currency-formatter";
 import React from "react";
-import { backend_url } from "../../server";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { addTocart } from "../../redux/actions/cart";
 import styles from "../../styles/styles";
 import CountDown from "./CountDown";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addTocart } from "../../redux/actions/cart";
-import { toast } from "react-toastify";
-import currency from "currency-formatter";
 
 const EventCard = ({ active, data }) => {
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
- 
 
   const addToCartHandler = (data) => {
-    
     const isItemExists = cart && cart.find((i) => i._id === data._id);
     if (isItemExists) {
       toast.error("Item already in cart!");
@@ -27,7 +24,7 @@ const EventCard = ({ active, data }) => {
         toast.success("Item added to cart successfully!");
       }
     }
-  }
+  };
   return (
     <div
       className={`w-full block bg-white rounded-lg border-double border-4 border-sky-500 ${
@@ -39,15 +36,24 @@ const EventCard = ({ active, data }) => {
       </div>
       <div className="w-full lg:[w-50%] flex flex-col justify-center">
         <h2 className={`${styles.productTitle}`}>{data.name}</h2>
-        <p>{data.description}</p>
+        {/* <p>{data.description}</p> */}
+        {data.description.length > 200 ? (
+          <p
+            dangerouslySetInnerHTML={{
+              __html: data.description.slice(0, 400) + "...",
+            }}
+          ></p>
+        ) : (
+          <p dangerouslySetInnerHTML={{ __html: data.description }}></p>
+        )}
+        {/* <p dangerouslySetInnerHTML={{ __html: data.description }}></p> */}
+
         <div className="flex py-2 justify-between">
           <div className="flex">
             <h5 className="font-[500] text-[18px] text-[#d55b45] pr-3 line-through">
-             
               {`${currency.format(data.originalPrice, { code: "VND" })}`}
             </h5>
             <h5 className="font-bold text-[20px] text-[#333] font-Roboto">
-             
               {`${currency.format(data.discountPrice, { code: "VND" })}`}
             </h5>
           </div>
@@ -66,8 +72,6 @@ const EventCard = ({ active, data }) => {
         </div>
       </div>
     </div>
-    
-     
   );
 };
 

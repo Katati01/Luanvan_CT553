@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 // import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -86,7 +88,7 @@ const CreateProduct = () => {
           />
         </div>
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">
             Mô tả <span className="text-red-500">*</span>
           </label>
@@ -101,7 +103,28 @@ const CreateProduct = () => {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Thêm mô tả sản phẩm..."
           ></textarea>
+        </div> */}
+        <div>
+          <label className="pb-2">
+            Mô tả <span className="text-red-500">*</span>
+          </label>
+          <ReactQuill
+            value={description}
+            onChange={setDescription}
+            modules={{
+              toolbar: [
+                ["bold", "italic", "underline", "strike"], // toggled buttons
+                ["blockquote", "code-block"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link", "image"],
+                [{ align: [] }],
+                ["clean"], // remove formatting button
+              ],
+            }}
+            placeholder="Thêm mô tả sản phẩm..."
+          />
         </div>
+
         <br />
         <div>
           <label className="pb-2">
