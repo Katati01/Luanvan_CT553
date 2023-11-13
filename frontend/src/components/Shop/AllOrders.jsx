@@ -47,7 +47,6 @@ const AllOrders = () => {
   };
 
   const calculateShopTotalPrice = (cartItems) => {
-
     return cartItems.reduce(
       (total, item) => total + item.discountPrice * item.qty,
       0
@@ -143,6 +142,7 @@ const AllOrders = () => {
       flex: 0.7,
     },
 
+
     {
       field: "total",
       headerName: "Tổng tiền",
@@ -236,6 +236,7 @@ const AllOrders = () => {
         <Loader />
       ) : (
         <div className="w-full mx-8 pt-1 mt-10 bg-white">
+          {/* <ShopRevenueStatistics orders={orders} /> */}
           <DataGrid
             rows={row}
             columns={columns}

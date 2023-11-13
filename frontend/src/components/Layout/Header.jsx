@@ -14,6 +14,11 @@ import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
 
+import { BiMenuAltLeft } from "react-icons/bi";
+import { IoIosArrowDown } from "react-icons/io";
+import DropDown from "./DropDown";
+import { categoriesData } from "../../static/data";
+
 import { BiMenu } from "react-icons/bi";
 import { TbArrowBarLeft } from "react-icons/tb";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
@@ -32,6 +37,7 @@ const Header = ({ activeHeading }) => {
   const [openWishlist, setOpenWishlist] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
 
   const searchInputRef = useRef(null);
   const searchResultsRef = useRef(null);
@@ -184,15 +190,35 @@ const Header = ({ activeHeading }) => {
         </div>
       </div>
       <div
-        className={`${
-          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-        } transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]`}
+        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+          } transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]`}
       >
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
         >
           {/* navitems */}
-          <div className={`${styles.noramlFlex}`}>
+          <div className="mr-[3vw]">
+            <div onClick={() => setDropDown(!dropDown)}>
+              <div className="relative flex items-center h-8 w-auto mb-7 hidden md:block">
+                <button
+                  className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-green-200 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600`}
+                >
+                  <BiMenuAltLeft size={30} className="mr-2" />
+                  Danh mục
+                  <IoIosArrowDown size={20} className="ml-2 cursor-pointer" onClick={() => setDropDown(!dropDown)} />
+                </button>
+                {dropDown ? (
+                  <>
+                    <DropDown
+                      categoriesData={categoriesData}
+                      setDropDown={setDropDown}
+                    />
+                  </>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          <div className="whitespace-nowrap self-center block mx-auto 800px:w-full 800px:flex 800px:justify-center">
             <Navbar active={activeHeading} />
           </div>
 
@@ -201,7 +227,7 @@ const Header = ({ activeHeading }) => {
               <div
                 className="relative cursor-pointer mr-[15px]"
                 onMouseEnter={handleMouseEnter}
-                // onMouseLeave={handleMouseLeave}
+              // onMouseLeave={handleMouseLeave}
               >
                 <IoIosNotificationsOutline size={35} color="#fff" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
@@ -271,9 +297,8 @@ const Header = ({ activeHeading }) => {
 
       {/* mobile header */}
       <div
-        className={`${
-          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-        }
+        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+          }
       w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
         <div className="w-full flex items-center justify-between">

@@ -25,12 +25,13 @@ const OrderDetails = () => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
 
-
   // Hàm tính tổng giá trị theo cửa hàng
   const calculateShopTotalPrice = (cartItems) => {
-    return cartItems.reduce((total, item) => total + item.discountPrice * item.qty, 0);
+    return cartItems.reduce(
+      (total, item) => total + item.discountPrice * item.qty,
+      0
+    );
   };
-
 
   const data = orders && orders.find((item) => item._id === id);
 
@@ -123,7 +124,14 @@ const OrderDetails = () => {
 
       <div className="border-t w-full text-right">
         <h5 className="pt-3 text-[18px]">
-          Tổng tiền: <strong>{data ? `${currency.format(calculateShopTotalPrice(data.cart), { code: "VND" })}` : null}</strong>
+          Tổng tiền:{" "}
+          <strong>
+            {data
+              ? `${currency.format(calculateShopTotalPrice(data.cart), {
+                  code: "VND",
+                })}`
+              : null}
+          </strong>
         </h5>
       </div>
       <br />
@@ -132,12 +140,15 @@ const OrderDetails = () => {
         <div className="w-full 800px:w-[60%]">
           <h4 className="pt-3 text-[20px] font-[600]">Thông tin giao hàng:</h4>
           <h4 className="pt-3 text-[20px]">
-            Tên khách hàng: {data?.user?.name}
+            Tên khách hàng: {data?.shippingAddress?.name}
           </h4>
           <h4 className="pt-3 text-[20px]">
             Địa chỉ: {data?.shippingAddress.address1}, {data?.shippingAddress.city}
           </h4>
-          <h4 className=" text-[20px]"> Số điện thoại: +(84) {data?.user?.phoneNumber}</h4>
+          <h4 className=" text-[20px]">
+            {" "}
+            Số điện thoại: +(84) {data?.shippingAddress?.phoneNumber}
+          </h4>
         </div>
         <div className="w-full 800px:w-[40%]">
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>

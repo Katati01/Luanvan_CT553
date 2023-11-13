@@ -58,7 +58,7 @@ const AdminDashboardOrders = () => {
   const allOrders = adminOrders?.map((allOrder) => {
     const productColumns = generateProductColumns(allOrder);
     return {
-      ["Mã đơn hàng"]: allOrder._id,
+      ["ID đơn hàng"]: allOrder._id,
       ["Tình trạng"]: allOrder.status,
       ["Tên cửa hàng"]: allOrder.cart?.[0]?.shop?.name,
       ["Số lượng"]: allOrder.cart.length,
@@ -71,8 +71,8 @@ const AdminDashboardOrders = () => {
           year: "numeric",
           month: "numeric",
           day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
+          // hour: "numeric",
+          // minute: "numeric",
         }),
       ...productColumns, // Sử dụng toàn bộ các cột sản phẩm ở đây
 
@@ -120,7 +120,7 @@ const AdminDashboardOrders = () => {
   const columns = [
 
 
-    { field: "id", headerName: "Mã đơn hàng", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
 
 
     {
@@ -170,6 +170,26 @@ const AdminDashboardOrders = () => {
   const row = [];
   const row1 = [];
 
+  // orders &&
+  //   orders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       total:
+  //         item.totalPrice.toLocaleString("vi-VN", {
+  //           style: "currency",
+  //           currency: "VND",
+  //         }) + "",
+  //       status: item.status,
+  //       created: new Date(item?.createdAt).toLocaleString("vi-VN", {
+  //         year: "numeric",
+  //         month: "numeric",
+  //         day: "numeric",
+  //         hour: "numeric",
+  //         minute: "numeric",
+  //       }),
+  //     });
+  //   });
 
   adminOrders &&
     adminOrders.forEach((item) => {

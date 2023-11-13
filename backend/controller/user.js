@@ -11,7 +11,7 @@ const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 // const cloudinary = require("cloudinary");
-
+const crypto = require("../");
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -405,19 +405,6 @@ router.delete(
     }
   })
 );
-
-// forgot password
-
-const nodemailer = require("nodemailer");
-// Bạn cần cấu hình nodemailer để gửi email. Sử dụng tài khoản email của bạn
-
-const transporter = nodemailer.createTransport({
-  service: "Gmail", // Sử dụng dịch vụ Gmail
-  auth: {
-    user: "your_gmail_username@gmail.com", // Thay bằng tên người dùng Gmail của bạn
-    pass: "your_gmail_password", // Thay bằng mật khẩu Gmail của bạn
-  },
-});
 
 // Gửi yêu cầu đặt lại mật khẩu qua email
 router.post(

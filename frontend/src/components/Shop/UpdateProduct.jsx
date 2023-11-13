@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { updateProduct } from "../../redux/actions/product";
 import { server } from "../../server";
 import { categoriesData } from "../../static/data";
-
 const UpdateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
   const navigate = useNavigate();
@@ -155,14 +156,12 @@ const UpdateProduct = () => {
       shopId: seller._id,
     };
 
-
     try {
       const response = await axios.put(
         `${server}/product/update-product/${id}`,
         updatedProductData,
         { withCredentials: true }
       );
-
 
       if (response.data.success) {
         toast.success("Sản phẩm đã được cập nhật thành công");
@@ -184,7 +183,9 @@ const UpdateProduct = () => {
       <form onSubmit={handleSubmit}>
         <br />
         <div>
-          <label className="pb-2">Tên sản phẩm <span className="text-red-500">*</span></label>
+          <label className="pb-2">
+            Tên sản phẩm <span className="text-red-500">*</span>
+          </label>
           <input
             type="text"
             name="name"
@@ -196,7 +197,7 @@ const UpdateProduct = () => {
         </div>
         <br />
         <div>
-          <label className="pb-2">
+          {/* <label className="pb-2">
             Mô tả <span className="text-red-500">*</span>
           </label>
           <textarea
@@ -209,7 +210,25 @@ const UpdateProduct = () => {
             className="mt-2 appearance-none block w-full pt-2 px-3 border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Thêm mô tả sản phẩm..."
-          ></textarea>
+          ></textarea> */}
+          <label className="pb-2">
+            Mô tả <span className="text-red-500">*</span>
+          </label>
+          <ReactQuill
+            value={description}
+            onChange={setDescription}
+            modules={{
+              toolbar: [
+                ["bold", "italic", "underline", "strike"], // toggled buttons
+                ["blockquote", "code-block"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link", "image"],
+                [{ align: [] }],
+                ["clean"], // remove formatting button
+              ],
+            }}
+            placeholder="Thêm mô tả sản phẩm..."
+          />
         </div>
         <br />
         <div>
@@ -284,7 +303,9 @@ const UpdateProduct = () => {
         </div>
         <br />
         <div>
-          <label className="pb-2">Số lượng sản phẩm <span className="text-red-500">*</span></label>
+          <label className="pb-2">
+            Số lượng sản phẩm <span className="text-red-500">*</span>
+          </label>
           <input
             type="number"
             name="stock"
@@ -295,7 +316,9 @@ const UpdateProduct = () => {
           />
         </div>
         <div>
-          <label className="pb-2">Hình ảnh <span className="text-red-500">*</span></label>
+          <label className="pb-2">
+            Hình ảnh <span className="text-red-500">*</span>
+          </label>
           <input
             type="file"
             name="images"
@@ -310,9 +333,13 @@ const UpdateProduct = () => {
             </label>
             {images &&
               images.map((image, index) => (
-                <div key={index} >
+                <div key={index}>
                   <img
-                    src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                    src={
+                      typeof image === "string"
+                        ? image
+                        : URL.createObjectURL(image)
+                    }
                     alt=""
                     className="h-[120px] w-[120px] object-cover m-2"
                   />
@@ -324,7 +351,6 @@ const UpdateProduct = () => {
                   </button>
                 </div>
               ))}
-
           </div>
         </div>
         <br />

@@ -45,6 +45,7 @@ const AdminDashboardMain = () => {
   const handleStatistic = () => {
     setStatistic(true);
   };
+
   const getAllProducts = adminOrders?.filter((item) => {
     const orderDate = new Date(item.deliveredAt?.slice(0, 10));
     return (
@@ -75,7 +76,8 @@ const AdminDashboardMain = () => {
   }, 0);
 
   const totalOrder = getAllProducts?.length;
-  const totalRevenue = sumOder * 0.1;
+
+  const totalRevenue = sumOder * 0.05;
 
   // tiền kiếm được
   const adminEarning =
@@ -135,6 +137,30 @@ const AdminDashboardMain = () => {
   ];
 
   const row = [];
+
+
+  // adminOrders &&
+  //   adminOrders.forEach((order) => {
+  //     order.cart.forEach((item) => {
+  //       row.push({
+  //         id: item._id,
+  //         itemsQty: item.qty,
+  //         total: item.totalPrice.toLocaleString("vi-VN", {
+  //           style: "currency",
+  //           currency: "VND",
+  //         }),
+  //         status: order.status,
+  //         createdAt: new Date(order.createdAt).toLocaleString("vi-VN", {
+  //           year: "numeric",
+  //           month: "numeric",
+  //           day: "numeric",
+  //           hour: "numeric",
+  //           minute: "numeric",
+  //         }),
+  //         ShopName: item.shop?.name,
+  //       });
+  //     });
+  //   });
 
   adminOrders &&
     adminOrders.forEach((item) => {

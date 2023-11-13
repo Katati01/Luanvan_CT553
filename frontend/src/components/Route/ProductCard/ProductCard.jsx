@@ -4,7 +4,7 @@ import {
   AiFillHeart,
   AiOutlineEye,
   AiOutlineHeart,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { VscLocation } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart";
 import {
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
 } from "../../../redux/actions/wishlist";
 import styles from "../../../styles/styles";
 import Ratings from "../../Products/Ratings";
@@ -63,10 +63,8 @@ const ProductCard = ({ data, isEvent }) => {
     <>
       <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
-        <Link
-          to={`/product/${data._id}`}
-        >
-        {/* <Link
+        <Link to={`/product/${data._id}`}>
+          {/* <Link
           to={`${
             isEvent === true
               ? `/product/${data._id}?isEvent=true`
@@ -87,10 +85,8 @@ const ProductCard = ({ data, isEvent }) => {
               : data.shop.name}
           </h5>
         </Link>
-        <Link
-          to={`/product/${data._id}`}
-        >
-        {/* <Link
+        <Link to={`/product/${data._id}`}>
+          {/* <Link
           to={`${
             isEvent === true
               ? `/product/${data._id}?isEvent=true`
@@ -132,7 +128,7 @@ const ProductCard = ({ data, isEvent }) => {
                   </h5>
                   <h4 className={`${styles.price}`}>
                     <del>{`${currency.format(data.originalPrice, {
-                      code: "VND"
+                      code: "VND",
                     })}`}</del>
                   </h4>
                 </>
