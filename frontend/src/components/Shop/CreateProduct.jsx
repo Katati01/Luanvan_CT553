@@ -69,7 +69,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
+    <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
       <h5 className="text-[30px] font-Poppins text-center">Thêm sản phẩm</h5>
       {/* create product form */}
       <form onSubmit={handleSubmit}>
@@ -118,8 +118,8 @@ const CreateProduct = () => {
                 [{ list: "ordered" }, { list: "bullet" }],
                 ["link", "image"],
                 [{ align: [] }],
-                ["clean"], // remove formatting button
-              ],
+                ["clean"] // remove formatting button
+              ]
             }}
             placeholder="Thêm mô tả sản phẩm..."
           />
