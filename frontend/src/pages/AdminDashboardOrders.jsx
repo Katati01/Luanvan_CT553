@@ -8,6 +8,7 @@ import { getAllOrdersOfAdmin } from "../redux/actions/order";
 import { AiFillFileExcel } from "react-icons/ai";
 import * as XLSX from "xlsx";
 import ChartComponentAdmin from "../components/Admin/ChartComponentAdmin";
+import currency from "currency-formatter";
 
 
 import Loader from "../components/Layout/Loader";
@@ -39,7 +40,18 @@ const AdminDashboardOrders = () => {
   const handleStatistic = () => {
     setStatistic(true);
   };
+// Hàm tính tổng giá trị đơn hàng của cửa hàng
+const calculateShopTotalPrice = (cartItems) => {
+  return cartItems.reduce((total, item) => {
+    // Lấy giá sản phẩm, nếu giá giảm giá là 0 thì sử dụng giá gốc
+    const itemPrice =
+      item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
 
+    // Tính tổng giá trị đơn hàng của cửa hàng
+    return total + itemPrice * item.qty;
+  }, 0);
+};
+  //Th
 
   //export excel
 
@@ -92,7 +104,7 @@ const AdminDashboardOrders = () => {
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
 
-    const fileName = `all-order-${formattedDate}.xlsx`;
+    const fileName = `admin-all-order-${formattedDate}.xlsx`;
     XLSX.writeFile(wb, fileName);
   };
 
@@ -196,11 +208,14 @@ const AdminDashboardOrders = () => {
       row.push({
         id: item._id,
         itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
-        total:
-          item?.totalPrice.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }) + "",
+        // total:
+        //   item?.totalPrice.toLocaleString("vi-VN", {
+        //     style: "currency",
+        //     currency: "VND",
+        //   }) + "",
+        total: `${currency.format(calculateShopTotalPrice(item.cart), {
+          code: "VND",
+        })}`,
         status: item?.status,
         createdAt: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",
@@ -212,16 +227,15 @@ const AdminDashboardOrders = () => {
         ShopName: item?.cart?.[0]?.shop?.name,
       });
     });
+    
   adminOrders &&
     getAllOrders.forEach((item) => {
       row1.push({
         id: item._id,
         itemsQty: item.cart.length,
-        total:
-          item.totalPrice.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }) + "",
+        total: `${currency.format(calculateShopTotalPrice(item.cart), {
+          code: "VND",
+        })}`,
         status: item.status,
         createdAt: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",

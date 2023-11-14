@@ -291,4 +291,34 @@ router.get(
   })
 );
 
+router.get(
+  "/get-order/:id",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const orderId = req.params.id;
+      const order = await Order.findById(orderId);
+
+      if (!order) {
+        return next(new ErrorHandler("Order not found with this ID", 404));
+      }
+
+      // Check if the user has the permission to access this order
+      if (
+        req.user.role !== "Admin" &&
+        (req.user.role !== "Seller" || order.cart[0].seller.toString() !== req.user.id)
+      ) {
+        return next(new ErrorHandler("Unauthorized access to this order", 403));
+      }
+
+      res.status(200).json({
+        success: true,
+        order,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;
