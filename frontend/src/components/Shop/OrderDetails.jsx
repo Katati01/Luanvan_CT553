@@ -114,8 +114,36 @@ const OrderDetails = () => {
             <div className="w-full">
               <h5 className="pl-3 text-[20px]">{item.name}</h5>
               <h5 className="pl-3 text-[20px] text-[#00000091]">
-                {currency.format(item.discountPrice, { code: "VND" })} x{" "}
-                {item.qty}
+                {/* {currency.format(item.discountPrice, { code: "VND" })} x{" "}
+                {item.qty} */}
+                {/* {item.discountPrice !== 0 ? (
+                  <>
+                    {item.name} -{" "}
+                    <span className="text-[#00000091]">
+                      {currency.format(item.discountPrice, { code: "VND" })} x{" "}
+                      {item.qty}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    {item.name} -{" "}
+                    <span className="text-[#00000091]">
+                      {currency.format(item.originalPrice, { code: "VND" })} x{" "}
+                      {item.qty}
+                    </span>
+                  </> */}
+                {/* )} */}
+                {item.discountPrice === 0 ? (
+                  <span>
+                    {currency.format(item.originalPrice, { code: "VND" })} x{" "}
+                    {item.qty}
+                  </span>
+                ) : (
+                  <span>
+                    {currency.format(item.discountPrice, { code: "VND" })} x{" "}
+                    {item.qty}
+                  </span>
+                )}
               </h5>
             </div>
           </div>
