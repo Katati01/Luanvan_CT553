@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createevent } from "../../redux/actions/event";
+import { RxCross1 } from "react-icons/rx";
 
-const CreateEvent = () => {
+const CreateEvent = ({ openForm, setOpen }) => {
   const { seller } = useSelector((state) => state.seller);
   const { success, error } = useSelector((state) => state.events);
   const navigate = useNavigate();
@@ -88,28 +89,37 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
-      <h5 className="text-[30px] font-Poppins text-center">
-        Tạo sự kiện, khuyến mãi
-      </h5>
-      {/* create event form */}
-      <form onSubmit={handleSubmit}>
-        <br />
-        <div>
-          <label className="pb-2">
-            Tên sự kiện <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Thêm tên sự kiện..."
-          />
-        </div>
-        <br />
-        {/* <div>
+    openForm && (
+      <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
+        <div className="w-[90%] 800px:w-[40%] h-[80vh] overflow-y-scroll [&::-webkit-scrollbar]:hidden bg-white rounded-md shadow p-4">
+          <div className="w-full flex justify-end">
+            <RxCross1
+              size={30}
+              className="cursor-pointer"
+              onClick={() => setOpen(false)}
+            />
+          </div>
+          <h5 className="text-[30px] font-Poppins text-center">
+            Tạo sự kiện, khuyến mãi
+          </h5>
+          {/* create event form */}
+          <form onSubmit={handleSubmit}>
+            <br />
+            <div>
+              <label className="pb-2">
+                Tên sự kiện <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Thêm tên sự kiện..."
+              />
+            </div>
+            <br />
+            {/* <div>
           <label className="pb-2">
             Mô tả <span className="text-red-500">*</span>
           </label>
@@ -126,28 +136,28 @@ const CreateEvent = () => {
           ></textarea>
           
         </div> */}
-        <div>
-          <label className="pb-2">
-            Mô tả <span className="text-red-500">*</span>
-          </label>
-          <ReactQuill
-            value={description}
-            onChange={(value) => setDescription(value)}
-            modules={{
-              toolbar: [
-                ["bold", "italic", "underline", "strike"], // toggled buttons
-                ["blockquote", "code-block"],
-                [{ list: "ordered" }, { list: "bullet" }],
-                ["link", "image"],
-                [{ align: [] }],
-                ["clean"], // remove formatting button
-              ],
-            }}
-            placeholder="Mô tả sự kiện, nội dung..."
-          />
-        </div>
+            <div>
+              <label className="pb-2">
+                Mô tả <span className="text-red-500">*</span>
+              </label>
+              <ReactQuill
+                value={description}
+                onChange={(value) => setDescription(value)}
+                modules={{
+                  toolbar: [
+                    ["bold", "italic", "underline", "strike"], // toggled buttons
+                    ["blockquote", "code-block"],
+                    [{ list: "ordered" }, { list: "bullet" }],
+                    ["link", "image"],
+                    [{ align: [] }],
+                    ["clean"] // remove formatting button
+                  ]
+                }}
+                placeholder="Mô tả sự kiện, nội dung..."
+              />
+            </div>
 
-        {/* <br />
+            {/* <br />
         <div>
           <label className="pb-2">
             Danh mục <span className="text-red-500">*</span>
@@ -166,20 +176,20 @@ const CreateEvent = () => {
               ))}
           </select>
         </div> */}
-        <br />
-        <div>
-          <label className="pb-2">Tags</label>
-          <input
-            type="text"
-            name="tags"
-            value={tags}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setTags(e.target.value)}
-            placeholder="Thêm tag cho sản phẩm khuyến mãi..."
-          />
-        </div>
-        <br />
-        {/* <div>
+            <br />
+            <div>
+              <label className="pb-2">Tags</label>
+              <input
+                type="text"
+                name="tags"
+                value={tags}
+                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="Thêm tag cho sản phẩm khuyến mãi..."
+              />
+            </div>
+            <br />
+            {/* <div>
           <label className="pb-2">Giá gốc</label>
           <input
             type="number"
@@ -205,7 +215,7 @@ const CreateEvent = () => {
           />
         </div>
         <br /> */}
-        {/* <div>
+            {/* <div>
           <label className="pb-2">
             Số lượng <span className="text-red-500">*</span>
           </label>
@@ -219,75 +229,81 @@ const CreateEvent = () => {
           />
         </div>
         <br /> */}
-        <div>
-          <label className="pb-2">
-            Ngày bắt đầu <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="date"
-            name="price"
-            id="start-date"
-            value={startDate ? startDate.toISOString().slice(0, 10) : ""}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={handleStartDateChange}
-            min={today}
-            placeholder="Enter your event product stock..."
-          />
-        </div>
-        <br />
-        <div>
-          <label className="pb-2">
-            Ngày kết thúc <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="date"
-            name="price"
-            id="start-date"
-            value={endDate ? endDate.toISOString().slice(0, 10) : ""}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={handleEndDateChange}
-            min={minEndDate}
-            placeholder="Enter your event product stock..."
-          />
-        </div>
-        <br />
-        <div>
-          <label className="pb-2">
-            Hình ảnh <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="file"
-            name=""
-            id="upload"
-            className="hidden"
-            multiple
-            onChange={handleImageChange}
-          />
-          <div className="w-full flex items-center flex-wrap">
-            <label htmlFor="upload">
-              <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
-            </label>
-            {images &&
-              images.map((i) => (
-                <img
-                  src={URL.createObjectURL(i)}
-                  key={i}
-                  alt=""
-                  className="h-[120px] w-[120px] object-cover m-2"
+            <div>
+              <label className="pb-2">
+                Ngày bắt đầu <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                name="price"
+                id="start-date"
+                value={startDate ? startDate.toISOString().slice(0, 10) : ""}
+                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                onChange={handleStartDateChange}
+                min={today}
+                placeholder="Enter your event product stock..."
+              />
+            </div>
+            <br />
+            <div>
+              <label className="pb-2">
+                Ngày kết thúc <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                name="price"
+                id="start-date"
+                value={endDate ? endDate.toISOString().slice(0, 10) : ""}
+                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                onChange={handleEndDateChange}
+                min={minEndDate}
+                placeholder="Enter your event product stock..."
+              />
+            </div>
+            <br />
+            <div>
+              <label className="pb-2">
+                Hình ảnh <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="file"
+                name=""
+                id="upload"
+                className="hidden"
+                multiple
+                onChange={handleImageChange}
+              />
+              <div className="w-full flex items-center flex-wrap">
+                <label htmlFor="upload">
+                  <AiOutlinePlusCircle
+                    size={30}
+                    className="mt-3"
+                    color="#555"
+                  />
+                </label>
+                {images &&
+                  images.map((i) => (
+                    <img
+                      src={URL.createObjectURL(i)}
+                      key={i}
+                      alt=""
+                      className="h-[120px] w-[120px] object-cover m-2"
+                    />
+                  ))}
+              </div>
+              <br />
+              <div>
+                <input
+                  type="submit"
+                  value="Thêm sự kiện"
+                  className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
-              ))}
-          </div>
-          <br />
-          <div>
-            <input
-              type="submit"
-              value="Thêm sự kiện"
-              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
-          </div>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      </div>
+    )
   );
 };
 
