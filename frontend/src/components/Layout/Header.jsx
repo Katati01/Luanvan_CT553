@@ -152,40 +152,57 @@ const Header = ({ activeHeading }) => {
             <div className="flex items-center">
               {!isAuthenticated && (
                 <div className="p-3 flex items-center text-black">
-                  <Link to="/login" className="text-black flex items-center">
-                    <AiOutlineUser className="text-black mr-1 text-xl" />
-                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
-                      Đăng nhập
-                    </h1>
-                  </Link>
-                  <span className="text-black mx-2">/</span>
-                  <Link to="/sign-up" className="text-black">
-                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
-                      Đăng ký
-                    </h1>
-                  </Link>
+                  {!isSeller ? (
+                    <React.Fragment>
+                      <Link to="/login" className="text-black flex items-center">
+                        <AiOutlineUser className="text-black mr-1 text-xl" />
+                        <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
+                          Đăng nhập
+                        </h1>
+                      </Link>
+                      <span className="text-black mx-2">/</span>
+                      <Link to="/sign-up" className="text-black">
+                        <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
+                          Đăng ký
+                        </h1>
+                      </Link>
+                    </React.Fragment>
+                  ) : (
+                    <div className={`${styles.button}`}>
+                      <Link to="/dashboard">
+                        <h1 className="text-[#fff] flex items-center">
+                          Quản lý <IoIosArrowForward className="ml-1" />
+                        </h1>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               )}
               {isAuthenticated && (
                 <div className={`${styles.noramlFlex}`}>
                   <div className="relative cursor-pointer mr-[20px]">
-                    {isAuthenticated ? (
+                    {isSeller ? (
+                      <div className={`${styles.button}`}>
+                        <Link to="/dashboard">
+                          <h1 className="text-[#fff] flex items-center">
+                            Quản lý <IoIosArrowForward className="ml-1" />
+                          </h1>
+                        </Link>
+                      </div>
+                    ) : (
                       <Link to="/profile">
                         <img
-                          src={`${user?.avatar}`}
+                          src={`${user.avatar}`}
                           className="w-[50px] h-[50px] rounded-full"
                           alt=""
                         />
-                      </Link>
-                    ) : (
-                      <Link to="/login">
-                        <CgProfile size={35} color="#de650a" />
                       </Link>
                     )}
                   </div>
                 </div>
               )}
             </div>
+
           </div>
         </div>
       </div>
@@ -197,7 +214,7 @@ const Header = ({ activeHeading }) => {
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
         >
           {/* navitems */}
-          <div className="mr-[3vw]">
+          <div className="mr-[3vw] mt-4">
             <div onClick={() => setDropDown(!dropDown)}>
               <div className="relative flex items-center h-8 w-auto mb-7 hidden md:block">
                 <button
@@ -209,10 +226,12 @@ const Header = ({ activeHeading }) => {
                 </button>
                 {dropDown ? (
                   <>
-                    <DropDown
-                      categoriesData={categoriesData}
-                      setDropDown={setDropDown}
-                    />
+                    <div className="absolute top-full left-0 mt-6 bg-white shadow-lg rounded-lg">
+                      <DropDown
+                        categoriesData={categoriesData}
+                        setDropDown={setDropDown}
+                      />
+                    </div>
                   </>
                 ) : null}
               </div>
