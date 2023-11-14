@@ -35,7 +35,7 @@ const DashboardHero = () => {
       currency: "VND",
     }) + "";
   console.log("availableBalance", availableBalance);
-  
+
   const scrollToTarget = () => {
     targetRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -57,12 +57,19 @@ const DashboardHero = () => {
   };
 
   // tổng cộng
-  const calculateShopTotalPrice = (cartItems) => {
+  // const calculateShopTotalPrice = (cartItems) => {
 
-    return cartItems.reduce(
-      (total, item) => total + item.discountPrice * item.qty,
-      0
-    );
+  //   return cartItems.reduce(
+  //     (total, item) => total + item.discountPrice * item.qty,
+  //     0
+  //   );
+  // };
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => {
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      return total + itemPrice * item.qty;
+    }, 0);
   };
 
   const getAllProducts = orders?.filter((item) => {
@@ -74,31 +81,34 @@ const DashboardHero = () => {
     );
   });
   console.log("getAllProducts", getAllProducts);
-  
-  
-  //chart 
 
-  const deliveredOrdersInfo = getAllProducts?.map((order) => {
-    const products = order.cart.map((item) => {
-      const itemPrice = item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
-      return {
-        day: order.deliveredAt.slice(0, 10),
-        total: itemPrice * item.qty - (itemPrice * item.qty * 0.05),
-      };
-    });
-  
-    return products;
-  }).flat();
+  //chart
+
+  const deliveredOrdersInfo = getAllProducts
+    ?.map((order) => {
+      const products = order.cart.map((item) => {
+        const itemPrice =
+          item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
+        return {
+          day: order.deliveredAt.slice(0, 10),
+          total: itemPrice * item.qty - itemPrice * item.qty * 0.05,
+        };
+      });
+
+      return products;
+    })
+    .flat();
 
   console.log("deliveredOrdersInfo", deliveredOrdersInfo);
 
-//Tổng doanh thu
+  //Tổng doanh thu
   const sumOder = getAllProducts?.reduce((total, order) => {
     const orderTotal = order.cart.reduce((orderTotal, item) => {
-      const itemPrice = item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
+      const itemPrice =
+        item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
       return orderTotal + itemPrice * item.qty;
     }, 0);
-    
+
     return total + orderTotal;
   }, 0);
 
