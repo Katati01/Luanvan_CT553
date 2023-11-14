@@ -136,7 +136,7 @@ const AllCoupons = () => {
         <div className="w-full mx-8 pt-1 mt-10 bg-white">
           <div className="w-full flex justify-end">
             <div
-              className={`${styles.button} !w-max !h-[45px] px-3 !rounded-[5px] mr-3 mb-3 bg-[#f61d1deb]`}
+              className={`${styles.button} !w-max !h-[45px] px-3 !rounded-[5px] mr-3 mb-3]`}
               onClick={() => setOpen(true)}
             >
               <span className="text-white">Thêm mã giảm giá</span>

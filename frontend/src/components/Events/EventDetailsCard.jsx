@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from "react";
-import {
-  AiFillHeart,
-  AiOutlineHeart,
-  AiOutlineShoppingCart
-} from "react-icons/ai";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addTocart } from "../../redux/actions/cart";
 import {
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
 } from "../../redux/actions/wishlist";
-import styles from "../../styles/styles";
 import { server } from "../../server";
-import { Link, useNavigate } from "react-router-dom";
-import { RxCross1 } from "react-icons/rx";
+import styles from "../../styles/styles";
 
 const EventDetailsCard = ({ setOpen }) => {
   const { id } = useParams();
@@ -101,7 +93,7 @@ const EventDetailsCard = ({ setOpen }) => {
         .post(`${server}/conversation/create-new-conversation`, {
           groupTitle,
           userId,
-          sellerId
+          sellerId,
         })
         .then((res) => {
           navigate(`/inbox?${res.eventData.conversation._id}`);
@@ -166,9 +158,14 @@ const EventDetailsCard = ({ setOpen }) => {
 
             <div className="mx-auto flex items-center">
               <div class="p-8 pt-0">
-                <p className="text-[18px] text-[#1b4462] text-justify leading-8">
+                {/* <p className="text-[18px] text-[#1b4462] text-justify leading-8">
                   {eventData.description}
-                </p>
+                </p> */}
+                <p
+                  className="text-[18px] text-[#1b4462] text-justify leading-8"
+                  dangerouslySetInnerHTML={{ __html: eventData.description }}
+                ></p>
+
                 <img
                   src={`${eventData && eventData.images[select]}`}
                   alt="Event"

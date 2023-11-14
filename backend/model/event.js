@@ -9,10 +9,10 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter your event product description!"],
   },
-  category: {
-    type: String,
-    required: [true, "Please enter your event product category!"],
-  },
+  // category: {
+  //   type: String,
+  //   required: [true, "Please enter your event product category!"],
+  // },
   start_Date: {
     type: Date,
     required: true,
@@ -28,17 +28,17 @@ const eventSchema = new mongoose.Schema({
   tags: {
     type: String,
   },
-  originalPrice: {
-    type: Number,
-  },
-  discountPrice: {
-    type: Number,
-    required: [true, "Please enter your event product price!"],
-  },
-  stock: {
-    type: Number,
-    required: [true, "Please enter your event product stock!"],
-  },
+  // originalPrice: {
+  //   type: Number,
+  // },
+  // discountPrice: {
+  //   type: Number,
+  //   required: [true, "Please enter your event product price!"],
+  // },
+  // stock: {
+  //   type: Number,
+  //   required: [true, "Please enter your event product stock!"],
+  // },
   images: [
     {
       type: String,
@@ -52,10 +52,10 @@ const eventSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
-  sold_out: {
-    type: Number,
-    default: 0,
-  },
+  // sold_out: {
+  //   type: Number,
+  //   default: 0,
+  // },
   createdAt: {
     type: Date,
     default: Date.now(),

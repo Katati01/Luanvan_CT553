@@ -27,7 +27,6 @@ export const createProduct = (newForm) => async (dispatch) => {
   }
 };
 
-// get All Products of a shop
 export const getAllProductsShop = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -121,3 +120,6 @@ export const updateProduct =
       });
     }
   };
+
+
+

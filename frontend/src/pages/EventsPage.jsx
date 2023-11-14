@@ -20,7 +20,7 @@ const EventsPage = () => {
                   allEvents.map((allEvents, index) => (
                     <EventCard data={allEvents} />
                   ))} */}
-          {allEvents && allEvents.length == 0 ? (
+          {allEvents && allEvents.length === 0 ? (
             <PageNotfound />
           ) : (
             <>
@@ -36,3 +36,4 @@ const EventsPage = () => {
 };
 
 export default EventsPage;
+

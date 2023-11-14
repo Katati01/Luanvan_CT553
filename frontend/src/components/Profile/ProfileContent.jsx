@@ -1,29 +1,28 @@
-import React, { useState } from "react";
+import { Button } from "@material-ui/core";
+import { DataGrid } from "@material-ui/data-grid";
+import axios from "axios";
+import { Country, State } from "country-state-city";
+import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineArrowRight,
   AiOutlineCamera,
-  AiOutlineDelete
+  AiOutlineDelete,
 } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { backend_url, server } from "../../server";
-import styles from "../../styles/styles";
-import { DataGrid } from "@material-ui/data-grid";
-import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import { MdTrackChanges } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getAllOrdersOfUser } from "../../redux/actions/order";
 import {
   deleteUserAddress,
   loadUser,
   updatUserAddress,
-  updateUserInformation
+  updateUserInformation,
 } from "../../redux/actions/user";
-import { Country, State } from "country-state-city";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { getAllOrdersOfUser } from "../../redux/actions/order";
-import currency from "currency-formatter";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const ProfileContent = ({ active }) => {
   const { user, error, successMessage } = useSelector((state) => state.user);
@@ -61,9 +60,9 @@ const ProfileContent = ({ active }) => {
     await axios
       .put(`${server}/user/update-avatar`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
-        withCredentials: true
+        withCredentials: true,
       })
       .then((response) => {
         dispatch(loadUser());
@@ -224,14 +223,14 @@ const AllOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      }
+      },
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
     },
 
     {
@@ -239,7 +238,7 @@ const AllOrders = () => {
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8
+      flex: 0.8,
     },
 
     {
@@ -259,8 +258,8 @@ const AllOrders = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -271,7 +270,7 @@ const AllOrders = () => {
         id: item._id,
         itemsQty: item.cart.length,
         total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status
+        status: item.status,
       });
     });
 
@@ -298,7 +297,11 @@ const AllRefundOrders = () => {
   }, []);
 
   const eligibleOrders =
-    orders && orders.filter((item) => item.status === "Processing refund");
+    orders &&
+    orders.filter(
+      (item) =>
+        item.status === "Processing refund" || item.status === "Refund Success"
+    );
 
   const columns = [
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
@@ -312,14 +315,14 @@ const AllRefundOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      }
+      },
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
     },
 
     {
@@ -327,7 +330,7 @@ const AllRefundOrders = () => {
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8
+      flex: 0.8,
     },
 
     {
@@ -347,8 +350,8 @@ const AllRefundOrders = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -360,7 +363,7 @@ const AllRefundOrders = () => {
         itemsQty: item.cart.length,
         // total: "US$ " + item.totalPrice,
         total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status
+        status: item.status,
       });
     });
 
@@ -398,14 +401,14 @@ const TrackOrder = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      }
+      },
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
     },
 
     {
@@ -413,7 +416,7 @@ const TrackOrder = () => {
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8
+      flex: 0.8,
     },
 
     {
@@ -433,8 +436,8 @@ const TrackOrder = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -446,7 +449,7 @@ const TrackOrder = () => {
         itemsQty: item.cart.length,
         // total: "US$ " + item.totalPrice,
         total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status
+        status: item.status,
       });
     });
 
@@ -550,17 +553,16 @@ const Address = () => {
   const [addressType, setAddressType] = useState("");
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
   const addressTypeData = [
     {
-      name: "Mặc định"
+      name: "Mặc định",
     },
     {
-      name: "Nhà, nơi thường trú"
+      name: "Nhà, nơi thường trú",
     },
     {
-      name: "Văn phòng, nơi làm việc"
-    }
+      name: "Văn phòng, nơi làm việc",
+    },
   ];
 
   const handleSubmit = async (e) => {
@@ -762,11 +764,11 @@ const Address = () => {
                 {item.address1}
               </h6>
             </div>
-            <div className="pl-8 flex items-center">
+            {/* <div className="pl-8 flex items-center">
               <h6 className="text-[12px] 800px:text-[unset]">
                 {user && user.phoneNumber}
               </h6>
-            </div>
+            </div> */}
             <div className="min-w-[10%] flex items-center justify-between pl-8">
               <AiOutlineDelete
                 size={25}

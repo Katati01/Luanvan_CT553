@@ -1,6 +1,9 @@
+// DashboardHero.jsx
+import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import currency from "currency-formatter";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { GiMoneyStack } from "react-icons/gi";
 import { IoFileTrayStackedOutline } from "react-icons/io5";
 import { RiBillLine } from "react-icons/ri";
@@ -9,36 +12,101 @@ import { Link } from "react-router-dom";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
 import { getAllProductsShop } from "../../redux/actions/product";
 import styles from "../../styles/styles";
-
+import ChartComponentShop from "./ChartComponentShop";
 
 const DashboardHero = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.order);
   const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products);
+  const [valStartDay, setValStartDay] = useState("");
+  const [valEndDay, setValEndDay] = useState("");
+  const [statistic, setStatistic] = useState(false);
+  const targetRef = useRef();
+  const clearRef = useRef();
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
     dispatch(getAllProductsShop(seller._id));
   }, [dispatch]);
 
-  const calculateShopTotalPrice = (cartItems) => {
-
-    return cartItems.reduce(
-      (total, item) => total + item.discountPrice * item.qty,
-      0
-    );
+  const availableBalance =
+    seller?.availableBalance.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }) + "";
+  console.log("availableBalance", availableBalance);
+  const scrollToTarget = () => {
+    targetRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleStartDayChange = (e) => {
+    setValStartDay(e.target.value);
+  };
 
-  const availableBalance = seller?.availableBalance.toFixed(2);
+  const handleEndDayChange = (e) => {
+    setValEndDay(e.target.value);
+  };
+  const handleStartDayClick = () => {
+    setValEndDay("");
+    setValStartDay("");
+    setStatistic(false);
+  };
+  const handleStatistic = () => {
+    setStatistic(true);
+  };
+
+  // const calculateShopTotalPrice = (cartItems) => {
+
+  //   return cartItems.reduce(
+  //     (total, item) => total + item.discountPrice * item.qty,
+  //     0
+  //   );
+  // };
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => {
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      return total + itemPrice * item.qty;
+    }, 0);
+  };
+
+  const getAllProducts = orders?.filter((item) => {
+    const orderDate = new Date(item.createdAt.slice(0, 10));
+    return (
+      orderDate >= new Date(valStartDay) &&
+      orderDate <= new Date(valEndDay) &&
+      item.status === "Delivered"
+    );
+  });
+
+  //chart (save in arr with 2 key day and price)
+  console.log("getAllProducts", getAllProducts);
+
+  const deliveredOrdersInfo = getAllProducts?.map((order) => {
+    return {
+      day: order.deliveredAt.slice(0, 10),
+      total: order.totalPrice - order.totalPrice * 0.1,
+    };
+  });
+  console.log("deliveredOrdersInfo", deliveredOrdersInfo);
+
+  const sumOder = getAllProducts?.reduce((total, item) => {
+    return total + item.totalPrice;
+  }, 0);
+
+  const totalRevenue = sumOder - sumOder * 0.1;
+
+  console.log("sumOder", sumOder);
+
+  console.log("getAllProducts", getAllProducts);
 
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
 
     {
       field: "status",
-      headerName: "Trạng thái",
+      headerName: "Tình trạng",
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
@@ -71,38 +139,27 @@ const DashboardHero = () => {
       },
     },
 
-    // {
-    //   field: " ",
-    //   flex: 1,
-    //   minWidth: 150,
-    //   headerName: "",
-    //   type: "number",
-    //   sortable: false,
-    //   renderCell: (params) => {
-    //     return (
-    //       <>
-    //         <Link to={`/dashboard/order/${params.id}`}>
-    //           <Button>
-    //             <AiOutlineArrowRight size={20} />
-    //           </Button>
-    //         </Link>
-    //       </>
-    //     );
-    //   },
-    // },
+    {
+      field: " ",
+      flex: 1,
+      minWidth: 150,
+      headerName: "",
+      type: "number",
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={`/order/${params.id}`}>
+              <Button>
+                <AiOutlineArrowRight size={20} />
+              </Button>
+            </Link>
+          </>
+        );
+      },
+    },
   ];
-
   const row = [];
-
-  // orders && orders.forEach((item) => {
-  //   row.push({
-  //       id: item._id,
-  //       itemsQty: item.cart.reduce((acc, item) => acc + item.qty, 0),
-  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-  //       status: item.status,
-  //     });
-  // });
-  //thêm
   orders &&
     orders.forEach((item) => {
       row.push({
@@ -111,6 +168,7 @@ const DashboardHero = () => {
         status: item.status,
       });
     });
+
   return (
     <div className="w-full p-8">
       <h3 className="text-[22px] font-Poppins pb-2">Tổng quan</h3>
@@ -126,8 +184,9 @@ const DashboardHero = () => {
             </h3>
           </div>
           <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
-            {currency.format(availableBalance, { code: "VND" })}
+            {availableBalance}
           </h5>
+
           <Link to="/dashboard-withdraw-money">
             <h5 className="pt-4 pl-[2] text-[#077f9c]">Yêu cầu rút tiền</h5>
           </Link>
@@ -171,13 +230,123 @@ const DashboardHero = () => {
           </Link>
         </div>
       </div>
+
+      <br />
+      <h3 className="text-[22px] font-Poppins pb-2">Thống kê</h3>
+      <div
+        style={{
+          padding: "20px",
+          background: "#F5F5DC",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <h1
+            style={{
+              fontSize: "25px",
+              fontFamily: "Roboto",
+              color: " #ccc",
+              lineHeight: "1.25",
+              fontSize: "18px",
+              fontWeight: "500",
+              color: "#00000085",
+            }}
+          >
+            Thống kê doanh thu
+          </h1>
+          <div>
+            <label>Ngày bắt đầu: </label>
+            <input
+              style={{ border: "1px solid black" }}
+              value={valStartDay}
+              ref={clearRef}
+              type="date"
+              onChange={handleStartDayChange}
+            ></input>
+            <label style={{ marginLeft: "50px" }}>Ngày kết thúc: </label>
+            <input
+              style={{ border: "1px solid black" }}
+              className="border border-solid border-red-500"
+              type="date"
+              value={valEndDay}
+              ref={clearRef}
+              onChange={handleEndDayChange}
+            ></input>
+            {/* <button onClick={handleSubmit}>Thống kê</button> */}
+          </div>
+        </div>
+        {statistic ? (
+          <button
+            onClick={handleStartDayClick}
+            style={{
+              color: "#294fff",
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            Tiếp tục thống kê
+          </button>
+        ) : (
+          <></>
+        )}
+        {valEndDay ? (
+          <button
+            onClick={handleStatistic}
+            style={{
+              color: "#294fff",
+              fontSize: "20px",
+              display: statistic ? "none" : "flex",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            Thống kê
+          </button>
+        ) : (
+          <></>
+        )}
+        {statistic && (
+          <>
+            <div
+              style={{
+                fontSize: "20px",
+                fontWeight: "700",
+                padding: "50px",
+                float: "right",
+              }}
+            >
+              <span>Tổng doanh thu: </span>
+              <span style={{ color: "#294fff" }}>
+                {totalRevenue
+                  ? totalRevenue?.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }) + ""
+                  : "0 đ"}
+              </span>
+            </div>
+          </>
+        )}
+      </div>
+      {statistic && deliveredOrdersInfo && (
+        <ChartComponentShop
+          arrData={deliveredOrdersInfo && deliveredOrdersInfo}
+          name="doanh thu"
+        ></ChartComponentShop>
+      )}
       <br />
       <h3 className="text-[22px] font-Poppins pb-2">Đơn hàng mới nhất</h3>
       <div className="w-full min-h-[45vh] bg-white rounded">
         <DataGrid
           rows={row}
           columns={columns}
-          pageSize={10}
+          pageSize={6}
           disableSelectionOnClick
           autoHeight
         />

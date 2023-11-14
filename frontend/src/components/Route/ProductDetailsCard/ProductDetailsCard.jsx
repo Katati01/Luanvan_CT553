@@ -28,6 +28,19 @@ const ProductDetailsCard = ({ setOpen, data }) => {
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const navigate = useNavigate();
   //   const [select, setSelect] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0); // Added state for tracking the current image index
+
+  const nextImage = () => {
+    setCurrentImage((prevImage) =>
+      prevImage === data.images.length - 1 ? 0 : prevImage + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImage((prevImage) =>
+      prevImage === 0 ? data.images.length - 1 : prevImage - 1
+    );
+  };
 
   const handleMessageSubmit = async () => {
     if (isAuthenticated) {
@@ -108,6 +121,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
                 <img src={`${data.images && data.images[0]}`} alt="" />
+
                 {/* <div className="flex mt-3">
                   <Link to={`/shop/preview/${data.shop._id}`} className="flex">
                     <img
@@ -218,20 +232,47 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                     ? data.description.slice(0, 130) + "..." + <Link to={`/product/${data._id}`}> <p>Nhấn để xem thêm</p></Link>
                     : data.description}
                 </p> */
-                  <p className="py-2 text-[18px] leading-8 pb-10 px-5 whitespace-pre-line">
-                    {data.description.length > 200 ? (
-                      <>
-                        {data.description.slice(0, 130)} ...
-                        <Link to={`/product/${data._id}`}>
-                          {" "}
-                          <p className="text-[#0054c3f5]">Nhấn để xem thêm</p>
-                        </Link>
-                      </>
-                    ) : (
-                      data.description
-                    )}
-                  </p>
+                  // <p className="py-2 text-[18px] leading-8 pb-10 px-5 whitespace-pre-line">
+                  //   {data.description.length > 200 ? (
+                  //     <>
+                  //       {data.description.slice(0, 130)} ...
+                  // <Link to={`/product/${data._id}`}>
+                  //   {" "}
+                  //   <p className="text-[#0054c3f5]">Nhấn để xem thêm</p>
+                  // </Link>
+                  //     </>
+                  //   ) : (
+                  //     data.description
+                  //   )}
+                  // </p>
+                  // <div className="py-2 text-[18px] leading-8 pb-10 px-5 whitespace-pre-line">
+                  //   {data.description.length > 200 ? (
+                  //     <>
+                  //       <div
+                  //         dangerouslySetInnerHTML={{
+                  //           __html: data.description.slice(0, 200),
+                  //         }}
+                  //       />
+                  //       {""}
+                  //       <Link to={`/product/${data._id}`}>
+                  //         <p className="text-[#0054c3f5]">Nhấn để xem thêm</p>
+                  //       </Link>
+                  //     </>
+                  //   ) : (
+                  //     <div
+                  //       dangerouslySetInnerHTML={{ __html: data.description }}
+                  //     />
+                  //   )}
+                  // </div>
                 }
+                {/* <p className="py-2 text-[18px] leading-8 pb-10 px-5 whitespace-pre-line">
+                  <div dangerouslySetInnerHTML={{ __html: data.description }} />
+                  {data.description.length > 200 ? (
+                    <Link to={`/product/${data._id}`}>
+                      <p className="text-[#0054c3f5]">Nhấn để xem thêm</p>
+                    </Link>
+                  ) : null}
+                </p> */}
                 <div className="flex items-center mt-12 justify-between px-5 pr-3">
                   <div>
                     <button
@@ -278,6 +319,10 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                       Thêm vào giỏ <AiOutlineShoppingCart className="ml-1" />
                     </span>
                   </div>
+                  <Link to={`/product/${data._id}`}>
+                    {" "}
+                    <p className="text-[#0054c3f5]">Nhấn để xem thêm</p>
+                  </Link>
                 </div>
               </div>
             </div>
