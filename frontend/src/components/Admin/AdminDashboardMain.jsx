@@ -1,4 +1,5 @@
 import { DataGrid } from "@material-ui/data-grid";
+import currency from "currency-formatter";
 import React, { useEffect, useState } from "react";
 import { AiOutlineMoneyCollect } from "react-icons/ai";
 import { MdBorderClear } from "react-icons/md";
@@ -8,8 +9,6 @@ import { getAllOrdersOfAdmin } from "../../redux/actions/order";
 import { getAllSellers } from "../../redux/actions/sellers";
 import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
-// import { Element, Link as ScrollLink } from "react-scroll";
-import currency from "currency-formatter";
 import ChartComponentAdmin from "./ChartComponentAdmin";
 
 const AdminDashboardMain = () => {
@@ -27,7 +26,17 @@ const AdminDashboardMain = () => {
     dispatch(getAllOrdersOfAdmin());
     dispatch(getAllSellers());
   }, []);
+  // Hàm tính tổng giá trị đơn hàng của cửa hàng
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => {
+      // Lấy giá sản phẩm, nếu giá giảm giá là 0 thì sử dụng giá gốc
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
 
+      // Tính tổng giá trị đơn hàng của cửa hàng
+      return total + itemPrice * item.qty;
+    }, 0);
+  };
   //Thống kê doanh thu
 
   const handleStartDayChange = (e) => {
@@ -56,24 +65,41 @@ const AdminDashboardMain = () => {
 
   //chart
   console.log("getAllProducts", getAllProducts);
-  const deliveredOrdersInfo = getAllProducts?.map((order) => {
-    return {
-      day: order.deliveredAt.slice(0, 10),
-      total: order.totalPrice,
-    };
-  });
+
+  const deliveredOrdersInfo = getAllProducts
+    ?.map((order) => {
+      const products = order.cart.map((item) => {
+        const itemPrice =
+          item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
+        return {
+          day: order.deliveredAt.slice(0, 10),
+          total: itemPrice * item.qty,
+        };
+      });
+
+      return products;
+    })
+    .flat();
   console.log("deliveredOrdersInfo", deliveredOrdersInfo);
 
   const arrProductDelivered = adminOrders?.filter((item) => {
-    return item.status === "Đã giao hàng";
+    return item.status === "Delivered";
   });
 
   console.log("adminOrders", adminOrders);
 
-  const sumOder = getAllProducts?.reduce((total, item) => {
-    return total + item.totalPrice;
-  }, 0);
+  // const sumOder = getAllProducts?.reduce((total, item) => {
+  //   return total + item.totalPrice;
+  // }, 0);
+  const sumOder = getAllProducts?.reduce((total, order) => {
+    const orderTotal = order.cart.reduce((orderTotal, item) => {
+      const itemPrice =
+        item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
+      return orderTotal + itemPrice * item.qty;
+    }, 0);
 
+    return total + orderTotal;
+  }, 0);
   const totalOrder = getAllProducts?.length;
 
   const totalRevenue = sumOder * 0.05;
@@ -161,11 +187,14 @@ const AdminDashboardMain = () => {
       row.push({
         id: item._id,
         itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
-        total:
-          item?.totalPrice?.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }) + "",
+        // total:
+        //   item?.totalPrice?.toLocaleString("vi-VN", {
+        //     style: "currency",
+        //     currency: "VND",
+        //   }) + "",
+        total: `${currency.format(calculateShopTotalPrice(item.cart), {
+          code: "VND",
+        })}`,
         status: item?.status,
         createdAt: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",

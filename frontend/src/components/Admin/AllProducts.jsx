@@ -104,7 +104,7 @@ const AllProducts = () => {
     const ws = XLSX.utils.json_to_sheet(allProducts);
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
  
-    const fileName = `all-seller-${formattedDate}.xlsx`;
+    const fileName = `admin-all-product-${formattedDate}.xlsx`;
     XLSX.writeFile(wb, fileName);
   };
   const columns = [

@@ -1,4 +1,3 @@
-// DashboardHero.jsx
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import currency from "currency-formatter";
@@ -36,6 +35,7 @@ const DashboardHero = () => {
       currency: "VND",
     }) + "";
   console.log("availableBalance", availableBalance);
+  
   const scrollToTarget = () => {
     targetRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -56,19 +56,13 @@ const DashboardHero = () => {
     setStatistic(true);
   };
 
-  // const calculateShopTotalPrice = (cartItems) => {
-
-  //   return cartItems.reduce(
-  //     (total, item) => total + item.discountPrice * item.qty,
-  //     0
-  //   );
-  // };
+  // tổng cộng
   const calculateShopTotalPrice = (cartItems) => {
-    return cartItems.reduce((total, item) => {
-      const itemPrice =
-        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
-      return total + itemPrice * item.qty;
-    }, 0);
+
+    return cartItems.reduce(
+      (total, item) => total + item.discountPrice * item.qty,
+      0
+    );
   };
 
   const getAllProducts = orders?.filter((item) => {
@@ -79,27 +73,38 @@ const DashboardHero = () => {
       item.status === "Delivered"
     );
   });
-
-  //chart (save in arr with 2 key day and price)
   console.log("getAllProducts", getAllProducts);
+  
+  
+  //chart 
 
   const deliveredOrdersInfo = getAllProducts?.map((order) => {
-    return {
-      day: order.deliveredAt.slice(0, 10),
-      total: order.totalPrice - order.totalPrice * 0.1,
-    };
-  });
+    const products = order.cart.map((item) => {
+      const itemPrice = item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
+      return {
+        day: order.deliveredAt.slice(0, 10),
+        total: itemPrice * item.qty - (itemPrice * item.qty * 0.05),
+      };
+    });
+  
+    return products;
+  }).flat();
+
   console.log("deliveredOrdersInfo", deliveredOrdersInfo);
 
-  const sumOder = getAllProducts?.reduce((total, item) => {
-    return total + item.totalPrice;
+//Tổng doanh thu
+  const sumOder = getAllProducts?.reduce((total, order) => {
+    const orderTotal = order.cart.reduce((orderTotal, item) => {
+      const itemPrice = item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
+      return orderTotal + itemPrice * item.qty;
+    }, 0);
+    
+    return total + orderTotal;
   }, 0);
 
-  const totalRevenue = sumOder - sumOder * 0.1;
+  const totalRevenue = sumOder - sumOder * 0.05;
 
   console.log("sumOder", sumOder);
-
-  console.log("getAllProducts", getAllProducts);
 
   const columns = [
     { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
