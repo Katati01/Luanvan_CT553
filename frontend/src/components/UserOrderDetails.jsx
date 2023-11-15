@@ -13,6 +13,7 @@ import styles from "../styles/styles";
 
 const UserOrderDetails = () => {
   const { orders } = useSelector((state) => state.order);
+  const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -51,6 +52,25 @@ const UserOrderDetails = () => {
       .catch((error) => {
         toast.error(error);
       });
+  };
+
+  const subTotalPrice = cart.reduce((acc, item) => {
+    const itemPrice =
+      item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+    return acc + item.qty * itemPrice;
+  }, 0);
+
+  // this is shipping cost variable
+  // const shipping = subTotalPrice * 0.02;
+  // const shipping = subTotalPrice > 2000000 ? 15000 : 30000;
+  const shipping = subTotalPrice > 2000000 ? 15000 : 30000;
+
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => {
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      return total + itemPrice * item.qty;
+    }, 0);
   };
 
   const refundHandler = async () => {
@@ -98,7 +118,17 @@ const UserOrderDetails = () => {
                 className="w-[80x] h-[80px]"
               />
               <div className="w-full">
-                <h5 className="pl-3 text-[20px]">{item.name}</h5>
+                <h5 className="pl-3 text-[25px]">
+                <Link
+                  to={`/product/${item._id}`}
+                  style={{ color: '#000', transition: 'color 0.3s' }}
+                  onMouseEnter={(e) => (e.target.style.color = '#2DC258')}
+                  onMouseLeave={(e) => (e.target.style.color = '#000')}
+                >
+                  
+                {item.name}
+                </Link>
+              </h5>
                 <h5 className="pl-3 text-[20px] text-[#00000091]">
                   {/* {currency.format(item.discountPrice, { code: "VND" })} x {item.qty}
                    */}
@@ -217,15 +247,26 @@ const UserOrderDetails = () => {
       )}
 
       <div className="border-t w-full text-right">
-        <h5 className="pt-3 text-[18px]">
-          Tổng tiền:{" "}
-          <strong> {currency.format(data?.totalPrice, { code: "VND" })}</strong>
-        </h5>
+
+        <div>
+  {data?.cart.map((item, index) => (
+    <div key={index}>
+      <h5 className="pt-3 text-[18px]">
+        Tổng tiền:{" "}
+        <strong>
+          {item.discountPrice === 0
+            ? currency.format(item.originalPrice, { code: "VND" })
+            : currency.format(item.discountPrice, { code: "VND" })}
+        </strong>
+      </h5>
+    </div>
+  ))}
+</div>
       </div>
       <br />
       <br />
       <div className="w-full 800px:flex items-center">
-        <div className="w-full 800px:w-[60%]">
+        <div className="w-full 800px:w-[35%]">
           <h4 className="pt-3 text-[20px] font-[700]">Thông tin giao hàng:</h4>
           <h4 className="pt-3 text-[20px]">
             <b>Địa chỉ:</b>{" "}
@@ -237,7 +278,7 @@ const UserOrderDetails = () => {
             <b>Số điện thoại:</b> (+84) {data?.user?.phoneNumber}
           </h4>
         </div>
-        <div className="w-full 800px:w-[40%]">
+        <div className="w-full 800px:w-[30%]">
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
           <h4>
             Trạng thái:{" "}
@@ -253,6 +294,7 @@ const UserOrderDetails = () => {
             </div>
           )}
         </div>
+
       </div>
       <br />
       <Link to="/">
