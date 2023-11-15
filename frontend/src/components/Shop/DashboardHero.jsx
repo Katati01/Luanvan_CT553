@@ -32,7 +32,7 @@ const DashboardHero = () => {
   const availableBalance =
     seller?.availableBalance.toLocaleString("vi-VN", {
       style: "currency",
-      currency: "VND",
+      currency: "VND"
     }) + "";
   console.log("availableBalance", availableBalance);
 
@@ -91,7 +91,7 @@ const DashboardHero = () => {
           item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
         return {
           day: order.deliveredAt.slice(0, 10),
-          total: itemPrice * item.qty - itemPrice * item.qty * 0.05,
+          total: itemPrice * item.qty - itemPrice * item.qty * 0.05
         };
       });
 
@@ -128,14 +128,14 @@ const DashboardHero = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
@@ -149,9 +149,9 @@ const DashboardHero = () => {
         const orderId = params.getValue(params.id, "id");
         const order = orders.find((item) => item._id === orderId);
         return `${currency.format(calculateShopTotalPrice(order.cart), {
-          code: "VND",
+          code: "VND"
         })}`;
-      },
+      }
     },
 
     {
@@ -171,8 +171,8 @@ const DashboardHero = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
   const row = [];
   orders &&
@@ -180,12 +180,12 @@ const DashboardHero = () => {
       row.push({
         id: item._id,
         itemsQty: item.cart.reduce((acc, item) => acc + item.qty, 0),
-        status: item.status,
+        status: item.status
       });
     });
 
   return (
-    <div className="w-full p-8">
+    <div className="w-full p-8 bg-[#f1f5f9]">
       <h3 className="text-[22px] font-Poppins pb-2">Tổng quan</h3>
       <div className="w-full block 800px:flex items-center justify-between">
         <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
@@ -251,13 +251,13 @@ const DashboardHero = () => {
       <div
         style={{
           padding: "20px",
-          background: "#F5F5DC",
+          background: "#F5F5DC"
         }}
       >
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           }}
         >
           <h1
@@ -268,7 +268,7 @@ const DashboardHero = () => {
               lineHeight: "1.25",
               fontSize: "18px",
               fontWeight: "500",
-              color: "#00000085",
+              color: "#00000085"
             }}
           >
             Thống kê doanh thu
@@ -302,7 +302,7 @@ const DashboardHero = () => {
               fontSize: "20px",
               display: "flex",
               justifyContent: "center",
-              width: "100%",
+              width: "100%"
             }}
           >
             Tiếp tục thống kê
@@ -318,7 +318,7 @@ const DashboardHero = () => {
               fontSize: "20px",
               display: statistic ? "none" : "flex",
               justifyContent: "center",
-              width: "100%",
+              width: "100%"
             }}
           >
             Thống kê
@@ -333,7 +333,7 @@ const DashboardHero = () => {
                 fontSize: "20px",
                 fontWeight: "700",
                 padding: "50px",
-                float: "right",
+                float: "right"
               }}
             >
               <span>Tổng doanh thu: </span>
@@ -341,7 +341,7 @@ const DashboardHero = () => {
                 {totalRevenue
                   ? totalRevenue?.toLocaleString("vi-VN", {
                       style: "currency",
-                      currency: "VND",
+                      currency: "VND"
                     }) + ""
                   : "0 đ"}
               </span>
