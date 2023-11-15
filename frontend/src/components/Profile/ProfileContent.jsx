@@ -212,8 +212,26 @@ const AllOrders = () => {
   }, [dispatch, user._id]);
 
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
 
+    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    {
+      field: "image",
+      headerName: "Sản phẩm",
+      minWidth: 150,
+      flex: 0.7,
+      sortable: false,
+      renderCell: (params) => {
+        const order = orders.find((order) => order._id === params.id);
+        const firstProductImage = order?.cart[0]?.images[0];
+        return (
+          <img
+            src={`${firstProductImage}`}
+            alt="Product"
+            style={{ width: "50px", height: "50px" }}
+          />
+        );
+      },
+    },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -230,21 +248,26 @@ const AllOrders = () => {
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
+      renderCell: (params) => {
+        const order = orders.find((order) => order._id === params.id);
+        const totalItemsQty = order?.cart.reduce((total, product) => total + product.qty, 0);
+        return totalItemsQty || 0; // Trả về 0 nếu không có sản phẩm
+      },
     },
 
     {
       field: "total",
       headerName: "Tổng cộng",
       type: "number",
-      minWidth: 130,
-      flex: 0.8
+      minWidth: 100,
+      flex: 0.6,
     },
 
     {
       field: " ",
       flex: 1,
-      minWidth: 150,
+      minWidth: 50,
       headerName: "",
       type: "number",
       sortable: false,
@@ -264,16 +287,28 @@ const AllOrders = () => {
 
   const row = [];
 
+  // orders &&
+  //   orders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+  //       status: item.status,
+  //     });
+  //   });
   orders &&
     orders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      const price = product.discountPrice !== 0 ? product.discountPrice : product.originalPrice;
+
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status
+        total: currency.format(price * product.qty, { code: "VND" }),
+        status: item.status,
       });
     });
-
+    
   return (
     <div className="pl-8 pt-1">
       <DataGrid
@@ -327,7 +362,7 @@ const AllRefundOrders = () => {
 
     {
       field: "total",
-      headerName: "Tổng cộng",
+      headerName: "Tổng xcộng",
       type: "number",
       minWidth: 130,
       flex: 0.8
@@ -367,6 +402,8 @@ const AllRefundOrders = () => {
       });
     });
 
+
+
   return (
     <div className="pl-8 pt-1">
       <DataGrid
@@ -391,7 +428,24 @@ const TrackOrder = () => {
 
   const columns = [
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
-
+    {
+      field: "image",
+      headerName: "Hình ảnh đơn hàng",
+      minWidth: 150,
+      flex: 0.7,
+      sortable: false,
+      renderCell: (params) => {
+        const order = orders.find((order) => order._id === params.id);
+        const firstProductImage = order?.cart[0]?.images[0];
+        return (
+          <img
+            src={`${firstProductImage}`}
+            alt="Product"
+            style={{ width: "50px", height: "50px" }}
+          />
+        );
+      },
+    },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -413,7 +467,7 @@ const TrackOrder = () => {
 
     {
       field: "total",
-      headerName: "Tổng cộng",
+      headerName: "Tổng x cộng",
       type: "number",
       minWidth: 130,
       flex: 0.8
@@ -442,14 +496,26 @@ const TrackOrder = () => {
 
   const row = [];
 
+  // orders &&
+  //   orders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       // total: "US$ " + item.totalPrice,
+  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+  //       status: item.status,
+  //     });
+  //   });
   orders &&
     orders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      const price = product.discountPrice !== 0 ? product.discountPrice : product.originalPrice;
+
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        // total: "US$ " + item.totalPrice,
-        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status
+        total: currency.format(price * product.qty, { code: "VND" }),
+        status: item.status,
       });
     });
 
