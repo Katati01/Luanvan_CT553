@@ -18,7 +18,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-  const { isSeller } = useSelector((state) => state.seller);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,18 +50,15 @@ const Login = () => {
             <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
           </Link>
           <div className="flex items-center">
-            {isSeller ? null : (
-              <span className="font-medium mt-1 mr-2 pr-2">
-                Đăng nhập vào cửa hàng
-              </span>
-            )}
-
+            <span className="font-medium mt-1 mr-2 pr-2">
+              Đăng nhập vào cửa hàng
+            </span>
             <div
               className={`${styles.button} mt-5 relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0`}
             >
-              <Link to={`${isSeller ? "/dashboard" : "/shop-login"}`}>
+              <Link to="/shop-login">
                 <h1 className="text-[#fff] flex items-center">
-                  {isSeller ? "Quản lý " : "Đăng nhập"}{" "}
+                  Đăng nhập
                   <IoIosArrowForward className="ml-1" />
                 </h1>
               </Link>
