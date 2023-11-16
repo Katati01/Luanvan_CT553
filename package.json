@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "chartjs-plugin-datalabels": "^2.2.0",
-    "react-quill": "^2.0.0",
-    "react-scroll": "^1.9.0",
-    "xlsx": "^0.18.5"
-  }
-}

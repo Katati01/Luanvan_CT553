@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import {
   AiOutlineArrowRight,
   AiOutlineCamera,
-  AiOutlineDelete,
+  AiOutlineDelete
 } from "react-icons/ai";
 import { MdTrackChanges } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
@@ -19,7 +19,7 @@ import {
   deleteUserAddress,
   loadUser,
   updatUserAddress,
-  updateUserInformation,
+  updateUserInformation
 } from "../../redux/actions/user";
 import { server } from "../../server";
 import styles from "../../styles/styles";
@@ -60,9 +60,9 @@ const ProfileContent = ({ active }) => {
     await axios
       .put(`${server}/user/update-avatar`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data"
         },
-        withCredentials: true,
+        withCredentials: true
       })
       .then((response) => {
         dispatch(loadUser());
@@ -155,7 +155,7 @@ const ProfileContent = ({ active }) => {
                 </div>
               </div>
               <input
-                className={`w-[250px] h-[40px] border border-[#fd3e25] text-center text-[#eeeeee] font-bold rounded-[8px] mt-8 bg-[#2374e1] cursor-pointer`}
+                className={`w-[250px] h-[40px] border text-center text-[#eeeeee] font-bold rounded-[8px] mt-8 bg-[#2374e1] cursor-pointer`}
                 required
                 value="Cập nhật"
                 type="submit"
@@ -212,8 +212,26 @@ const AllOrders = () => {
   }, [dispatch, user._id]);
 
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
 
+    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    {
+      field: "image",
+      headerName: "Sản phẩm",
+      minWidth: 150,
+      flex: 0.7,
+      sortable: false,
+      renderCell: (params) => {
+        const order = orders.find((order) => order._id === params.id);
+        const firstProductImage = order?.cart[0]?.images[0];
+        return (
+          <img
+            src={`${firstProductImage}`}
+            alt="Product"
+            style={{ width: "50px", height: "50px" }}
+          />
+        );
+      },
+    },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -223,7 +241,7 @@ const AllOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
@@ -231,20 +249,25 @@ const AllOrders = () => {
       type: "number",
       minWidth: 130,
       flex: 0.7,
+      renderCell: (params) => {
+        const order = orders.find((order) => order._id === params.id);
+        const totalItemsQty = order?.cart.reduce((total, product) => total + product.qty, 0);
+        return totalItemsQty || 0; // Trả về 0 nếu không có sản phẩm
+      },
     },
 
     {
       field: "total",
       headerName: "Tổng cộng",
       type: "number",
-      minWidth: 130,
-      flex: 0.8,
+      minWidth: 100,
+      flex: 0.6,
     },
 
     {
       field: " ",
       flex: 1,
-      minWidth: 150,
+      minWidth: 50,
       headerName: "",
       type: "number",
       sortable: false,
@@ -258,22 +281,34 @@ const AllOrders = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
 
+  // orders &&
+  //   orders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+  //       status: item.status,
+  //     });
+  //   });
   orders &&
     orders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      const price = product.discountPrice !== 0 ? product.discountPrice : product.originalPrice;
+
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+        total: currency.format(price * product.qty, { code: "VND" }),
         status: item.status,
       });
     });
-
+    
   return (
     <div className="pl-8 pt-1">
       <DataGrid
@@ -315,22 +350,22 @@ const AllRefundOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
       field: "total",
-      headerName: "Tổng cộng",
+      headerName: "Tổng xcộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -350,8 +385,8 @@ const AllRefundOrders = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -363,9 +398,11 @@ const AllRefundOrders = () => {
         itemsQty: item.cart.length,
         // total: "US$ " + item.totalPrice,
         total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status,
+        status: item.status
       });
     });
+
+
 
   return (
     <div className="pl-8 pt-1">
@@ -391,7 +428,24 @@ const TrackOrder = () => {
 
   const columns = [
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
-
+    {
+      field: "image",
+      headerName: "Hình ảnh đơn hàng",
+      minWidth: 150,
+      flex: 0.7,
+      sortable: false,
+      renderCell: (params) => {
+        const order = orders.find((order) => order._id === params.id);
+        const firstProductImage = order?.cart[0]?.images[0];
+        return (
+          <img
+            src={`${firstProductImage}`}
+            alt="Product"
+            style={{ width: "50px", height: "50px" }}
+          />
+        );
+      },
+    },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -401,22 +455,22 @@ const TrackOrder = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
       field: "total",
-      headerName: "Tổng cộng",
+      headerName: "Tổng x cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -436,19 +490,31 @@ const TrackOrder = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
 
+  // orders &&
+  //   orders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       // total: "US$ " + item.totalPrice,
+  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+  //       status: item.status,
+  //     });
+  //   });
   orders &&
     orders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      const price = product.discountPrice !== 0 ? product.discountPrice : product.originalPrice;
+
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        // total: "US$ " + item.totalPrice,
-        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+        total: currency.format(price * product.qty, { code: "VND" }),
         status: item.status,
       });
     });
@@ -555,14 +621,14 @@ const Address = () => {
   const dispatch = useDispatch();
   const addressTypeData = [
     {
-      name: "Mặc định",
+      name: "Mặc định"
     },
     {
-      name: "Nhà, nơi thường trú",
+      name: "Nhà, nơi thường trú"
     },
     {
-      name: "Văn phòng, nơi làm việc",
-    },
+      name: "Văn phòng, nơi làm việc"
+    }
   ];
 
   const handleSubmit = async (e) => {

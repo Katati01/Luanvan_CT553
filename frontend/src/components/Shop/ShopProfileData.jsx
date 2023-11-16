@@ -7,7 +7,7 @@ import ProductCard from "../Route/ProductCard/ProductCard";
 import { backend_url } from "../../server";
 import Ratings from "../Products/Ratings";
 import { getAllEventsShop } from "../../redux/actions/event";
-import EventCard from "../Events/EventCard"
+import EventCard from "../Events/EventCard";
 
 import Lottie from "react-lottie";
 import animationData from "../../Assests/animations/searchNotFound.json";
@@ -19,22 +19,21 @@ const ShopProfileData = ({ isOwner }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  
   const defaultOptions = {
     loop: false,
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
+      preserveAspectRatio: "xMidYMid slice"
+    }
   };
   const notHaveEvent = {
     loop: false,
     autoplay: true,
     animationData: animationData2,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
+      preserveAspectRatio: "xMidYMid slice"
+    }
   };
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const ShopProfileData = ({ isOwner }) => {
           <div className="flex items-center" onClick={() => setActive(1)}>
             <h5
               className={`font-[600] text-[20px] ${
-                active === 1 ? "text-red-500 font-[650]" : "text-[#333]"
+                active === 1 ? "text-[#009b49] font-[650]" : "text-[#333]"
               } cursor-pointer pr-[20px]`}
             >
               Sản phẩm
@@ -63,17 +62,17 @@ const ShopProfileData = ({ isOwner }) => {
           <div className="flex items-center" onClick={() => setActive(2)}>
             <h5
               className={`font-[600] text-[20px] ${
-                active === 2 ? "text-red-500 font-[650]" : "text-[#333]"
+                active === 2 ? "text-[#009b49] font-[650]" : "text-[#333]"
               } cursor-pointer pr-[20px]`}
             >
-              Sự kiện của x cửa hàng
+              Sự kiện của cửa hàng
             </h5>
           </div>
 
           <div className="flex items-center" onClick={() => setActive(3)}>
             <h5
               className={`font-[600] text-[20px] ${
-                active === 3 ? "text-red-500 font-[650]" : "text-[#333]"
+                active === 3 ? "text-[#009b49] font-[650]" : "text-[#333]"
               } cursor-pointer pr-[20px]`}
             >
               Đánh giá của cửa hàng
@@ -118,13 +117,13 @@ const ShopProfileData = ({ isOwner }) => {
           </div>
           {events && events.length === 0 && (
             <div>
-            <Lottie options={notHaveEvent} width={300} height={300} />
-            <h5 className="text-center mb-14 text-[25px] text-[#000000a1]">
-              Chưa có sự kiện nào đang diễn ra 🥲
-            </h5>
-            <br />
-            <br />
-          </div>
+              <Lottie options={notHaveEvent} width={300} height={300} />
+              <h5 className="text-center mb-14 text-[25px] text-[#000000a1]">
+                Chưa có sự kiện nào đang diễn ra 🥲
+              </h5>
+              <br />
+              <br />
+            </div>
           )}
         </div>
       )}
@@ -154,13 +153,13 @@ const ShopProfileData = ({ isOwner }) => {
             //   Chưa có đánh giá cho cửa hàng này!
             // </h5>
             <div>
-           <Lottie options={defaultOptions} width={300} height={300} />
-           <h5 className="text-center mb-14 text-[25px] text-[#000000a1]">
-             Chưa có đánh giá cho cửa hàng này 🥲
-           </h5>
-           <br />
-           <br />
-         </div>
+              <Lottie options={defaultOptions} width={300} height={300} />
+              <h5 className="text-center mb-14 text-[25px] text-[#000000a1]">
+                Chưa có đánh giá cho cửa hàng này 🥲
+              </h5>
+              <br />
+              <br />
+            </div>
           )}
         </div>
       )}
