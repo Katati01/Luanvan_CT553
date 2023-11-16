@@ -219,7 +219,7 @@ const Header = ({ activeHeading }) => {
               <div className="relative flex items-center h-8 w-auto mb-7 hidden md:block">
                 <button
                   // className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-green-200 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600`}
-                  className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center hover:text-[#D6AF54]`}
+                  className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center hover:text-[#009b49]`}
                 >
                   <BiMenuAltLeft size={30} className="mr-2" />
                   Danh mục
