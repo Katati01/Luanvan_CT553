@@ -149,38 +149,6 @@ const Header = ({ activeHeading }) => {
                 </div>
               ) : null}
             </div>
-            <div className="flex">
-            <div className={`${styles.noramlFlex}`}>
-              <div
-                className="relative cursor-pointer mr-[15px]"
-                onMouseEnter={handleMouseEnter}
-              // onMouseLeave={handleMouseLeave}
-              >
-                <IoIosNotificationsOutline size={35} color="#FFD700" />
-                <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
-                  {orders ? orders.length : 0}
-                </span>
-
-                {isHovered ? (
-                  <div onMouseLeave={handleMouseLeave}>
-                    <NotificationBar openNotification={isHovered} />
-                  </div>
-                ) : null}
-              </div>
-            </div>
-
-            <div className={`${styles.noramlFlex}`}>
-              <div
-                className="relative cursor-pointer mr-[30px]"
-                onClick={() => setOpenWishlist(true)}
-              >
-                <AiOutlineHeart size={35} color="#FF69B4" />
-                <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
-                  {wishlist && wishlist.length}
-                </span>
-              </div>
-            </div>
-            </div>
             <div className="flex items-center">
               {!isAuthenticated && (
                 <div className="p-3 flex items-center text-black">
@@ -251,7 +219,7 @@ const Header = ({ activeHeading }) => {
               <div className="relative flex items-center h-8 w-auto mb-7 hidden md:block">
                 <button
                   // className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-green-200 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600`}
-                  className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center hover:text-[#ae4ad9]`}
+                  className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center hover:text-[#D6AF54]`}
                 >
                   <BiMenuAltLeft size={30} className="mr-2" />
                   Danh mục
@@ -273,8 +241,40 @@ const Header = ({ activeHeading }) => {
           <div className="h-full whitespace-nowrap self-center block mx-auto 800px:w-full 800px:flex 800px:justify-center">
             <Navbar active={activeHeading} />
           </div>
+          <div className="flex">
+            <div className={`${styles.noramlFlex}`}>
+              <div
+                className="relative cursor-pointer mr-[15px]"
+                onMouseEnter={handleMouseEnter}
+              // onMouseLeave={handleMouseLeave}
+              >
+                <IoIosNotificationsOutline size={35} color="#333333" />
+                <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
+                  {orders ? orders.length : 0}
+                </span>
 
-          <div className="flex text-sm">            
+                {isHovered ? (
+                  <div onMouseLeave={handleMouseLeave}>
+                    <NotificationBar openNotification={isHovered} />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className={`${styles.noramlFlex}`}>
+              <div
+                className="relative cursor-pointer mr-[15px]"
+                onClick={() => setOpenWishlist(true)}
+              >
+                <AiOutlineHeart size={35} color="#333333" />
+                <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
+                  {wishlist && wishlist.length}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex text-sm">
             <div className={`${styles.noramlFlex} `}>
               <div
                 className="relative cursor-pointer mr-[15px]"
