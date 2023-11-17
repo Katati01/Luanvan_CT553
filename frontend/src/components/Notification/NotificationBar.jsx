@@ -39,7 +39,7 @@ const NotificationBar = ({ openNotification }) => {
             to={`/profile`}
             className="block bg-gray-800 text-white text-center font-bold py-2"
           >
-            See all notifications
+            Xem thêm
           </Link>
         </div>
       )}
