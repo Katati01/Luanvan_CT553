@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
+import { TiDeleteOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { addTocart } from "../../redux/actions/cart";
 import { removeFromWishlist } from "../../redux/actions/wishlist";
@@ -24,7 +25,7 @@ const Wishlist = ({ setOpenWishlist }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
-      <div className="fixed top-0 right-0 h-full w-[80%] overflow-y-scroll 800px:w-[30%] bg-white flex flex-col justify-between shadow-sm">
+    <div className="fixed mt-2 top-0 right-1 w-[75%] h-[96%] 800px:w-[30%] md:w-[35%] 700px:w-[80%] rounded-md bg-white flex flex-col overflow-x-auto justify-between shadow-sm">
         {wishlist && wishlist.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
@@ -55,7 +56,7 @@ const Wishlist = ({ setOpenWishlist }) => {
               </div>
 
               {/* cart Single Items */}
-              <br />
+              
               <div className="w-full border-t">
                 {wishlist &&
                   wishlist.map((i, index) => (
@@ -67,6 +68,7 @@ const Wishlist = ({ setOpenWishlist }) => {
                     />
                   ))}
               </div>
+              
             </div>
           </>
         )}
@@ -85,10 +87,10 @@ const CartSingle = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
   return (
     <div className="border-b p-4">
       <div className="w-full 800px:flex items-center">
-        <RxCross1
-          size={25}
-          color="#fff"
-          className="flex-3 cursor-pointer 800px:mb-['unset'] 800px:ml-['unset'] mb-2 bg-[#d80a0a] border border-[#e4434373] rounded-[100%]"
+        <TiDeleteOutline
+          size={40}
+          color="#f00202"
+          className="cursor-pointer rounded-[0%]"
           onClick={() => removeFromWishlistHandler(data)}
         />
         <img
