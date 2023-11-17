@@ -13,8 +13,8 @@ const Navbar = ({ active }) => {
               to={i.url}
               className={`${
                 active === index + 1
-                  ? "whitespace-nowrap self-center text-[#d3cd9f] font-[700]"
-                  : "whitespace-nowrap self-center text-black 800px:text-[#fff]"
+                  ? "whitespace-nowrap self-center text-[#009b49] font-[700]"
+                  : "whitespace-nowrap self-center text-black 800px:text-[text-sm]"
               } pb-[30px] 800px:pb-0 font-[500] px-6 cursor-pointer}`}
             >
               {i.title}

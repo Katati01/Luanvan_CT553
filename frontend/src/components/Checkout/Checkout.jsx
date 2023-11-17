@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { server } from "../../server";
 import styles from "../../styles/styles";
+
 const Checkout = () => {
   const { user } = useSelector((state) => state.user);
   const { cart } = useSelector((state) => state.cart);
@@ -30,26 +31,6 @@ const Checkout = () => {
     if (address1 === "" || country === "" || city === "") {
       toast.error("Vui lòng chọn địa chỉ giao hàng!");
     } else {
-      // Nhóm các mục trong giỏ hàng theo shopId
-      const cartByShop = cart.reduce((acc, item) => {
-        acc[item.shopId] = acc[item.shopId] || [];
-        acc[item.shopId].push(item);
-        return acc;
-      }, {});
-
-      // Tính tổng giá cho mỗi cửa hàng
-      const shopTotalPrices = Object.keys(cartByShop).map((shopId) => {
-        const shopItems = cartByShop[shopId];
-        const shopSubTotalPrice = shopItems.reduce(
-          (acc, item) =>
-            acc + item.qty * (item.discountPrice === 0 ? item.originalPrice : item.discountPrice),
-          0
-        );
-        return shopSubTotalPrice + 30000; // Thêm phí vận chuyển cho mỗi cửa hàng
-      });
-
-      const totalPrice = shopTotalPrices.reduce((acc, price) => acc + price, 0);
-
       const shippingAddress = {
         address1,
         country,
@@ -68,7 +49,7 @@ const Checkout = () => {
         user,
       };
 
-      // Cập nhật local storage với mảng đơn hàng đã được cập nhật
+      // update local storage with the updated orders array
       localStorage.setItem("latestOrder", JSON.stringify(orderData));
 
       // Gọi API để cập nhật số lượng mã giảm giá còn lại
@@ -83,63 +64,6 @@ const Checkout = () => {
       navigate("/payment");
     }
   };
-
-// const Checkout = () => {
-//   const { user } = useSelector((state) => state.user);
-//   const { cart } = useSelector((state) => state.cart);
-//   const [country, setCountry] = useState("VN");
-//   const [city, setCity] = useState("");
-//   const [userInfo, setUserInfo] = useState(false);
-//   const [address1, setAddress1] = useState("");
-//   const [address2, setAddress2] = useState("");
-//   const [zipCode, setZipCode] = useState(null);
-//   const [couponCode, setCouponCode] = useState("");
-//   const [couponCodeData, setCouponCodeData] = useState(null);
-//   const [discountPrice, setDiscountPrice] = useState(null);
-//   const navigate = useNavigate();
-//   const [name, setName] = useState("");
-//   const [phoneNumber, setPhoneNumber] = useState("");
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, []);
-
-//   const paymentSubmit = async () => {
-//     if (address1 === "" || country === "" || city === "") {
-//       toast.error("Vui lòng chọn địa chỉ giao hàng!");
-//     } else {
-//       const shippingAddress = {
-//         address1,
-//         country,
-//         city,
-//         name,
-//         phoneNumber,
-//       };
-
-//       const orderData = {
-//         cart,
-//         totalPrice,
-//         subTotalPrice,
-//         shipping,
-//         discountPrice,
-//         shippingAddress,
-//         user,
-//       };
-
-//       // update local storage with the updated orders array
-//       localStorage.setItem("latestOrder", JSON.stringify(orderData));
-
-//       // Gọi API để cập nhật số lượng mã giảm giá còn lại
-//       if (couponCodeData) {
-//         const couponName = couponCodeData.name;
-
-//         // Gửi yêu cầu PUT lên máy chủ để cập nhật số lượng còn lại
-//         await axios.put(
-//           `${server}/coupon/update-coupon-quantity/${couponName}`
-//         );
-//       }
-//       navigate("/payment");
-//     }
-//   };
 
   // const subTotalPrice = cart.reduce(
   //   (acc, item) => acc + item.qty * item.discountPrice,

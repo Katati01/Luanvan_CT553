@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import {
   AiOutlineArrowRight,
   AiOutlineCamera,
-  AiOutlineDelete,
+  AiOutlineDelete
 } from "react-icons/ai";
 import { MdTrackChanges } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
@@ -19,7 +19,7 @@ import {
   deleteUserAddress,
   loadUser,
   updatUserAddress,
-  updateUserInformation,
+  updateUserInformation
 } from "../../redux/actions/user";
 import { server } from "../../server";
 import styles from "../../styles/styles";
@@ -60,9 +60,9 @@ const ProfileContent = ({ active }) => {
     await axios
       .put(`${server}/user/update-avatar`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data"
         },
-        withCredentials: true,
+        withCredentials: true
       })
       .then((response) => {
         dispatch(loadUser());
@@ -155,7 +155,7 @@ const ProfileContent = ({ active }) => {
                 </div>
               </div>
               <input
-                className={`w-[250px] h-[40px] border border-[#fd3e25] text-center text-[#eeeeee] font-bold rounded-[8px] mt-8 bg-[#2374e1] cursor-pointer`}
+                className={`w-[250px] h-[40px] border text-center text-[#eeeeee] font-bold rounded-[8px] mt-8 bg-[#2374e1] cursor-pointer`}
                 required
                 value="Cập nhật"
                 type="submit"
@@ -241,7 +241,7 @@ const AllOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
@@ -281,8 +281,8 @@ const AllOrders = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -350,14 +350,14 @@ const AllRefundOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
@@ -365,7 +365,7 @@ const AllRefundOrders = () => {
       headerName: "Tổng xcộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -385,8 +385,8 @@ const AllRefundOrders = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -398,7 +398,7 @@ const AllRefundOrders = () => {
         itemsQty: item.cart.length,
         // total: "US$ " + item.totalPrice,
         total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status,
+        status: item.status
       });
     });
 
@@ -455,14 +455,14 @@ const TrackOrder = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      },
+      }
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7,
+      flex: 0.7
     },
 
     {
@@ -470,7 +470,7 @@ const TrackOrder = () => {
       headerName: "Tổng x cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8,
+      flex: 0.8
     },
 
     {
@@ -490,8 +490,8 @@ const TrackOrder = () => {
             </Link>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -621,14 +621,14 @@ const Address = () => {
   const dispatch = useDispatch();
   const addressTypeData = [
     {
-      name: "Mặc định",
+      name: "Mặc định"
     },
     {
-      name: "Nhà, nơi thường trú",
+      name: "Nhà, nơi thường trú"
     },
     {
-      name: "Văn phòng, nơi làm việc",
-    },
+      name: "Văn phòng, nơi làm việc"
+    }
   ];
 
   const handleSubmit = async (e) => {

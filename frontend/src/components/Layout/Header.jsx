@@ -109,7 +109,7 @@ const Header = ({ activeHeading }) => {
               </Link>
             </div>
             {/* search box */}
-            <div className="w-[50%] relative">
+            <div className="w-[40%] relative">
               <input
                 type="text"
                 placeholder="Tìm kiếm sản phẩm..."
@@ -152,56 +152,74 @@ const Header = ({ activeHeading }) => {
             <div className="flex items-center">
               {!isAuthenticated && (
                 <div className="p-3 flex items-center text-black">
-                  <Link to="/login" className="text-black flex items-center">
-                    <AiOutlineUser className="text-black mr-1 text-xl" />
-                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
-                      Đăng nhập
-                    </h1>
-                  </Link>
-                  <span className="text-black mx-2">/</span>
-                  <Link to="/sign-up" className="text-black">
-                    <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
-                      Đăng ký
-                    </h1>
-                  </Link>
+                  {!isSeller ? (
+                    <React.Fragment>
+                      <Link to="/login" className="text-black flex items-center">
+                        <AiOutlineUser className="text-black mr-1 text-xl" />
+                        <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
+                          Đăng nhập
+                        </h1>
+                      </Link>
+                      <span className="text-black mx-2">/</span>
+                      <Link to="/sign-up" className="text-black">
+                        <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
+                          Đăng ký
+                        </h1>
+                      </Link>
+                    </React.Fragment>
+                  ) : (
+                    <div className={`${styles.button}`}>
+                      <Link to="/dashboard">
+                        <h1 className="text-[#fff] flex items-center">
+                          Quản lý <IoIosArrowForward className="ml-1" />
+                        </h1>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               )}
               {isAuthenticated && (
                 <div className={`${styles.noramlFlex}`}>
                   <div className="relative cursor-pointer mr-[20px]">
-                    {isAuthenticated ? (
+                    {isSeller ? (
+                      <div className={`${styles.button}`}>
+                        <Link to="/dashboard">
+                          <h1 className="text-[#fff] flex items-center">
+                            Quản lý <IoIosArrowForward className="ml-1" />
+                          </h1>
+                        </Link>
+                      </div>
+                    ) : (
                       <Link to="/profile">
                         <img
-                          src={`${user?.avatar}`}
+                          src={`${user.avatar}`}
                           className="w-[50px] h-[50px] rounded-full"
                           alt=""
                         />
-                      </Link>
-                    ) : (
-                      <Link to="/login">
-                        <CgProfile size={35} color="#de650a" />
                       </Link>
                     )}
                   </div>
                 </div>
               )}
             </div>
+
           </div>
         </div>
       </div>
       <div
         className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-          } transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]`}
+          } transition hidden 800px:flex items-center justify-between w-full text-sm bg-[#e4e4e4] h-[40px]`}
       >
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
         >
           {/* navitems */}
-          <div className="mr-[3vw]">
+          <div className="mt-4 h-full">
             <div onClick={() => setDropDown(!dropDown)}>
               <div className="relative flex items-center h-8 w-auto mb-7 hidden md:block">
                 <button
-                  className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-green-200 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600`}
+                  // className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-green-200 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600`}
+                  className={`whitespace-nowrap self-center inline-flex items-center p-2 text-sm font-medium text-center hover:text-[#009b49]`}
                 >
                   <BiMenuAltLeft size={30} className="mr-2" />
                   Danh mục
@@ -209,19 +227,20 @@ const Header = ({ activeHeading }) => {
                 </button>
                 {dropDown ? (
                   <>
-                    <DropDown
-                      categoriesData={categoriesData}
-                      setDropDown={setDropDown}
-                    />
+                    <div className="absolute top-full left-0 mt-[10px] bg-white shadow-lg rounded-lg">
+                      <DropDown
+                        categoriesData={categoriesData}
+                        setDropDown={setDropDown}
+                      />
+                    </div>
                   </>
                 ) : null}
               </div>
             </div>
           </div>
-          <div className="whitespace-nowrap self-center block mx-auto 800px:w-full 800px:flex 800px:justify-center">
+          <div className="h-full whitespace-nowrap self-center block mx-auto 800px:w-full 800px:flex 800px:justify-center">
             <Navbar active={activeHeading} />
           </div>
-
           <div className="flex">
             <div className={`${styles.noramlFlex}`}>
               <div
@@ -229,7 +248,7 @@ const Header = ({ activeHeading }) => {
                 onMouseEnter={handleMouseEnter}
               // onMouseLeave={handleMouseLeave}
               >
-                <IoIosNotificationsOutline size={35} color="#fff" />
+                <IoIosNotificationsOutline size={35} color="#333333" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
                   {orders ? orders.length : 0}
                 </span>
@@ -247,19 +266,21 @@ const Header = ({ activeHeading }) => {
                 className="relative cursor-pointer mr-[15px]"
                 onClick={() => setOpenWishlist(true)}
               >
-                <AiOutlineHeart size={35} color="#fff" />
+                <AiOutlineHeart size={35} color="#333333" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
                   {wishlist && wishlist.length}
                 </span>
               </div>
             </div>
-
+          </div>
+          
+          <div className="flex text-sm">
             <div className={`${styles.noramlFlex} `}>
               <div
                 className="relative cursor-pointer mr-[15px]"
                 onClick={() => setOpenCart(true)}
               >
-                <AiOutlineShoppingCart size={35} color="#fff" />
+                <AiOutlineShoppingCart size={35} color="#333333" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
                   {cart && cart.length}
                 </span>
