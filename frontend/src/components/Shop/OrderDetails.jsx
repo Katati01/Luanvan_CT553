@@ -44,7 +44,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/update-order-status/${id}`,
         {
-          status,
+          status
         },
         { withCredentials: true }
       )
@@ -62,7 +62,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/order-refund-success/${id}`,
         {
-          status,
+          status
         },
         { withCredentials: true }
       )
@@ -74,6 +74,7 @@ const OrderDetails = () => {
         toast.error(error.response.data.message);
       });
   };
+  console.log(status);
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>
@@ -155,7 +156,7 @@ const OrderDetails = () => {
           <strong>
             {data
               ? `${currency.format(calculateShopTotalPrice(data.cart), {
-                  code: "VND",
+                  code: "VND"
                 })}`
               : null}
           </strong>
@@ -199,21 +200,21 @@ const OrderDetails = () => {
             className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
           >
             {[
-              "Processing",
-              "Transferred to delivery partner",
-              "Shipping",
-              "Received",
-              "On the way",
-              "Delivered",
+              "Đang xử lý",
+              "Chuyển giao cho đối tác vận chuyển",
+              "Đang vận chuyển",
+              "Đã nhận",
+              "Đơn hàng đang trên đường giao đến bạn",
+              "Đã giao hàng"
             ]
               .slice(
                 [
-                  "Processing",
-                  "Transferred to delivery partner",
-                  "Shipping",
-                  "Received",
-                  "On the way",
-                  "Delivered",
+                  "Đang xử lý",
+                  "Chuyển giao cho đối tác vận chuyển",
+                  "Đang vận chuyển",
+                  "Đã nhận",
+                  "Đơn hàng đang trên đường giao đến bạn",
+                  "Đã giao hàng"
                 ].indexOf(data?.status)
               )
               .map((option, index) => (
