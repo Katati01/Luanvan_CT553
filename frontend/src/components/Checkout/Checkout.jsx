@@ -151,6 +151,7 @@ const Checkout = () => {
             setName={setName}
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
+            cart={cart}
           />
         </div>
         <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
@@ -194,6 +195,7 @@ const ShippingInfo = ({
   setName,
   phoneNumber,
   setPhoneNumber,
+  cart,
 }) => {
   return (
     <div className="w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8">
@@ -328,6 +330,7 @@ const ShippingInfo = ({
 
         <div></div>
       </form>
+
       <h5
         className="text-[18px] cursor-pointer inline-block"
         onClick={() => setUserInfo(!userInfo)}
@@ -357,6 +360,22 @@ const ShippingInfo = ({
             ))}
         </div>
       )}
+      {/* <div className="mb-4">
+        <h5 className="text-[18px] font-[500] mb-2">
+          Sản phẩm trong đơn hàng:
+        </h5>
+        {cart.map((item, index) => (
+          <div key={index} className="flex items-center mb-2">
+            <img
+              src={item.images[0]} // Assuming your product data includes an 'images' array
+              alt={item.name}
+              className="w-8 h-8 mr-2 object-cover"
+            />
+            <span className="mr-2">{item.name}</span>
+            <span>x{item.qty}</span>
+          </div>
+        ))}
+      </div> */}
     </div>
   );
 };
