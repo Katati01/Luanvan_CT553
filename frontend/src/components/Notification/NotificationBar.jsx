@@ -9,8 +9,8 @@ const NotificationBar = ({ openNotification }) => {
     <>
       {openNotification && (
         <div
-          className="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-x-hidden overflow-y-auto [&::-webkit-scrollbar]:hidden z-20"
-          style={{ width: "35rem", maxHeight: "15rem" }}
+          className="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-x-hidden [&::-webkit-scrollbar]:hidden z-20"
+          style={{ width: "35rem", maxHeight: "20rem" }}
         >
           <div className="py-2">
             {orders?.map((order) => (
