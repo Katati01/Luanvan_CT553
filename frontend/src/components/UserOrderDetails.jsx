@@ -98,7 +98,7 @@ const UserOrderDetails = () => {
 
       <div className="w-full flex items-center justify-between pt-6">
         <h5 className="text-[#00000084]">
-          ID đơn hàng: <span>#{data?._id?.slice(0, 8)}</span>
+          ID đơn hàng: <span>#{data?._id}</span>
         </h5>
         <h5 className="text-[#00000084]">
           Thời gian: <span>{data?.createdAt?.slice(0, 10)}</span>
@@ -256,7 +256,7 @@ const UserOrderDetails = () => {
         <strong>
           {item.discountPrice === 0
             ? currency.format(item.originalPrice, { code: "VND" })
-            : currency.format(item.discountPrice, { code: "VND" })}
+            : currency.format(item.discountPrice, { code: "VND" })} 
         </strong>
       </h5>
     </div>

@@ -57,7 +57,11 @@ const Payment = () => {
     shippingAddress: orderData?.shippingAddress,
     user: user && user,
     totalPrice: orderData?.totalPrice,
+    shipping: orderData?.shipping?.toFixed(2), 
+    shopTotal: orderData?.shopTotal
   };
+  console.log("tien ship",order.shipping)
+  console.log("tiền shop", order.shopTotal)
 
   const onApprove = async (data, actions) => {
     return actions.order.capture().then(function (details) {
