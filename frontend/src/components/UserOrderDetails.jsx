@@ -29,6 +29,17 @@ const UserOrderDetails = () => {
 
   const data = orders && orders.find((item) => item._id === id);
 
+  const calculateShopTotal = (cart, shopId) => {
+    return cart.reduce((total, item) => {
+      if (item.shopId === shopId) {
+        const itemPrice =
+          item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+        return total + itemPrice * item.qty;
+      }
+      return total;
+    }, 0);
+  };
+
   const reviewHandler = async (e) => {
     await axios
       .put(
@@ -248,7 +259,7 @@ const UserOrderDetails = () => {
 
       <div className="border-t w-full text-right">
 
-        <div>
+        {/* <div>
   {data?.cart.map((item, index) => (
     <div key={index}>
       <h5 className="pt-3 text-[18px]">
@@ -261,6 +272,43 @@ const UserOrderDetails = () => {
       </h5>
     </div>
   ))}
+</div> */}
+
+{/* <div className="border-t w-full text-right">
+  {Object.keys(data?.shopTotal).map((shopId, index) => (
+    <div key={index}>
+      <h5 className="pt-3 text-[18px]">
+        Tổng tiền (cửa hàng {index + 1}):{" "}
+        <strong>
+          {calculateShopTotal(data?.cart, shopId).toLocaleString("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }) + ""}
+        </strong>
+      </h5>
+    </div>
+  ))}
+</div> */}
+<div className="border-t w-full text-right">
+  {Object.keys(data?.shopTotal).map((shopId, index) => {
+    const shopTotal = calculateShopTotal(data?.cart, shopId);
+    if (shopTotal > 0) {
+      return (
+        <div key={index}>
+          <h5 className="pt-3 text-[18px]">
+            Tổng tiền :{" "}
+            <strong>
+              {shopTotal.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""}
+            </strong>
+          </h5>
+        </div>
+      );
+    }
+    return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
+  })}
 </div>
       </div>
       <br />
