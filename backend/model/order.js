@@ -17,6 +17,14 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    shipping: {
+        type: Number,
+        required: true,
+      },
+    shopTotal:{
+        type: Object,
+        required: true,
+    }, 
     status:{
         type: String,
         default: "Processing",

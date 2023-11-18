@@ -29,11 +29,22 @@ const OrderDetails = () => {
   //     0
   //   );
   // };
-  const calculateShopTotalPrice = (cartItems) => {
-    return cartItems.reduce((total, item) => {
-      const itemPrice =
-        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
-      return total + itemPrice * item.qty;
+  // const calculateShopTotalPrice = (cartItems) => {
+  //   return cartItems.reduce((total, item) => {
+  //     const itemPrice =
+  //       item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+  //     return total + itemPrice * item.qty;
+  //   }, 0);
+  // };
+
+  const calculateShopTotal = (cart, shopId) => {
+    return cart.reduce((total, item) => {
+      if (item.shopId === shopId) {
+        const itemPrice =
+          item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+        return total + itemPrice * item.qty;
+      }
+      return total;
     }, 0);
   };
 
@@ -150,7 +161,7 @@ const OrderDetails = () => {
           </div>
         ))}
 
-      <div className="border-t w-full text-right">
+      {/* <div className="border-t w-full text-right">
         <h5 className="pt-3 text-[18px]">
           Tổng tiền:{" "}
           <strong>
@@ -161,7 +172,28 @@ const OrderDetails = () => {
               : null}
           </strong>
         </h5>
-      </div>
+      </div> */}
+      <div className="border-t w-full text-right">
+  {Object.keys(data?.shopTotal).map((shopId, index) => {
+    const shopTotal = calculateShopTotal(data?.cart, shopId);
+    if (shopTotal > 0) {
+      return (
+        <div key={index}>
+          <h5 className="pt-3 text-[18px]">
+            Tổng tiền :{" "}
+            <strong>
+              {shopTotal.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""}
+            </strong>
+          </h5>
+        </div>
+      );
+    }
+    return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
+  })}
+</div>
       <br />
       <br />
       <div className="w-full 800px:flex items-center">

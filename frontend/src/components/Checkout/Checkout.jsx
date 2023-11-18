@@ -23,6 +23,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -44,6 +45,7 @@ const Checkout = () => {
         totalPrice,
         subTotalPrice,
         shipping,
+        shopTotal,
         discountPrice,
         shippingAddress,
         user,
@@ -65,21 +67,42 @@ const Checkout = () => {
     }
   };
 
-  // const subTotalPrice = cart.reduce(
-  //   (acc, item) => acc + item.qty * item.discountPrice,
-  //   0
-  // );
+  const calculateShopTotal = (cart) => {
+    const shopTotalMap = new Map();
+  
+    cart.forEach((item) => {
+      const shopId = item.shopId;
+      const itemPrice = item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      const itemTotal = item.qty * itemPrice;
+  
+      if (!shopTotalMap.has(shopId)) {
+        shopTotalMap.set(shopId, {
+          totalQuantity: item.qty,
+          totalPrice: itemTotal,
+        });
+      } else {
+        const existingShopTotal = shopTotalMap.get(shopId);
+        existingShopTotal.totalQuantity += item.qty;
+        existingShopTotal.totalPrice += itemTotal;
+      }
+    });
+  
+    return Object.fromEntries(shopTotalMap);
+  };
+  const shopTotal = calculateShopTotal(cart);
+  console.log(shopTotal)
+
   const subTotalPrice = cart.reduce((acc, item) => {
     const itemPrice =
       item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
     return acc + item.qty * itemPrice;
   }, 0);
 
-  // this is shipping cost variable
-  // const shipping = subTotalPrice * 0.02;
-  // const shipping = subTotalPrice > 2000000 ? 15000 : 30000;
+
   const shopCount = new Set(cart.map((item) => item.shopId)).size;
   const shipping = 30000 * shopCount;
+  console.log(shipping);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -128,7 +151,14 @@ const Checkout = () => {
     ? (subTotalPrice + shipping - discountPercentenge).toFixed(2)
     : (subTotalPrice + shipping).toFixed(2);
 
+
   console.log(discountPercentenge);
+
+  // thêm 
+
+
+   
+ 
 
   return (
     <div className="w-full flex flex-col items-center py-8">
@@ -162,6 +192,7 @@ const Checkout = () => {
             handleSubmit={handleSubmit}
             totalPrice={totalPrice}
             shipping={shipping}
+            shopTotal={shopTotal}
             subTotalPrice={subTotalPrice}
             couponCode={couponCode}
             setCouponCode={setCouponCode}
@@ -364,14 +395,14 @@ const ShippingInfo = ({
             ))}
         </div>
       )}
-      {/* <div className="mb-4">
+      <div className="mb-4">
         <h5 className="text-[18px] font-[500] mb-2">
           Sản phẩm trong đơn hàng:
         </h5>
         {cart.map((item, index) => (
           <div key={index} className="flex items-center mb-2">
             <img
-              src={item.images[0]} // Assuming your product data includes an 'images' array
+              src={item.images[0]} 
               alt={item.name}
               className="w-8 h-8 mr-2 object-cover"
             />
@@ -379,7 +410,25 @@ const ShippingInfo = ({
             <span>x{item.qty}</span>
           </div>
         ))}
-      </div> */}
+      </div>
+      <div className="mb-4">
+        <h5 className="text-[18px] font-[500] mb-2">
+          Cửa hàng:
+        </h5>
+        {cart.map((item, index) => (
+          <div key={index} className="flex items-center mb-2">
+             <img
+              src={item.shop.avatar} 
+
+              className="w-8 h-8 mr-2 object-cover"
+            />
+            <span
+              className="mr-2">{item.shop.name} 
+            </span>
+        
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -388,6 +437,8 @@ const CartData = ({
   handleSubmit,
   totalPrice,
   shipping,
+  shopTotal,
+  calculateShopTotal,
   subTotalPrice,
   couponCode,
   setCouponCode,
@@ -401,6 +452,19 @@ const CartData = ({
           {currency.format(subTotalPrice, { code: "VND" })}
         </h5>
       </div>
+
+      <br />
+      {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
+        <div key={shopId} className="flex justify-between">
+          <h3 className="text-[16px] font-[400] text-[#000000a4]">
+            Tiền shop {shopId}:
+          </h3>
+          <h5 className="text-[18px] font-[600]">
+            {currency.format(shopInfo.totalPrice, { code: "VND" })}
+          </h5>
+        </div>
+      ))}
+
       <br />
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">
@@ -410,7 +474,8 @@ const CartData = ({
           {currency.format(shipping.toFixed(2), { code: "VND" })}
         </h5>
       </div>
-      <br />
+      <br/>
+
       <div className="flex justify-between border-b pb-3">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>
         <h5 className="text-[18px] font-[600]">

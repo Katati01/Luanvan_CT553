@@ -29,6 +29,17 @@ const UserOrderDetails = () => {
 
   const data = orders && orders.find((item) => item._id === id);
 
+  const calculateShopTotal = (cart, shopId) => {
+    return cart.reduce((total, item) => {
+      if (item.shopId === shopId) {
+        const itemPrice =
+          item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+        return total + itemPrice * item.qty;
+      }
+      return total;
+    }, 0);
+  };
+
   const reviewHandler = async (e) => {
     await axios
       .put(
@@ -98,7 +109,7 @@ const UserOrderDetails = () => {
 
       <div className="w-full flex items-center justify-between pt-6">
         <h5 className="text-[#00000084]">
-          ID đơn hàng: <span>#{data?._id?.slice(0, 8)}</span>
+          ID đơn hàng: <span>#{data?._id}</span>
         </h5>
         <h5 className="text-[#00000084]">
           Thời gian: <span>{data?.createdAt?.slice(0, 10)}</span>
@@ -248,7 +259,7 @@ const UserOrderDetails = () => {
 
       <div className="border-t w-full text-right">
 
-        <div>
+        {/* <div>
   {data?.cart.map((item, index) => (
     <div key={index}>
       <h5 className="pt-3 text-[18px]">
@@ -256,11 +267,48 @@ const UserOrderDetails = () => {
         <strong>
           {item.discountPrice === 0
             ? currency.format(item.originalPrice, { code: "VND" })
-            : currency.format(item.discountPrice, { code: "VND" })}
+            : currency.format(item.discountPrice, { code: "VND" })} 
         </strong>
       </h5>
     </div>
   ))}
+</div> */}
+
+{/* <div className="border-t w-full text-right">
+  {Object.keys(data?.shopTotal).map((shopId, index) => (
+    <div key={index}>
+      <h5 className="pt-3 text-[18px]">
+        Tổng tiền (cửa hàng {index + 1}):{" "}
+        <strong>
+          {calculateShopTotal(data?.cart, shopId).toLocaleString("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }) + ""}
+        </strong>
+      </h5>
+    </div>
+  ))}
+</div> */}
+<div className="border-t w-full text-right">
+  {Object.keys(data?.shopTotal).map((shopId, index) => {
+    const shopTotal = calculateShopTotal(data?.cart, shopId);
+    if (shopTotal > 0) {
+      return (
+        <div key={index}>
+          <h5 className="pt-3 text-[18px]">
+            Tổng tiền :{" "}
+            <strong>
+              {shopTotal.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""}
+            </strong>
+          </h5>
+        </div>
+      );
+    }
+    return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
+  })}
 </div>
       </div>
       <br />
