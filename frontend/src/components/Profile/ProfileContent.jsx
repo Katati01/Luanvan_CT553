@@ -142,7 +142,7 @@ const ProfileContent = ({ active }) => {
                 </div>
 
                 <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">
+                  <label className="whitespace-nowrap overflow-hidden overflow-ellipsis block pb-2">
                     Nhập mật khẩu để thay đổi thông tin{" "}
                   </label>
                   <input

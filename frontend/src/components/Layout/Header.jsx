@@ -273,7 +273,7 @@ const Header = ({ activeHeading }) => {
               </div>
             </div>
           </div>
-          
+
           <div className="flex text-sm">
             <div className={`${styles.noramlFlex} `}>
               <div
@@ -320,7 +320,7 @@ const Header = ({ activeHeading }) => {
       <div
         className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
           }
-      w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
+      w-full h-[40px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
         <div className="w-full flex items-center justify-between">
           <div>
@@ -328,7 +328,7 @@ const Header = ({ activeHeading }) => {
           </div>
           <div>
             <Link to="/">
-              <h1 className="whitespace-nowrap self-center text-[33px] font-bold">
+              <h1 className="whitespace-nowrap self-center md:text-lg lg:text-md xl:text-lg 2xl:text-md font-bold">
                 NÔNG NGHIỆP XANH
               </h1>
             </Link>
@@ -384,27 +384,32 @@ const Header = ({ activeHeading }) => {
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
-                {searchData && (
-                  <div className="absolute bg-[#fff] z-10 shadow w-full left-0 p-3">
-                    {searchData.map((i) => {
-                      const d = i.name;
-
-                      const Product_name = d.replace(/\s+/g, "-");
-                      return (
-                        <Link to={`/product/${Product_name}`}>
-                          <div className="flex items-center">
-                            <img
-                              src={i.image_Url[0].url}
-                              alt=""
-                              className="w-[50px] mr-2"
-                            />
-                            <h5>{i.name}</h5>
-                          </div>
-                        </Link>
-                      );
-                    })}
+                {searchTerm && searchData && searchData.length === 0 ? (
+                  <div
+                    className="absolute min-h-[6vh] bg-slate-50 shadow-sm-2 z-[2] p-4 w-[100%]"
+                    ref={searchResultsRef}
+                  >
+                    <p className="text-red-500">Không tìm thấy sản phẩm</p>
                   </div>
-                )}
+                ) : searchData && searchData.length !== 0 ? (
+                  <div
+                    className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4 w-[100%]"
+                    ref={searchResultsRef}
+                  >
+                    {searchData.map((i, index) => (
+                      <Link to={`/product/${i._id}`} key={i._id}>
+                        <div className="w-full flex items-start py-3">
+                          <img
+                            src={`${i.images[0]}`}
+                            alt=""
+                            className="w-[40px] h-[40px] mr-[10px]"
+                          />
+                          <h1>{i.name}</h1>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
               </div>
 
               <Navbar active={activeHeading} />
