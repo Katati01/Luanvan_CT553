@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { RxCross1 } from "react-icons/rx";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the styles
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createevent } from "../../redux/actions/event";
-import { RxCross1 } from "react-icons/rx";
 
 const CreateEvent = ({ openForm, setOpen }) => {
   const { seller } = useSelector((state) => state.seller);
@@ -83,8 +83,8 @@ const CreateEvent = ({ openForm, setOpen }) => {
     // newForm.append("discountPrice", discountPrice);
     // newForm.append("stock", stock);
     newForm.append("shopId", seller._id);
-    newForm.append("start_Date", startDate.toISOString());
-    newForm.append("Finish_Date", endDate.toISOString());
+    // newForm.append("start_Date", startDate.toISOString());
+    // newForm.append("Finish_Date", endDate.toISOString());
     dispatch(createevent(newForm));
   };
 
@@ -150,8 +150,8 @@ const CreateEvent = ({ openForm, setOpen }) => {
                     [{ list: "ordered" }, { list: "bullet" }],
                     ["link", "image"],
                     [{ align: [] }],
-                    ["clean"] // remove formatting button
-                  ]
+                    ["clean"], // remove formatting button
+                  ],
                 }}
                 placeholder="Mô tả sự kiện, nội dung..."
               />
@@ -229,7 +229,7 @@ const CreateEvent = ({ openForm, setOpen }) => {
           />
         </div>
         <br /> */}
-            <div>
+            {/* <div>
               <label className="pb-2">
                 Ngày bắt đầu <span className="text-red-500">*</span>
               </label>
@@ -259,7 +259,7 @@ const CreateEvent = ({ openForm, setOpen }) => {
                 min={minEndDate}
                 placeholder="Enter your event product stock..."
               />
-            </div>
+            </div> */}
             <br />
             <div>
               <label className="pb-2">
