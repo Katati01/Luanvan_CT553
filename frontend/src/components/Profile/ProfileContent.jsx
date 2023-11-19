@@ -25,6 +25,7 @@ import { server } from "../../server";
 import styles from "../../styles/styles";
 
 const ProfileContent = ({ active }) => {
+  
   const { user, error, successMessage } = useSelector((state) => state.user);
   const [name, setName] = useState(user && user.name);
   const [email, setEmail] = useState(user && user.email);
@@ -32,6 +33,9 @@ const ProfileContent = ({ active }) => {
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
+
+
+
 
   useEffect(() => {
     if (error) {
@@ -207,9 +211,11 @@ const AllOrders = () => {
   const { user } = useSelector((state) => state.user);
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
   }, [dispatch, user._id]);
+
 
   const columns = [
 
@@ -255,9 +261,8 @@ const AllOrders = () => {
         return totalItemsQty || 0; // Trả về 0 nếu không có sản phẩm
       },
     },
-
     {
-      field: "total",
+      field: "shopTotal",
       headerName: "Tổng cộng",
       type: "number",
       minWidth: 100,
@@ -287,28 +292,25 @@ const AllOrders = () => {
 
   const row = [];
 
-  // orders &&
-  //   orders.forEach((item) => {
-  //     row.push({
-  //       id: item._id,
-  //       itemsQty: item.cart.length,
-  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-  //       status: item.status,
-  //     });
-  //   });
-  orders &&
-    orders.forEach((item) => {
-      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
-      const price = product.discountPrice !== 0 ? product.discountPrice : product.originalPrice;
+  orders.forEach((item) => {
+    const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
 
-      row.push({
-        id: item._id,
-        itemsQty: item.cart.length,
-        total: currency.format(price * product.qty, { code: "VND" }),
-        status: item.status,
-      });
+    // Lấy giá trị của totalPrice và shopShip từ shopTotal
+    const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+    const totalPrice = shopTotal.totalPrice || 0;
+    const shopShip = shopTotal.shopShip || 0;
+  
+    // Tính tổng của totalPrice và shopShip
+    const totalAmount = totalPrice + shopShip;
+  
+    row.push({
+      id: item._id,
+      itemsQty: item.cart.length,
+      status: item.status,
+      shopTotal: totalAmount,
     });
-    
+  });
+
   return (
     <div className="pl-8 pt-1">
       <DataGrid
@@ -331,13 +333,14 @@ const AllRefundOrders = () => {
     dispatch(getAllOrdersOfUser(user._id));
   }, []);
 
+  // const eligibleOrders =
+  //   orders &&
+  //   orders.filter(
+  //     (item) =>
+  //       item.status === "Processing refund" || item.status === "Refund Success"
+  //   );
   const eligibleOrders =
-    orders &&
-    orders.filter(
-      (item) =>
-        item.status === "Processing refund" || item.status === "Refund Success"
-    );
-
+  orders && orders.filter((item) => item.status === "Đang xử lý hoàn trả");
   const columns = [
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
 
@@ -446,6 +449,18 @@ const TrackOrder = () => {
         );
       },
     },
+    // {
+    //   field: "status",
+    //   headerName: "Trạng thái",
+    //   minWidth: 130,
+    //   flex: 0.7,
+    //   cellClassName: (params) => {
+    //     return params.getValue(params.id, "status") === "Delivered"
+    //       ? "greenColor"
+    //       : "redColor";
+    //   }
+
+    // },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -456,6 +471,7 @@ const TrackOrder = () => {
           ? "greenColor"
           : "redColor";
       }
+
     },
     {
       field: "itemsQty",
@@ -506,18 +522,39 @@ const TrackOrder = () => {
   //       status: item.status,
   //     });
   //   });
-  orders &&
+  // orders &&
+  //   orders.forEach((item) => {
+  //     const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+  //     const price = product.discountPrice !== 0 ? product.discountPrice : product.originalPrice;
+
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       total: currency.format(price * product.qty, { code: "VND" }),
+  //       status: item.status,
+  //     });
+  //   });
+    orders &&
     orders.forEach((item) => {
       const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
-      const price = product.discountPrice !== 0 ? product.discountPrice : product.originalPrice;
-
+  
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      const shopShip = shopTotal.shopShip || 0;
+    
+      // Tính tổng của totalPrice và shopShip
+      const totalAmount = totalPrice + shopShip;
+    
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        total: currency.format(price * product.qty, { code: "VND" }),
+        
+        total: totalAmount,
         status: item.status,
       });
     });
+  
 
   return (
     <div className="pl-8 pt-1">

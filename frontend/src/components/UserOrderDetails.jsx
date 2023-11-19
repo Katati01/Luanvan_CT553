@@ -39,6 +39,8 @@ const UserOrderDetails = () => {
       return total;
     }, 0);
   };
+ 
+
 
   const reviewHandler = async (e) => {
     await axios
@@ -71,18 +73,8 @@ const UserOrderDetails = () => {
     return acc + item.qty * itemPrice;
   }, 0);
 
-  // this is shipping cost variable
-  // const shipping = subTotalPrice * 0.02;
-  // const shipping = subTotalPrice > 2000000 ? 15000 : 30000;
-  const shipping = subTotalPrice > 2000000 ? 15000 : 30000;
 
-  const calculateShopTotalPrice = (cartItems) => {
-    return cartItems.reduce((total, item) => {
-      const itemPrice =
-        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
-      return total + itemPrice * item.qty;
-    }, 0);
-  };
+
 
   const refundHandler = async () => {
     await axios
@@ -112,7 +104,11 @@ const UserOrderDetails = () => {
           ID đơn hàng: <span>#{data?._id}</span>
         </h5>
         <h5 className="text-[#00000084]">
-          Thời gian: <span>{data?.createdAt?.slice(0, 10)}</span>
+          Ngày đặt: <span>{new Date(data?.createdAt).toLocaleString("vi-VN", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+          })}</span>
         </h5>
       </div>
 
@@ -289,27 +285,74 @@ const UserOrderDetails = () => {
     </div>
   ))}
 </div> */}
-<div className="border-t w-full text-right">
+{/* <div className="border-t w-full text-right">
   {Object.keys(data?.shopTotal).map((shopId, index) => {
     const shopTotal = calculateShopTotal(data?.cart, shopId);
     if (shopTotal > 0) {
       return (
         <div key={index}>
+                    <h5 className="pt-3 text-[18px]">
+          Phí vận chuyển :{" "}
+
+          
+          </h5>
           <h5 className="pt-3 text-[18px]">
             Tổng tiền :{" "}
             <strong>
               {shopTotal.toLocaleString("vi-VN", {
                 style: "currency",
                 currency: "VND",
-              }) + ""}
+              }) + ""} 
             </strong>
+            
           </h5>
+
         </div>
       );
     }
     return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
   })}
-</div>
+  
+  
+</div> */}
+{Object.keys(data?.shopTotal).map((shopId, index) => {
+  const shopTotal = calculateShopTotal(data?.cart, shopId);
+  const shopShip = data?.shopTotal[shopId]?.shopShip || 0; // Lấy giá trị shopShip từ JSON
+
+  if (shopTotal > 0) {
+    return (
+      <div key={index}>
+        <h5 className="pt-3 text-[18px]">
+            Tổng tiền hàng :{" "}
+            <strong>
+              {shopTotal.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""} 
+            </strong>
+        </h5>
+        <h5 className="pt-3 text-[18px]">
+          Phí vận chuyển:  <strong>{currency.format(shopShip, { code: "VND" })}</strong>
+        </h5>
+
+        <h5 className="pt-3 text-[18px]">
+          Tổng cộng:{" "}
+          <strong>
+            {(
+              shopTotal + shopShip
+            ).toLocaleString("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }) + ""}
+          </strong>
+        </h5>
+      </div>
+    );
+  }
+  return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
+})}
+
+
       </div>
       <br />
       <br />

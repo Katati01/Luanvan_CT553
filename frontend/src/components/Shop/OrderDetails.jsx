@@ -108,7 +108,11 @@ const OrderDetails = () => {
           ID đơn hàng: <span>#{data?._id?.slice(0, 8)}</span>
         </h5>
         <h5 className="text-[#00000084]">
-          Thời gian: <span>{data?.createdAt?.slice(0, 10)}</span>
+          Ngày đặt: <span>{new Date(data?.createdAt).toLocaleString("vi-VN", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+          })}</span>
         </h5>
       </div>
 
@@ -231,22 +235,22 @@ const OrderDetails = () => {
             onChange={(e) => setStatus(e.target.value)}
             className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
           >
-            {[
-              "Đang xử lý",
-              "Chuyển giao cho đối tác vận chuyển",
-              "Đang vận chuyển",
-              "Đã nhận",
-              "Đơn hàng đang trên đường giao đến bạn",
-              "Đã giao hàng"
+ {[
+              "Processing",
+              "Transferred to delivery partner",
+              "Shipping",
+              "Received",
+              "On the way",
+              "Delivered",
             ]
               .slice(
                 [
-                  "Đang xử lý",
-                  "Chuyển giao cho đối tác vận chuyển",
-                  "Đang vận chuyển",
-                  "Đã nhận",
-                  "Đơn hàng đang trên đường giao đến bạn",
-                  "Đã giao hàng"
+                  "Processing",
+                  "Transferred to delivery partner",
+                  "Shipping",
+                  "Received",
+                  "On the way",
+                  "Delivered",
                 ].indexOf(data?.status)
               )
               .map((option, index) => (
