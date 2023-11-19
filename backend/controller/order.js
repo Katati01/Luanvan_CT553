@@ -190,6 +190,7 @@ router.put(
     }
   })
 );
+// update order status for seller
 
 // give a refund ----- user
 router.put(
