@@ -1,15 +1,13 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
+import currency from "currency-formatter";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteEvent, getAllEventsShop } from "../../redux/actions/event";
-import { getAllProductsShop } from "../../redux/actions/product";
-import { deleteProduct } from "../../redux/actions/product";
-import Loader from "../Layout/Loader";
-import currency from "currency-formatter";
 import styles from "../../styles/styles";
+import Loader from "../Layout/Loader";
 import CreateEvent from "./CreateEvent";
 const AllEvents = () => {
   const [open, setOpen] = useState(false);
@@ -31,31 +29,31 @@ const AllEvents = () => {
     { field: "id", headerName: "ID X SP", minWidth: 150, flex: 0.7 },
     {
       field: "name",
-      headerName: "Tên sản phẩm",
+      headerName: "Tên bài viết",
       minWidth: 180,
-      flex: 1.4
+      flex: 1.4,
     },
     {
       field: "price",
-      headerName: "Giá",
+      headerName: "Ngày đăng",
       minWidth: 100,
-      flex: 0.6
+      flex: 0.6,
     },
-    {
-      field: "Stock",
-      headerName: "Số lượng",
-      type: "number",
-      minWidth: 80,
-      flex: 0.5
-    },
+    // {
+    //   field: "Stock",
+    //   headerName: "Số lượng",
+    //   type: "number",
+    //   minWidth: 80,
+    //   flex: 0.5,
+    // },
 
-    {
-      field: "sold",
-      headerName: "Đã bán",
-      type: "number",
-      minWidth: 130,
-      flex: 0.6
-    },
+    // {
+    //   field: "sold",
+    //   headerName: "Đã bán",
+    //   type: "number",
+    //   minWidth: 130,
+    //   flex: 0.6,
+    // },
     {
       field: "Xem",
       flex: 0.8,
@@ -76,7 +74,7 @@ const AllEvents = () => {
             </Link>
           </>
         );
-      }
+      },
     },
     {
       field: "Xóa",
@@ -93,8 +91,8 @@ const AllEvents = () => {
             </Button>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -105,10 +103,10 @@ const AllEvents = () => {
         id: item._id,
         name: item.name,
         price: `${currency.format(item.discountPrice, {
-          code: "VND"
+          code: "VND",
         })}`,
-        Stock: item.stock,
-        sold: item.sold_out
+        // Stock: item.stock,
+        // sold: item.sold_out,
       });
     });
 

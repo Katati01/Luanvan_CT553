@@ -1,11 +1,9 @@
-import currency from "currency-formatter";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addTocart } from "../../redux/actions/cart";
 import styles from "../../styles/styles";
-import CountDown from "./CountDown";
 
 const EventCard = ({ active, data }) => {
   const { cart } = useSelector((state) => state.cart);
@@ -48,7 +46,7 @@ const EventCard = ({ active, data }) => {
         )}
         {/* <p dangerouslySetInnerHTML={{ __html: data.description }}></p> */}
 
-        <div className="flex py-2 justify-between">
+        {/* <div className="flex py-2 justify-between">
           <div className="flex">
             <h5 className="font-[500] text-[18px] text-[#d55b45] pr-3 line-through">
               {`${currency.format(data.originalPrice, { code: "VND" })}`}
@@ -61,7 +59,7 @@ const EventCard = ({ active, data }) => {
             {data.sold_out} Đã bán
           </span>
         </div>
-        <CountDown data={data} />
+        <CountDown data={data} /> */}
         <br />
         <div className="flex items-center">
           {/* <Link to={`/product/${data._id}?isEvent=true`}> */}
