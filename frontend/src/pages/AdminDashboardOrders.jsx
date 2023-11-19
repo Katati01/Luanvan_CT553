@@ -141,7 +141,7 @@ const calculateShopTotalPrice = (cartItems) => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Đã giao hàng"
+        return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
       },
@@ -182,74 +182,60 @@ const calculateShopTotalPrice = (cartItems) => {
   const row = [];
   const row1 = [];
 
-  // orders &&
-  //   orders.forEach((item) => {
-  //     row.push({
-  //       id: item._id,
-  //       itemsQty: item.cart.length,
-  //       total:
-  //         item.totalPrice.toLocaleString("vi-VN", {
-  //           style: "currency",
-  //           currency: "VND",
-  //         }) + "",
-  //       status: item.status,
-  //       created: new Date(item?.createdAt).toLocaleString("vi-VN", {
-  //         year: "numeric",
-  //         month: "numeric",
-  //         day: "numeric",
-  //         hour: "numeric",
-  //         minute: "numeric",
-  //       }),
-  //     });
-  //   });
-
   adminOrders &&
-    adminOrders.forEach((item) => {
+  adminOrders.forEach((item) => {
+    const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+
+    // Lấy giá trị của totalPrice và shopShip từ shopTotal
+    const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+    const totalPrice = shopTotal.totalPrice || 0;
+    const shopShip = shopTotal.shopShip || 0;
+        // Tính tổng của totalPrice và shopShip
+    const totalAmount = totalPrice + shopShip;
+    console.log("tiền ship shop",shopShip)
+  
+    row.push({
+      id: item._id,
+      itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
+
+      total: totalAmount,
+      status: item?.status,
+      createdAt: new Date(item?.createdAt).toLocaleString("vi-VN", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      }),
+      ShopName: item?.cart?.[0]?.shop?.name,
+    });
+  });
+ 
+    
+  adminOrders &&
+    getAllOrders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      const shopShip = shopTotal.shopShip || 0;
+          // Tính tổng của totalPrice và shopShip
+      const totalAmount = totalPrice + shopShip;
+      console.log("tiền ship shop",shopShip)
+    
       row.push({
         id: item._id,
         itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
-        // total:
-        //   item?.totalPrice.toLocaleString("vi-VN", {
-        //     style: "currency",
-        //     currency: "VND",
-        //   }) + "",
-        total: `${currency.format(calculateShopTotalPrice(item.cart), {
-          code: "VND",
-        })}`,
+  
+        total: totalAmount,
         status: item?.status,
         createdAt: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",
           month: "numeric",
           day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
         }),
         ShopName: item?.cart?.[0]?.shop?.name,
       });
     });
-    
-  adminOrders &&
-    getAllOrders.forEach((item) => {
-      row1.push({
-        id: item._id,
-        itemsQty: item.cart.length,
-        total: `${currency.format(calculateShopTotalPrice(item.cart), {
-          code: "VND",
-        })}`,
-        status: item.status,
-        createdAt: new Date(item?.createdAt).toLocaleString("vi-VN", {
-          year: "numeric",
-          month: "numeric",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        }),
-        ShopName: item?.cart?.[0]?.shop?.name,
-      });
-    });
-
-
-
 
     return (
       <div>
