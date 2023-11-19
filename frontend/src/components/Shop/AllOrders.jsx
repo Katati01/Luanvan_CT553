@@ -135,7 +135,7 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.getValue(params.id, "status") === "Đã giao hàng"
           ? "greenColor"
           : "redColor";
       },
@@ -210,8 +210,9 @@ const AllOrders = () => {
           year: "numeric",
           month: "numeric",
           day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
+          // hour: "numeric",
+          // minute: "numeric",
+
         }),
       });
     });
@@ -230,8 +231,8 @@ const AllOrders = () => {
           year: "numeric",
           month: "numeric",
           day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
+          // hour: "numeric",
+          // minute: "numeric",
         }),
       });
     });

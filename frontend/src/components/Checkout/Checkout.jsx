@@ -67,29 +67,57 @@ const Checkout = () => {
     }
   };
 
-  const calculateShopTotal = (cart) => {
+  // const calculateShopTotal = (cart) => {
+  //   const shopTotalMap = new Map();
+  
+  //   cart.forEach((item) => {
+  //     const shopId = item.shopId;
+  //     const itemPrice = item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+  //     const itemTotal = item.qty * itemPrice;
+  
+  //     if (!shopTotalMap.has(shopId)) {
+  //       shopTotalMap.set(shopId, {
+  //         totalQuantity: item.qty,
+  //         totalPrice: itemTotal,
+  //       });
+  //     } else {
+  //       const existingShopTotal = shopTotalMap.get(shopId);
+  //       existingShopTotal.totalQuantity += item.qty;
+  //       existingShopTotal.totalPrice += itemTotal;
+  //     }
+  //   });
+  
+  //   return Object.fromEntries(shopTotalMap);
+  // };
+  const calculateShopTotal = (cart, shippingFee) => {
     const shopTotalMap = new Map();
   
     cart.forEach((item) => {
       const shopId = item.shopId;
       const itemPrice = item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
       const itemTotal = item.qty * itemPrice;
+      const itemShip = item.qty * 30000;
   
       if (!shopTotalMap.has(shopId)) {
         shopTotalMap.set(shopId, {
           totalQuantity: item.qty,
           totalPrice: itemTotal,
+          shopShip: itemShip,
         });
       } else {
         const existingShopTotal = shopTotalMap.get(shopId);
         existingShopTotal.totalQuantity += item.qty;
         existingShopTotal.totalPrice += itemTotal;
+        existingShopTotal.shopShip += itemShip;
       }
     });
+  
+
   
     return Object.fromEntries(shopTotalMap);
   };
   const shopTotal = calculateShopTotal(cart);
+  // const shopTotal = calculateShopTotal(cart);
   console.log(shopTotal)
 
   const subTotalPrice = cart.reduce((acc, item) => {
