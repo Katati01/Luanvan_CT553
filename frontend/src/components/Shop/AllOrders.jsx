@@ -135,7 +135,7 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Đã giao hàng"
+        return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
       },
@@ -147,7 +147,6 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.7,
     },
-
     {
       field: "total",
       headerName: "Tổng tiền",
