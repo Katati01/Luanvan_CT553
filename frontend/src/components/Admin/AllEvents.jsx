@@ -1,7 +1,6 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import axios from "axios";
-import currency from "currency-formatter";
 import React, { useEffect, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -26,7 +25,7 @@ const AllEvents = () => {
       flex: 1.4,
     },
     {
-      field: "price",
+      field: "created",
       headerName: "Ngày đăng",
       minWidth: 100,
       flex: 0.6,
@@ -74,11 +73,14 @@ const AllEvents = () => {
       row.push({
         id: item._id,
         name: item.name,
-        price: `${currency.format(item.discountPrice, {
-          code: "VND",
-        })}`,
-        Stock: item.stock,
-        sold: item.sold_out,
+
+        created: new Date(item?.createdAt).toLocaleString("vi-VN", {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          // hour: "numeric",
+          // minute: "numeric",
+        }),
       });
     });
 

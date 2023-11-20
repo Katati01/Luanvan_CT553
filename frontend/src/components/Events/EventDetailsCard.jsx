@@ -2,12 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { addTocart } from "../../redux/actions/cart";
-import {
-  addToWishlist,
-  removeFromWishlist,
-} from "../../redux/actions/wishlist";
 import { server } from "../../server";
 import styles from "../../styles/styles";
 
@@ -37,74 +31,6 @@ const EventDetailsCard = ({ setOpen }) => {
     fetchEventData();
   }, [id]);
   console.log(eventData);
-
-  useEffect(() => {
-    if (wishlist && wishlist.find((i) => i._id === id)) {
-      setClick(true);
-    } else {
-      setClick(false);
-    }
-  }, [wishlist, id]);
-  const handleCategoryClick = (category) => {
-    navigate(`/products?category=${category}`);
-  };
-
-  const incrementCount = () => {
-    setCount(count + 1);
-  };
-
-  const decrementCount = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  };
-
-  const removeFromWishlistHandler = (eventData) => {
-    setClick(!click);
-    dispatch(removeFromWishlist(eventData));
-  };
-
-  const addToWishlistHandler = (eventData) => {
-    setClick(!click);
-    dispatch(addToWishlist(eventData));
-  };
-
-  const addToCartHandler = (id) => {
-    const isItemExists = cart && cart.find((i) => i._id === id);
-    if (isItemExists) {
-      toast.error("Sản phẩm đã có trong giỏ hàng!");
-    } else {
-      if (eventData.stock < count) {
-        toast.error("Sản phẩm có số lượng giới hạn!");
-      } else {
-        const carteventData = { ...eventData, qty: count };
-        dispatch(addTocart(carteventData));
-        toast.success("Sản phẩm đã thêm vào giỏ hàng!");
-      }
-    }
-  };
-
-  const handleMessageSubmit = async () => {
-    if (isAuthenticated) {
-      const groupTitle = eventData._id + user._id;
-      const userId = user._id;
-      const sellerId = eventData.shop._id;
-      await axios
-        .post(`${server}/conversation/create-new-conversation`, {
-          groupTitle,
-          userId,
-          sellerId,
-        })
-        .then((res) => {
-          navigate(`/inbox?${res.eventData.conversation._id}`);
-        })
-        .catch((error) => {
-          toast.error(error.response.eventData.message);
-        });
-    } else {
-      toast.error("Vui lòng đăng nhập để nhắn tin");
-    }
-  };
 
   // const formatDate = (date) => {
   //   const inputDate = typeof date === "string" ? new Date(date) : date;
