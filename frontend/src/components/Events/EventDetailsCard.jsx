@@ -2,12 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { addTocart } from "../../redux/actions/cart";
-import {
-  addToWishlist,
-  removeFromWishlist,
-} from "../../redux/actions/wishlist";
 import { server } from "../../server";
 import styles from "../../styles/styles";
 import eventCard from "./EventCard";
@@ -39,97 +33,29 @@ const EventDetailsCard = ({ setOpen }) => {
   }, [id]);
   console.log(eventData);
 
-  useEffect(() => {
-    if (wishlist && wishlist.find((i) => i._id === id)) {
-      setClick(true);
-    } else {
-      setClick(false);
-    }
-  }, [wishlist, id]);
-  const handleCategoryClick = (category) => {
-    navigate(`/products?category=${category}`);
-  };
+  // const formatDate = (date) => {
+  //   const inputDate = typeof date === "string" ? new Date(date) : date;
 
-  const incrementCount = () => {
-    setCount(count + 1);
-  };
+  //   if (
+  //     Object.prototype.toString.call(inputDate) !== "[object Date]" ||
+  //     isNaN(inputDate.getTime())
+  //   ) {
+  //     return "Invalid Date";
+  //   }
 
-  const decrementCount = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  };
+  //   const day = inputDate.getUTCDate();
+  //   const month = inputDate.getUTCMonth() + 1;
+  //   const year = inputDate.getUTCFullYear();
 
-  const removeFromWishlistHandler = (eventData) => {
-    setClick(!click);
-    dispatch(removeFromWishlist(eventData));
-  };
+  //   const formattedDate = `${day < 10 ? "0" : ""}${day}-${
+  //     month < 10 ? "0" : ""
+  //   }${month}-${year}`;
 
-  const addToWishlistHandler = (eventData) => {
-    setClick(!click);
-    dispatch(addToWishlist(eventData));
-  };
+  //   return formattedDate;
+  // };
 
-  const addToCartHandler = (id) => {
-    const isItemExists = cart && cart.find((i) => i._id === id);
-    if (isItemExists) {
-      toast.error("Sản phẩm đã có trong giỏ hàng!");
-    } else {
-      if (eventData.stock < count) {
-        toast.error("Sản phẩm có số lượng giới hạn!");
-      } else {
-        const carteventData = { ...eventData, qty: count };
-        dispatch(addTocart(carteventData));
-        toast.success("Sản phẩm đã thêm vào giỏ hàng!");
-      }
-    }
-  };
-
-  const handleMessageSubmit = async () => {
-    if (isAuthenticated) {
-      const groupTitle = eventData._id + user._id;
-      const userId = user._id;
-      const sellerId = eventData.shop._id;
-      await axios
-        .post(`${server}/conversation/create-new-conversation`, {
-          groupTitle,
-          userId,
-          sellerId,
-        })
-        .then((res) => {
-          navigate(`/inbox?${res.eventData.conversation._id}`);
-        })
-        .catch((error) => {
-          toast.error(error.response.eventData.message);
-        });
-    } else {
-      toast.error("Vui lòng đăng nhập để nhắn tin");
-    }
-  };
-
-  const formatDate = (date) => {
-    const inputDate = typeof date === "string" ? new Date(date) : date;
-
-    if (
-      Object.prototype.toString.call(inputDate) !== "[object Date]" ||
-      isNaN(inputDate.getTime())
-    ) {
-      return "Invalid Date";
-    }
-
-    const day = inputDate.getUTCDate();
-    const month = inputDate.getUTCMonth() + 1;
-    const year = inputDate.getUTCFullYear();
-
-    const formattedDate = `${day < 10 ? "0" : ""}${day}-${
-      month < 10 ? "0" : ""
-    }${month}-${year}`;
-
-    return formattedDate;
-  };
-
-  const startDate = eventData ? formatDate(eventData.start_Date) : "";
-  const finishDate = eventData ? formatDate(eventData.Finish_Date) : "";
+  // const startDate = eventData ? formatDate(eventData.start_Date) : "";
+  // const finishDate = eventData ? formatDate(eventData.Finish_Date) : "";
 
   return (
     <div className="flex items-center bg-white">
@@ -150,10 +76,16 @@ const EventDetailsCard = ({ setOpen }) => {
                 </span>
               </div>
 
-              <div className="font-semibold">
+              {/* <div className="font-semibold">
                 Thời gian diễn ra sự kiện: Từ{" "}
                 <span className="text-[#c96665]">{" " + startDate}</span> đến{" "}
                 <span className="text-[#c96665]">{" " + finishDate}</span>
+              </div> */}
+              <div className="font-semibold">
+                Ngày đăng:
+                <span className="text-[#c96665]">
+                  {" " + eventData.createdAt.slice(0, 10)}
+                </span>
               </div>
             </div>
 
@@ -195,118 +127,3 @@ const EventDetailsCard = ({ setOpen }) => {
 };
 
 export default EventDetailsCard;
-
-/* <div className="w-full flex flex-wrap">
-                  {eventData &&
-                    eventData.images.map((i, index) => (
-                      <div
-                        className={`${select === 0 ? "border" : "null"
-                          } cursor-pointer`}
-                      >
-                        <img
-                          src={`${i}`}
-                          alt=""
-                          className="h-[115px] overflow-hidden object-cover rounded-[8px]"
-                          onClick={() => setSelect(index)}
-                        />
-                      </div>
-                    ))}
-                  <div
-                    className={`${select === 1 ? "border" : "null"
-                      } cursor-pointer`}
-                  ></div>
-                </div> */
-
-/* <div className="w-full 800px:w-[50%] pt-5">
-                <h1 className={`${styles.productTitle}`}>{eventData.name}</h1>
-                <div className="flex">
-                  <p>
-                    Tag: #<i className="text-[#242e8a] mr-4 ">{eventData.tags}</i>
-                  </p>
-                  <p>
-                    Danh mục: <i className="text-[#8a2424] ">{eventData.category}</i>
-                  </p>
-
-                  <p>
-                    Danh mục:{" "}
-                    <i
-                      className="text-[#8a2424] cursor-pointer"
-                      onClick={() => handleCategoryClick(eventData.category)}
-                    >
-                      {eventData.category}
-                    </i>
-                  </p>
-                </div>
-
-                <span className="font-[500] text-[17px] text-[#f1055c]">
-                  {eventData?.sold_out} đã bán
-                </span>
-                <div className="flex pt-3">
-                  <h4
-                    className={`${styles.productDiscountPrice} mt-5 !text-3xl font-bol `}
-                  >
-                    {eventData.discountPrice === 0
-                      ? `${currency.format(eventData.originalPrice, {
-                        code: "VND",
-                      })}`
-                      : `${currency.format(eventData.discountPrice, {
-                        code: "VND",
-                      })}`}
-                  </h4>
-                  {eventData.discountPrice !== 0 && (
-                    <h3 className={`${styles.price}`}>
-                      {`${currency.format(eventData.originalPrice, {
-                        code: "VND",
-                      })}`}
-                    </h3>
-                  )}
-
-                  <div className="ml-5">
-                    <p
-                      className={`${eventData.stock > 0 ? "text-[#008000]" : "text-[#FF0000]"
-                        }`}
-                    >
-                      {eventData.stock > 0 ? "Còn hàng" : "Hết hàng"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center mt-12 justify-between pr-3">
-                  <div>
-                    <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                      onClick={decrementCount}
-                    >
-                      -
-                    </button>
-                    <span className="bg-gray-200 text-gray-800 font-medium px-6 py-[11px]">
-                      {count}
-                    </span>
-                    <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                      onClick={incrementCount}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div>
-                    {click ? (
-                      <AiFillHeart
-                        size={30}
-                        className="cursor-pointer"
-                        onClick={() => removeFromWishlistHandler(eventData)}
-                        color={click ? "red" : "#333"}
-                        title="Remove from wishlist"
-                      />
-                    ) : (
-                      <AiOutlineHeart
-                        size={30}
-                        className="cursor-pointer"
-                        onClick={() => addToWishlistHandler(eventData)}
-                        color={click ? "red" : "#333"}
-                        title="Add to wishlist"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div> */

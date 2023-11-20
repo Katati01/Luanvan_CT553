@@ -288,7 +288,7 @@ const UpdateProduct = () => {
           />
         </div>
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">
             Số lượng sản phẩm <span className="text-red-500">*</span>
           </label>
@@ -301,7 +301,7 @@ const UpdateProduct = () => {
             placeholder="Nhập số lượng sản phẩm..."
           />
         </div>
-        <br />
+        <br /> */}
         <div>
           <label className="pb-2">
             Số lượng sản phẩm <span className="text-red-500">*</span>

@@ -69,12 +69,12 @@ const Checkout = () => {
 
   // const calculateShopTotal = (cart) => {
   //   const shopTotalMap = new Map();
-  
+
   //   cart.forEach((item) => {
   //     const shopId = item.shopId;
   //     const itemPrice = item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
   //     const itemTotal = item.qty * itemPrice;
-  
+
   //     if (!shopTotalMap.has(shopId)) {
   //       shopTotalMap.set(shopId, {
   //         totalQuantity: item.qty,
@@ -86,18 +86,19 @@ const Checkout = () => {
   //       existingShopTotal.totalPrice += itemTotal;
   //     }
   //   });
-  
+
   //   return Object.fromEntries(shopTotalMap);
   // };
   const calculateShopTotal = (cart, shippingFee) => {
     const shopTotalMap = new Map();
-  
+
     cart.forEach((item) => {
       const shopId = item.shopId;
-      const itemPrice = item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
       const itemTotal = item.qty * itemPrice;
-      const itemShip = item.qty * 30000;
-  
+      const itemShip = 30000;
+
       if (!shopTotalMap.has(shopId)) {
         shopTotalMap.set(shopId, {
           totalQuantity: item.qty,
@@ -111,14 +112,13 @@ const Checkout = () => {
         existingShopTotal.shopShip += itemShip;
       }
     });
-  
 
-  
     return Object.fromEntries(shopTotalMap);
   };
   const shopTotal = calculateShopTotal(cart);
   // const shopTotal = calculateShopTotal(cart);
   console.log(shopTotal)
+
 
   const subTotalPrice = cart.reduce((acc, item) => {
     const itemPrice =
@@ -126,11 +126,9 @@ const Checkout = () => {
     return acc + item.qty * itemPrice;
   }, 0);
 
-
   const shopCount = new Set(cart.map((item) => item.shopId)).size;
   const shipping = 30000 * shopCount;
   console.log(shipping);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -158,8 +156,16 @@ const Checkout = () => {
 
           const eligiblePrice = isCouponValid.reduce(
             (acc, item) => acc + item.qty * item.discountPrice,
+
             0
           );
+          // const eligiblePrice = cart.reduce((acc, item) => {
+          //   const itemPrice =
+          //     item.discountPrice === 0
+          //       ? item.originalPrice
+          //       : item.discountPrice;
+          //   return acc + item.qty * itemPrice;
+          // }, 0);
           const discountPrice = (eligiblePrice * couponCodeValue) / 100;
           setDiscountPrice(discountPrice);
           setCouponCodeData(res.data.couponCode);
@@ -179,13 +185,9 @@ const Checkout = () => {
     ? (subTotalPrice + shipping - discountPercentenge).toFixed(2)
     : (subTotalPrice + shipping).toFixed(2);
 
-
   console.log(discountPercentenge);
 
   // thêm 
-
-
-   
  
 
   return (
@@ -237,8 +239,6 @@ const Checkout = () => {
     </div>
   );
 };
-
-
 
 const ShippingInfo = ({
   user,
@@ -430,7 +430,7 @@ const ShippingInfo = ({
         {cart.map((item, index) => (
           <div key={index} className="flex items-center mb-2">
             <img
-              src={item.images[0]} 
+              src={item.images[0]}
               alt={item.name}
               className="w-8 h-8 mr-2 object-cover"
             />
@@ -440,20 +440,11 @@ const ShippingInfo = ({
         ))}
       </div>
       <div className="mb-4">
-        <h5 className="text-[18px] font-[500] mb-2">
-          Cửa hàng:
-        </h5>
+        <h5 className="text-[18px] font-[500] mb-2">Cửa hàng:</h5>
         {cart.map((item, index) => (
           <div key={index} className="flex items-center mb-2">
-             <img
-              src={item.shop.avatar} 
-
-              className="w-8 h-8 mr-2 object-cover"
-            />
-            <span
-              className="mr-2">{item.shop.name} 
-            </span>
-        
+            <img src={item.shop.avatar} className="w-8 h-8 mr-2 object-cover" />
+            <span className="mr-2">{item.shop.name}</span>
           </div>
         ))}
       </div>
@@ -502,7 +493,7 @@ const CartData = ({
           {currency.format(shipping.toFixed(2), { code: "VND" })}
         </h5>
       </div>
-      <br/>
+      <br />
 
       <div className="flex justify-between border-b pb-3">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>

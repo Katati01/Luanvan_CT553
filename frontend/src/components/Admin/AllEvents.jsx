@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { server } from "../../server";
-import currency from "currency-formatter";
 
 const AllEvents = () => {
   const [events, setEvents] = useState([]);
@@ -21,31 +20,31 @@ const AllEvents = () => {
     { field: "id", headerName: "ID sản phẩm", minWidth: 150, flex: 0.7 },
     {
       field: "name",
-      headerName: "Tên sản phẩm",
+      headerName: "Tên sự kiện",
       minWidth: 150,
-      flex: 1.4
+      flex: 1.4,
     },
     {
-      field: "price",
-      headerName: "Giá",
-      minWidth: 80,
-      flex: 0.6
+      field: "created",
+      headerName: "Ngày đăng",
+      minWidth: 100,
+      flex: 0.6,
     },
-    {
-      field: "Stock",
-      headerName: "Số lượng",
-      type: "number",
-      minWidth: 80,
-      flex: 0.5
-    },
+    // {
+    //   field: "Stock",
+    //   headerName: "Số lượng",
+    //   type: "number",
+    //   minWidth: 80,
+    //   flex: 0.5,
+    // },
 
-    {
-      field: "sold",
-      headerName: "Đã bán",
-      type: "number",
-      minWidth: 80,
-      flex: 0.6
-    },
+    // {
+    //   field: "sold",
+    //   headerName: "Đã bán",
+    //   type: "number",
+    //   minWidth: 80,
+    //   flex: 0.6,
+    // },
     {
       field: "Xem",
       flex: 0.8,
@@ -55,7 +54,7 @@ const AllEvents = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <>  
+          <>
             <Link to={`/event/${params.id}`}>
               <Button>
                 <AiOutlineEye size={20} />
@@ -63,8 +62,8 @@ const AllEvents = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -74,11 +73,14 @@ const AllEvents = () => {
       row.push({
         id: item._id,
         name: item.name,
-        price: `${currency.format(item.discountPrice, {
-          code: "VND"
-        })}`,
-        Stock: item.stock,
-        sold: item.sold_out
+
+        created: new Date(item?.createdAt).toLocaleString("vi-VN", {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          // hour: "numeric",
+          // minute: "numeric",
+        }),
       });
     });
 
