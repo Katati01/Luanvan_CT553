@@ -55,8 +55,15 @@ router.post(
   "/create-order",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const { cart, shippingAddress, user, totalPrice, shipping, shopTotal, paymentInfo } =
-        req.body;
+      const {
+        cart,
+        shippingAddress,
+        user,
+        totalPrice,
+        shipping,
+        shopTotal,
+        paymentInfo,
+      } = req.body;
 
       //   group cart items by shopId
       const shopItemsMap = new Map();
@@ -242,7 +249,7 @@ router.put(
             const seller = await Shop.findById(shopId);
 
             if (seller) {
-              seller.availableBalance += amount -( amount *0.05);
+              seller.availableBalance += amount - amount * 0.05;
               await seller.save();
             }
           }
@@ -359,6 +366,7 @@ router.put(
 
       // Tính toán và trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
       const refundAmount = order.totalPrice;
+      console.log("hello", refundAmount);
       await updateSellerInfo(-refundAmount);
 
       // Hàm cập nhật thông tin cửa hàng
@@ -413,7 +421,8 @@ router.get(
       // Check if the user has the permission to access this order
       if (
         req.user.role !== "Admin" &&
-        (req.user.role !== "Seller" || order.cart[0].seller.toString() !== req.user.id)
+        (req.user.role !== "Seller" ||
+          order.cart[0].seller.toString() !== req.user.id)
       ) {
         return next(new ErrorHandler("Unauthorized access to this order", 403));
       }

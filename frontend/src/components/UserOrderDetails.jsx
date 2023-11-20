@@ -39,8 +39,6 @@ const UserOrderDetails = () => {
       return total;
     }, 0);
   };
- 
-
 
   const reviewHandler = async (e) => {
     await axios
@@ -73,9 +71,6 @@ const UserOrderDetails = () => {
     return acc + item.qty * itemPrice;
   }, 0);
 
-
-
-
   const refundHandler = async () => {
     await axios
       .put(`${server}/order/order-refund/${id}`, {
@@ -104,11 +99,14 @@ const UserOrderDetails = () => {
           ID đơn hàng: <span>#{data?._id}</span>
         </h5>
         <h5 className="text-[#00000084]">
-          Ngày đặt: <span>{new Date(data?.createdAt).toLocaleString("vi-VN", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-          })}</span>
+          Ngày đặt:{" "}
+          <span>
+            {new Date(data?.createdAt).toLocaleString("vi-VN", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+            })}
+          </span>
         </h5>
       </div>
 
@@ -126,16 +124,15 @@ const UserOrderDetails = () => {
               />
               <div className="w-full">
                 <h5 className="pl-3 text-[25px]">
-                <Link
-                  to={`/product/${item._id}`}
-                  style={{ color: '#000', transition: 'color 0.3s' }}
-                  onMouseEnter={(e) => (e.target.style.color = '#2DC258')}
-                  onMouseLeave={(e) => (e.target.style.color = '#000')}
-                >
-                  
-                {item.name}
-                </Link>
-              </h5>
+                  <Link
+                    to={`/product/${item._id}`}
+                    style={{ color: "#000", transition: "color 0.3s" }}
+                    onMouseEnter={(e) => (e.target.style.color = "#2DC258")}
+                    onMouseLeave={(e) => (e.target.style.color = "#000")}
+                  >
+                    {item.name}
+                  </Link>
+                </h5>
                 <h5 className="pl-3 text-[20px] text-[#00000091]">
                   {/* {currency.format(item.discountPrice, { code: "VND" })} x {item.qty}
                    */}
@@ -254,7 +251,6 @@ const UserOrderDetails = () => {
       )}
 
       <div className="border-t w-full text-right">
-
         {/* <div>
   {data?.cart.map((item, index) => (
     <div key={index}>
@@ -270,7 +266,7 @@ const UserOrderDetails = () => {
   ))}
 </div> */}
 
-{/* <div className="border-t w-full text-right">
+        {/* <div className="border-t w-full text-right">
   {Object.keys(data?.shopTotal).map((shopId, index) => (
     <div key={index}>
       <h5 className="pt-3 text-[18px]">
@@ -285,7 +281,7 @@ const UserOrderDetails = () => {
     </div>
   ))}
 </div> */}
-{/* <div className="border-t w-full text-right">
+        {/* <div className="border-t w-full text-right">
   {Object.keys(data?.shopTotal).map((shopId, index) => {
     const shopTotal = calculateShopTotal(data?.cart, shopId);
     if (shopTotal > 0) {
@@ -315,44 +311,41 @@ const UserOrderDetails = () => {
   
   
 </div> */}
-{Object.keys(data?.shopTotal).map((shopId, index) => {
-  const shopTotal = calculateShopTotal(data?.cart, shopId);
-  const shopShip = data?.shopTotal[shopId]?.shopShip || 0; // Lấy giá trị shopShip từ JSON
+        {Object.keys(data?.shopTotal).map((shopId, index) => {
+          const shopTotal = calculateShopTotal(data?.cart, shopId);
+          const shopShip = data?.shopTotal[shopId]?.shopShip || 0; // Lấy giá trị shopShip từ JSON
 
-  if (shopTotal > 0) {
-    return (
-      <div key={index}>
-        <h5 className="pt-3 text-[18px]">
-            Tổng tiền hàng :{" "}
-            <strong>
-              {shopTotal.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }) + ""} 
-            </strong>
-        </h5>
-        <h5 className="pt-3 text-[18px]">
-          Phí vận chuyển:  <strong>{currency.format(shopShip, { code: "VND" })}</strong>
-        </h5>
+          if (shopTotal > 0) {
+            return (
+              <div key={index}>
+                <h5 className="pt-3 text-[18px]">
+                  Tổng tiền hàng :{" "}
+                  <strong>
+                    {shopTotal.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }) + ""}
+                  </strong>
+                </h5>
+                <h5 className="pt-3 text-[18px]">
+                  Phí vận chuyển:{" "}
+                  <strong>{currency.format(shopShip, { code: "VND" })}</strong>
+                </h5>
 
-        <h5 className="pt-3 text-[18px]">
-          Tổng cộng:{" "}
-          <strong>
-            {(
-              shopTotal + shopShip
-            ).toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }) + ""}
-          </strong>
-        </h5>
-      </div>
-    );
-  }
-  return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
-})}
-
-
+                <h5 className="pt-3 text-[18px]">
+                  Tổng cộng:{" "}
+                  <strong>
+                    {(shopTotal + shopShip).toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }) + ""}
+                  </strong>
+                </h5>
+              </div>
+            );
+          }
+          return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
+        })}
       </div>
       <br />
       <br />
@@ -373,7 +366,9 @@ const UserOrderDetails = () => {
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
           <h4>
             Trạng thái:{" "}
-            {data?.paymentInfo?.status ? data?.paymentInfo?.status : "Not Paid"}
+            {data?.paymentInfo?.status
+              ? data?.paymentInfo?.status
+              : "Chưa thanh toán"}
           </h4>
           <br />
           {data?.status === "Delivered" && (
@@ -385,7 +380,6 @@ const UserOrderDetails = () => {
             </div>
           )}
         </div>
-
       </div>
       <br />
       <Link to="/">
