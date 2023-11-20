@@ -117,8 +117,7 @@ const Checkout = () => {
   };
   const shopTotal = calculateShopTotal(cart);
   // const shopTotal = calculateShopTotal(cart);
-  console.log(shopTotal)
-
+  console.log(shopTotal);
 
   const subTotalPrice = cart.reduce((acc, item) => {
     const itemPrice =
@@ -167,6 +166,7 @@ const Checkout = () => {
           //   return acc + item.qty * itemPrice;
           // }, 0);
           const discountPrice = (eligiblePrice * couponCodeValue) / 100;
+
           setDiscountPrice(discountPrice);
           setCouponCodeData(res.data.couponCode);
           setCouponCode("");
@@ -187,8 +187,7 @@ const Checkout = () => {
 
   console.log(discountPercentenge);
 
-  // thêm 
- 
+  // thêm
 
   return (
     <div className="w-full flex flex-col items-center py-8">

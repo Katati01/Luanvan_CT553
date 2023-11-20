@@ -6,51 +6,9 @@ const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
 const Order = require("../model/order");
 const Shop = require("../model/shop");
 const Product = require("../model/product");
+const sendMail = require("../utils/sendMail");
 
 // create new order
-
-// router.post(
-//   "/create-order",
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const { cart, shippingAddress, user, totalPrice, shipping, paymentInfo } =
-//         req.body;
-
-//       //   group cart items by shopId
-//       const shopItemsMap = new Map();
-
-//       for (const item of cart) {
-//         const shopId = item.shopId;
-//         if (!shopItemsMap.has(shopId)) {
-//           shopItemsMap.set(shopId, []);
-//         }
-//         shopItemsMap.get(shopId).push(item);
-//       }
-
-//       // create an order for each shop
-//       const orders = [];
-
-//       for (const [shopId, items] of shopItemsMap) {
-//         const order = await Order.create({
-//           cart: items,
-//           shippingAddress,
-//           user,
-//           totalPrice,
-//           shipping,
-//           paymentInfo,
-//         });
-//         orders.push(order);
-//       }
-
-//       res.status(201).json({
-//         success: true,
-//         orders,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   })
-// );
 router.post(
   "/create-order",
   catchAsyncErrors(async (req, res, next) => {
@@ -232,158 +190,6 @@ router.put(
   })
 );
 
-// accept the refund ---- seller
-// router.put(
-//   "/order-refund-success/:id",
-//   isSeller,
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const order = await Order.findById(req.params.id);
-
-//       if (!order) {
-//         return next(
-//           new ErrorHandler("Không tìm thấy đơn đặt hàng với id này", 400)
-//         );
-//       }
-
-//       order.status = req.body.status;
-
-//       await order.save();
-
-//       res.status(200).json({
-//         success: true,
-//         message: "Hoàn tiền đặt hàng thành công!",
-//       });
-
-//       if (req.body.status === "Refund Success") {
-//         order.cart.forEach(async (o) => {
-//           await updateOrder(o._id, o.qty);
-//         });
-//       }
-
-//       async function updateOrder(id, qty) {
-//         const product = await Product.findById(id);
-
-//         product.stock += qty;
-//         product.sold_out -= qty;
-
-//         await product.save({ validateBeforeSave: false });
-//       }
-//     } catch (error) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   })
-// );
-
-// accept the refund ---- seller
-// router.put(
-//   "/order-refund-success/:id",
-//   isSeller,
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const order = await Order.findById(req.params.id);
-
-//       if (!order) {
-//         return next(
-//           new ErrorHandler("Không tìm thấy đơn đặt hàng với id này", 400)
-//         );
-//       }
-
-//       // Kiểm tra trạng thái của đơn hàng
-//       // if (order.status !== "Refund Success") {
-//       //   return next(
-//       //     new ErrorHandler(
-//       //       "Đơn hàng không ở trạng thái hoàn tiền thành công",
-//       //       400
-//       //     )
-//       //   );
-//       // }
-
-//       order.status = req.body.status;
-
-//       await order.save();
-
-//       res.status(200).json({
-//         success: true,
-//         message: "Hoàn tiền đặt hàng thành công!",
-//       });
-
-//       // Tính toán và trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
-//       const refundAmount = order.totalPrice;
-//       console.log("hello", refundAmount);
-//       await updateSellerInfo(-refundAmount);
-
-//       // Hàm cập nhật thông tin cửa hàng
-//       async function updateSellerInfo(amount) {
-//         const seller = await Shop.findById(req.seller.id);
-
-//         // Trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
-//         seller.availableBalance += amount;
-
-//         // Lưu thông tin cửa hàng sau khi cập nhật
-//         await seller.save();
-//       }
-//     } catch (error) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   })
-// );
-// router.put(
-//   "/order-refund-success/:id",
-//   isSeller,
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const order = await Order.findById(req.params.id);
-
-//       if (!order) {
-//         return next(
-//           new ErrorHandler("Không tìm thấy đơn đặt hàng với id này", 400)
-//         );
-//       }
-
-//       order.status = req.body.status;
-
-//       await order.save();
-
-//       res.status(200).json({
-//         success: true,
-//         message: "Hoàn tiền đặt hàng thành công!",
-//       });
-
-//       // Tính toán và trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
-//       const shopTotal = order.shopTotal;
-//       const refundAmount = calculateRefundAmount(shopTotal);
-      
-//       await updateSellerInfo(-refundAmount);
-
-//       // Hàm cập nhật thông tin cửa hàng
-//       async function updateSellerInfo(amount) {
-//         const seller = await Shop.findById(req.seller.id);
-
-//         // Trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
-//         seller.availableBalance += amount;
-
-//         // Lưu thông tin cửa hàng sau khi cập nhật
-//         await seller.save();
-//       }
-
-//       // Hàm tính toán số tiền hoàn tiền từ shopTotal
-//       function calculateRefundAmount(shopTotal) {
-//         let refundAmount = 0;
-
-//         for (const shopId in shopTotal) {
-//           if (shopTotal.hasOwnProperty(shopId)) {
-//             refundAmount += shopTotal[shopId].totalPrice;
-//           }
-//         }
-
-//         return refundAmount;
-//       }
-//     } catch (error) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   })
-// );
 router.put(
   "/order-refund-success/:id",
   isSeller,
@@ -400,7 +206,15 @@ router.put(
       order.status = req.body.status;
 
       await order.save();
-
+      try {
+        await sendMail({
+          email: order.user.email,
+          subject: "Hoàn tiền đơn hàng thành công",
+          message: `Chúng tôi xác nhận rằng số tiền của đơn hàng #${order._id} đã được hoàn trả thành công vào tài khoản của bạn.`,
+        });
+      } catch (error) {
+        console.error("Error sending refund confirmation email:", error);
+      }
       res.status(200).json({
         success: true,
         message: "Hoàn tiền đặt hàng thành công!",
@@ -442,7 +256,6 @@ router.put(
     }
   })
 );
-
 
 // all orders --- for admin
 router.get(

@@ -1,21 +1,18 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "../../styles/styles";
-import { useEffect } from "react";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import {
   CardNumberElement,
-  CardCvcElement,
-  CardExpiryElement,
-  useStripe,
   useElements,
+  useStripe,
 } from "@stripe/react-stripe-js";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useSelector } from "react-redux";
 import axios from "axios";
-import { server } from "../../server";
-import { toast } from "react-toastify";
-import { RxCross1 } from "react-icons/rx";
 import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
+import { RxCross1 } from "react-icons/rx";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const Payment = () => {
   const [orderData, setOrderData] = useState([]);
@@ -31,6 +28,9 @@ const Payment = () => {
   }, []);
 
   const createOrder = (data, actions) => {
+    const usdTotal = orderData?.totalPrice * 0.000041;
+    // console.log("Tiền đô", usdTotal);
+    // console.log("Tiền tổng:", orderData?.totalPrice);
     return actions.order
       .create({
         purchase_units: [
@@ -38,7 +38,8 @@ const Payment = () => {
             description: "Sunflower",
             amount: {
               currency_code: "USD",
-              value: orderData?.totalPrice,
+              // value: orderData?.totalPrice,
+              value: usdTotal.toFixed(2),
             },
           },
         ],
@@ -57,11 +58,11 @@ const Payment = () => {
     shippingAddress: orderData?.shippingAddress,
     user: user && user,
     totalPrice: orderData?.totalPrice,
-    shipping: orderData?.shipping?.toFixed(2), 
-    shopTotal: orderData?.shopTotal
+    shipping: orderData?.shipping?.toFixed(2),
+    shopTotal: orderData?.shopTotal,
   };
-  console.log("tien ship",order.shipping)
-  console.log("tiền shop", order.shopTotal)
+  console.log("tien ship", order.shipping);
+  console.log("tiền shop", order.shopTotal);
 
   const onApprove = async (data, actions) => {
     return actions.order.capture().then(function (details) {
@@ -444,18 +445,18 @@ const CartData = ({ orderData }) => {
         </h3>
         <h5 className="text-[18px] font-[600]">
           {/* {orderData?.discountPrice ? "$" + orderData.discountPrice : "-"} */}
-         - {currency.format(orderData.discountPrice, {
+          -{" "}
+          {currency.format(orderData.discountPrice, {
             code: "VND",
           })}
-
         </h5>
       </div>
       <h5 className="text-[18px] font-[600] text-end pt-3">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng cộng:</h3>
-        
+
         {currency.format(orderData?.totalPrice, {
-            code: "VND",
-          })}
+          code: "VND",
+        })}
       </h5>
       <br />
     </div>
