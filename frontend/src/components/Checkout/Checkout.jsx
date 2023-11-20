@@ -120,6 +120,7 @@ const Checkout = () => {
   // const shopTotal = calculateShopTotal(cart);
   console.log(shopTotal)
 
+
   const subTotalPrice = cart.reduce((acc, item) => {
     const itemPrice =
       item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
@@ -183,9 +184,6 @@ const Checkout = () => {
   console.log(discountPercentenge);
 
   // thêm 
-
-
-   
  
 
   return (
