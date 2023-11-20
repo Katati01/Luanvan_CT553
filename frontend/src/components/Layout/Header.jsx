@@ -3,9 +3,8 @@ import {
   AiOutlineHeart,
   AiOutlineSearch,
   AiOutlineShoppingCart,
-  AiOutlineUser
+  AiOutlineUser,
 } from "react-icons/ai";
-import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward, IoIosNotificationsOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -16,8 +15,8 @@ import Navbar from "./Navbar";
 
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
-import DropDown from "./DropDown";
 import { categoriesData } from "../../static/data";
+import DropDown from "./DropDown";
 
 import { BiMenu } from "react-icons/bi";
 import { TbArrowBarLeft } from "react-icons/tb";
@@ -154,7 +153,10 @@ const Header = ({ activeHeading }) => {
                 <div className="p-3 flex items-center text-black">
                   {!isSeller ? (
                     <React.Fragment>
-                      <Link to="/login" className="text-black flex items-center">
+                      <Link
+                        to="/login"
+                        className="text-black flex items-center"
+                      >
                         <AiOutlineUser className="text-black mr-1 text-xl" />
                         <h1 className="whitespace-nowrap self-center text-sm lg:text-base">
                           Đăng nhập
@@ -202,13 +204,13 @@ const Header = ({ activeHeading }) => {
                 </div>
               )}
             </div>
-
           </div>
         </div>
       </div>
       <div
-        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-          } transition hidden 800px:flex items-center justify-between w-full text-sm bg-[#e4e4e4] h-[40px]`}
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+        } transition hidden 800px:flex items-center justify-between w-full text-sm bg-[#e4e4e4] h-[40px]`}
       >
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
@@ -223,7 +225,11 @@ const Header = ({ activeHeading }) => {
                 >
                   <BiMenuAltLeft size={30} className="mr-2" />
                   Danh mục
-                  <IoIosArrowDown size={20} className="ml-2 cursor-pointer" onClick={() => setDropDown(!dropDown)} />
+                  <IoIosArrowDown
+                    size={20}
+                    className="ml-2 cursor-pointer"
+                    onClick={() => setDropDown(!dropDown)}
+                  />
                 </button>
                 {dropDown ? (
                   <>
@@ -246,7 +252,7 @@ const Header = ({ activeHeading }) => {
               <div
                 className="relative cursor-pointer mr-[15px]"
                 onMouseEnter={handleMouseEnter}
-              // onMouseLeave={handleMouseLeave}
+                // onMouseLeave={handleMouseLeave}
               >
                 <IoIosNotificationsOutline size={35} color="#333333" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
@@ -318,8 +324,9 @@ const Header = ({ activeHeading }) => {
 
       {/* mobile header */}
       <div
-        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-          }
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+        }
       w-full h-[40px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
         <div className="w-full flex items-center justify-between">

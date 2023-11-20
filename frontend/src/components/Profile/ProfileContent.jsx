@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import {
   AiOutlineArrowRight,
   AiOutlineCamera,
-  AiOutlineDelete
+  AiOutlineDelete,
 } from "react-icons/ai";
 import { MdTrackChanges } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
@@ -19,13 +19,12 @@ import {
   deleteUserAddress,
   loadUser,
   updatUserAddress,
-  updateUserInformation
+  updateUserInformation,
 } from "../../redux/actions/user";
 import { server } from "../../server";
 import styles from "../../styles/styles";
 
 const ProfileContent = ({ active }) => {
-  
   const { user, error, successMessage } = useSelector((state) => state.user);
   const [name, setName] = useState(user && user.name);
   const [email, setEmail] = useState(user && user.email);
@@ -33,9 +32,6 @@ const ProfileContent = ({ active }) => {
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
-
-
-
 
   useEffect(() => {
     if (error) {
@@ -64,9 +60,9 @@ const ProfileContent = ({ active }) => {
     await axios
       .put(`${server}/user/update-avatar`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
-        withCredentials: true
+        withCredentials: true,
       })
       .then((response) => {
         dispatch(loadUser());
@@ -108,9 +104,7 @@ const ProfileContent = ({ active }) => {
             <form onSubmit={handleSubmit} aria-required={true}>
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">
-                    Họ và tên (Tên người nhận)
-                  </label>
+                  <label className="block pb-2">Họ và tên:</label>
                   <input
                     type="text"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
@@ -211,14 +205,12 @@ const AllOrders = () => {
   const { user } = useSelector((state) => state.user);
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
   }, [dispatch, user._id]);
 
-
   const columns = [
-
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
     {
       field: "image",
@@ -247,7 +239,7 @@ const AllOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      }
+      },
     },
     {
       field: "itemsQty",
@@ -257,7 +249,10 @@ const AllOrders = () => {
       flex: 0.7,
       renderCell: (params) => {
         const order = orders.find((order) => order._id === params.id);
-        const totalItemsQty = order?.cart.reduce((total, product) => total + product.qty, 0);
+        const totalItemsQty = order?.cart.reduce(
+          (total, product) => total + product.qty,
+          0
+        );
         return totalItemsQty || 0; // Trả về 0 nếu không có sản phẩm
       },
     },
@@ -286,8 +281,8 @@ const AllOrders = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -296,13 +291,16 @@ const AllOrders = () => {
     const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
 
     // Lấy giá trị của totalPrice và shopShip từ shopTotal
-    const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+    const shopTotal =
+      item.shopTotal && item.shopTotal[product.shopId]
+        ? item.shopTotal[product.shopId]
+        : {};
     const totalPrice = shopTotal.totalPrice || 0;
     const shopShip = shopTotal.shopShip || 0;
-  
+
     // Tính tổng của totalPrice và shopShip
     const totalAmount = totalPrice + shopShip;
-  
+
     row.push({
       id: item._id,
       itemsQty: item.cart.length,
@@ -333,16 +331,34 @@ const AllRefundOrders = () => {
     dispatch(getAllOrdersOfUser(user._id));
   }, []);
 
-  // const eligibleOrders =
-  //   orders &&
-  //   orders.filter(
-  //     (item) =>
-  //       item.status === "Processing refund" || item.status === "Refund Success"
-  //   );
   const eligibleOrders =
-  orders && orders.filter((item) => item.status === "Đang xử lý hoàn trả");
+    orders &&
+    orders.filter(
+      (item) =>
+        item.status === "Processing refund" || item.status === "Refund Success"
+    );
+  // const eligibleOrders =
+  //   orders && orders.filter((item) => item.status === "Processing refund");
   const columns = [
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    {
+      field: "image",
+      headerName: "Sản phẩm",
+      minWidth: 150,
+      flex: 0.7,
+      sortable: false,
+      renderCell: (params) => {
+        const order = orders.find((order) => order._id === params.id);
+        const firstProductImage = order?.cart[0]?.images[0];
+        return (
+          <img
+            src={`${firstProductImage}`}
+            alt="Product"
+            style={{ width: "50px", height: "50px" }}
+          />
+        );
+      },
+    },
 
     {
       field: "status",
@@ -353,22 +369,22 @@ const AllRefundOrders = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      }
+      },
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
     },
 
     {
       field: "total",
-      headerName: "Tổng xcộng",
+      headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8
+      flex: 0.8,
     },
 
     {
@@ -388,23 +404,44 @@ const AllRefundOrders = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
 
+  // eligibleOrders &&
+  //   eligibleOrders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       // total: "US$ " + item.totalPrice,
+  //       total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+  //       status: item.status,
+  //     });
+  //   });
   eligibleOrders &&
-    eligibleOrders.forEach((item) => {
-      row.push({
-        id: item._id,
-        itemsQty: item.cart.length,
-        // total: "US$ " + item.totalPrice,
-        total: `${currency.format(item.totalPrice, { code: "VND" })}`,
-        status: item.status
-      });
-    });
+  eligibleOrders.forEach((item) => {
+    const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
 
+    // Lấy giá trị của totalPrice và shopShip từ shopTotal
+    const shopTotal =
+      item.shopTotal && item.shopTotal[product.shopId]
+        ? item.shopTotal[product.shopId]
+        : {};
+    const totalPrice = shopTotal.totalPrice || 0;
+    const shopShip = shopTotal.shopShip || 0;
+
+    // Tính tổng của totalPrice và shopShip
+    const totalAmount = totalPrice;
+
+    row.push({
+      id: item._id,
+      itemsQty: item.cart.length,
+      status: item.status,
+      total: totalAmount,
+    });
+  });
 
 
   return (
@@ -470,15 +507,14 @@ const TrackOrder = () => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
-      }
-
+      },
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
     },
 
     {
@@ -486,7 +522,7 @@ const TrackOrder = () => {
       headerName: "Tổng x cộng",
       type: "number",
       minWidth: 130,
-      flex: 0.8
+      flex: 0.8,
     },
 
     {
@@ -506,8 +542,8 @@ const TrackOrder = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -534,27 +570,29 @@ const TrackOrder = () => {
   //       status: item.status,
   //     });
   //   });
-    orders &&
+  orders &&
     orders.forEach((item) => {
       const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
-  
+
       // Lấy giá trị của totalPrice và shopShip từ shopTotal
-      const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+      const shopTotal =
+        item.shopTotal && item.shopTotal[product.shopId]
+          ? item.shopTotal[product.shopId]
+          : {};
       const totalPrice = shopTotal.totalPrice || 0;
       const shopShip = shopTotal.shopShip || 0;
-    
+
       // Tính tổng của totalPrice và shopShip
       const totalAmount = totalPrice + shopShip;
-    
+
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        
+
         total: totalAmount,
         status: item.status,
       });
     });
-  
 
   return (
     <div className="pl-8 pt-1">
@@ -658,14 +696,14 @@ const Address = () => {
   const dispatch = useDispatch();
   const addressTypeData = [
     {
-      name: "Mặc định"
+      name: "Mặc định",
     },
     {
-      name: "Nhà, nơi thường trú"
+      name: "Nhà, nơi thường trú",
     },
     {
-      name: "Văn phòng, nơi làm việc"
-    }
+      name: "Văn phòng, nơi làm việc",
+    },
   ];
 
   const handleSubmit = async (e) => {
