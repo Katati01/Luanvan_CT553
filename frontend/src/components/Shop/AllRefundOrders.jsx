@@ -1,12 +1,12 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
+import currency from "currency-formatter";
 import React, { useEffect } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Loader from "../Layout/Loader";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import currency from "currency-formatter";
+import Loader from "../Layout/Loader";
 
 const AllRefundOrders = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -17,8 +17,19 @@ const AllRefundOrders = () => {
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
   }, [dispatch]);
-
-  const refundOrders = orders && orders.filter((item) => item.status === "Processing refund"  || item.status === "Refund Success");
+  const calculateShopTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => {
+      const itemPrice =
+        item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+      return total + itemPrice * item.qty;
+    }, 0);
+  };
+  const refundOrders =
+    orders &&
+    orders.filter(
+      (item) =>
+        item.status === "Processing refund" || item.status === "Refund Success"
+    );
 
   const columns = [
     { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
@@ -48,6 +59,13 @@ const AllRefundOrders = () => {
       type: "number",
       minWidth: 130,
       flex: 0.8,
+      valueGetter: (params) => {
+        const orderId = params.getValue(params.id, "id");
+        const order = orders.find((item) => item._id === orderId);
+        return `${currency.format(calculateShopTotalPrice(order.cart), {
+          code: "VND",
+        })}`;
+      },
     },
 
     {
@@ -74,11 +92,16 @@ const AllRefundOrders = () => {
   const row = [];
 
   refundOrders &&
-  refundOrders.forEach((item) => {
+    refundOrders.forEach((item) => {
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
-        total:`${currency.format(item.totalPrice, { code: "VND" })}`,
+        // total: `${currency.format(item.totalPrice, { code: "VND" })}`,
+        total:
+          item.totalPrice.toLocaleString("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }) + "",
         status: item.status,
       });
     });

@@ -34,6 +34,7 @@ const DashboardHero = () => {
       style: "currency",
       currency: "VND"
     }) + "";
+    
   console.log("availableBalance", availableBalance);
 
   const scrollToTarget = () => {
@@ -145,13 +146,13 @@ const DashboardHero = () => {
       minWidth: 130,
       flex: 0.8,
       //thêm
-      valueGetter: (params) => {
-        const orderId = params.getValue(params.id, "id");
-        const order = orders.find((item) => item._id === orderId);
-        return `${currency.format(calculateShopTotalPrice(order.cart), {
-          code: "VND"
-        })}`;
-      }
+      // valueGetter: (params) => {
+      //   const orderId = params.getValue(params.id, "id");
+      //   const order = orders.find((item) => item._id === orderId);
+      //   return `${currency.format(calculateShopTotalPrice(order.cart), {
+      //     code: "VND"
+      //   })}`;
+      // }
     },
 
     {
@@ -175,14 +176,28 @@ const DashboardHero = () => {
     }
   ];
   const row = [];
+  // orders &&
+  //   orders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.reduce((acc, item) => acc + item.qty, 0),
+  //       status: item.status
+  //     });
+  //   });
   orders &&
-    orders.forEach((item) => {
-      row.push({
-        id: item._id,
-        itemsQty: item.cart.reduce((acc, item) => acc + item.qty, 0),
-        status: item.status
-      });
-    });
+orders.forEach((item) => {
+  const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+  // Lấy giá trị của totalPrice và shopShip từ shopTotal
+  const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+  const totalPrice = shopTotal.totalPrice || 0;
+  row.push({
+    id: item._id,
+    itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
+    total: totalPrice, 
+    status: item?.status,
+
+  });
+});
 
   return (
     <div className="w-full p-8 bg-[#f1f5f9]">
@@ -194,7 +209,7 @@ const DashboardHero = () => {
             <h3
               className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
             >
-              Thu nhập (Với 10% phí dich vụ){" "}
+              Thu nhập (Với 5% phí dich vụ){" "}
               <span className="text-[16px]"></span>
             </h3>
           </div>

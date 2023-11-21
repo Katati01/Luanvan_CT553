@@ -184,7 +184,7 @@ const OrderDetails = () => {
       return (
         <div key={index}>
           <h5 className="pt-3 text-[18px]">
-            Tổng tiền :{" "}
+            Tổng tiền đơn hàng:{" "}
             <strong>
               {shopTotal.toLocaleString("vi-VN", {
                 style: "currency",
