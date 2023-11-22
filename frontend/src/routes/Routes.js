@@ -22,6 +22,7 @@ import ShopLoginPage from "../pages/ShopLoginPage";
 import TrackOrderPage from "../pages/TrackOrderPage";
 import UserInboxPage from "../pages/UserInboxPage";
 import EventDetailsPage from "../pages/EventDetailsPage";
+import AboutPage from "../pages/AboutPage";
 
 export {
   ActivationPage,
@@ -46,5 +47,6 @@ export {
   SignupPage,
   TrackOrderPage,
   UserInboxPage,
+  AboutPage,
   EventDetailsPage
 };
