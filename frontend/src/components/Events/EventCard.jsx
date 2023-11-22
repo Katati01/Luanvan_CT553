@@ -25,7 +25,7 @@ const EventCard = ({ active, data }) => {
     }
   };
   return (
-    <div className={`w-11/12 mx-auto mt-6 block ${active ? "unset" : "mb-12"}`}>
+    <div className={`w-8/12 mx-auto mt-6 block ${active ? "unset" : "mb-12"}`}>
       {/* <div className="text-center my-12">
         <h1 className="text-4xl font-bold">Sự kiện</h1>
       </div> */}
@@ -33,7 +33,7 @@ const EventCard = ({ active, data }) => {
         <img
           src={`${data.images[0]}`}
           alt=""
-          className="w-full h-auto object-cover rounded-lg"
+          className="w-full h-[450px] object-cover rounded-lg"
         />
       </div>
       <div className="w-full mt-6 lg:[w-50%] flex flex-col justify-center">
@@ -84,18 +84,18 @@ const EventCard = ({ active, data }) => {
         <CountDown data={data} /> */}
         <br />
         <div className="flex items-center">
-          {/* <Link to={`/product/${data._id}?isEvent=true`}> */}
-          {/* <Link to={`/event/${data._id}`}>
+          <Link to={`/product/${data._id}?isEvent=true`}>
+          {/* <Link to={`/event/${data._id}`}> */}
             <div className={`${styles.button} text-[#fff]`}>Xem chi tiết</div>
-          </Link> */}
-          <div
+          </Link>
+          {/* <div
             className={`${styles.button} text-[#fff] cursor-pointer`}
             onClick={() => {
               window.location.href = `/event/${data._id}`;
             }}
           >
             Xem chi tiết
-          </div>
+          </div> */}
           {/* <div className={`${styles.button} text-[#fff] ml-5`} onClick={() => addToCartHandler(data)}>Add to cart</div> */}
         </div>
       </div>

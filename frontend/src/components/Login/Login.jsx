@@ -21,25 +21,28 @@ const Login = () => {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    await axios
-      .post(
+    e.preventDefault();  
+    try {
+      const response = await axios.post(
         `${server}/user/login-user`,
         {
           email,
           password
         },
         { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success("Login Success!");
-        navigate("/");
-        window.location.reload(true);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
+      );
+  
+      const isAdmin = response.data.user.role === 'admin';   
+      toast.success('Login Success!');
+      if (isAdmin) {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
+      window.location.reload(true);
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
   };
 
   return (

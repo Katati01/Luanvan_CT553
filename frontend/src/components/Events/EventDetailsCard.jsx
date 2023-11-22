@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { server } from "../../server";
 import styles from "../../styles/styles";
 import eventCard from "./EventCard";
+import { toast } from 'react-toastify';
+import { addTocart } from '../../redux/actions/cart';
 
 const EventDetailsCard = ({ setOpen }) => {
   const { id } = useParams();

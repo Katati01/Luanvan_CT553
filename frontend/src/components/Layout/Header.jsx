@@ -12,6 +12,7 @@ import styles from "../../styles/styles";
 import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
+import logo from '../../Assests/PhotoType/logo.png';
 
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
@@ -102,9 +103,9 @@ const Header = ({ activeHeading }) => {
           <div className="mx-auto null transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]">
             <div>
               <Link to="/">
-                <h1 className="whitespace-nowrap self-center p-3 text-[33px] font-bold">
-                  NÔNG NGHIỆP XANH
-                </h1>
+              <img src={logo}
+                className="max-w-[150px] max-h-[50px] object-contain"
+              />
               </Link>
             </div>
             {/* search box */}
