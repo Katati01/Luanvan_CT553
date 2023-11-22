@@ -211,7 +211,7 @@ const AllOrders = () => {
   }, [dispatch, user._id]);
 
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
     {
       field: "image",
       headerName: "Hình ảnh",
@@ -340,7 +340,7 @@ const AllRefundOrders = () => {
   // const eligibleOrders =
   //   orders && orders.filter((item) => item.status === "Processing refund");
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
     {
       field: "image",
       headerName: "Hình ảnh",
@@ -467,7 +467,7 @@ const TrackOrder = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
     {
       field: "image",
       headerName: "Hình ảnh",
@@ -519,7 +519,7 @@ const TrackOrder = () => {
 
     {
       field: "total",
-      headerName: "Tổng x cộng",
+      headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
       flex: 0.8,

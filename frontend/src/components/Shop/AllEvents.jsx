@@ -25,7 +25,7 @@ const AllEvents = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID X SP", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID sự kiện", minWidth: 150, flex: 0.7 },
     {
       field: "name",
       headerName: "Tên bài viết",

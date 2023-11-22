@@ -17,7 +17,7 @@ const AllEvents = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID sản phẩm", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID sự kiện", minWidth: 150, flex: 0.7 },
     {
       field: "name",
       headerName: "Tên sự kiện",
