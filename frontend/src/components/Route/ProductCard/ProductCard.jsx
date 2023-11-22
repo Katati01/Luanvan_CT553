@@ -88,14 +88,7 @@ const ProductCard = ({ data, isEvent }) => {
               : data.shop.name}
           </h5>
         </Link>
-        <Link to={`/product/${data._id}`}>
-          {/* <Link
-          to={`${
-            isEvent === true
-              ? `/product/${data._id}?isEvent=true`
-              : `/product/${data._id}`
-          }`}
-        > */}
+        <Link to={`/product/${data._id}`} onClick={handleClick}>
           <h4 className="pb-3 font-[500] ">
             {data.name.length > 35 ? data.name.slice(0, 27) + "..." : data.name}
           </h4>

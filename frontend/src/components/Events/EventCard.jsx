@@ -84,8 +84,8 @@ const EventCard = ({ active, data }) => {
         <CountDown data={data} /> */}
         <br />
         <div className="flex items-center">
-          <Link to={`/product/${data._id}?isEvent=true`}>
-          {/* <Link to={`/event/${data._id}`}> */}
+          {/* <Link to={`/product/${data._id}?isEvent=true`}> */}
+          <Link to={`/event/${data._id}`}>
             <div className={`${styles.button} text-[#fff]`}>Xem chi tiết</div>
           </Link>
           {/* <div

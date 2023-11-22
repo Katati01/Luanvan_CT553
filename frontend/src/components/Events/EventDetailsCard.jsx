@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { server } from "../../server";
 import styles from "../../styles/styles";
-import eventCard from "./EventCard";
-import { toast } from 'react-toastify';
-import { addTocart } from '../../redux/actions/cart';
-
+import { toast } from "react-toastify";
+import { addTocart } from "../../redux/actions/cart";
+import SuggestedEvent from "./SuggestedEvent";
 const EventDetailsCard = ({ setOpen }) => {
   const { id } = useParams();
   const { cart } = useSelector((state) => state.cart);
@@ -19,6 +18,7 @@ const EventDetailsCard = ({ setOpen }) => {
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
   const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { allEvents, isLoading } = useSelector((state) => state.events);
 
   useEffect(() => {
     async function fetchEventData() {
@@ -33,7 +33,7 @@ const EventDetailsCard = ({ setOpen }) => {
 
     fetchEventData();
   }, [id]);
-  console.log(eventData);
+  const filteredSuggestEvents = allEvents.filter((event) => event._id !== id);
 
   // const formatDate = (date) => {
   //   const inputDate = typeof date === "string" ? new Date(date) : date;
@@ -55,7 +55,6 @@ const EventDetailsCard = ({ setOpen }) => {
 
   //   return formattedDate;
   // };
-
 
   const addToCartHandler = (id) => {
     const isItemExists = cart && cart.find((i) => i._id === id);
@@ -81,7 +80,7 @@ const EventDetailsCard = ({ setOpen }) => {
         .post(`${server}/conversation/create-new-conversation`, {
           groupTitle,
           userId,
-          sellerId,
+          sellerId
         })
         .then((res) => {
           navigate(`/inbox?${res.eventData.conversation._id}`);
@@ -108,18 +107,15 @@ const EventDetailsCard = ({ setOpen }) => {
     const month = inputDate.getUTCMonth() + 1;
     const year = inputDate.getUTCFullYear();
 
-    const formattedDate = `${day < 10 ? "0" : ""}${day}-${month < 10 ? "0" : ""
-      }${month}-${year}`;
+    const formattedDate = `${day < 10 ? "0" : ""}${day}-${
+      month < 10 ? "0" : ""
+    }${month}-${year}`;
 
     return formattedDate;
   };
 
-  const startDate = eventData ? formatDate(eventData.start_Date) : "";
-  const finishDate = eventData ? formatDate(eventData.Finish_Date) : "";
-
   // const startDate = eventData ? formatDate(eventData.start_Date) : "";
   // const finishDate = eventData ? formatDate(eventData.Finish_Date) : "";
-
 
   return (
     <div className="flex items-center bg-white">
@@ -135,9 +131,12 @@ const EventDetailsCard = ({ setOpen }) => {
             <div className="w-full flex items-center flex-col gap-2 p-4 px-8">
               <div className="font-semibold text-[#1b4462]">
                 Sự kiện được tạo bởi:
-                <span className="text-[#c96665]">
+                <Link
+                  to={`/shop/preview/${eventData?.shop._id}`}
+                  className="text-[#c96665]"
+                >
                   {" " + eventData.shop.name}
-                </span>
+                </Link>
               </div>
 
               {/* <div className="font-semibold">
@@ -145,6 +144,7 @@ const EventDetailsCard = ({ setOpen }) => {
                 <span className="text-[#c96665]">{" " + startDate}</span> đến{" "}
                 <span className="text-[#c96665]">{" " + finishDate}</span>
               </div> */}
+
               <div className="font-semibold">
                 Ngày đăng:
                 <span className="text-[#c96665]">
@@ -171,19 +171,7 @@ const EventDetailsCard = ({ setOpen }) => {
               </div>
             </div>
           </div>
-          <div className={`p-4 ${styles.section}`}>
-            <h2
-              className={`${styles.heading} text-[25px] font-[500] border-b mb-5`}
-            >
-              Sự kiện khác
-            </h2>
-            <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-              {eventData &&
-                eventData.map((i, index) => (
-                  <eventCard data={i} key={index} />
-                ))}
-            </div>
-          </div>
+          {allEvents && <SuggestedEvent data={filteredSuggestEvents} />}
         </div>
       ) : null}
     </div>
