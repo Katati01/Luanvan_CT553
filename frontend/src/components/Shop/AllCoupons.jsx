@@ -15,8 +15,8 @@ const AllCoupons = () => {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [coupouns, setCoupouns] = useState([]);
-  const [minAmount, setMinAmout] = useState(null);
-  const [maxAmount, setMaxAmount] = useState(null);
+  // const [minAmount, setMinAmout] = useState(null);
+  // const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [value, setValue] = useState(null);
   const [quantity, setQuantity] = useState(null);
@@ -29,7 +29,7 @@ const AllCoupons = () => {
     setIsLoading(true);
     axios
       .get(`${server}/coupon/get-coupon/${seller._id}`, {
-        withCredentials: true
+        withCredentials: true,
       })
       .then((res) => {
         setIsLoading(false);
@@ -57,12 +57,12 @@ const AllCoupons = () => {
         `${server}/coupon/create-coupon-code`,
         {
           name,
-          minAmount,
-          maxAmount,
+          // minAmount,
+          // maxAmount,
           selectedProducts,
           value,
           quantity,
-          shopId: seller._id
+          shopId: seller._id,
         },
         { withCredentials: true }
       )
@@ -82,19 +82,19 @@ const AllCoupons = () => {
       field: "name",
       headerName: "Mã giảm giá",
       minWidth: 180,
-      flex: 1.4
+      flex: 1.4,
     },
     {
       field: "price",
       headerName: "Giá trị",
       minWidth: 100,
-      flex: 0.6
+      flex: 0.6,
     },
     {
       field: "quantity",
       headerName: "Số lượng mã giảm giá",
       minWidth: 120,
-      flex: 0.8
+      flex: 0.8,
     },
     {
       field: "Xóa",
@@ -111,8 +111,8 @@ const AllCoupons = () => {
             </Button>
           </>
         );
-      }
-    }
+      },
+    },
   ];
 
   const row = [];
@@ -124,7 +124,7 @@ const AllCoupons = () => {
         name: item.name,
         quantity: item.quantity,
         price: item.value + " %",
-        sold: 10
+        sold: 10,
       });
     });
 
@@ -212,7 +212,7 @@ const AllCoupons = () => {
                     />
                   </div>
                   <br />
-                  <div>
+                  {/* <div>
                     <label className="pb-2">Số tiền tổi thiểu</label>
                     <input
                       type="number"
@@ -234,8 +234,8 @@ const AllCoupons = () => {
                       onChange={(e) => setMaxAmount(e.target.value)}
                       placeholder="Nhập số tiền tối đa có thể giảm giá..."
                     />
-                  </div>
-                  <br />
+                  </div> */}
+                  {/* <br /> */}
                   <div>
                     <label className="pb-2">
                       Chọn sản phẩm có thể áp dụng mã giảm giá
@@ -248,7 +248,8 @@ const AllCoupons = () => {
                       <option value="Choose your selected products">
                         Chọn sản phẩm
                       </option>
-                      {products &&products.map((i) => (
+                      {products &&
+                        products.map((i) => (
                           <option value={i.name} key={i.name}>
                             {i.name}
                           </option>

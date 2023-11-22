@@ -10,12 +10,12 @@ const coupounCodeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  minAmount: {
-    type: Number,
-  },
-  maxAmount: {
-    type: Number,
-  },
+  // minAmount: {
+  //   type: Number,
+  // },
+  // maxAmount: {
+  //   type: Number,
+  // },
   shopId: {
     type: String,
     required: true,
