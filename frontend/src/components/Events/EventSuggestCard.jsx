@@ -29,16 +29,27 @@ const EventSuggestCard = ({ data, isEvent }) => {
         </Link>
         <Link to={`/event/${data._id}`} onClick={handleClick}>
           <h4 className="pb-3 font-[500] ">
-            {data.name.length > 35 ? data.name.slice(0, 27) + "..." : data.name}
+            {/* {data.name.length > 35 ? data.name.slice(0, 27) + "..." : data.name} */}
+            {data.name}
           </h4>
 
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <VscLocation className=" text-red-400 h-6 w-6 mr-2" />
             <p className="text-gray-500 overflow-hidden overflow-ellipsis whitespace-nowrap">
               {data?.shop?.address}
             </p>
-          </div>
+          </div> */}
         </Link>
+        {data.description.length > 200 ? (
+          <p
+            className="mt-4 font-[300] text-[13px]"
+            dangerouslySetInnerHTML={{
+              __html: data.description.slice(0, 180) + "..."
+            }}
+          ></p>
+        ) : (
+          <p dangerouslySetInnerHTML={{ __html: data.description }}></p>
+        )}
       </div>
     </>
   );

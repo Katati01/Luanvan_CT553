@@ -7,11 +7,12 @@ import ProductCard from "../Route/ProductCard/ProductCard";
 import { backend_url } from "../../server";
 import Ratings from "../Products/Ratings";
 import { getAllEventsShop } from "../../redux/actions/event";
-import EventCard from "../Events/EventCard";
+// import EventCard from "../Events/EventCard";
 
 import Lottie from "react-lottie";
 import animationData from "../../Assests/animations/searchNotFound.json";
 import animationData2 from "../../Assests/animations/notHaveEvent.json";
+import EventCard from "../Events/EventSuggestCard";
 
 const ShopProfileData = ({ isOwner }) => {
   const { products } = useSelector((state) => state.products);
@@ -46,6 +47,7 @@ const ShopProfileData = ({ isOwner }) => {
   const allReviews =
     products && products.map((product) => product.reviews).flat();
 
+  console.log(events);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between bg-[#b4b4b463] p-3 rounded-xl">
