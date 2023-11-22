@@ -132,7 +132,7 @@ const Checkout = () => {
         const existingShopTotal = shopTotalMap.get(shopId);
         existingShopTotal.totalQuantity += item.qty;
         existingShopTotal.totalPrice += itemTotal;
-        existingShopTotal.shopShip += itemShip;
+        existingShopTotal.shopShip = itemShip;
       }
     });
 
