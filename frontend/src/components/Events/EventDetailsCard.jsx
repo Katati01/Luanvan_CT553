@@ -33,7 +33,8 @@ const EventDetailsCard = ({ setOpen }) => {
 
     fetchEventData();
   }, [id]);
-  const filteredSuggestEvents = allEvents.filter((event) => event._id !== id);
+
+  const filteredSuggestEvents = allEvents?.filter((event) => event._id !== id);
 
   // const formatDate = (date) => {
   //   const inputDate = typeof date === "string" ? new Date(date) : date;
@@ -154,7 +155,7 @@ const EventDetailsCard = ({ setOpen }) => {
             </div>
 
             <div className="mx-auto flex items-center">
-              <div class="p-8 pt-0">
+              <div className="p-8 pt-0">
                 {/* <p className="text-[18px] text-[#1b4462] text-justify leading-8">
                   {eventData.description}
                 </p> */}
