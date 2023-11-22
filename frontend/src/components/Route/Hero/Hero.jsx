@@ -60,7 +60,7 @@ const Hero = () => {
         className="mySwiper"
       >
         {slideData.map((slide, index) => (
-          <SwiperSlide>
+          <SwiperSlide key={index}>
             <div
               key={index}
               className={`relative min-h-[70vh] 800px:min-h-[80vh] w-full bg-no-repeat ${styles.noramlFlex} bg-center bg-cover`}

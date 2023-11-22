@@ -3,7 +3,7 @@ import {
   AiOutlineHeart,
   AiOutlineSearch,
   AiOutlineShoppingCart,
-  AiOutlineUser,
+  AiOutlineUser
 } from "react-icons/ai";
 import { IoIosArrowForward, IoIosNotificationsOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import styles from "../../styles/styles";
 import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../cart/Cart";
 import Navbar from "./Navbar";
+import logo from "../../Assests/PhotoType/logo.png";
 
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
@@ -102,9 +103,11 @@ const Header = ({ activeHeading }) => {
           <div className="mx-auto null transition hidden 800px:flex items-center justify-between w-full bg-[#009b49] h-[70px]">
             <div>
               <Link to="/">
-                <h1 className="whitespace-nowrap self-center p-3 text-[33px] font-bold">
-                  NÔNG NGHIỆP XANH
-                </h1>
+                <img
+                  src={logo}
+                  alt="logo"
+                  className="max-w-[150px] max-h-[50px] object-contain"
+                />
               </Link>
             </div>
             {/* search box */}
@@ -327,17 +330,19 @@ const Header = ({ activeHeading }) => {
         className={`${
           active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
         }
-      w-full h-[40px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
+      w-full h-auto py-1 bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
         <div className="w-full flex items-center justify-between">
           <div>
             <BiMenu size={40} className="ml-4" onClick={() => setOpen(true)} />
           </div>
           <div>
-            <Link to="/">
-              <h1 className="whitespace-nowrap self-center md:text-lg lg:text-md xl:text-lg 2xl:text-md font-bold">
-                NÔNG NGHIỆP XANH
-              </h1>
+            <Link to="">
+              <img
+                src={logo}
+                alt="logo"
+                className="max-w-[150px] max-h-[50px] object-contain"
+              />
             </Link>
           </div>
           <div>
@@ -371,7 +376,7 @@ const Header = ({ activeHeading }) => {
                     onClick={() => setOpenWishlist(true) || setOpen(false)}
                   >
                     <AiOutlineHeart size={30} className="mt-5 ml-3" />
-                    <span class="absolute right-0 top-0 rounded-full bg-[#db3f59] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
+                    <span className="absolute right-0 top-0 rounded-full bg-[#db3f59] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
                       {wishlist && wishlist.length}
                     </span>
                   </div>

@@ -5,7 +5,7 @@ import EventCard from "./EventCard";
 
 const Events = () => {
   const { allEvents, isLoading } = useSelector((state) => state.events);
- 
+
   return (
     <div>
       {!isLoading && (
@@ -24,7 +24,7 @@ const Events = () => {
                     {" "}
                     {allEvents &&
                       allEvents.map((allEvents, index) => (
-                        <EventCard data={allEvents} />
+                        <EventCard key={index} data={allEvents} />
                       ))}
                   </div>
                 </div>
