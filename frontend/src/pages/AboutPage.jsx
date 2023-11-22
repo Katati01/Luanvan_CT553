@@ -19,6 +19,25 @@ export default AboutPage;
 
 const About = () =>{
     return(
-        <h1>AGRISHOP – CHUỖI SIÊU THỊ NÔNG NGHIỆP HÀNG ĐẦU VIỆT NAM</h1>
+        <>
+        <div className="">
+     
+        <div className={`${styles.section} 800px:w-[80%] mx-auto`}>
+          <div className="w-full flex items-center flex-col">
+            
+
+            <div className="w-full flex items-center flex-col gap-2 p-4 px-8">
+    
+            </div>
+
+            <div className="mx-auto flex items-center">
+              
+            </div>
+          </div>
+          
+        </div>
+         </div>
+        
+        </>
     )
 }

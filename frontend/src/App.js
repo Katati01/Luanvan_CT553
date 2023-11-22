@@ -24,7 +24,8 @@ import {
   TrackOrderPage,
   UserInboxPage,
   PageNotfound,
-  EventDetailsPage
+  EventDetailsPage,
+  AboutPage
   // UserInbox,
 } from "./routes/Routes.js";
 import {
@@ -124,6 +125,7 @@ const App = () => {
         <Route path="/best-selling" element={<BestSellingPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route
           path="/checkout"
           element={
