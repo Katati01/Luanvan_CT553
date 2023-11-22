@@ -238,15 +238,15 @@ orders.forEach((item) => {
 });
   orders &&
     getAllOrders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+      const totalPrice = shopTotal.totalPrice || 0;
       row1.push({
         id: item._id,
-        itemsQty: item.cart.length,
-        total:
-          item.totalPrice.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }) + "",
-        status: item.status,
+        itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
+        total: totalPrice, 
+        status: item?.status,
         created: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",
           month: "numeric",
@@ -254,6 +254,7 @@ orders.forEach((item) => {
           // hour: "numeric",
           // minute: "numeric",
         }),
+    
       });
     });
   return (

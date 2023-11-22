@@ -178,9 +178,9 @@ const OrderDetails = () => {
         </h5>
       </div> */}
       <div className="border-t w-full text-right">
-  {Object.keys(data?.shopTotal).map((shopId, index) => {
+  {/* {Object.keys(data?.shopTotal).map((shopId, index) => {
     const shopTotalInfo = data?.shopTotal[shopId];
-    if ( shopTotalInfo > 0) {
+    if ( shopTotalInfo> 0) {
       return (
         <div key={index}>
           <h5 className="pt-3 text-[18px]">
@@ -196,44 +196,41 @@ const OrderDetails = () => {
       );
     }
     return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
-  })}
-   {/* {Object.keys(data?.shopTotal).map((shopId, index) => {
+  })} */}
+  {Object.keys(data?.shopTotal).map((shopId, index) => {
   const shopTotalInfo = data?.shopTotal[shopId];
-  
 
   // Kiểm tra nếu có thông tin totalPrice trong shopTotal
   if (shopTotalInfo && shopTotalInfo.totalPrice > 0) {
-    return (
-      <div key={index}>
-        <h5 className="pt-3 text-[18px]">
-          Tổng tiền hàng:{" "}
-          <strong>
-            {shopTotalInfo.totalPrice.toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }) + ""}
-          </strong>
-        </h5>
-        <h5 className="pt-3 text-[18px]">
-          Phí vận chuyển:{" "}
-          <strong>
-            {currency.format(shopTotalInfo.shopShip, { code: "VND" })}
-          </strong>
-        </h5>
-        <h5 className="pt-3 text-[18px]">
-          Tổng tiền đơn hàng:{" "}
-          <strong>
-            {(shopTotalInfo.totalPrice + shopTotalInfo.shopShip).toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }) + ""}
-          </strong>
-        </h5>
-      </div>
-    );
+    const productsInShop = data.cart.filter(product => product.shopId === shopId);
+
+    // Kiểm tra xem có sản phẩm thuộc shop này không
+    if (productsInShop.length > 0) {
+      
+      const product = productsInShop[0]; // Chọn sản phẩm đầu tiên trong đơn hàng thuộc shop này
+      const shopTotal = data.shopTotal && data.shopTotal[product.shopId] ? data.shopTotal[product.shopId] : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+     
+
+      return (
+        <div key={index}>
+          <h5 className="pt-3 text-[18px]">
+            Tổng tiền hàng:{" "}
+            <strong>
+              {totalPrice.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""}
+            </strong>
+          </h5>
+        </div>
+      );
+    }
   }
-  return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
-})} */}
+
+  return null;
+})}
+
 </div>
       <br />
       <br />

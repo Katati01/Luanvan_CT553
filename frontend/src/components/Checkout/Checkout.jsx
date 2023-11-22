@@ -9,6 +9,8 @@ import { server } from "../../server";
 import styles from "../../styles/styles";
 
 
+
+
 const Checkout = () => {
  const { user } = useSelector((state) => state.user);
  const { cart } = useSelector((state) => state.cart);
@@ -28,9 +30,13 @@ const Checkout = () => {
  const [shopCouponValues, setShopCouponValues] = useState({});
 
 
+
+
  useEffect(() => {
    window.scrollTo(0, 0);
  }, []);
+
+
 
 
  const paymentSubmit = async () => {
@@ -46,6 +52,8 @@ const Checkout = () => {
      };
 
 
+
+
      const orderData = {
        cart,
        totalPrice,
@@ -58,13 +66,19 @@ const Checkout = () => {
      };
 
 
+
+
      // update local storage with the updated orders array
      localStorage.setItem("latestOrder", JSON.stringify(orderData));
+
+
 
 
      // Gọi API để cập nhật số lượng mã giảm giá còn lại
      if (couponCodeData) {
        const couponName = couponCodeData.name;
+
+
 
 
        // Gửi yêu cầu PUT lên máy chủ để cập nhật số lượng còn lại
@@ -78,8 +92,11 @@ const Checkout = () => {
  const discountPercentenge = couponCodeData ? discountPrice : "";
 console.log("voucher", discountPercentenge)
 
+
 const calculateShopTotal = (cart, shippingFee) => {
   const shopTotalMap = new Map();
+
+
 
 
   cart.forEach((item) => {
@@ -89,6 +106,8 @@ const calculateShopTotal = (cart, shippingFee) => {
     const itemTotal = item.qty * itemPrice;
     const itemShip = 30000;
     const couponValue = shopCouponValues[shopId] || 0; // Lấy giá trị coupon cho cửa hàng
+
+
 
 
     if (!shopTotalMap.has(shopId)) {
@@ -105,30 +124,41 @@ const calculateShopTotal = (cart, shippingFee) => {
       existingShopTotal.totalPrice += itemTotal - (itemTotal * couponValue) / 100;
 
 
+
+
       existingShopTotal.shopShip += itemShip;
     }
   });
+
+
 
 
   return Object.fromEntries(shopTotalMap);
 };
 
 
+
+
 // const calculateShopTotal = (cart) => {
 //   const shopTotalMap = new Map();
+
 
 //   cart.forEach((item) => {
 //     const shopId = item.shopId;
 //     const itemPrice = item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
 //     const total = item.qty * itemPrice;
 
+
 //     // Check if the item has a coupon value for the shop
 //     const couponValue = shopCouponValues[shopId] || 0;
+
 
 //     // Apply coupon only to the items with the matching shopId
 //     const itemTotal = item.shopId === shopId ? total - (total * couponValue) / 100 : total;
 
+
 //     const itemShip = 30000;
+
 
 //     if (!shopTotalMap.has(shopId)) {
 //       shopTotalMap.set(shopId, {
@@ -145,12 +175,16 @@ const calculateShopTotal = (cart, shippingFee) => {
 //     }
 //   });
 
+
 //   return Object.fromEntries(shopTotalMap);
 // };
+
 
 // Usage
 const shopTotal = calculateShopTotal(cart);
 console.log(shopTotal);
+
+
 
 
  const subTotalPrice = cart.reduce((acc, item) => {
@@ -160,14 +194,20 @@ console.log(shopTotal);
  }, 0);
 
 
+
+
  const shopCount = new Set(cart.map((item) => item.shopId)).size;
  const shipping = 30000 * shopCount;
  console.log(shipping);
 
 
+
+
  const handleSubmit = async (e) => {
    e.preventDefault();
    const name = couponCode;
+
+
 
 
    await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
@@ -177,9 +217,13 @@ console.log(shopTotal);
      const quantity = res.data.couponCode?.quantity;
 
 
+
+
      if (res.data.couponCode !== null) {
        const isCouponValid =
          cart && cart.filter((item) => item.shopId === shopId);
+
+
 
 
        if (isCouponValid.length === 0) {
@@ -193,8 +237,12 @@ console.log(shopTotal);
          // const updatedRemainingQuantity = remainingQuantity + 1;
 
 
+
+
          const eligiblePrice = isCouponValid.reduce(
            (acc, item) => acc + item.qty * item.discountPrice,
+
+
 
 
            0
@@ -207,6 +255,8 @@ console.log(shopTotal);
          //   return acc + item.qty * itemPrice;
          // }, 0);
          const discountPrice = (eligiblePrice * couponCodeValue) / 100;
+
+
 
 
          setDiscountPrice(discountPrice);
@@ -230,15 +280,26 @@ console.log(shopTotal);
 
 
 
+
+
+
+
+
  const totalPrice = couponCodeData
    ? (subTotalPrice + shipping - discountPercentenge).toFixed(2)
    : (subTotalPrice + shipping).toFixed(2);
 
 
+
+
  console.log(discountPercentenge);
 
 
+
+
  // thêm
+
+
 
 
  return (
@@ -292,6 +353,8 @@ console.log(shopTotal);
 };
 
 
+
+
 const ShippingInfo = ({
  user,
  country,
@@ -340,6 +403,8 @@ const ShippingInfo = ({
        </div>
 
 
+
+
        <div className="w-full flex pb-3">
          <div className="w-[50%]">
            <label className="block pb-2">Số điện thoại: +(84)</label>
@@ -383,6 +448,8 @@ const ShippingInfo = ({
        </div>
 
 
+
+
        <div className="w-full flex pb-3">
          <div className="w-[50%]">
            <label className="block pb-2">Khu vực:</label>
@@ -423,6 +490,8 @@ const ShippingInfo = ({
        </div>
 
 
+
+
        <div className="w-full flex pb-3">
          <div className="w-[50%]">
            <label className="block pb-2">Địa chỉ:</label>
@@ -447,8 +516,12 @@ const ShippingInfo = ({
        </div>
 
 
+
+
        <div></div>
      </form>
+
+
 
 
      <h5
@@ -510,6 +583,8 @@ const ShippingInfo = ({
 };
 
 
+
+
 const CartData = ({
  handleSubmit,
  totalPrice,
@@ -531,17 +606,21 @@ const CartData = ({
      </div>
 
 
+
+
      <br />
      {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
        <div key={shopId} className="flex justify-between">
          <h3 className="text-[16px] font-[400] text-[#000000a4]">
-           Tiền shop {shopId}:
+           Tiền shop {shopId?.slice(0, 5)}:
          </h3>
          <h5 className="text-[18px] font-[600]">
            {currency.format(shopInfo.totalPrice, { code: "VND" })}
          </h5>
        </div>
      ))}
+
+
 
 
      <br />
@@ -554,6 +633,8 @@ const CartData = ({
        </h5>
      </div>
      <br />
+
+
 
 
      <div className="flex justify-between border-b pb-3">
@@ -595,7 +676,6 @@ const CartData = ({
 };
 
 
+
+
 export default Checkout;
-
-
-

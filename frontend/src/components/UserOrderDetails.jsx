@@ -27,6 +27,7 @@ const UserOrderDetails = () => {
     dispatch(getAllOrdersOfUser(user._id));
   }, [dispatch]);
 
+  
   const data = orders && orders.find((item) => item._id === id);
 
   const calculateShopTotal = (cart, shopId) => {
@@ -251,138 +252,57 @@ const UserOrderDetails = () => {
       )}
 
       <div className="border-t w-full text-right">
-        {/* <div>
-  {data?.cart.map((item, index) => (
-    <div key={index}>
-      <h5 className="pt-3 text-[18px]">
-        Tổng tiền:{" "}
-        <strong>
-          {item.discountPrice === 0
-            ? currency.format(item.originalPrice, { code: "VND" })
-            : currency.format(item.discountPrice, { code: "VND" })} 
-        </strong>
-      </h5>
-    </div>
-  ))}
-</div> */}
 
-        {/* <div className="border-t w-full text-right">
-  {Object.keys(data?.shopTotal).map((shopId, index) => (
-    <div key={index}>
-      <h5 className="pt-3 text-[18px]">
-        Tổng tiền (cửa hàng {index + 1}):{" "}
-        <strong>
-          {calculateShopTotal(data?.cart, shopId).toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }) + ""}
-        </strong>
-      </h5>
-    </div>
-  ))}
-</div> */}
-        {/* <div className="border-t w-full text-right">
-  {Object.keys(data?.shopTotal).map((shopId, index) => {
-    const shopTotal = calculateShopTotal(data?.cart, shopId);
-    if (shopTotal > 0) {
-      return (
-        <div key={index}>
-                    <h5 className="pt-3 text-[18px]">
-          Phí vận chuyển :{" "}
-
-          
-          </h5>
-          <h5 className="pt-3 text-[18px]">
-            Tổng tiền :{" "}
-            <strong>
-              {shopTotal.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }) + ""} 
-            </strong>
-            
-          </h5>
-
-        </div>
-      );
-    }
-    return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
-  })}
-  
-  
-</div> */}
-        {/* {Object.keys(data?.shopTotal).map((shopId, index) => {
-          const shopTotal = calculateShopTotal(data?.cart, shopId);
-          
-          const shopShip = data?.shopTotal[shopId]?.shopShip || 0; // Lấy giá trị shopShip từ JSON
-
-          if (shopTotal > 0) {
-            return (
-              <div key={index}>
-                <h5 className="pt-3 text-[18px]">
-                  Tổng tiền hàng :{" "}
-                  <strong>
-                    {shopTotal.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }) + ""}
-                  </strong>
-                </h5>
-                <h5 className="pt-3 text-[18px]">
-                  Phí vận chuyển:{" "}
-                  <strong>{currency.format(shopShip, { code: "VND" })}</strong>
-                </h5>
-
-                <h5 className="pt-3 text-[18px]">
-                  Tổng tiền đơn hàng:{" "}
-                  <strong>
-                    {(shopTotal + shopShip).toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }) + ""}
-                  </strong>
-                </h5>
-              </div>
-            );
-          }
-          return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
-        })} */}
-        {Object.keys(data?.shopTotal).map((shopId, index) => {
+{Object.keys(data?.shopTotal).map((shopId, index) => {
   const shopTotalInfo = data?.shopTotal[shopId];
-  
 
   // Kiểm tra nếu có thông tin totalPrice trong shopTotal
   if (shopTotalInfo && shopTotalInfo.totalPrice > 0) {
-    return (
-      <div key={index}>
-        <h5 className="pt-3 text-[18px]">
-          Tổng tiền hàng:{" "}
-          <strong>
-            {shopTotalInfo.totalPrice.toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }) + ""}
-          </strong>
-        </h5>
-        <h5 className="pt-3 text-[18px]">
-          Phí vận chuyển:{" "}
-          <strong>
-            {currency.format(shopTotalInfo.shopShip, { code: "VND" })}
-          </strong>
-        </h5>
-        <h5 className="pt-3 text-[18px]">
-          Tổng tiền đơn hàng:{" "}
-          <strong>
-            {(shopTotalInfo.totalPrice + shopTotalInfo.shopShip).toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }) + ""}
-          </strong>
-        </h5>
-      </div>
-    );
+    const productsInShop = data.cart.filter(product => product.shopId === shopId);
+
+    // Kiểm tra xem có sản phẩm thuộc shop này không
+    if (productsInShop.length > 0) {
+      const totalAmount = shopTotalInfo.totalPrice + shopTotalInfo.shopShip;
+      const product = productsInShop[0]; // Chọn sản phẩm đầu tiên trong đơn hàng thuộc shop này
+      const shopTotal = data.shopTotal && data.shopTotal[product.shopId] ? data.shopTotal[product.shopId] : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      const shopShip = data?.shopTotal[shopId]?.shopShip || 0
+
+      return (
+        <div key={index}>
+          <h5 className="pt-3 text-[18px]">
+            Tổng tiền hàng:{" "}
+            <strong>
+              {totalPrice.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""}
+            </strong>
+          </h5>
+          <h5 className="pt-3 text-[18px]">
+            Phí vận chuyển:{" "}
+            <strong>
+              {shopShip.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""}
+            </strong>
+          </h5>
+          <h5 className="pt-3 text-[18px]">
+            Tổng tiền đơn hàng:{" "}
+            <strong>
+              {totalAmount.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }) + ""}
+            </strong>
+          </h5>
+        </div>
+      );
+    }
   }
-  return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
+
+  return null;
 })}
       </div>
       <br />

@@ -214,7 +214,7 @@ const AllOrders = () => {
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
     {
       field: "image",
-      headerName: "Sản phẩm",
+      headerName: "Hình ảnh",
       minWidth: 150,
       flex: 0.7,
       sortable: false,
@@ -286,7 +286,7 @@ const AllOrders = () => {
   ];
 
   const row = [];
-
+orders &&
   orders.forEach((item) => {
     const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
 
@@ -343,7 +343,7 @@ const AllRefundOrders = () => {
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
     {
       field: "image",
-      headerName: "Sản phẩm",
+      headerName: "Hình ảnh",
       minWidth: 150,
       flex: 0.7,
       sortable: false,
@@ -470,7 +470,7 @@ const TrackOrder = () => {
     { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
     {
       field: "image",
-      headerName: "Hình ảnh đơn hàng",
+      headerName: "Hình ảnh",
       minWidth: 150,
       flex: 0.7,
       sortable: false,
