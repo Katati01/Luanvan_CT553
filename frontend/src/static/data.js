@@ -618,7 +618,8 @@ export const footercompanyLinks = [
 
 export const footerSupportLinks = [
   {
-    name: "FAQ"
+    name: "FAQ",
+    link: "/faq"
   },
   {
     name: "Đánh giá"

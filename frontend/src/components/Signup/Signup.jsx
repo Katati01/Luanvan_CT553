@@ -12,6 +12,7 @@ import {
   footercompanyLinks
 } from "../../static/data";
 import styles from "../../styles/styles";
+import logo from "../../Assests/PhotoType/logo.png";
 
 const Singup = () => {
   const [email, setEmail] = useState("");
@@ -55,8 +56,12 @@ const Singup = () => {
     <div>
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
-          <Link to="/">
-            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
+          <Link to="">
+            <img
+              src={logo}
+              alt="logo"
+              className="max-w-[180px] max-h-[100px] object-contain"
+            />
           </Link>
           <div className="flex items-center">
             {isSeller ? null : (

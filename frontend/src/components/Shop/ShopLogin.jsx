@@ -9,6 +9,7 @@ import {
   footerSupportLinks,
   footercompanyLinks
 } from "../../static/data";
+import logo from "../../Assests/PhotoType/logo.png";
 import styles from "../../styles/styles";
 
 const ShopLogin = () => {
@@ -43,8 +44,12 @@ const ShopLogin = () => {
     <div>
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
-          <Link to="/">
-            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
+          <Link to="">
+            <img
+              src={logo}
+              alt="logo"
+              className="max-w-[180px] max-h-[100px] object-contain"
+            />
           </Link>
         </div>
       </div>

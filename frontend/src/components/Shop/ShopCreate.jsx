@@ -1,3 +1,4 @@
+import logo from "../../Assests/PhotoType/logo.png";
 import axios from "axios";
 import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -61,8 +62,12 @@ const ShopCreate = () => {
     <div>
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
-          <Link to="/">
-            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
+          <Link to="">
+            <img
+              src={logo}
+              alt="logo"
+              className="max-w-[180px] max-h-[100px] object-contain"
+            />
           </Link>
         </div>
       </div>
