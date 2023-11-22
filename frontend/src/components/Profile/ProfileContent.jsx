@@ -211,10 +211,10 @@ const AllOrders = () => {
   }, [dispatch, user._id]);
 
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
     {
       field: "image",
-      headerName: "Sản phẩm",
+      headerName: "Hình ảnh",
       minWidth: 150,
       flex: 0.7,
       sortable: false,
@@ -286,7 +286,7 @@ const AllOrders = () => {
   ];
 
   const row = [];
-
+orders &&
   orders.forEach((item) => {
     const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
 
@@ -340,10 +340,10 @@ const AllRefundOrders = () => {
   // const eligibleOrders =
   //   orders && orders.filter((item) => item.status === "Processing refund");
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
     {
       field: "image",
-      headerName: "Sản phẩm",
+      headerName: "Hình ảnh",
       minWidth: 150,
       flex: 0.7,
       sortable: false,
@@ -467,10 +467,10 @@ const TrackOrder = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID đơn hàng", minWidth: 150, flex: 0.7 },
     {
       field: "image",
-      headerName: "Hình ảnh đơn hàng",
+      headerName: "Hình ảnh",
       minWidth: 150,
       flex: 0.7,
       sortable: false,
@@ -519,7 +519,7 @@ const TrackOrder = () => {
 
     {
       field: "total",
-      headerName: "Tổng x cộng",
+      headerName: "Tổng cộng",
       type: "number",
       minWidth: 130,
       flex: 0.8,

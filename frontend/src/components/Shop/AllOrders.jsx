@@ -153,13 +153,13 @@ const AllOrders = () => {
       type: "number",
       minWidth: 130,
       flex: 0.8,
-      valueGetter: (params) => {
-        const orderId = params.getValue(params.id, "id");
-        const order = orders.find((item) => item._id === orderId);
-        return `${currency.format(calculateShopTotalPrice(order.cart), {
-          code: "VND",
-        })}`;
-      },
+      // valueGetter: (params) => {
+      //   const orderId = params.getValue(params.id, "id");
+      //   const order = orders.find((item) => item._id === orderId);
+      //   return `${currency.format(calculateShopTotalPrice(order.cart), {
+      //     code: "VND",
+      //   })}`;
+      
     },
 
     {
@@ -171,7 +171,7 @@ const AllOrders = () => {
     },
 
     {
-      field: " ",
+      field: "Xem chi tiết ",
       flex: 1,
       minWidth: 150,
       headerName: "",
@@ -194,38 +194,59 @@ const AllOrders = () => {
   const row = [];
   const row1 = [];
 
-  orders &&
-    orders.forEach((item) => {
-      row.push({
-        id: item._id,
-        itemsQty: item.cart.length,
-        total:
-          item.totalPrice.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }) + "",
-        status: item.status,
-        created: new Date(item?.createdAt).toLocaleString("vi-VN", {
-          year: "numeric",
-          month: "numeric",
-          day: "numeric",
-          // hour: "numeric",
-          // minute: "numeric",
+  // orders &&
+  //   orders.forEach((item) => {
+  //     row.push({
+  //       id: item._id,
+  //       itemsQty: item.cart.length,
+  //       total:
+  //         item.totalPrice.toLocaleString("vi-VN", {
+  //           style: "currency",
+  //           currency: "VND",
+  //         }) + "",
+  //       status: item.status,
+        // created: new Date(item?.createdAt).toLocaleString("vi-VN", {
+        //   year: "numeric",
+        //   month: "numeric",
+        //   day: "numeric",
+        //   // hour: "numeric",
+        //   // minute: "numeric",
 
-        }),
-      });
-    });
+  //       }),
+  //     });
+  //   });
+  orders &&
+orders.forEach((item) => {
+  const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+  // Lấy giá trị của totalPrice và shopShip từ shopTotal
+  const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+  const totalPrice = shopTotal.totalPrice || 0;
+  row.push({
+    id: item._id,
+    itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
+    total: totalPrice, 
+    status: item?.status,
+    created: new Date(item?.createdAt).toLocaleString("vi-VN", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      // hour: "numeric",
+      // minute: "numeric",
+    }),
+
+  });
+});
   orders &&
     getAllOrders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
+      const totalPrice = shopTotal.totalPrice || 0;
       row1.push({
         id: item._id,
-        itemsQty: item.cart.length,
-        total:
-          item.totalPrice.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }) + "",
-        status: item.status,
+        itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
+        total: totalPrice, 
+        status: item?.status,
         created: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",
           month: "numeric",
@@ -233,6 +254,7 @@ const AllOrders = () => {
           // hour: "numeric",
           // minute: "numeric",
         }),
+    
       });
     });
   return (

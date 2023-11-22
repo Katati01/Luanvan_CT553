@@ -222,7 +222,7 @@ const calculateShopTotalPrice = (cartItems) => {
       const totalAmount = totalPrice + shopShip;
       console.log("tiền ship shop",shopShip)
     
-      row.push({
+      row1.push({
         id: item._id,
         itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
   
