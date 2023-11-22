@@ -5,22 +5,27 @@ import {
   footerProductLinks,
   footerSupportLinks
 } from "../../static/data";
+import logo from "../../Assests/PhotoType/logo.png";
 
 const Footer = () => {
   return (
     <div className="bg-[#009b49] text-white">
       <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16 sm:text-center">
-        <ul className="px-5 text-center sm:text-start flex sm:block flex-col items-center">
-          <img
-            src="https://upload-os-bbs.hoyolab.com/upload/2021/12/14/150538198/70445fce849442234a0c524cbd3b99c5_7958474898017939592.png?x-oss-process=image/resize,s_1000/quality,q_80/auto-orient,0/interlace,1/format,png"
-            alt=""
-            style={{ filter: "brightness(0) invert(1)" }}
-          />
+        <ul className="px-5 text-center lg:text-start flex lg:block flex-col items-center">
+          <div>
+            <Link to="">
+              <img
+                src={logo}
+                alt="logo"
+                className="max-w-[180px] max-h-[100px] object-contain"
+              />
+            </Link>
+          </div>
           <br />
           <p></p>
         </ul>
 
-        <ul className="text-center sm:text-start">
+        <ul className="text-center lg:text-start">
           <h1 className="mb-1 font-semibold text-[20px]">Công ty</h1>
           {footerProductLinks.map((link, index) => (
             <li key={index}>
@@ -35,7 +40,7 @@ const Footer = () => {
           ))}
         </ul>
 
-        <ul className="text-center sm:text-start">
+        <ul className="text-center lg:text-start">
           <h1 className="mb-1 font-semibold text-[20px]">Cửa hàng</h1>
           {footercompanyLinks.map((link, index) => (
             <li key={index}>
@@ -50,7 +55,7 @@ const Footer = () => {
           ))}
         </ul>
 
-        <ul className="text-center sm:text-start">
+        <ul className="text-center lg:text-start">
           <h1 className="mb-1 font-semibold text-[20px]">Hỗ trợ</h1>
           {footerSupportLinks.map((link, index) => (
             <li key={index}>

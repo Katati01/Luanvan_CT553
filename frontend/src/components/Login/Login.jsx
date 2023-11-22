@@ -12,6 +12,7 @@ import {
   footercompanyLinks
 } from "../../static/data";
 import styles from "../../styles/styles";
+import logo from "../../Assests/PhotoType/logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,9 +20,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault();  
+    e.preventDefault();
     try {
       const response = await axios.post(
         `${server}/user/login-user`,
@@ -31,13 +31,13 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-  
-      const isAdmin = response.data.user.role === 'admin';   
-      toast.success('Login Success!');
+
+      const isAdmin = response.data.user.role === "admin";
+      toast.success("Login Success!");
       if (isAdmin) {
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
-        navigate('/');
+        navigate("/");
       }
       window.location.reload(true);
     } catch (err) {
@@ -50,8 +50,13 @@ const Login = () => {
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
+            <img
+              src={logo}
+              alt="logo"
+              className="max-w-[150px] max-h-[50px] object-contain"
+            />
           </Link>
+
           <div className="flex items-center">
             <span className="font-medium mt-1 mr-2 pr-2">
               Đăng nhập vào cửa hàng

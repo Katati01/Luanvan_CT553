@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { server } from "../../server";
 import styles from "../../styles/styles";
+import logo from "../../Assests/PhotoType/logo.png";
 const ResetPasswordTokenPage = () => {
   // const { reset_password_token } = useParams();
   const { resetPasswordToken } = useParams();
@@ -60,7 +61,11 @@ const ResetPasswordTokenPage = () => {
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
+            <img
+              src={logo}
+              alt="logo"
+              className="max-w-[150px] max-h-[50px] object-contain"
+            />
           </Link>
         </div>
       </div>
