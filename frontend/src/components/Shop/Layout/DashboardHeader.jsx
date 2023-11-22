@@ -5,6 +5,7 @@ import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import logo from "../../../Assests/PhotoType/logo.png";
 
 const DashboardHeader = () => {
   const { seller } = useSelector((state) => state.seller);
@@ -12,7 +13,11 @@ const DashboardHeader = () => {
     <div className="w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
       <div>
         <Link to="/">
-          <h1 className="text-[33px] font-bold">NÔNG NGHIỆP XANH</h1>
+          <img
+            src={logo}
+            alt="logo"
+            className="max-w-[150px] max-h-[50px] object-contain"
+          />
         </Link>
       </div>
       <div className="flex items-center">
