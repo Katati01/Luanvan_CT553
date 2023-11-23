@@ -176,7 +176,6 @@ router.put(
       }
 
       order.status = req.body.status;
-
       await order.save({ validateBeforeSave: false });
 
       res.status(200).json({

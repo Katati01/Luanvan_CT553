@@ -1,12 +1,12 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { server } from "../../server";
 import { DataGrid } from "@material-ui/data-grid";
+import axios from "axios";
+import currency from "currency-formatter";
+import React, { useEffect, useState } from "react";
 import { BsPencil } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
-import styles from "../../styles/styles";
 import { toast } from "react-toastify";
-import currency from "currency-formatter";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 
 const AllWithdraw = () => {
   const [data, setData] = useState([]);
@@ -17,7 +17,7 @@ const AllWithdraw = () => {
   useEffect(() => {
     axios
       .get(`${server}/withdraw/get-all-withdraw-request`, {
-        withCredentials: true
+        withCredentials: true,
       })
       .then((res) => {
         setData(res.data.withdraws);
@@ -28,38 +28,38 @@ const AllWithdraw = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "Id", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "ID rút tiền", minWidth: 150, flex: 0.7 },
     {
       field: "name",
       headerName: "Tên cửa hàng ",
       minWidth: 180,
-      flex: 1.4
+      flex: 1.4,
     },
     {
       field: "shopId",
       headerName: "ID cửa hàng",
       minWidth: 180,
-      flex: 1.4
+      flex: 1.4,
     },
     {
       field: "amount",
       headerName: "Số tiền",
       minWidth: 100,
-      flex: 0.6
+      flex: 0.6,
     },
     {
       field: "status",
       headerName: "Trạng thái",
       type: "text",
       minWidth: 80,
-      flex: 0.5
+      flex: 0.5,
     },
     {
       field: "createdAt",
       headerName: "Thời gian",
       type: "number",
       minWidth: 130,
-      flex: 0.6
+      flex: 0.6,
     },
     {
       field: " ",
@@ -77,8 +77,8 @@ const AllWithdraw = () => {
             onClick={() => setOpen(true) || setWithdrawData(params.row)}
           />
         );
-      }
-    }
+      },
+    },
   ];
 
   const handleSubmit = async () => {
@@ -86,7 +86,7 @@ const AllWithdraw = () => {
       .put(
         `${server}/withdraw/update-withdraw-request/${withdrawData.id}`,
         {
-          sellerId: withdrawData.shopId
+          sellerId: withdrawData.shopId,
         },
         { withCredentials: true }
       )
@@ -106,10 +106,10 @@ const AllWithdraw = () => {
         shopId: item.seller._id,
         name: item.seller.name,
         amount: `${currency.format(item.amount, {
-          code: "VND"
+          code: "VND",
         })}`,
         status: item.status,
-        createdAt: item.createdAt.slice(0, 10)
+        createdAt: item.createdAt.slice(0, 10),
       });
     });
   return (
