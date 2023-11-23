@@ -10,7 +10,7 @@ const EventSuggestCard = ({ data, isEvent }) => {
   console.log(data);
   return (
     <>
-      <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
+      <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer overflow-hidden border">
         <div className="flex justify-end"></div>
         <Link to={`/event/${data._id}`} onClick={handleClick}>
           <img
@@ -44,7 +44,7 @@ const EventSuggestCard = ({ data, isEvent }) => {
           <p
             className="mt-4 font-[300] text-[13px]"
             dangerouslySetInnerHTML={{
-              __html: data.description.slice(0, 180) + "..."
+              __html: data.description.slice(0, 150) + "..."
             }}
           ></p>
         ) : (

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import styles from "../../styles/styles";
 import ProductCard from "../Route/ProductCard/ProductCard";
 
-const SuggestedProduct = ({ data }) => {
+const SuggestedProduct = ({ data, styles }) => {
   const { allProducts } = useSelector((state) => state.products);
   const [productData, setProductData] = useState();
 
@@ -23,7 +23,9 @@ const SuggestedProduct = ({ data }) => {
           >
             Sản phẩm liên quan
           </h2>
-          <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
+          <div
+            className={`grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12 ${styles}`}
+          >
             {productData &&
               productData.map((i, index) => (
                 <ProductCard data={i} key={index} />

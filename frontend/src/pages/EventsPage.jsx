@@ -15,7 +15,7 @@ const EventsPage = () => {
       ) : (
         <div>
           <Header activeHeading={4} />
-          {allEvents && allEvents.length === 0 ? (
+          {allEvents && allEvents?.length === 0 ? (
             <PageNotfound />
           ) : (
             <>
