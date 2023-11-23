@@ -57,43 +57,6 @@ const EventDetailsCard = ({ setOpen }) => {
   //   return formattedDate;
   // };
 
-  const addToCartHandler = (id) => {
-    const isItemExists = cart && cart.find((i) => i._id === id);
-    if (isItemExists) {
-      toast.error("Sản phẩm đã có trong giỏ hàng!");
-    } else {
-      if (eventData.stock < count) {
-        toast.error("Sản phẩm có số lượng giới hạn!");
-      } else {
-        const carteventData = { ...eventData, qty: count };
-        dispatch(addTocart(carteventData));
-        toast.success("Sản phẩm đã thêm vào giỏ hàng!");
-      }
-    }
-  };
-
-  const handleMessageSubmit = async () => {
-    if (isAuthenticated) {
-      const groupTitle = eventData._id + user._id;
-      const userId = user._id;
-      const sellerId = eventData.shop._id;
-      await axios
-        .post(`${server}/conversation/create-new-conversation`, {
-          groupTitle,
-          userId,
-          sellerId
-        })
-        .then((res) => {
-          navigate(`/inbox?${res.eventData.conversation._id}`);
-        })
-        .catch((error) => {
-          toast.error(error.response.eventData.message);
-        });
-    } else {
-      toast.error("Vui lòng đăng nhập để nhắn tin");
-    }
-  };
-
   const formatDate = (date) => {
     const inputDate = typeof date === "string" ? new Date(date) : date;
 
@@ -119,9 +82,11 @@ const EventDetailsCard = ({ setOpen }) => {
   // const finishDate = eventData ? formatDate(eventData.Finish_Date) : "";
 
   return (
-    <div className="flex items-center bg-white">
+    <div className="flex items-center bg-[#efefef]">
       {eventData ? (
-        <div className={`${styles.section} 800px:w-[80%] mx-auto`}>
+        <div
+          className={`${styles.section} 800px:w-[80%] mx-auto bg-white rounded-lg my-4 shadow-md`}
+        >
           <div className="w-full flex items-center flex-col">
             <h1
               className={`${styles.productTitle} text-[30px] text-center my-4 mt-8 uppercase`}
@@ -156,19 +121,16 @@ const EventDetailsCard = ({ setOpen }) => {
 
             <div className="mx-auto flex items-center">
               <div className="p-8 pt-0">
-                {/* <p className="text-[18px] text-[#1b4462] text-justify leading-8">
-                  {eventData.description}
-                </p> */}
                 <p
                   className="text-[18px] text-[#1b4462] text-justify leading-8"
                   dangerouslySetInnerHTML={{ __html: eventData.description }}
                 ></p>
 
-                <img
+                {/* <img
                   src={`${eventData && eventData.images[select]}`}
                   alt="Event"
-                  className="rounded-[8px] my-6 mx-auto w-[80%] h-[80%]"
-                />
+                  className="rounded-[8px] mx-auto my-6 w-[60%] h-[60%]"
+                /> */}
               </div>
             </div>
           </div>

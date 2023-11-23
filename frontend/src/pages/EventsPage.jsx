@@ -15,17 +15,12 @@ const EventsPage = () => {
       ) : (
         <div>
           <Header activeHeading={4} />
-          {/* <EventCard active={true} data={allEvents && allEvents[0]} /> */}
-          {/* {allEvents &&
-                  allEvents.map((allEvents, index) => (
-                    <EventCard data={allEvents} />
-                  ))} */}
           {allEvents && allEvents.length === 0 ? (
             <PageNotfound />
           ) : (
             <>
               {allEvents.map((allEvents, index) => (
-                <EventCard data={allEvents} />
+                <EventCard key={index} data={allEvents} />
               ))}{" "}
             </>
           )}
@@ -36,4 +31,3 @@ const EventsPage = () => {
 };
 
 export default EventsPage;
-
