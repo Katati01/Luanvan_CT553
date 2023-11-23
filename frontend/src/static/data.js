@@ -15,11 +15,11 @@ export const navItems = [
   {
     title: "Sự kiện",
     url: "/events"
-  },
-  {
-    title: "FAQ",
-    url: "/faq"
   }
+  // {
+  //   title: "FAQ",
+  //   url: "/faq"
+  // }
 ];
 
 // branding data
