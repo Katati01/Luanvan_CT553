@@ -1,13 +1,12 @@
 import React from "react";
-import { AiOutlineFolderAdd, AiOutlineGift } from "react-icons/ai";
+import { AiOutlineGift } from "react-icons/ai";
+import { BiMessageSquareDetail } from "react-icons/bi";
+import { CiMoneyBill, CiSettings } from "react-icons/ci";
 import { FiPackage, FiShoppingBag } from "react-icons/fi";
+import { HiOutlineReceiptRefund } from "react-icons/hi";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
-import { VscNewFile } from "react-icons/vsc";
-import { CiMoneyBill, CiSettings } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { BiMessageSquareDetail } from "react-icons/bi";
-import { HiOutlineReceiptRefund } from "react-icons/hi";
 
 const DashboardSideBar = ({ active }) => {
   return (
@@ -41,7 +40,7 @@ const DashboardSideBar = ({ active }) => {
               active === 2 ? "text-[#009b49] font-bold" : "text-[#555]"
             }`}
           >
-            Đơn hàng
+            Quản lý đơn hàng
           </h5>
         </Link>
       </div>
@@ -54,7 +53,7 @@ const DashboardSideBar = ({ active }) => {
               active === 3 ? "text-[#009b49] font-bold" : "text-[#555]"
             }`}
           >
-            Sản phẩm
+            Quản lý sản phẩm
           </h5>
         </Link>
       </div>
@@ -89,7 +88,7 @@ const DashboardSideBar = ({ active }) => {
               active === 5 ? "text-[#009b49] font-bold" : "text-[#555]"
             }`}
           >
-            Khuyến mãi, sự kiện
+            Quản lý sự kiện,tin tức
           </h5>
         </Link>
       </div>
@@ -156,7 +155,7 @@ const DashboardSideBar = ({ active }) => {
               active === 9 ? "text-[#009b49] font-bold" : "text-[#555]"
             }`}
           >
-            Mã giảm giá
+            Quản lý mã giảm giá
           </h5>
         </Link>
       </div>
@@ -172,7 +171,7 @@ const DashboardSideBar = ({ active }) => {
               active === 10 ? "text-[#009b49] font-bold" : "text-[#555]"
             }`}
           >
-            Hoàn tiền
+            Xử lý hoàn tiền
           </h5>
         </Link>
       </div>

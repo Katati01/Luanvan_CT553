@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { server } from "../../server";
 import styles from "../../styles/styles";
-
 const Checkout = () => {
   const { user } = useSelector((state) => state.user);
   const { cart } = useSelector((state) => state.cart);

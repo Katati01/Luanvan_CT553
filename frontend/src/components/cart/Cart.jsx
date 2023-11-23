@@ -1,15 +1,14 @@
 import currency from "currency-formatter";
 import React, { useState } from "react";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
+import { IoBagHandleOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import { TiDeleteOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
-import { IoCart } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addTocart, removeFromCart } from "../../redux/actions/cart";
 import styles from "../../styles/styles";
-import { IoBagHandleOutline } from "react-icons/io5";
 const Cart = ({ setOpenCart }) => {
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -33,12 +32,11 @@ const Cart = ({ setOpenCart }) => {
     dispatch(addTocart(data));
   };
 
-
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
       <div className="fixed mt-2 top-0 right-0.5 w-[75%] h-[96%] 800px:w-[30%] md:w-[35%] 700px:w-[80%] rounded-md bg-white flex flex-col overflow-x-auto justify-between shadow-sm">
-    {/* <div className="absolute top-2 right-0 mt-2 bg-white rounded-md md:w-[35%] 700px:w-[80%] shadow-lg overflow-x-auto z-20 w-[75%] h-[95%]">      */}
-    {cart && cart.length === 0 ? (
+        {/* <div className="absolute top-2 right-0 mt-2 bg-white rounded-md md:w-[35%] 700px:w-[80%] shadow-lg overflow-x-auto z-20 w-[75%] h-[95%]">      */}
+        {cart && cart.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
               <RxCross1
@@ -68,7 +66,7 @@ const Cart = ({ setOpenCart }) => {
               </div>
 
               {/* cart Single Items */}
-              
+
               <div className="w-full border-t">
                 {cart &&
                   cart.map((i, index) => (
@@ -81,7 +79,7 @@ const Cart = ({ setOpenCart }) => {
                   ))}
               </div>
             </div>
-<br/>
+            <br />
             <div className="px-5 mb-3">
               {/* checkout buttons */}
               <Link to="/checkout">
@@ -104,9 +102,6 @@ const Cart = ({ setOpenCart }) => {
     </div>
   );
 };
-
-
-
 
 const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const [value, setValue] = useState(data.qty);
