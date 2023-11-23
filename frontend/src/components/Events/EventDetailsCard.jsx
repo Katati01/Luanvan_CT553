@@ -1,24 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import { server } from "../../server";
 import styles from "../../styles/styles";
-import { toast } from "react-toastify";
-import { addTocart } from "../../redux/actions/cart";
 import SuggestedEvent from "./SuggestedEvent";
 const EventDetailsCard = ({ setOpen }) => {
   const { id } = useParams();
-  const { cart } = useSelector((state) => state.cart);
-  const { wishlist } = useSelector((state) => state.wishlist);
-  const dispatch = useDispatch();
   const [eventData, setEventData] = useState(null);
-  const [count, setCount] = useState(1);
-  const [click, setClick] = useState(false);
-  const [select, setSelect] = useState(0);
-  const navigate = useNavigate();
-  const { user, isAuthenticated } = useSelector((state) => state.user);
-  const { allEvents, isLoading } = useSelector((state) => state.events);
+  const { allEvents } = useSelector((state) => state.events);
 
   useEffect(() => {
     async function fetchEventData() {
