@@ -25,7 +25,8 @@ import {
   UserInboxPage,
   PageNotfound,
   EventDetailsPage,
-  AboutPage
+  AboutPage,
+  PolicyPage
   // UserInbox,
 } from "./routes/Routes.js";
 import {
@@ -107,9 +108,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/reset-password/:reset_password_token"
-          element={
-            <ResetPasswordTokenPage />
-          }
+          element={<ResetPasswordTokenPage />}
         />
         <Route
           path="/activation/:activation_token"
@@ -126,6 +125,8 @@ const App = () => {
         <Route path="/events" element={<EventsPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/policy" element={<PolicyPage />} />
+
         <Route
           path="/checkout"
           element={
@@ -204,13 +205,13 @@ const App = () => {
             </SellerProtectedRoute>
           }
         />
-        <Route 
+        <Route
           path="/dashboard-update-product/:id"
           element={
             <SellerProtectedRoute>
               <ShopUpdateProduct />
             </SellerProtectedRoute>
-          } 
+          }
         />
         <Route
           path="/dashboard-orders"

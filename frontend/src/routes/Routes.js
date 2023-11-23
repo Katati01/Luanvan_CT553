@@ -7,6 +7,7 @@ import BestSellingPage from "../pages/BestSellingPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import EventsPage from "../pages/EventsPage";
 import FAQPage from "../pages/FAQPage";
+import PolicyPage from "../pages/PolicyPage";
 import HomePage from "../pages/HomePage";
 import OrderDetailsPage from "../pages/OrderDetailsPage";
 import OrderSuccessPage from "../pages/OrderSuccessPage";
@@ -30,6 +31,7 @@ export {
   CheckoutPage,
   EventsPage,
   FAQPage,
+  PolicyPage,
   ForgotPasswordPage,
   HomePage,
   LoginPage,

@@ -70,6 +70,9 @@ const Footer = () => {
           ))}
         </ul>
       </div>
+      <div className="py-3 px-0 text-center text-white bg-black">
+        Copyright © 2023 AGRISTORE
+      </div>
 
       {/* <div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10

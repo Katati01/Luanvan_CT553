@@ -622,6 +622,10 @@ export const footerSupportLinks = [
     link: "/faq"
   },
   {
+    name: "Chính sách",
+    link: "/policy"
+  },
+  {
     name: "Đánh giá"
   },
   {
