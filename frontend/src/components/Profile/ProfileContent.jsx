@@ -2,7 +2,6 @@ import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import axios from "axios";
 import { Country, State } from "country-state-city";
-import currency from "currency-formatter";
 import React, { useEffect, useState } from "react";
 import {
   AiOutlineArrowRight,
@@ -47,6 +46,7 @@ const ProfileContent = ({ active }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUserInformation(name, email, phoneNumber, password));
+    toast.success("Thông tin cá nhân đã được cập nhật thành công!");
   };
 
   const handleImage = async (e) => {
@@ -286,28 +286,28 @@ const AllOrders = () => {
   ];
 
   const row = [];
-orders &&
-  orders.forEach((item) => {
-    const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+  orders &&
+    orders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
 
-    // Lấy giá trị của totalPrice và shopShip từ shopTotal
-    const shopTotal =
-      item.shopTotal && item.shopTotal[product.shopId]
-        ? item.shopTotal[product.shopId]
-        : {};
-    const totalPrice = shopTotal.totalPrice || 0;
-    const shopShip = shopTotal.shopShip || 0;
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal =
+        item.shopTotal && item.shopTotal[product.shopId]
+          ? item.shopTotal[product.shopId]
+          : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      const shopShip = shopTotal.shopShip || 0;
 
-    // Tính tổng của totalPrice và shopShip
-    const totalAmount = totalPrice + shopShip;
+      // Tính tổng của totalPrice và shopShip
+      const totalAmount = totalPrice + shopShip;
 
-    row.push({
-      id: item._id,
-      itemsQty: item.cart.length,
-      status: item.status,
-      shopTotal: totalAmount,
+      row.push({
+        id: item._id,
+        itemsQty: item.cart.length,
+        status: item.status,
+        shopTotal: totalAmount,
+      });
     });
-  });
 
   return (
     <div className="pl-8 pt-1">
@@ -421,28 +421,27 @@ const AllRefundOrders = () => {
   //     });
   //   });
   eligibleOrders &&
-  eligibleOrders.forEach((item) => {
-    const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+    eligibleOrders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
 
-    // Lấy giá trị của totalPrice và shopShip từ shopTotal
-    const shopTotal =
-      item.shopTotal && item.shopTotal[product.shopId]
-        ? item.shopTotal[product.shopId]
-        : {};
-    const totalPrice = shopTotal.totalPrice || 0;
-    const shopShip = shopTotal.shopShip || 0;
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal =
+        item.shopTotal && item.shopTotal[product.shopId]
+          ? item.shopTotal[product.shopId]
+          : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      const shopShip = shopTotal.shopShip || 0;
 
-    // Tính tổng của totalPrice và shopShip
-    const totalAmount = totalPrice;
+      // Tính tổng của totalPrice và shopShip
+      const totalAmount = totalPrice;
 
-    row.push({
-      id: item._id,
-      itemsQty: item.cart.length,
-      status: item.status,
-      total: totalAmount,
+      row.push({
+        id: item._id,
+        itemsQty: item.cart.length,
+        status: item.status,
+        total: totalAmount,
+      });
     });
-  });
-
 
   return (
     <div className="pl-8 pt-1">
@@ -622,7 +621,8 @@ const ChangePassword = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success(res.data.success);
+        // toast.success(res.data.success);
+        toast.success("Đổi mật khẩu thành công!");
         setOldPassword("");
         setNewPassword("");
         setConfirmPassword("");

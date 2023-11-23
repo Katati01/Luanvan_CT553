@@ -178,10 +178,21 @@ router.put(
       order.status = req.body.status;
       await order.save({ validateBeforeSave: false });
 
+      try {
+        console.log(order.user.email);
+        await sendMail({
+          email: order.user.email,
+          subject: "Xác nhận yêu cầu hoàn tiền",
+          message: `Chúng tôi xác nhận rằng yêu cầu hoàn tiền cho đơn hàng #${order._id} đã được xác nhận. Số tiền sẽ được hoàn trả đến quý khách trong thời gian sớm nhất. Cảm ơn quý khách !`,
+        });
+      } catch (error) {
+        console.error("Error sending refund confirmation email:", error);
+      }
+
       res.status(200).json({
         success: true,
         order,
-        message: "Yêu cầu hoàn tiền đặt hàng thành công!",
+        message: "Yêu cầu hoàn tiền đơn hàng thành công!",
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -209,7 +220,7 @@ router.put(
         await sendMail({
           email: order.user.email,
           subject: "Hoàn tiền đơn hàng thành công",
-          message: `Chúng tôi xác nhận rằng số tiền của đơn hàng #${order._id} đã được hoàn trả thành công vào tài khoản của bạn.`,
+          message: `Chúng tôi xác nhận rằng số tiền của đơn hàng #${order._id} đã được hoàn trả đến quý khách thành công. Cảm ơn quý khách rất nhiều.`,
         });
       } catch (error) {
         console.error("Error sending refund confirmation email:", error);

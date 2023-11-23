@@ -1,26 +1,51 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ShopHomePage } from "./ShopRoutes.js";
+import { getAllEvents } from "./redux/actions/event";
+import { getAllProducts } from "./redux/actions/product";
+import { loadSeller, loadUser } from "./redux/actions/user";
+import Store from "./redux/store";
 import {
-  LoginPage,
-  SignupPage,
-  ForgotPasswordPage,
-  ResetPasswordTokenPage,
+  AdminDashboardEvents,
+  AdminDashboardOrders,
+  AdminDashboardPage,
+  AdminDashboardProducts,
+  AdminDashboardSellers,
+  AdminDashboardUsers,
+  AdminDashboardWithdraw,
+} from "./routes/AdminRoutes";
+import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import {
+  AboutPage,
+  // UserInbox,
+  // ResetPasswordTokenPage,
   ActivationPage,
-  HomePage,
-  ProductsPage,
   BestSellingPage,
+  CheckoutPage,
+  EventDetailsPage,
   EventsPage,
   FAQPage,
-  CheckoutPage,
-  PaymentPage,
-  OrderSuccessPage,
-  ProductDetailsPage,
-  ProfilePage,
-  ShopCreatePage,
-  SellerActivationPage,
-  ShopLoginPage,
+  ForgotPasswordPage,
+  HomePage,
+  LoginPage,
   OrderDetailsPage,
+  OrderSuccessPage,
+  PageNotfound,
+  PaymentPage,
+  ProductDetailsPage,
+  ProductsPage,
+  ProfilePage,
+  SellerActivationPage,
+  ShopCreatePage,
+  ShopLoginPage,
+  SignupPage,
   TrackOrderPage,
   UserInboxPage,
   PageNotfound,
@@ -29,45 +54,24 @@ import {
   PolicyPage
   // UserInbox,
 } from "./routes/Routes.js";
-import {
-  ShopDashboardPage,
-  ShopCreateProduct,
-  ShopUpdateProduct,
-  ShopAllProducts,
-  ShopCreateEvents,
-  ShopAllEvents,
-  ShopAllCoupouns,
-  ShopPreviewPage,
-  ShopAllOrders,
-  ShopOrderDetails,
-  ShopAllRefunds,
-  ShopSettingsPage,
-  ShopWithDrawMoneyPage,
-  ShopInboxPage
-} from "./routes/ShopRoutes";
-import {
-  AdminDashboardPage,
-  AdminDashboardUsers,
-  AdminDashboardSellers,
-  AdminDashboardOrders,
-  AdminDashboardProducts,
-  AdminDashboardEvents,
-  AdminDashboardWithdraw
-} from "./routes/AdminRoutes";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Store from "./redux/store";
-import { loadSeller, loadUser } from "./redux/actions/user";
-import ProtectedRoute from "./routes/ProtectedRoute";
-import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
-import { ShopHomePage } from "./ShopRoutes.js";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
-import { getAllProducts } from "./redux/actions/product";
-import { getAllEvents } from "./redux/actions/event";
-import axios from "axios";
+import {
+  ShopAllCoupouns,
+  ShopAllEvents,
+  ShopAllOrders,
+  ShopAllProducts,
+  ShopAllRefunds,
+  ShopCreateEvents,
+  ShopCreateProduct,
+  ShopDashboardPage,
+  ShopInboxPage,
+  ShopOrderDetails,
+  ShopPreviewPage,
+  ShopSettingsPage,
+  ShopUpdateProduct,
+  ShopWithDrawMoneyPage,
+} from "./routes/ShopRoutes";
 import { server } from "./server";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 // import ShopUpdateProduct from "./pages/Shop/ShopUpdateProduct";
 
 const App = () => {
@@ -106,10 +110,12 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route
+        {/* <Route
           path="/reset-password/:reset_password_token"
-          element={<ResetPasswordTokenPage />}
-        />
+          element={
+            <ResetPasswordTokenPage />
+          }
+        /> */}
         <Route
           path="/activation/:activation_token"
           element={<ActivationPage />}
