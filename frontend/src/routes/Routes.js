@@ -2,9 +2,11 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import LoginPage from "../pages/Login";
 import SignupPage from "../pages/SignupPage";
 // import ResetPasswordToekPage from "../pages/ResetPasswordPage";
+import AboutPage from "../pages/AboutPage";
 import ActivationPage from "../pages/ActivationPage";
 import BestSellingPage from "../pages/BestSellingPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import EventDetailsPage from "../pages/EventDetailsPage";
 import EventsPage from "../pages/EventsPage";
 import FAQPage from "../pages/FAQPage";
 import HomePage from "../pages/HomePage";
@@ -15,19 +17,18 @@ import PaymentPage from "../pages/PaymentPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage";
 import ProductsPage from "../pages/ProductsPage";
 import ProfilePage from "../pages/ProfilePage";
-import ResetPasswordTokenPage from "../pages/ResetPasswordPage";
 import SellerActivationPage from "../pages/SellerActivationPage";
 import ShopCreatePage from "../pages/ShopCreate";
 import ShopLoginPage from "../pages/ShopLoginPage";
 import TrackOrderPage from "../pages/TrackOrderPage";
 import UserInboxPage from "../pages/UserInboxPage";
-import EventDetailsPage from "../pages/EventDetailsPage";
-import AboutPage from "../pages/AboutPage";
 
 export {
+  AboutPage,
   ActivationPage,
   BestSellingPage,
   CheckoutPage,
+  EventDetailsPage,
   EventsPage,
   FAQPage,
   ForgotPasswordPage,
@@ -40,13 +41,10 @@ export {
   ProductDetailsPage,
   ProductsPage,
   ProfilePage,
-  ResetPasswordTokenPage,
   SellerActivationPage,
   ShopCreatePage,
   ShopLoginPage,
   SignupPage,
   TrackOrderPage,
   UserInboxPage,
-  AboutPage,
-  EventDetailsPage
 };

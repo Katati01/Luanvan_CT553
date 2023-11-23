@@ -92,8 +92,14 @@ const AllCoupons = () => {
     },
     {
       field: "quantity",
-      headerName: "Số lượng mã giảm giá",
+      headerName: "Số lượng mã",
       minWidth: 120,
+      flex: 0.8,
+    },
+    {
+      field: "remainingQuantity",
+      headerName: "Số lượng đã dùng",
+      minWidth: 150,
       flex: 0.8,
     },
     {
@@ -124,7 +130,8 @@ const AllCoupons = () => {
         name: item.name,
         quantity: item.quantity,
         price: item.value + " %",
-        sold: 10,
+        // sold: 10,
+        remainingQuantity: item.remainingQuantity,
       });
     });
 
