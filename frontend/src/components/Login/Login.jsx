@@ -32,10 +32,11 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      const isAdmin = response.data.user.role === "admin";
+      const isAdmin = response.data.user.role === "Admin";
+      console.log("------" + response.data.user.role);
       toast.success("Login Success!");
       if (isAdmin) {
-        navigate("/dashboard");
+        navigate("/admin/dashboard");
       } else {
         navigate("/");
       }
