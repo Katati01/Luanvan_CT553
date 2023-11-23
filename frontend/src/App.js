@@ -18,12 +18,11 @@ import {
   AdminDashboardProducts,
   AdminDashboardSellers,
   AdminDashboardUsers,
-  AdminDashboardWithdraw,
+  AdminDashboardWithdraw
 } from "./routes/AdminRoutes";
 import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import {
-  AboutPage,
   // UserInbox,
   // ResetPasswordTokenPage,
   ActivationPage,
@@ -48,8 +47,6 @@ import {
   SignupPage,
   TrackOrderPage,
   UserInboxPage,
-  PageNotfound,
-  EventDetailsPage,
   AboutPage,
   PolicyPage
   // UserInbox,
@@ -69,7 +66,7 @@ import {
   ShopPreviewPage,
   ShopSettingsPage,
   ShopUpdateProduct,
-  ShopWithDrawMoneyPage,
+  ShopWithDrawMoneyPage
 } from "./routes/ShopRoutes";
 import { server } from "./server";
 // import ShopUpdateProduct from "./pages/Shop/ShopUpdateProduct";
