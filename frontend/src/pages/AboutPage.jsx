@@ -13,31 +13,14 @@ const AboutPage = () => {
   );
 };
 
-
-
 export default AboutPage;
 
-const About = () =>{
-    return(
-        <>
-        <div className="">
-     
-        <div className={`${styles.section} 800px:w-[80%] mx-auto`}>
-          <div className="w-full flex items-center flex-col">
-            
-
-            <div className="w-full flex items-center flex-col gap-2 p-4 px-8">
-    
-            </div>
-
-            <div className="mx-auto flex items-center">
-              
-            </div>
-          </div>
-          
-        </div>
-         </div>
-        
-        </>
-    )
-}
+const About = () => {
+  return (
+    <div className="flex items-center bg-[#efefef]">
+      <div
+        className={`${styles.section} 800px:w-[80%] mx-auto bg-white rounded-lg my-4 shadow-md`}
+      ></div>
+    </div>
+  );
+};
