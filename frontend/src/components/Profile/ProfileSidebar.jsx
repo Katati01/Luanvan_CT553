@@ -18,6 +18,8 @@ import { useSelector } from "react-redux";
 const ProfileSidebar = ({ setActive, active }) => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  console.log(user.role);
+  const isAdmin = user.role === "Admin";
   const logoutHandler = () => {
     axios
       .get(`${server}/user/logout`, { withCredentials: true })
@@ -32,127 +34,168 @@ const ProfileSidebar = ({ setActive, active }) => {
   };
   return (
     <div className="w-full bg-white shadow-sm rounded-[10px] p-4 pt-8">
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(1)}
-      >
-        <RxPerson size={20} color={active === 1 ? "#009b49" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 1 ? "text-[#009b49]" : ""
-          } 800px:block hidden`}
-        >
-          Trang cá nhân
-        </span>
-      </div>
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(2)}
-      >
-        <HiOutlineShoppingBag size={20} color={active === 2 ? "#009b49" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 2 ? "text-[#009b49]" : ""
-          } 800px:block hidden`}
-        >
-          Đơn đặt hàng
-        </span>
-      </div>
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(3)}
-      >
-        <HiOutlineReceiptRefund
-          size={20}
-          color={active === 3 ? "#009b49" : ""}
-        />
-        <span
-          className={`pl-3 ${
-            active === 3 ? "text-[#009b49]" : ""
-          } 800px:block hidden`}
-        >
-          Đơn hoàn tiền
-        </span>
-      </div>
-
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(4) || navigate("/inbox")}
-      >
-        <AiOutlineMessage size={20} color={active === 4 ? "#009b49" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 4 ? "text-[#009b49]" : ""
-          } 800px:block hidden`}
-        >
-          Tin nhắn
-        </span>
-      </div>
-
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(5)}
-      >
-        <MdOutlineTrackChanges
-          size={20}
-          color={active === 5 ? "#009b49" : ""}
-        />
-        <span
-          className={`pl-3 ${
-            active === 5 ? "text-[#009b49]" : ""
-          } 800px:block hidden`}
-        >
-          Theo dõi đơn hàng
-        </span>
-      </div>
-
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(6)}
-      >
-        <RiLockPasswordLine size={20} color={active === 6 ? "#009b49" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 6 ? "text-[#009b49]" : ""
-          } 800px:block hidden`}
-        >
-          Đổi mật khẩu
-        </span>
-      </div>
-
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(7)}
-      >
-        <TbAddressBook size={20} color={active === 7 ? "#009b49" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 7 ? "text-[#009b49]" : ""
-          } 800px:block hidden`}
-        >
-          Địa chỉ
-        </span>
-      </div>
-
-      {user && user?.role === "Admin" && (
-        <Link to="/admin/dashboard">
+      {user && user?.role !== "Admin" && (
+        <>
           <div
             className="flex items-center cursor-pointer w-full mb-8"
-            onClick={() => setActive(8)}
+            onClick={() => setActive(1)}
           >
-            <MdOutlineAdminPanelSettings
+            <RxPerson size={20} color={active === 1 ? "#009b49" : ""} />
+            <span
+              className={`pl-3 ${
+                active === 1 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Trang cá nhân
+            </span>
+          </div>
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(2)}
+          >
+            <HiOutlineShoppingBag
               size={20}
-              color={active === 7 ? "#009b49" : ""}
+              color={active === 2 ? "#009b49" : ""}
             />
             <span
               className={`pl-3 ${
-                active === 8 ? "text-[#009b49]" : ""
+                active === 2 ? "text-[#009b49]" : ""
               } 800px:block hidden`}
             >
-              Quản lý
+              Đơn đặt hàng
             </span>
           </div>
-        </Link>
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(3)}
+          >
+            <HiOutlineReceiptRefund
+              size={20}
+              color={active === 3 ? "#009b49" : ""}
+            />
+            <span
+              className={`pl-3 ${
+                active === 3 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Đơn hoàn tiền
+            </span>
+          </div>
+
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(4) || navigate("/inbox")}
+          >
+            <AiOutlineMessage size={20} color={active === 4 ? "#009b49" : ""} />
+            <span
+              className={`pl-3 ${
+                active === 4 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Tin nhắn
+            </span>
+          </div>
+
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(5)}
+          >
+            <MdOutlineTrackChanges
+              size={20}
+              color={active === 5 ? "#009b49" : ""}
+            />
+            <span
+              className={`pl-3 ${
+                active === 5 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Theo dõi đơn hàng
+            </span>
+          </div>
+
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(6)}
+          >
+            <RiLockPasswordLine
+              size={20}
+              color={active === 6 ? "#009b49" : ""}
+            />
+            <span
+              className={`pl-3 ${
+                active === 6 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Đổi mật khẩu
+            </span>
+          </div>
+
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(7)}
+          >
+            <TbAddressBook size={20} color={active === 7 ? "#009b49" : ""} />
+            <span
+              className={`pl-3 ${
+                active === 7 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Địa chỉ
+            </span>
+          </div>
+        </>
+      )}
+
+      {user && user?.role === "Admin" && (
+        <>
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(1)}
+          >
+            <RxPerson size={20} color={active === 1 ? "#009b49" : ""} />
+            <span
+              className={`pl-3 ${
+                active === 1 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Trang cá nhân
+            </span>
+          </div>
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(6)}
+          >
+            <RiLockPasswordLine
+              size={20}
+              color={active === 6 ? "#009b49" : ""}
+            />
+            <span
+              className={`pl-3 ${
+                active === 6 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Đổi mật khẩu
+            </span>
+          </div>
+          <Link to="/admin/dashboard">
+            <div
+              className="flex items-center cursor-pointer w-full mb-8"
+              onClick={() => setActive(8)}
+            >
+              <MdOutlineAdminPanelSettings
+                size={20}
+                color={active === 7 ? "#009b49" : ""}
+              />
+              <span
+                className={`pl-3 ${
+                  active === 8 ? "text-[#009b49]" : ""
+                } 800px:block hidden`}
+              >
+                Quản lý
+              </span>
+            </div>
+          </Link>
+        </>
       )}
       <div
         className="single_item flex items-center cursor-pointer w-full mb-8"
