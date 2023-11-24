@@ -30,7 +30,7 @@ const DashboardMessages = () => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
-        createdAt: Date.now(),
+        createdAt: Date.now()
       });
     });
   }, []);
@@ -47,7 +47,7 @@ const DashboardMessages = () => {
         const resonse = await axios.get(
           `${server}/conversation/get-all-conversation-seller/${seller?._id}`,
           {
-            withCredentials: true,
+            withCredentials: true
           }
         );
 
@@ -98,7 +98,7 @@ const DashboardMessages = () => {
     const message = {
       sender: seller._id,
       text: newMessage,
-      conversationId: currentChat._id,
+      conversationId: currentChat._id
     };
 
     const receiverId = currentChat.members.find(
@@ -108,7 +108,7 @@ const DashboardMessages = () => {
     socketId.emit("sendMessage", {
       senderId: seller._id,
       receiverId,
-      text: newMessage,
+      text: newMessage
     });
 
     try {
@@ -131,13 +131,13 @@ const DashboardMessages = () => {
   const updateLastMessage = async () => {
     socketId.emit("updateLastMessage", {
       lastMessage: newMessage,
-      lastMessageId: seller._id,
+      lastMessageId: seller._id
     });
 
     await axios
       .put(`${server}/conversation/update-last-message/${currentChat._id}`, {
         lastMessage: newMessage,
-        lastMessageId: seller._id,
+        lastMessageId: seller._id
       })
       .then((res) => {
         console.log(res.data.conversation);
@@ -169,15 +169,15 @@ const DashboardMessages = () => {
     socketId.emit("sendMessage", {
       senderId: seller._id,
       receiverId,
-      images: e,
+      images: e
     });
 
     try {
       await axios
         .post(`${server}/message/create-new-message`, formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            "Content-Type": "multipart/form-data"
+          }
         })
         .then((res) => {
           setImages();
@@ -194,7 +194,7 @@ const DashboardMessages = () => {
       `${server}/conversation/update-last-message/${currentChat._id}`,
       {
         lastMessage: "Photo",
-        lastMessageId: seller._id,
+        lastMessageId: seller._id
       }
     );
   };
@@ -204,7 +204,7 @@ const DashboardMessages = () => {
   }, [messages]);
 
   return (
-    <div className="w-[90%] bg-white m-5 h-[85vh] overflow-y-scroll rounded">
+    <div className="w-[90%] bg-white m-5 h-[85vh] overflow-y-scroll [&::-webkit-scrollbar]:hidden rounded">
       {!open && (
         <>
           <h1 className="text-center text-[30px] py-3 font-Poppins">
@@ -256,7 +256,7 @@ const MessageList = ({
   me,
   setUserData,
   online,
-  setActiveStatus,
+  setActiveStatus
 }) => {
   console.log(data);
   const [user, setUser] = useState([]);
@@ -329,7 +329,7 @@ const SellerInbox = ({
   sellerId,
   userData,
   activeStatus,
-  handleImageUpload,
+  handleImageUpload
 }) => {
   return (
     <div className="w-full min-h-full flex flex-col justify-between">
@@ -354,7 +354,7 @@ const SellerInbox = ({
       </div>
 
       {/* messages */}
-      <div className="px-3 h-[65vh] py-3 overflow-y-scroll">
+      <div className="px-3 h-[65vh] py-3 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
         {messages &&
           messages.map((item, index) => {
             return (
