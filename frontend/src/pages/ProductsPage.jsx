@@ -67,10 +67,12 @@ const ProductsPage = () => {
           <Header activeHeading={3} />
           <br />
           <br />
-          <div className="flex justify-end">
+          <div className="flex md:justify-end md:flex-row flex-col pb-2">
             <div className="mr-[3vw]">
               <div onClick={() => setDropDown(!dropDown)}>
-                <div className="relative h-[60px] mt-[10px] w-[370px] mb-7 hidden 1000px:block">
+                {/* <div className="relative h-[60px] mt-[10px] w-[370px] mb-7 hidden 
+                1000px:block"> */}
+                <div className="relative h-[60px] mt-[10px] w-[370px] mb-7">
                   <BiMenuAltLeft size={30} className="absolute top-4 left-2" />
                   <button
                     className={`h-[60px] w-full flex justify-between items-center pl-11 border border-gray-300 rounded-md bg-white font-sans text-lg font-[500] select-none rounded-t-md`}
@@ -108,11 +110,8 @@ const ProductsPage = () => {
             </div>
           </div>
           <div className={`${styles.section}`}>
-            {/* <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-          {data && data.map((i, index) => <ProductCard data={i} key={index} />)}
-        </div> */}
             <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-              {sortProducts(sortBy, data).map((i, index) => (
+              {sortProducts(sortBy, data)?.map((i, index) => (
                 <ProductCard data={i} key={index} />
               ))}
             </div>

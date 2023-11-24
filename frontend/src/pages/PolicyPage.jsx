@@ -6,7 +6,7 @@ import styles from "../styles/styles";
 const PolicyPage = () => {
   return (
     <div>
-      <Header activeHeading={5} />
+      <Header />
       <Policy />
       <Footer />
     </div>
@@ -34,8 +34,8 @@ const Policy = () => {
               <p className="mt-0 mb-4">
                 AGRISTORE – CHUỖI SIÊU THỊ NÔNG NGHIỆP HÀNG ĐẦU VIỆT NAM
                 Agristore ra đời từ mong muốn phục vụ được nhu cầu về vật tư
-                nông nghiệp – tư vấn kỹ thuật – Hỗ trợ tài chính và giải quyết
-                đầu ra cho người nông dân làm nông nghiệp .
+                nông nghiệp – Tư vấn kỹ thuật cho người nông dân làm nông nghiệp
+                .
               </p>
               <p className="mt-0 mb-4">
                 <span className="text-[14px]">
@@ -46,9 +46,9 @@ const Policy = () => {
               </p>
               <p className="mt-0 mb-4">
                 <span className="text-[14px]">
-                  Đội ngũ nhân viên tư vấn&nbsp;của AGRISTORE luôn hoạt động 24/7
-                  (cả cả chủ nhật và ngày lễ)&nbsp;để đáp ứng nhu cầu tư vấn,
-                  khiếu nại của khách hàng .&nbsp;&nbsp;
+                  Đội ngũ nhân viên tư vấn&nbsp;của AGRISTORE luôn hoạt động
+                  24/7 (cả cả chủ nhật và ngày lễ)&nbsp;để đáp ứng nhu cầu tư
+                  vấn, khiếu nại của khách hàng .&nbsp;&nbsp;
                 </span>
               </p>
               <p className="mt-0 mb-4">

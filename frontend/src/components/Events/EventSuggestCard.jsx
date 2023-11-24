@@ -1,7 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import styles from "../../styles/styles";
-import { VscLocation } from "react-icons/vsc";
-import { useEffect } from "react";
 
 const EventSuggestCard = ({ data, isEvent }) => {
   const handleClick = () => {
