@@ -18,7 +18,6 @@ import { useSelector } from "react-redux";
 const ProfileSidebar = ({ setActive, active }) => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  console.log(user.role);
   const isAdmin = user.role === "Admin";
   const logoutHandler = () => {
     axios
