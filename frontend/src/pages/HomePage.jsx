@@ -6,6 +6,7 @@ import BestDeals from "../components/Route/BestDeals/BestDeals";
 import Categories from "../components/Route/Categories/Categories";
 import FeaturedProduct from "../components/Route/FeaturedProduct/FeaturedProduct";
 import Hero from "../components/Route/Hero/Hero";
+import CategoryProduct from "../components/Route/CategoryProduct/CategoryProduct";
 
 const HomePage = () => {
   return (
@@ -15,7 +16,13 @@ const HomePage = () => {
       <Categories />
       <BestDeals />
       <Events />
-      <FeaturedProduct />
+      {/* <FeaturedProduct /> */}
+      <CategoryProduct category="Hạt giống" />
+      <CategoryProduct category="Đất sạch" />
+      <CategoryProduct category="Phân hữu cơ" />
+      <CategoryProduct category="Chậu, khay trồng" />
+      <CategoryProduct category="Chăm mai tết" />
+      <CategoryProduct category="Dụng cụ làm vườn" />
       <Footer />
     </div>
   );

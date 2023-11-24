@@ -20,7 +20,7 @@ const BestDeals = () => {
           <h1>Bán chạy</h1>
           <Link
             to="/best-selling"
-            className="text-[#000] font-[700] text-[16px] underline hover:text-[#009b49] ease-linear duration-100 mr-5"
+            className="text-[#fff] font-[700] text-[1rem] hover:text-[#000] ease-linear duration-100 mr-5 bg-[#009b49] py-2 px-3 rounded-3xl"
           >
             Xem thêm
           </Link>

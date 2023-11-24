@@ -594,26 +594,26 @@ export const footerProductLinks = [
 export const footercompanyLinks = [
   {
     name: "Hạt giống",
-    link: "products?category=Hạt%20giống"
+    link: "products?category=Hạt giống"
   },
   {
     name: "Đất sạch",
-    link: "products?category=Đất%20sạch"
+    link: "products?category=Đất sạch"
   },
   {
     name: "Phân hữu cơ",
-    link: "products?category=Phân%20hữu%20cơ"
+    link: "products?category=Phân hữu cơ"
   },
   {
     name: "Chậu, khay trồng",
-    link: "products?category=Chậu,%20khay%20trồng"
+    link: "products?category=Chậu, khay trồng"
   },
-  { name: "Chăm mai tết", link: "products?category=Chăm%20mai%20tết" },
+  { name: "Chăm mai tết", link: "products?category=Chăm mai tết" },
   {
     name: "Dụng cụ làm vườn",
-    link: "products?category=Dụng%20cụ%20làm%20vườn"
+    link: "products?category=Dụng cụ làm vườn"
   },
-  { name: "Danh mục khác", link: "products?category=Danh%20mục%20khác" }
+  { name: "Danh mục khác", link: "products?category=Danh mục khác" }
 ];
 
 export const footerSupportLinks = [
