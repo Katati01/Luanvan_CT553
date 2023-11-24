@@ -25,6 +25,7 @@ import { getAllOrdersOfUser } from "../../redux/actions/order";
 import NotificationBar from "../Notification/NotificationBar";
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+
   const { orders } = useSelector((state) => state.order);
   const { isSeller } = useSelector((state) => state.seller);
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -95,6 +96,8 @@ const Header = ({ activeHeading }) => {
       setActive(false);
     }
   });
+
+  const isAdmin = user?.role === "Admin";
 
   return (
     <>
@@ -252,22 +255,25 @@ const Header = ({ activeHeading }) => {
           </div>
           <div className="flex">
             <div className={`${styles.noramlFlex}`}>
-              <div
-                className="relative cursor-pointer mr-[15px]"
-                onMouseEnter={handleMouseEnter}
-                // onMouseLeave={handleMouseLeave}
-              >
-                <IoIosNotificationsOutline size={35} color="#333333" />
-                <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
-                  {orders ? orders.length : 0}
-                </span>
+              {/* notification */}
+              {!isAdmin && (
+                <div
+                  className="relative cursor-pointer mr-[15px]"
+                  onMouseEnter={handleMouseEnter}
+                  // onMouseLeave={handleMouseLeave}
+                >
+                  <IoIosNotificationsOutline size={35} color="#333333" />
+                  <span className="absolute right-0 top-0 rounded-full bg-[#fff] w-4 h-4 top right p-0 m-0 text-[#009b49] font-mono text-[12px] leading-tight text-center">
+                    {orders ? orders.length : 0}
+                  </span>
 
-                {isHovered ? (
-                  <div onMouseLeave={handleMouseLeave}>
-                    <NotificationBar openNotification={isHovered} />
-                  </div>
-                ) : null}
-              </div>
+                  {isHovered ? (
+                    <div onMouseLeave={handleMouseLeave}>
+                      <NotificationBar openNotification={isHovered} />
+                    </div>
+                  ) : null}
+                </div>
+              )}
             </div>
 
             <div className={`${styles.noramlFlex}`}>
