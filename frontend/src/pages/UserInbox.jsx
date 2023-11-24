@@ -31,7 +31,7 @@ const UserInbox = () => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
-        createdAt: Date.now(),
+        createdAt: Date.now()
       });
     });
   }, []);
@@ -48,7 +48,7 @@ const UserInbox = () => {
         const resonse = await axios.get(
           `${server}/conversation/get-all-conversation-user/${user?._id}`,
           {
-            withCredentials: true,
+            withCredentials: true
           }
         );
 
@@ -99,7 +99,7 @@ const UserInbox = () => {
     const message = {
       sender: user._id,
       text: newMessage,
-      conversationId: currentChat._id,
+      conversationId: currentChat._id
     };
     const receiverId = currentChat.members.find(
       (member) => member !== user?._id
@@ -108,7 +108,7 @@ const UserInbox = () => {
     socketId.emit("sendMessage", {
       senderId: user?._id,
       receiverId,
-      text: newMessage,
+      text: newMessage
     });
 
     try {
@@ -131,13 +131,13 @@ const UserInbox = () => {
   const updateLastMessage = async () => {
     socketId.emit("updateLastMessage", {
       lastMessage: newMessage,
-      lastMessageId: user._id,
+      lastMessageId: user._id
     });
 
     await axios
       .put(`${server}/conversation/update-last-message/${currentChat._id}`, {
         lastMessage: newMessage,
-        lastMessageId: user._id,
+        lastMessageId: user._id
       })
       .then((res) => {
         setNewMessage("");
@@ -168,15 +168,15 @@ const UserInbox = () => {
     socketId.emit("sendMessage", {
       senderId: user._id,
       receiverId,
-      images: e,
+      images: e
     });
 
     try {
       await axios
         .post(`${server}/message/create-new-message`, formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            "Content-Type": "multipart/form-data"
+          }
         })
         .then((res) => {
           setImages();
@@ -193,7 +193,7 @@ const UserInbox = () => {
       `${server}/conversation/update-last-message/${currentChat._id}`,
       {
         lastMessage: "Photo",
-        lastMessageId: user._id,
+        lastMessageId: user._id
       }
     );
   };
@@ -291,7 +291,7 @@ const MessageList = ({
   setUserData,
   userData,
   online,
-  setActiveStatus,
+  setActiveStatus
 }) => {
   const [active, setActive] = useState(0);
   const [user, setUser] = useState([]);
@@ -363,7 +363,7 @@ const SellerInbox = ({
   userData,
   activeStatus,
   scrollRef,
-  handleImageUpload,
+  handleImageUpload
 }) => {
   return (
     <div className="w-[full] min-h-full flex flex-col justify-between p-5">
@@ -388,7 +388,7 @@ const SellerInbox = ({
       </div>
 
       {/* messages */}
-      <div className="px-3 h-[57vh] py-3 overflow-y-scroll">
+      <div className="px-3 h-[57vh] py-3 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
         {messages &&
           messages.map((item, index) => (
             <div
