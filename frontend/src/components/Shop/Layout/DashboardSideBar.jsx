@@ -1,17 +1,19 @@
 import React from "react";
-import { AiOutlineGift } from "react-icons/ai";
-import { BiMessageSquareDetail } from "react-icons/bi";
+import { 
+  AiOutlineTags,
+  AiOutlineInbox,
+  AiOutlineForm,
+} from "react-icons/ai";
+import { RiCoupon2Line } from "react-icons/ri";
 import { CiMoneyBill, CiSettings } from "react-icons/ci";
-import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { HiOutlineReceiptRefund } from "react-icons/hi";
-import { MdOutlineLocalOffer } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
 const DashboardSideBar = ({ active }) => {
   return (
     // <div className="w-full h-[90vh] bg-white shadow-sm overflow-y-scroll sticky top-0 left-0 z-10">
-    <div className="w-full h-[90vh] bg-white shadow-sm sticky top-0 left-0 z-10">
+    <div className="w-full h-[100vh] bg-white shadow-sm sticky top-0 left-0 z-10">
       {/* single item */}
       <div className="w-full flex items-center p-4">
         <Link to="/dashboard" className="w-full flex items-center">
@@ -31,7 +33,7 @@ const DashboardSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/dashboard-orders" className="w-full flex items-center">
-          <FiShoppingBag
+          <AiOutlineForm
             size={30}
             color={`${active === 2 ? "#009b49" : "#555"}`}
           />
@@ -47,7 +49,7 @@ const DashboardSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/dashboard-products" className="w-full flex items-center">
-          <FiPackage size={30} color={`${active === 3 ? "#009b49" : "#555"}`} />
+          <AiOutlineInbox size={30} color={`${active === 3 ? "#009b49" : "#555"}`} />
           <h5
             className={`hidden 800px:block pl-2 text-[18px] font-[400] ${
               active === 3 ? "text-[#009b49] font-bold" : "text-[#555]"
@@ -79,7 +81,7 @@ const DashboardSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/dashboard-events" className="w-full flex items-center">
-          <MdOutlineLocalOffer
+          <AiOutlineTags
             size={30}
             color={`${active === 5 ? "#009b49" : "#555"}`}
           />
@@ -130,7 +132,7 @@ const DashboardSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/dashboard-messages" className="w-full flex items-center">
-          <BiMessageSquareDetail
+          <AiOutlineInbox
             size={30}
             color={`${active === 8 ? "#009b49" : "#555"}`}
           />
@@ -146,7 +148,7 @@ const DashboardSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/dashboard-coupouns" className="w-full flex items-center">
-          <AiOutlineGift
+          <RiCoupon2Line
             size={30}
             color={`${active === 9 ? "#009b49" : "#555"}`}
           />

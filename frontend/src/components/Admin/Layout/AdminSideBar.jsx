@@ -1,13 +1,15 @@
 import React from "react";
-import { FiShoppingBag } from "react-icons/fi";
-import { GrWorkshop } from "react-icons/gr";
 import { RxDashboard } from "react-icons/rx";
-import { CiMoneyBill } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { HiOutlineUserGroup } from "react-icons/hi";
-import { BsHandbag } from "react-icons/bs";
-import { MdOutlineLocalOffer } from "react-icons/md";
-import { AiOutlineSetting } from "react-icons/ai";
+import { 
+  AiOutlineSetting,
+  AiOutlineContacts,
+  AiOutlineCreditCard,
+  AiOutlineTeam,
+  AiOutlineTags,
+  AiOutlineInbox,
+  AiOutlineForm
+} from "react-icons/ai";
 
 const AdminSideBar = ({ active }) => {
   return (
@@ -31,7 +33,7 @@ const AdminSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/admin-orders" className="w-full flex items-center">
-          <FiShoppingBag
+          <AiOutlineForm
             size={30}
             color={`${active === 2 ? "#009b49" : "#555"}`}
           />
@@ -47,7 +49,7 @@ const AdminSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/admin-sellers" className="w-full flex items-center">
-          <GrWorkshop
+          <AiOutlineContacts
             size={30}
             color={`${active === 3 ? "#009b49" : "#555"}`}
           />
@@ -63,7 +65,7 @@ const AdminSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/admin-users" className="w-full flex items-center">
-          <HiOutlineUserGroup
+          <AiOutlineTeam
             size={30}
             color={`${active === 4 ? "#009b49" : "#555"}`}
           />
@@ -79,7 +81,7 @@ const AdminSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/admin-products" className="w-full flex items-center">
-          <BsHandbag size={30} color={`${active === 5 ? "#009b49" : "#555"}`} />
+          <AiOutlineInbox size={30} color={`${active === 5 ? "#009b49" : "#555"}`} />
           <h5
             className={`hidden 800px:block pl-2 text-[18px] font-[400] ${
               active === 5 ? "text-[#009b49]" : "text-[#555]"
@@ -92,7 +94,7 @@ const AdminSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/admin-events" className="w-full flex items-center">
-          <MdOutlineLocalOffer
+          <AiOutlineTags
             size={30}
             color={`${active === 6 ? "#009b49" : "#555"}`}
           />
@@ -108,7 +110,7 @@ const AdminSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/admin-withdraw-request" className="w-full flex items-center">
-          <CiMoneyBill
+          <AiOutlineCreditCard
             size={30}
             color={`${active === 7 ? "#009b49" : "#555"}`}
           />
