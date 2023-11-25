@@ -71,8 +71,9 @@ const Faq = () => {
           {activeTab === 3 && (
             <div className="mt-4">
               <p className="text-base text-gray-500">
-                Bạn có thể liên hệ với tôi qua Email:<b> test@gmail.com</b> nếu
-                có vướng mắc hay điều gì muốn nói nhé.
+                Bạn có thể liên hệ với tôi qua Email:
+                <b> luanvanct553@gmail.com</b> nếu có vướng mắc hay điều gì muốn
+                nói nhé.
               </p>
             </div>
           )}
