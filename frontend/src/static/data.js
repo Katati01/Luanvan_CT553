@@ -625,10 +625,10 @@ export const footerSupportLinks = [
     name: "Chính sách",
     link: "/policy"
   },
-  {
-    name: "Đánh giá"
-  },
-  {
-    name: "Liên hệ"
-  }
+//  {
+//    name: "Đánh giá"
+//  },
+//  {
+//    name: "Liên hệ"
+//  }
 ];
