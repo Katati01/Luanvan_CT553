@@ -198,46 +198,54 @@ export const categoriesData = [
   },
   {
     id: 2,
-    title: "Đất sạch",
+    title: "Phân bón",
     subTitle: "",
     image_Url:
-      "https://media.loveitopcdn.com/23464/dat-trong-rau-sach-tai-nha-hcm-q12.jpg"
+      "https://vietnong.vn/wp-content/uploads/2022/07/bang-gia-phan-bon-npk.jpg"
   },
   {
     id: 3,
-    title: "Phân hữu cơ",
+    title: "Thuốc bảo vệ thực vật",
     subTitle: "",
     image_Url:
-      "https://vietyen.bacgiang.gov.vn/images/22791/155/037/324/254/8/1550373242548.png"
+      "https://tse2.mm.bing.net/th?id=OIP.GpMQ4Al-mfW-tNJEC3K9qAHaET&pid=Api&P=0&h=180"
   },
   {
     id: 4,
-    title: "Chậu, khay trồng",
+    title: "Máy nông nghiệp",
     subTitle: "",
     image_Url:
-      "https://images.unsplash.com/photo-1487268113661-a75c49688467?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80"
+      "https://agridoctor.vn/sites/default/files/may-keo-nong-nghiep-1_2.jpg"
   },
   {
     id: 5,
-    title: "Chăm mai tết",
-    subTitle: "",
-    image_Url:
-      "https://images.unsplash.com/photo-1677283224636-f6c2eff879ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-  },
-  {
-    id: 6,
     title: "Dụng cụ làm vườn",
     subTitle: "",
     image_Url:
       "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
   },
   {
-    id: 7,
-    title: "Danh mục khác",
+    id: 6,
+    title: "Chậu, khay trồng",
     subTitle: "",
     image_Url:
-      "https://res.cloudinary.com/drymesbrv/image/upload/v1685786678/pngegg_3_byxapr.png"
-  }
+      "https://images.unsplash.com/photo-1487268113661-a75c49688467?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80"
+  },
+  {
+    id: 7,
+    title: "Đất sạch",
+    subTitle: "",
+    image_Url:
+      "https://media.loveitopcdn.com/23464/dat-trong-rau-sach-tai-nha-hcm-q12.jpg"
+  },
+  {
+    id: 7,
+    title: "Vật tư nông nghiệp",
+    subTitle: "",
+    image_Url:
+      "https://file.hstatic.net/1000192210/file/vat-tu-nong-nghiep-1_ef657fefe8d948dda24f185b3e6c3dfd.jpg"
+  },
+  
 ];
 
 // product Data
@@ -597,23 +605,29 @@ export const footercompanyLinks = [
     link: "products?category=Hạt giống"
   },
   {
-    name: "Đất sạch",
-    link: "products?category=Đất sạch"
+    name: "Phân bón",
+    link: "products?category=Phân bón"
   },
   {
-    name: "Phân hữu cơ",
-    link: "products?category=Phân hữu cơ"
+    name: "Thuốc bảo vệ thực vật",
+    link: "products?category=Thuốc bảo vệ thực vật"
+  },
+  {
+    name: "Máy nông nghiệp",
+    link: "products?category=Máy nông nghiệp"
+  },
+  { name: "Dụng cụ làm vườn", 
+    link: "products?category=Dụng cụ làm vườn" 
   },
   {
     name: "Chậu, khay trồng",
     link: "products?category=Chậu, khay trồng"
   },
-  { name: "Chăm mai tết", link: "products?category=Chăm mai tết" },
-  {
-    name: "Dụng cụ làm vườn",
-    link: "products?category=Dụng cụ làm vườn"
+  { name: "Đất sạch",
+    link: "products?category=Đất sạch" 
   },
-  { name: "Danh mục khác", link: "products?category=Danh mục khác" }
+  { name: "Vật tư nông nghiệp",
+    link: "products?category=Vật tư nông nghiệp" }
 ];
 
 export const footerSupportLinks = [
