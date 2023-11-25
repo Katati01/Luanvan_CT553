@@ -48,7 +48,8 @@ import {
   TrackOrderPage,
   UserInboxPage,
   AboutPage,
-  PolicyPage
+  PolicyPage,
+  WarrantyPolicyPage
   // UserInbox,
 } from "./routes/Routes.js";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
@@ -129,6 +130,7 @@ const App = () => {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/policy" element={<PolicyPage />} />
+        <Route path="/warrantyPolicy" element={<WarrantyPolicyPage />} />
 
         <Route
           path="/checkout"

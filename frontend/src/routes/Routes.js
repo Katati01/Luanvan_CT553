@@ -9,6 +9,7 @@ import CheckoutPage from "../pages/CheckoutPage";
 import EventDetailsPage from "../pages/EventDetailsPage";
 import EventsPage from "../pages/EventsPage";
 import FAQPage from "../pages/FAQPage";
+import WarrantyPolicyPage from "../pages/WarrantyPolicyPage";
 import PolicyPage from "../pages/PolicyPage";
 import HomePage from "../pages/HomePage";
 import OrderDetailsPage from "../pages/OrderDetailsPage";
@@ -32,6 +33,7 @@ export {
   EventDetailsPage,
   EventsPage,
   FAQPage,
+  WarrantyPolicyPage,
   PolicyPage,
   ForgotPasswordPage,
   HomePage,
