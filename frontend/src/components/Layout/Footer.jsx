@@ -41,7 +41,7 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center lg:text-start">
-          <h1 className="mb-1 font-semibold text-[20px]">Cửa hàng</h1>
+          <h1 className="mb-1 font-semibold text-[20px]">Danh mục</h1>
           {footercompanyLinks.map((link, index) => (
             <li key={index}>
               <Link
