@@ -7,7 +7,7 @@ import Categories from "../components/Route/Categories/Categories";
 import FeaturedProduct from "../components/Route/FeaturedProduct/FeaturedProduct";
 import Hero from "../components/Route/Hero/Hero";
 import CategoryProduct from "../components/Route/CategoryProduct/CategoryProduct";
-
+import { categoriesData } from "../static/data";
 const HomePage = () => {
   return (
     <div>
@@ -17,12 +17,9 @@ const HomePage = () => {
       <BestDeals />
       <Events />
       {/* <FeaturedProduct /> */}
-      <CategoryProduct category="Hạt giống" />
-      <CategoryProduct category="Đất sạch" />
-      <CategoryProduct category="Phân hữu cơ" />
-      <CategoryProduct category="Chậu, khay trồng" />
-      <CategoryProduct category="Chăm mai tết" />
-      <CategoryProduct category="Dụng cụ làm vườn" />
+      {categoriesData.map((category) => (
+        <CategoryProduct key={category.id} category={category.title} />
+      ))}
       <Footer />
     </div>
   );

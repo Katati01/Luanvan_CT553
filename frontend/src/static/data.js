@@ -239,13 +239,12 @@ export const categoriesData = [
       "https://media.loveitopcdn.com/23464/dat-trong-rau-sach-tai-nha-hcm-q12.jpg"
   },
   {
-    id: 7,
+    id: 8,
     title: "Vật tư nông nghiệp",
     subTitle: "",
     image_Url:
       "https://file.hstatic.net/1000192210/file/vat-tu-nong-nghiep-1_ef657fefe8d948dda24f185b3e6c3dfd.jpg"
-  },
-  
+  }
 ];
 
 // product Data
@@ -616,18 +615,13 @@ export const footercompanyLinks = [
     name: "Máy nông nghiệp",
     link: "products?category=Máy nông nghiệp"
   },
-  { name: "Dụng cụ làm vườn", 
-    link: "products?category=Dụng cụ làm vườn" 
-  },
+  { name: "Dụng cụ làm vườn", link: "products?category=Dụng cụ làm vườn" },
   {
     name: "Chậu, khay trồng",
     link: "products?category=Chậu, khay trồng"
   },
-  { name: "Đất sạch",
-    link: "products?category=Đất sạch" 
-  },
-  { name: "Vật tư nông nghiệp",
-    link: "products?category=Vật tư nông nghiệp" }
+  { name: "Đất sạch", link: "products?category=Đất sạch" },
+  { name: "Vật tư nông nghiệp", link: "products?category=Vật tư nông nghiệp" }
 ];
 
 export const footerSupportLinks = [
