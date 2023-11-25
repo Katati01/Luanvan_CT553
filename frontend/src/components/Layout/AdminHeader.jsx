@@ -1,11 +1,11 @@
 import React from "react";
-import {
-  AiOutlineComment,
-  AiOutlineTags,
-  AiOutlineInbox,
-  AiOutlineForm
-} from "react-icons/ai";
-import { RiCoupon2Line } from "react-icons/ri";
+// import {
+//   AiOutlineComment,
+//   AiOutlineTags,
+//   AiOutlineInbox,
+//   AiOutlineForm
+// } from "react-icons/ai";
+// import { RiCoupon2Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../Assests/PhotoType/logo.png";
@@ -26,7 +26,7 @@ const AdminHeader = () => {
       </div>
       <div className="flex items-center">
         <div className="flex items-center mr-4">
-          <Link to="/dashboard/cupouns" className="800px:block hidden">
+          {/* <Link to="/dashboard/cupouns" className="800px:block hidden">
             <RiCoupon2Line
               color="#555"
               size={30}
@@ -48,7 +48,11 @@ const AdminHeader = () => {
             />
           </Link>
           <Link to="/dashboard-orders" className="800px:block hidden">
-            <AiOutlineForm color="#555" size={30} className="mx-5 cursor-pointer" />
+            <AiOutlineForm
+              color="#555"
+              size={30}
+              className="mx-5 cursor-pointer"
+            />
           </Link>
           <Link to="/dashboard-messages" className="800px:block hidden">
             <AiOutlineComment
@@ -56,7 +60,8 @@ const AdminHeader = () => {
               size={30}
               className="mx-5 cursor-pointer"
             />
-          </Link>
+          </Link> */}
+
           <Link to="/profile" className="w-full flex items-center">
             <img
               src={`${user?.avatar}`}
