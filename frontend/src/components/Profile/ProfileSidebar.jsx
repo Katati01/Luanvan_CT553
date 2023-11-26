@@ -159,6 +159,22 @@ const ProfileSidebar = ({ setActive, active }) => {
               Trang cá nhân
             </span>
           </div>
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(6)}
+          >
+            <RiLockPasswordLine
+              size={20}
+              color={active === 6 ? "#009b49" : ""}
+            />
+            <span
+              className={`pl-3 ${
+                active === 6 ? "text-[#009b49]" : ""
+              } 800px:block hidden`}
+            >
+              Đổi mật khẩu
+            </span>
+          </div>
           <Link to="/admin/dashboard">
             <div
               className="flex items-center cursor-pointer w-full mb-8"

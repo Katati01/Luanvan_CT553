@@ -15,6 +15,8 @@ const AllCoupons = () => {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [coupouns, setCoupouns] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [couponIdToDelete, setCouponIdToDelete] = useState("");
   // const [minAmount, setMinAmout] = useState(null);
   // const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
@@ -29,7 +31,7 @@ const AllCoupons = () => {
     setIsLoading(true);
     axios
       .get(`${server}/coupon/get-coupon/${seller._id}`, {
-        withCredentials: true,
+        withCredentials: true
       })
       .then((res) => {
         setIsLoading(false);
@@ -42,7 +44,9 @@ const AllCoupons = () => {
 
   const handleDelete = async (id) => {
     axios
-      .delete(`${server}/coupon/delete-coupon/${id}`, { withCredentials: true })
+      .delete(`${server}/coupon/delete-coupon/${couponIdToDelete}`, {
+        withCredentials: true
+      })
       .then((res) => {
         toast.success("Coupon code deleted succesfully!");
       });
@@ -62,7 +66,7 @@ const AllCoupons = () => {
           selectedProducts,
           value,
           quantity,
-          shopId: seller._id,
+          shopId: seller._id
         },
         { withCredentials: true }
       )
@@ -82,25 +86,25 @@ const AllCoupons = () => {
       field: "name",
       headerName: "Mã giảm giá",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "price",
       headerName: "Giá trị",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "quantity",
       headerName: "Số lượng mã",
       minWidth: 120,
-      flex: 0.8,
+      flex: 0.8
     },
     {
       field: "remainingQuantity",
       headerName: "Số lượng đã dùng",
       minWidth: 150,
-      flex: 0.8,
+      flex: 0.8
     },
     {
       field: "Xóa",
@@ -112,13 +116,17 @@ const AllCoupons = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => handleDelete(params.id)}>
+            <Button
+              onClick={() =>
+                setCouponIdToDelete(params.id) || setOpenModal(true)
+              }
+            >
               <AiOutlineDelete size={20} />
             </Button>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -131,7 +139,7 @@ const AllCoupons = () => {
         quantity: item.quantity,
         price: item.value + " %",
         // sold: 10,
-        remainingQuantity: item.remainingQuantity,
+        remainingQuantity: item.remainingQuantity
       });
     });
 
@@ -275,6 +283,32 @@ const AllCoupons = () => {
               </div>
             </div>
           )}
+        </div>
+      )}
+      {openModal && (
+        <div className="w-full fixed top-0 left-0 z-[999] bg-[#00000039] flex items-center justify-center h-screen">
+          <div className="w-[95%] 800px:w-[40%] min-h-[20vh] bg-white rounded shadow p-5">
+            <div className="w-full flex justify-end cursor-pointer">
+              <RxCross1 size={25} onClick={() => setOpenModal(false)} />
+            </div>
+            <h3 className="text-[25px] text-center py-5 font-Poppins text-[#000000cb]">
+              Bạn có chắc chắn muốn xóa mã giảm giá này?
+            </h3>
+            <div className="w-full flex items-center justify-center">
+              <div
+                className={`${styles.button} text-white text-[18px] !h-[42px] mr-4`}
+                onClick={() => setOpenModal(false)}
+              >
+                Không
+              </div>
+              <div
+                className={`${styles.button} text-white text-[18px] !h-[42px] ml-4`}
+                onClick={() => setOpenModal(false) || handleDelete()}
+              >
+                Có
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>
