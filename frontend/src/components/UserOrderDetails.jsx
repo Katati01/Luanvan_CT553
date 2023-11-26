@@ -27,7 +27,6 @@ const UserOrderDetails = () => {
     dispatch(getAllOrdersOfUser(user._id));
   }, [dispatch]);
 
-  
   const data = orders && orders.find((item) => item._id === id);
 
   const calculateShopTotal = (cart, shopId) => {
@@ -252,58 +251,63 @@ const UserOrderDetails = () => {
       )}
 
       <div className="border-t w-full text-right">
+        {Object.keys(data?.shopTotal).map((shopId, index) => {
+          const shopTotalInfo = data?.shopTotal[shopId];
 
-{Object.keys(data?.shopTotal).map((shopId, index) => {
-  const shopTotalInfo = data?.shopTotal[shopId];
+          // Kiểm tra nếu có thông tin totalPrice trong shopTotal
+          if (shopTotalInfo && shopTotalInfo.totalPrice > 0) {
+            const productsInShop = data.cart.filter(
+              (product) => product.shopId === shopId
+            );
 
-  // Kiểm tra nếu có thông tin totalPrice trong shopTotal
-  if (shopTotalInfo && shopTotalInfo.totalPrice > 0) {
-    const productsInShop = data.cart.filter(product => product.shopId === shopId);
+            // Kiểm tra xem có sản phẩm thuộc shop này không
+            if (productsInShop.length > 0) {
+              const totalAmount =
+                shopTotalInfo.totalPrice + shopTotalInfo.shopShip;
+              const product = productsInShop[0]; // Chọn sản phẩm đầu tiên trong đơn hàng thuộc shop này
+              const shopTotal =
+                data.shopTotal && data.shopTotal[product.shopId]
+                  ? data.shopTotal[product.shopId]
+                  : {};
+              const totalPrice = shopTotal.totalPrice || 0;
+              const shopShip = data?.shopTotal[shopId]?.shopShip || 0;
 
-    // Kiểm tra xem có sản phẩm thuộc shop này không
-    if (productsInShop.length > 0) {
-      const totalAmount = shopTotalInfo.totalPrice + shopTotalInfo.shopShip;
-      const product = productsInShop[0]; // Chọn sản phẩm đầu tiên trong đơn hàng thuộc shop này
-      const shopTotal = data.shopTotal && data.shopTotal[product.shopId] ? data.shopTotal[product.shopId] : {};
-      const totalPrice = shopTotal.totalPrice || 0;
-      const shopShip = data?.shopTotal[shopId]?.shopShip || 0
+              return (
+                <div key={index}>
+                  <h5 className="pt-3 text-[18px]">
+                    Tổng tiền hàng:{" "}
+                    <strong>
+                      {totalPrice.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }) + ""}
+                    </strong>
+                  </h5>
+                  <h5 className="pt-3 text-[18px]">
+                    Phí vận chuyển:{" "}
+                    <strong>
+                      {shopShip.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }) + ""}
+                    </strong>
+                  </h5>
+                  <h5 className="pt-3 text-[18px]">
+                    Tổng tiền đơn hàng:{" "}
+                    <strong>
+                      {totalAmount.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }) + ""}
+                    </strong>
+                  </h5>
+                </div>
+              );
+            }
+          }
 
-      return (
-        <div key={index}>
-          <h5 className="pt-3 text-[18px]">
-            Tổng tiền hàng:{" "}
-            <strong>
-              {totalPrice.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }) + ""}
-            </strong>
-          </h5>
-          <h5 className="pt-3 text-[18px]">
-            Phí vận chuyển:{" "}
-            <strong>
-              {shopShip.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }) + ""}
-            </strong>
-          </h5>
-          <h5 className="pt-3 text-[18px]">
-            Tổng tiền đơn hàng:{" "}
-            <strong>
-              {totalAmount.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }) + ""}
-            </strong>
-          </h5>
-        </div>
-      );
-    }
-  }
-
-  return null;
-})}
+          return null;
+        })}
       </div>
       <br />
       <br />
@@ -322,12 +326,16 @@ const UserOrderDetails = () => {
         </div>
         <div className="w-full 800px:w-[30%]">
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
+          {data?.paymentInfo?.type && (
+            <h4>Hình thức thanh toán: {data?.paymentInfo?.type}</h4>
+          )}
           <h4>
             Trạng thái:{" "}
             {data?.paymentInfo?.status
               ? data?.paymentInfo?.status
               : "Chưa thanh toán"}
           </h4>
+
           <br />
           {data?.status === "Delivered" && (
             <div

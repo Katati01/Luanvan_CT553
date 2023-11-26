@@ -55,7 +55,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/update-order-status/${id}`,
         {
-          status
+          status,
         },
         { withCredentials: true }
       )
@@ -73,7 +73,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/order-refund-success/${id}`,
         {
-          status
+          status,
         },
         { withCredentials: true }
       )
@@ -108,11 +108,14 @@ const OrderDetails = () => {
           ID đơn hàng: <span>#{data?._id?.slice(0, 8)}</span>
         </h5>
         <h5 className="text-[#00000084]">
-          Ngày đặt: <span>{new Date(data?.createdAt).toLocaleString("vi-VN", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-          })}</span>
+          Ngày đặt:{" "}
+          <span>
+            {new Date(data?.createdAt).toLocaleString("vi-VN", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+            })}
+          </span>
         </h5>
       </div>
 
@@ -178,7 +181,7 @@ const OrderDetails = () => {
         </h5>
       </div> */}
       <div className="border-t w-full text-right">
-  {/* {Object.keys(data?.shopTotal).map((shopId, index) => {
+        {/* {Object.keys(data?.shopTotal).map((shopId, index) => {
     const shopTotalInfo = data?.shopTotal[shopId];
     if ( shopTotalInfo> 0) {
       return (
@@ -197,41 +200,43 @@ const OrderDetails = () => {
     }
     return null; // Không hiển thị nếu tổng tiền của cửa hàng là 0 hoặc âm
   })} */}
-  {Object.keys(data?.shopTotal).map((shopId, index) => {
-  const shopTotalInfo = data?.shopTotal[shopId];
+        {Object.keys(data?.shopTotal).map((shopId, index) => {
+          const shopTotalInfo = data?.shopTotal[shopId];
 
-  // Kiểm tra nếu có thông tin totalPrice trong shopTotal
-  if (shopTotalInfo && shopTotalInfo.totalPrice > 0) {
-    const productsInShop = data.cart.filter(product => product.shopId === shopId);
+          // Kiểm tra nếu có thông tin totalPrice trong shopTotal
+          if (shopTotalInfo && shopTotalInfo.totalPrice > 0) {
+            const productsInShop = data.cart.filter(
+              (product) => product.shopId === shopId
+            );
 
-    // Kiểm tra xem có sản phẩm thuộc shop này không
-    if (productsInShop.length > 0) {
-      
-      const product = productsInShop[0]; // Chọn sản phẩm đầu tiên trong đơn hàng thuộc shop này
-      const shopTotal = data.shopTotal && data.shopTotal[product.shopId] ? data.shopTotal[product.shopId] : {};
-      const totalPrice = shopTotal.totalPrice || 0;
-     
+            // Kiểm tra xem có sản phẩm thuộc shop này không
+            if (productsInShop.length > 0) {
+              const product = productsInShop[0]; // Chọn sản phẩm đầu tiên trong đơn hàng thuộc shop này
+              const shopTotal =
+                data.shopTotal && data.shopTotal[product.shopId]
+                  ? data.shopTotal[product.shopId]
+                  : {};
+              const totalPrice = shopTotal.totalPrice || 0;
 
-      return (
-        <div key={index}>
-          <h5 className="pt-3 text-[18px]">
-            Tổng tiền hàng:{" "}
-            <strong>
-              {totalPrice.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }) + ""}
-            </strong>
-          </h5>
-        </div>
-      );
-    }
-  }
+              return (
+                <div key={index}>
+                  <h5 className="pt-3 text-[18px]">
+                    Tổng tiền hàng:{" "}
+                    <strong>
+                      {totalPrice.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }) + ""}
+                    </strong>
+                  </h5>
+                </div>
+              );
+            }
+          }
 
-  return null;
-})}
-
-</div>
+          return null;
+        })}
+      </div>
       <br />
       <br />
       <div className="w-full 800px:flex items-center">
@@ -251,6 +256,9 @@ const OrderDetails = () => {
         </div>
         <div className="w-full 800px:w-[40%]">
           <h4 className="pt-3 text-[20px]">Thông tin thanh toán:</h4>
+          {data?.paymentInfo?.type && (
+            <h4>Hình thức thanh toán: {data?.paymentInfo?.type}</h4>
+          )}
           <h4>
             Trạng thái:{" "}
             {data?.paymentInfo?.status
@@ -269,7 +277,7 @@ const OrderDetails = () => {
             onChange={(e) => setStatus(e.target.value)}
             className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
           >
- {[
+            {[
               "Processing",
               "Transferred to delivery partner",
               "Shipping",
