@@ -44,7 +44,9 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
   const handleMessageSubmit = async () => {
     if (isAuthenticated) {
-      const groupTitle = data._id + user._id;
+      // const groupTitle = data._id + user._id;
+      const groupTitle = `${user._id}_${data.shop._id}`; // Sử dụng id của người dùng và người bán để tạo groupTitle
+
       const userId = user._id;
       const sellerId = data.shop._id;
       await axios

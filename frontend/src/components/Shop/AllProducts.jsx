@@ -223,7 +223,7 @@ const AllProducts = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => setProductId(params.id) || setOpen(true)}>
+            <Button onClick={() => handleDelete(params.id) || setOpen(false)}>
               <AiOutlineDelete size={20} />
             </Button>
           </>

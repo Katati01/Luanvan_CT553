@@ -5,7 +5,7 @@ import {
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineMessage,
-  AiOutlineShoppingCart
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import { addTocart } from "../../redux/actions/cart";
 import { getAllProductsShop } from "../../redux/actions/product";
 import {
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
 } from "../../redux/actions/wishlist";
 import { server } from "../../server";
 import styles from "../../styles/styles";
@@ -120,7 +120,10 @@ const ProductDetails = ({ data }) => {
 
   const handleMessageSubmit = async () => {
     if (isAuthenticated) {
-      const groupTitle = data._id + data.shop._id; // Sử dụng id của sản phẩm và cửa hàng để tạo groupTitle
+      // const groupTitle = data._id + data.shop._id; // Sử dụng id của sản phẩm và cửa hàng để tạo groupTitle
+      const groupTitle = `${user._id}_${data.shop._id}`; // Sử dụng id của người dùng và người bán để tạo groupTitle
+
+      // console.log(data._id);
       const userId = user._id;
       const sellerId = data.shop._id;
       console.log(groupTitle);
@@ -153,7 +156,7 @@ const ProductDetails = ({ data }) => {
             {
               groupTitle,
               userId,
-              sellerId
+              sellerId,
             }
           );
 
@@ -234,16 +237,16 @@ const ProductDetails = ({ data }) => {
                   >
                     {data.discountPrice === 0
                       ? `${currency.format(data.originalPrice, {
-                          code: "VND"
+                          code: "VND",
                         })}`
                       : `${currency.format(data.discountPrice, {
-                          code: "VND"
+                          code: "VND",
                         })}`}
                   </h4>
                   {data.discountPrice !== 0 && (
                     <h3 className={`${styles.price}`}>
                       {`${currency.format(data.originalPrice, {
-                        code: "VND"
+                        code: "VND",
                       })}`}
                     </h3>
                   )}
@@ -411,7 +414,7 @@ const ProductDetailsInfo = ({
   data,
   products,
   totalReviewsLength,
-  averageRating
+  averageRating,
 }) => {
   const [active, setActive] = useState(1);
 
