@@ -6,7 +6,7 @@ import {
   AiFillFileExcel,
   AiOutlineDelete,
   AiOutlineEdit,
-  AiOutlineEye,
+  AiOutlineEye
 } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,16 +28,17 @@ const AllProducts = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const clearRef = useRef();
   const [open, setOpen] = useState(false);
-  const [productId, setProductId] = useState("");
-  // const [productId, setProductId] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [productIdToDelete, setProductIdToDelete] = useState("");
 
   useEffect(() => {
     dispatch(getAllProductsShop(seller._id));
   }, [dispatch, seller._id]);
 
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
-    window.location.reload();
+  const handleDelete = async () => {
+    await dispatch(deleteProduct(productIdToDelete));
+    // window.location.reload();
+    dispatch(getAllProductsShop(seller._id));
   };
 
   const handleUpdate = (id) => {
@@ -50,14 +51,14 @@ const AllProducts = () => {
     const formattedOriginalPrice = allProduct.originalPrice
       ? allProduct.originalPrice.toLocaleString("vi-VN", {
           style: "currency",
-          currency: "VND",
+          currency: "VND"
         })
       : "";
 
     const formattedDiscountPrice = allProduct.discountPrice
       ? allProduct.discountPrice.toLocaleString("vi-VN", {
           style: "currency",
-          currency: "VND",
+          currency: "VND"
         })
       : "";
 
@@ -74,12 +75,12 @@ const AllProducts = () => {
           month: "numeric",
           day: "numeric",
           hour: "numeric",
-          minute: "numeric",
+          minute: "numeric"
         }
       ),
       ["Số lượng"]: allProduct.stock,
       ["Đã bán"]: allProduct.sold_out,
-      ["Đánh giá"]: allProduct.ratings,
+      ["Đánh giá"]: allProduct.ratings
     };
   });
 
@@ -125,7 +126,7 @@ const AllProducts = () => {
   const deliveredProductsInfo = getAllProducts?.map((product) => {
     return {
       day: product.createdAt.slice(0, 10),
-      total: 1,
+      total: 1
     };
   });
 
@@ -138,33 +139,33 @@ const AllProducts = () => {
       field: "name",
       headerName: "Tên sản phẩm",
       minWidth: 100,
-      flex: 1.0,
+      flex: 1.0
     },
     {
       field: "originalPrice",
       headerName: "Giá",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "discountPrice",
       headerName: "Giá khuyến mãi",
       minWidth: 120,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "Stock",
       headerName: "Số lượng",
       type: "number",
       minWidth: 100,
-      flex: 0.5,
+      flex: 0.5
     },
     {
       field: "sold",
       headerName: "Đã bán",
       type: "number",
       minWidth: 100,
-      flex: 0.5,
+      flex: 0.5
     },
     // {
     //   field: "created",
@@ -190,7 +191,7 @@ const AllProducts = () => {
             </Link>
           </>
         );
-      },
+      }
     },
     {
       field: "Cập nhật", // New column for Update button
@@ -211,10 +212,9 @@ const AllProducts = () => {
             </Link>
           </>
         );
-      },
+      }
     },
     {
-
       field: "Xóa",
 
       flex: 0.4,
@@ -228,24 +228,19 @@ const AllProducts = () => {
       sortable: false,
 
       renderCell: (params) => {
-
         return (
-
           <>
-
-            <Button onClick={() => handleDelete(params.id) || setOpen(false)}>
-
+            <Button
+              onClick={() =>
+                setProductIdToDelete(params.id) || setOpenModal(true)
+              }
+            >
               <AiOutlineDelete size={20} />
-
             </Button>
-
           </>
-
         );
-
-      },
-
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -256,20 +251,20 @@ const AllProducts = () => {
         id: item._id,
         name: item.name,
         originalPrice: `${currency.format(item.originalPrice, {
-          code: "VND",
+          code: "VND"
         })}`,
         discountPrice: `${currency.format(item.discountPrice, {
-          code: "VND",
+          code: "VND"
         })}`,
         created: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",
           month: "numeric",
           day: "numeric",
           hour: "numeric",
-          minute: "numeric",
+          minute: "numeric"
         }),
         Stock: item.stock,
-        sold: item?.sold_out,
+        sold: item?.sold_out
       });
     });
   products &&
@@ -278,13 +273,13 @@ const AllProducts = () => {
         id: item._id,
         name: item.name,
         originalPrice: `${currency.format(item.originalPrice, {
-          code: "VND",
+          code: "VND"
         })}`,
         discountPrice: `${currency.format(item.discountPrice, {
-          code: "VND",
+          code: "VND"
         })}`,
         Stock: item.stock,
-        sold: item?.sold_out,
+        sold: item?.sold_out
       });
     });
 
@@ -321,13 +316,13 @@ const AllProducts = () => {
           <div
             style={{
               padding: "20px",
-              background: "#F5F5DC",
+              background: "#F5F5DC"
             }}
           >
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "space-between"
               }}
             >
               <h1
@@ -336,9 +331,7 @@ const AllProducts = () => {
                   fontFamily: "Roboto",
                   color: " #ccc",
                   lineHeight: "1.25",
-                  fontSize: "18px",
-                  fontWeight: "500",
-                  color: "#00000085",
+                  fontWeight: "500"
                 }}
               >
                 Thống kê sản phẩm
@@ -372,7 +365,7 @@ const AllProducts = () => {
                   fontSize: "20px",
                   display: "flex",
                   justifyContent: "center",
-                  width: "100%",
+                  width: "100%"
                 }}
               >
                 Tiếp tục thống kê
@@ -388,7 +381,7 @@ const AllProducts = () => {
                   fontSize: "20px",
                   display: statistic ? "none" : "flex",
                   justifyContent: "center",
-                  width: "100%",
+                  width: "100%"
                 }}
               >
                 Thống kê
@@ -412,7 +405,7 @@ const AllProducts = () => {
                   fontSize: "20px",
                   fontWeight: "700",
                   padding: "50px",
-                  float: "right",
+                  float: "right"
                 }}
               >
                 <span>Tổng sản phẩm: </span>
@@ -429,25 +422,25 @@ const AllProducts = () => {
           )}
         </div>
       )}
-      {open && (
+      {openModal && (
         <div className="w-full fixed top-0 left-0 z-[999] bg-[#00000039] flex items-center justify-center h-screen">
           <div className="w-[95%] 800px:w-[40%] min-h-[20vh] bg-white rounded shadow p-5">
             <div className="w-full flex justify-end cursor-pointer">
-              <RxCross1 size={25} onClick={() => setOpen(false)} />
+              <RxCross1 size={25} onClick={() => setOpenModal(false)} />
             </div>
             <h3 className="text-[25px] text-center py-5 font-Poppins text-[#000000cb]">
-              Bạn có chắc muốn xóa người bán này?
+              Bạn có chắc chắn muốn xóa sản phẩm này?
             </h3>
             <div className="w-full flex items-center justify-center">
               <div
                 className={`${styles.button} text-white text-[18px] !h-[42px] mr-4`}
-                onClick={() => setOpen(false)}
+                onClick={() => setOpenModal(false)}
               >
                 Không
               </div>
               <div
                 className={`${styles.button} text-white text-[18px] !h-[42px] ml-4`}
-                onClick={() => setOpen(false) || handleDelete(productId)}
+                onClick={() => setOpenModal(false) || handleDelete()}
               >
                 Có
               </div>

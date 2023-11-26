@@ -60,8 +60,8 @@ const UpdateProduct = () => {
       .post(`${server}/product/upload-images`, formData, {
         withCredentials: true,
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       })
       .then(async (response) => {
         if (response.data.success) {
@@ -153,7 +153,7 @@ const UpdateProduct = () => {
       originalPrice,
       discountPrice,
       stock,
-      shopId: seller._id,
+      shopId: seller._id
     };
 
     try {
@@ -176,7 +176,7 @@ const UpdateProduct = () => {
   };
 
   return (
-    <div className="w-[90%] 800px:w-[50%] bg-white shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
+    <div className="w-[90%] 800px:w-[50%] bg-white shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
       <h5 className="text-[30px] font-Poppins text-center">
         Cập nhật thông tin sản phẩm
       </h5>
@@ -224,8 +224,8 @@ const UpdateProduct = () => {
                 [{ list: "ordered" }, { list: "bullet" }],
                 ["link", "image"],
                 [{ align: [] }],
-                ["clean"], // remove formatting button
-              ],
+                ["clean"] // remove formatting button
+              ]
             }}
             placeholder="Thêm mô tả sản phẩm..."
           />

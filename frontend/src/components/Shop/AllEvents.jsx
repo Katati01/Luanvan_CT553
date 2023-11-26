@@ -8,20 +8,23 @@ import { deleteEvent, getAllEventsShop } from "../../redux/actions/event";
 import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
 import CreateEvent from "./CreateEvent";
+import { RxCross1 } from "react-icons/rx";
 const AllEvents = () => {
   const [open, setOpen] = useState(false);
   const { events, isLoading } = useSelector((state) => state.events);
   const { seller } = useSelector((state) => state.seller);
-
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
+  const [eventIdToDelete, setEventIdToDelete] = useState("");
 
   useEffect(() => {
     dispatch(getAllEventsShop(seller._id));
   }, [dispatch]);
 
-  const handleDelete = (id) => {
-    dispatch(deleteEvent(id));
-    window.location.reload();
+  const handleDelete = async () => {
+    await dispatch(deleteEvent(eventIdToDelete));
+    // window.location.reload();
+    dispatch(getAllEventsShop(seller._id));
   };
 
   const columns = [
@@ -30,13 +33,13 @@ const AllEvents = () => {
       field: "name",
       headerName: "Tên bài viết",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "created",
       headerName: "Ngày đăng",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
     },
     // {
     //   field: "Stock",
@@ -73,7 +76,7 @@ const AllEvents = () => {
             </Link>
           </>
         );
-      },
+      }
     },
     {
       field: "Xóa",
@@ -85,13 +88,17 @@ const AllEvents = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => handleDelete(params.id)}>
+            <Button
+              onClick={() =>
+                setOpenModal(true) || setEventIdToDelete(params.id)
+              }
+            >
               <AiOutlineDelete size={20} />
             </Button>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -107,10 +114,10 @@ const AllEvents = () => {
         created: new Date(item?.createdAt).toLocaleString("vi-VN", {
           year: "numeric",
           month: "numeric",
-          day: "numeric",
+          day: "numeric"
           // hour: "numeric",
           // minute: "numeric",
-        }),
+        })
         // Stock: item.stock,
         // sold: item.sold_out,
       });
@@ -139,6 +146,32 @@ const AllEvents = () => {
           />
           {/* create event form */}
           {open && <CreateEvent openForm={open} setOpen={setOpen} />}
+        </div>
+      )}
+      {openModal && (
+        <div className="w-full fixed top-0 left-0 z-[999] bg-[#00000039] flex items-center justify-center h-screen">
+          <div className="w-[95%] 800px:w-[40%] min-h-[20vh] bg-white rounded shadow p-5">
+            <div className="w-full flex justify-end cursor-pointer">
+              <RxCross1 size={25} onClick={() => setOpenModal(false)} />
+            </div>
+            <h3 className="text-[25px] text-center py-5 font-Poppins text-[#000000cb]">
+              Bạn có chắc chắn muốn xóa sự kiện này?
+            </h3>
+            <div className="w-full flex items-center justify-center">
+              <div
+                className={`${styles.button} text-white text-[18px] !h-[42px] mr-4`}
+                onClick={() => setOpenModal(false)}
+              >
+                Không
+              </div>
+              <div
+                className={`${styles.button} text-white text-[18px] !h-[42px] ml-4`}
+                onClick={() => setOpenModal(false) || handleDelete()}
+              >
+                Có
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>
