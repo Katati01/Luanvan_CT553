@@ -214,21 +214,37 @@ const AllProducts = () => {
       },
     },
     {
+
       field: "Xóa",
+
       flex: 0.4,
+
       minWidth: 50,
+
       headerName: "",
+
       type: "number",
+
       sortable: false,
+
       renderCell: (params) => {
+
         return (
+
           <>
-            <Button onClick={() => setProductId(params.id) || setOpen(true)}>
+
+            <Button onClick={() => handleDelete(params.id) || setOpen(false)}>
+
               <AiOutlineDelete size={20} />
+
             </Button>
+
           </>
+
         );
+
       },
+
     },
   ];
 
