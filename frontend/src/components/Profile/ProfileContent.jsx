@@ -45,6 +45,13 @@ const ProfileContent = ({ active }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Validate phoneNumber format
+    const phoneNumberRegex = /^[0-9]{10}$/;
+    if (!phoneNumberRegex.test(phoneNumber)) {
+      toast.error("Số điện thoại không hợp lệ. Vui lòng kiểm tra lại!");
+      return;
+    }
+
     dispatch(updateUserInformation(name, email, phoneNumber, password));
     toast.success("Thông tin cá nhân đã được cập nhật thành công!");
   };
@@ -797,7 +804,7 @@ const Address = () => {
                           <option
                             className="block pb-2"
                             key={item.isoCode}
-                            value={item.isoCode}
+                            value={item.name}
                           >
                             {item.name}
                           </option>

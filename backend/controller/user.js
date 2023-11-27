@@ -190,6 +190,15 @@ router.put(
 
       const user = await User.findOne({ email }).select("+password");
 
+      const phoneNumberRegex = /^[0-9]{10}$/;
+      if (!phoneNumberRegex.test(phoneNumber)) {
+        return next(
+          new ErrorHandler(
+            "Vui lòng nhập số điện thoại hợp lệ với 10 chữ số!",
+            400
+          )
+        );
+      }
       if (!user) {
         return next(new ErrorHandler("Không tìm thấy người dùng này!", 400));
       }

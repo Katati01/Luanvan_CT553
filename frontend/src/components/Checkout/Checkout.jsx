@@ -41,6 +41,12 @@ const Checkout = () => {
         phoneNumber,
       };
 
+      // Validate phoneNumber format
+      const phoneNumberRegex = /^[0-9]{10}$/;
+      if (!phoneNumberRegex.test(phoneNumber)) {
+        toast.error("Số điện thoại không hợp lệ. Vui lòng kiểm tra lại!");
+        return;
+      }
       const orderData = {
         cart,
         totalPrice,
@@ -145,7 +151,9 @@ const Checkout = () => {
   const subTotalPrice = cart.reduce((acc, item) => {
     const itemPrice =
       item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
-    return acc + item.qty * itemPrice;
+    const totalForItem =
+      item.shopId in shopTotal ? shopTotal[item.shopId].totalPrice : 0;
+    return acc + totalForItem;
   }, 0);
 
   const shopCount = new Set(cart.map((item) => item.shopId)).size;
@@ -208,7 +216,7 @@ const Checkout = () => {
   };
 
   const totalPrice = couponCodeData
-    ? (subTotalPrice + shipping - discountPercentenge).toFixed(2)
+    ? (subTotalPrice + shipping).toFixed(2)
     : (subTotalPrice + shipping).toFixed(2);
 
   console.log(discountPercentenge);

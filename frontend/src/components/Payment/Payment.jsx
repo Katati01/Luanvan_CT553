@@ -85,7 +85,7 @@ const Payment = () => {
 
     order.paymentInfo = {
       id: paymentInfo.payer_id,
-      status: "succeeded",
+      status: "Thanh toán thành công",
       type: "Thanh toán qua Paypal",
     };
 
@@ -132,7 +132,7 @@ const Payment = () => {
       if (result.error) {
         toast.error(result.error.message);
       } else {
-        if (result.paymentIntent.status === "succeeded") {
+        if (result.paymentIntent.status === "Thanh toán thành công") {
           order.paymnentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,

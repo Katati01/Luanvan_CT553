@@ -321,7 +321,7 @@ const UserOrderDetails = () => {
           {/* <h4 className=" text-[20px]">{data?.shippingAddress.country}</h4> */}
           {/* <h4 className=" text-[20px]">{data?.shippingAddress.city}</h4> */}
           <h4 className=" text-[20px]">
-            <b>Số điện thoại:</b> (+84) {data?.user?.phoneNumber}
+            <b>Số điện thoại:</b> (+84) {data?.shippingAddress.phoneNumber}
           </h4>
         </div>
         <div className="w-full 800px:w-[30%]">
