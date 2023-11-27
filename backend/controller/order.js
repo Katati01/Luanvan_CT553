@@ -112,7 +112,7 @@ router.put(
           new ErrorHandler("Đơn hàng không tìm thấy với ID này", 400)
         );
       }
-      if (req.body.status === "Transferred to delivery partner") {
+      if (req.body.status === "Trên đường giao cho đối giác giao hàng") {
         order.cart.forEach(async (o) => {
           await updateOrder(o._id, o.qty);
         });

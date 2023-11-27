@@ -28,20 +28,21 @@ const TrackOrder = () => {
           </h1>
         ) : data?.status === "Shipping" ? (
           <h1 className="text-[20px]">
-            Đơn đặt hàng của bạn đang được vận chuyển với đối tác giao hàng của chúng tôi.
+            Đơn đặt hàng của bạn đang được vận chuyển với đối tác giao hàng của
+            chúng tôi.
           </h1>
         ) : data?.status === "Received" ? (
           <h1 className="text-[20px]">
             Đơn hàng đã đến khu vực của bạn và chuẩn bị giao hàng.
           </h1>
         ) : data?.status === "On the way" ? (
-          <h1 className="text-[20px]">
-            Đang giao hàng.
-          </h1>
+          <h1 className="text-[20px]">Đang giao hàng.</h1>
         ) : data?.status === "Delivered" ? (
           <h1 className="text-[20px]">Đơn hàng đã được giao!</h1>
         ) : data?.status === "Processing refund" ? (
-          <h1 className="text-[20px]">Yêu cầu trả hàng và hoàn tiền đang được xử lý!</h1>
+          <h1 className="text-[20px]">
+            Yêu cầu trả hàng và hoàn tiền đang được xử lý!
+          </h1>
         ) : data?.status === "Refund Success" ? (
           <h1 className="text-[20px]">Trả hàng và hoàn tiền thành công!</h1>
         ) : null}

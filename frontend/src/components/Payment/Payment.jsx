@@ -86,7 +86,7 @@ const Payment = () => {
     order.paymentInfo = {
       id: paymentInfo.payer_id,
       status: "succeeded",
-      type: "Paypal",
+      type: "Thanh toán qua Paypal",
     };
 
     await axios
@@ -166,7 +166,7 @@ const Payment = () => {
     };
 
     order.paymentInfo = {
-      type: "Cash On Delivery",
+      type: "Thanh toán khi nhận hàng",
     };
 
     await axios
