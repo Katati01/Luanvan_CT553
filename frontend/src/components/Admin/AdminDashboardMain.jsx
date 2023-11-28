@@ -304,65 +304,68 @@ adminOrders.forEach((item) => {
        <div className="w-full p-4">
          <h3 className="text-[22px] font-Poppins pb-2">Tổng quan</h3>
          <div className="w-full block 800px:flex items-center justify-between">
-           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#17a2b8] shadow rounded px-2 py-5">
              <div className="flex items-center">
                <AiOutlineDollar
                  size={30}
                  className="mr-2"
-                 fill="#00000085"
+                 fill="white"
                />
                <h3
-                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
                >
                  Tổng thu nhập
                </h3>
              </div>
-             <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+             <h5 className="pt-2 pl-[36px] text-[22px] text-white">
                {currency.format(adminBalance, {
                  code: "VND",
                })}
              </h5>
+             <h5 className="pt-4 pl-2 text-[#000000]">
+              <span className="invisible">a</span>
+             </h5>
            </div>
 
 
-           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#28A745] shadow rounded px-2 py-5">
              <div className="flex items-center">
-               <AiOutlineShop size={30} className="mr-2" fill="#00000085" />
+               <AiOutlineShop size={30} className="mr-2" fill="white" />
                <h3
-                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
                >
                  Quản lý người bán hàng
                </h3>
              </div>
-             <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+             <h5 className="pt-2 pl-[36px] text-[22px] text-white">
                {sellers && sellers.length}
              </h5>
              <Link to="/admin-sellers">
-               <h5 className="pt-4 pl-2 text-[#077f9c]">
+               <h5 className="pt-4 pl-2 text-[#000000]">
                  Xem danh sách cửa hàng
                </h5>
              </Link>
            </div>
 
 
-           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#f6960b] shadow rounded px-2 py-5">
              <div className="flex items-center">
                <AiOutlineShopping
                  size={30}
                  className="mr-2"
-                 fill="#00000085"
+                 fill="white"
                />
                <h3
-                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
                >
                  Đơn hàng
                </h3>
              </div>
-             <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+             <h5 className="pt-2 pl-[36px] text-[22px] text-white">
                {adminOrders && adminOrders.length}
              </h5>
              <Link to="/admin-orders">
-               <h5 className="pt-4 pl-2 text-[#077f9c]">
+               <h5 className="pt-4 pl-2 text-[#000000]">
                  Xem danh sách đơn hàng
                </h5>
              </Link>
