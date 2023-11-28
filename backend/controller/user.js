@@ -52,7 +52,7 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
     try {
       await sendMail({
         email: user.email,
-        subject: "Activate your account",
+        subject: "Kích hoạt tài khoản",
         message: `Xin chào ${user.name}, vui lòng nhấn vào liên kết để kích hoạt tài khoản: ${activationUrl}`,
       });
       res.status(201).json({
