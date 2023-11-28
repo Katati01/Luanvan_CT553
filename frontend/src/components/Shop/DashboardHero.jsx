@@ -203,60 +203,60 @@ orders.forEach((item) => {
     <div className="w-full p-8 bg-[#f1f5f9]">
       <h3 className="text-[22px] font-Poppins pb-2">Tổng quan</h3>
       <div className="w-full block 800px:flex items-center justify-between">
-        <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+        <div className="w-full mb-4 bg-[#17a2b8] text-white 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
           <div className="flex items-center">
-            <GiMoneyStack size={30} className="mr-2" fill="#00000085" />
+            <GiMoneyStack size={30} className="mr-2" fill="white" />
             <h3
-              className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+              className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
             >
-              Thu nhập (Với 5% phí dich vụ){" "}
+              Thu nhập (5% phí dịch vụ){" "}
               <span className="text-[16px]"></span>
             </h3>
           </div>
-          <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+          <h5 className="pt-2 pl-[36px] text-[22px] text-white">
             {availableBalance}
           </h5>
 
           <Link to="/dashboard-withdraw-money">
-            <h5 className="pt-4 pl-[2] text-[#077f9c]">Yêu cầu rút tiền</h5>
+            <h5 className="pt-4 pl-[2] text-[#000000]">Yêu cầu rút tiền</h5>
           </Link>
         </div>
 
-        <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+        <div className="w-full mb-4 bg-[#28A745] 800px:w-[30%] min-h-[20vh] shadow rounded px-2 py-5">
           <div className="flex items-center">
-            <RiBillLine size={30} className="mr-2" fill="#00000085" />
+            <RiBillLine size={30} className="mr-2" fill="white" />
             <h3
-              className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+              className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
             >
               Đơn hàng
             </h3>
           </div>
-          <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+          <h5 className="pt-2 pl-[36px] text-[22px] text-white">
             {orders && orders.length}
           </h5>
           <Link to="/dashboard-orders">
-            <h5 className="pt-4 pl-2 text-[#077f9c]">Danh sách đơn hàng</h5>
+            <h5 className="pt-4 pl-2 text-[#000000]">Danh sách đơn hàng</h5>
           </Link>
         </div>
 
-        <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+        <div className="w-full mb-4 bg-[#f6960b] 800px:w-[30%] min-h-[20vh] shadow rounded px-2 py-5">
           <div className="flex items-center">
             <IoFileTrayStackedOutline
               size={30}
-              className="mr-2"
-              fill="#00000085"
+              className="mr-2 text-white"
+              fill="white"
             />
             <h3
-              className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+              className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
             >
               Sản phẩm
             </h3>
           </div>
-          <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+          <h5 className="pt-2 pl-[36px] text-[22px] text-white">
             {products && products.length}
           </h5>
           <Link to="/dashboard-products">
-            <h5 className="pt-4 pl-2 text-[#077f9c]">Danh sách sản phẩm</h5>
+            <h5 className="pt-4 pl-2 text-[#000000]">Danh sách sản phẩm</h5>
           </Link>
         </div>
       </div>
