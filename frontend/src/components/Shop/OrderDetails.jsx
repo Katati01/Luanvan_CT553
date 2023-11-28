@@ -55,7 +55,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/update-order-status/${id}`,
         {
-          status,
+          status
         },
         { withCredentials: true }
       )
@@ -73,7 +73,7 @@ const OrderDetails = () => {
       .put(
         `${server}/order/order-refund-success/${id}`,
         {
-          status,
+          status
         },
         { withCredentials: true }
       )
@@ -96,7 +96,7 @@ const OrderDetails = () => {
         </div>
         <Link to="/dashboard-orders">
           <div
-            className={`${styles.button} !bg-[#fce1e6] !rounded-[4px] text-[#e94560] font-[600] !h-[45px] text-[18px]`}
+            className={`${styles.button} !rounded-[4px] text-[#fff] font-[600] !h-[45px] text-[18px]`}
           >
             Quay lại
           </div>
@@ -113,7 +113,7 @@ const OrderDetails = () => {
             {new Date(data?.createdAt).toLocaleString("vi-VN", {
               year: "numeric",
               month: "numeric",
-              day: "numeric",
+              day: "numeric"
             })}
           </span>
         </h5>
@@ -225,7 +225,7 @@ const OrderDetails = () => {
                     <strong>
                       {totalPrice.toLocaleString("vi-VN", {
                         style: "currency",
-                        currency: "VND",
+                        currency: "VND"
                       }) + ""}
                     </strong>
                   </h5>
@@ -283,7 +283,7 @@ const OrderDetails = () => {
               "Shipping",
               "Received",
               "On the way",
-              "Delivered",
+              "Delivered"
             ]
               .slice(
                 [
@@ -292,7 +292,7 @@ const OrderDetails = () => {
                   "Shipping",
                   "Received",
                   "On the way",
-                  "Delivered",
+                  "Delivered"
                 ].indexOf(data?.status)
               )
               .map((option, index) => (
