@@ -22,7 +22,12 @@ router.post(
         shopTotal,
         paymentInfo,
       } = req.body;
-
+      // Check if the cart is empty
+      if (!cart || cart.length === 0) {
+        return next(
+          new ErrorHandler("Giỏ hàng trống. Không thể tạo đơn hàng.", 400)
+        );
+      }
       //   group cart items by shopId
       const shopItemsMap = new Map();
 
