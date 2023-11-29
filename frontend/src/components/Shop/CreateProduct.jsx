@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 // import "react-quill/dist/quill.snow.css";
+import { RxCross1 } from "react-icons/rx";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createProduct } from "../../redux/actions/product";
 import { categoriesData } from "../../static/data";
-import { RxCross1 } from "react-icons/rx";
 
-const CreateProduct = ({openForm, setOpen}) => {
+const CreateProduct = ({ openForm, setOpen }) => {
   const { seller } = useSelector((state) => state.seller);
   const { success, error } = useSelector((state) => state.products);
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const CreateProduct = ({openForm, setOpen}) => {
       toast.error(error);
     }
     if (success) {
-      toast.success("Product created successfully!");
+      toast.success("Thêm sản phẩm thành công!");
       navigate("/dashboard");
       window.location.reload();
     }
@@ -130,8 +130,8 @@ const CreateProduct = ({openForm, setOpen}) => {
                     [{ list: "ordered" }, { list: "bullet" }],
                     ["link", "image"],
                     [{ align: [] }],
-                    ["clean"] // remove formatting button
-                  ]
+                    ["clean"], // remove formatting button
+                  ],
                 }}
                 placeholder="Thêm mô tả sản phẩm..."
               />

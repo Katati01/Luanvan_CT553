@@ -73,7 +73,7 @@ const ProfileContent = ({ active }) => {
       })
       .then((response) => {
         dispatch(loadUser());
-        toast.success("avatar updated successfully!");
+        toast.success("Cập nhật avatar thành công!");
       })
       .catch((error) => {
         toast.error(error);
@@ -243,7 +243,7 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.getValue(params.id, "status") === "Đã giao hàng"
           ? "greenColor"
           : "redColor";
       },
@@ -342,7 +342,8 @@ const AllRefundOrders = () => {
     orders &&
     orders.filter(
       (item) =>
-        item.status === "Processing refund" || item.status === "Refund Success"
+        item.status === "Đang xử lý hoàn tiền" ||
+        item.status === "Hoàn tiền thành công"
     );
   // const eligibleOrders =
   //   orders && orders.filter((item) => item.status === "Processing refund");
@@ -373,7 +374,7 @@ const AllRefundOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.getValue(params.id, "status") === "Đã giao hàng"
           ? "greenColor"
           : "redColor";
       },
@@ -510,7 +511,7 @@ const TrackOrder = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.getValue(params.id, "status") === "Đã giao hàng"
           ? "greenColor"
           : "redColor";
       },

@@ -50,7 +50,7 @@ const AdminDashboardMain = () => {
     return (
       orderDate >= new Date(valStartDay) &&
       orderDate <= new Date(valEndDay) &&
-      item.status === "Delivered"
+      item.status === "Đã giao hàng"
     );
   });
 
@@ -74,7 +74,7 @@ const AdminDashboardMain = () => {
   console.log("deliveredOrdersInfo", deliveredOrdersInfo);
 
   const arrProductDelivered = adminOrders?.filter((item) => {
-    return item.status === "Delivered";
+    return item.status === "Đã giao hàng";
   });
 
   console.log("adminOrders", adminOrders);
@@ -119,7 +119,19 @@ const AdminDashboardMain = () => {
 
   const totalOrder = getAllProducts?.length;
 
-  const totalRevenue = sumOder * 0.05 + totalShopShip;
+  const sumOdertotalrevenue = getAllProducts?.reduce((total, order) => {
+    const orderTotal = order.cart.reduce((orderTotal, item) => {
+      const shopTotal = order.shopTotal[item.shopId] || {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      const totalAmount = item.qty * totalPrice;
+
+      return orderTotal + totalAmount;
+    }, 0);
+
+    return total + orderTotal;
+  }, 0);
+
+  const totalRevenue = sumOdertotalrevenue * 0.05 + totalShopShip;
 
   console.log("Tổng tiền kiếm được", totalRevenue);
 
@@ -144,7 +156,7 @@ const AdminDashboardMain = () => {
     adminOrders &&
     adminOrders.reduce((acc, order) => {
       // Check if the order has status "Delivered"
-      if (order.status === "Delivered") {
+      if (order.status === "Đã giao hàng") {
         // Calculate shopTotal for the first product in the order's cart
         const product = order.cart[0];
         const shopTotal =
@@ -153,10 +165,9 @@ const AdminDashboardMain = () => {
             : {};
         const totalPrice = shopTotal.totalPrice || 0;
         const shopShip = shopTotal.shopShip || 0;
-        const shopTotail = totalPrice + shopShip;
-
+        // const shopTotail = totalPrice;
         // Add shopTotal * 0.05 + shopShip to the accumulator
-        return acc + (shopTotail * 0.05 + shopShip);
+        return acc + (totalPrice * 0.05 + shopShip);
       }
 
       return acc; // If status is not "Delivered", return the accumulator unchanged
@@ -172,7 +183,7 @@ const AdminDashboardMain = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.getValue(params.id, "status") === "Đã giao hàng"
           ? "greenColor"
           : "redColor";
       },
@@ -288,117 +299,106 @@ const AdminDashboardMain = () => {
       });
     });
 
- return (
-   <>
-     {adminOrderLoading ? (
-       <Loader />
-     ) : (
-       <div className="w-full p-4">
-         <h3 className="text-[22px] font-Poppins pb-2">Tổng quan</h3>
-         <div className="w-full block 800px:flex items-center justify-between">
-           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#17a2b8] shadow rounded px-2 py-5">
-             <div className="flex items-center">
-               <AiOutlineDollar
-                 size={30}
-                 className="mr-2"
-                 fill="white"
-               />
-               <h3
-                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
-               >
-                 Tổng thu nhập
-               </h3>
-             </div>
-             <h5 className="pt-2 pl-[36px] text-[22px] text-white">
-               {currency.format(adminBalance, {
-                 code: "VND",
-               })}
-             </h5>
-             <h5 className="pt-4 pl-2 text-[#000000]">
-              <span className="invisible">a</span>
-             </h5>
-           </div>
+  return (
+    <>
+      {adminOrderLoading ? (
+        <Loader />
+      ) : (
+        <div className="w-full p-4">
+          <h3 className="text-[22px] font-Poppins pb-2">Tổng quan</h3>
+          <div className="w-full block 800px:flex items-center justify-between">
+            <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#17a2b8] shadow rounded px-2 py-5">
+              <div className="flex items-center">
+                <AiOutlineDollar size={30} className="mr-2" fill="white" />
+                <h3
+                  className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
+                >
+                  Tổng thu nhập
+                </h3>
+              </div>
+              <h5 className="pt-2 pl-[36px] text-[22px] text-white">
+                {currency.format(adminBalance, {
+                  code: "VND",
+                })}
+              </h5>
+              <h5 className="pt-4 pl-2 text-[#000000]">
+                <span className="invisible">a</span>
+              </h5>
+            </div>
 
+            <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#28A745] shadow rounded px-2 py-5">
+              <div className="flex items-center">
+                <AiOutlineShop size={30} className="mr-2" fill="white" />
+                <h3
+                  className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
+                >
+                  Quản lý người bán hàng
+                </h3>
+              </div>
+              <h5 className="pt-2 pl-[36px] text-[22px] text-white">
+                {sellers && sellers.length}
+              </h5>
+              <Link to="/admin-sellers">
+                <h5 className="pt-4 pl-2 text-[#000000]">
+                  Xem danh sách cửa hàng
+                </h5>
+              </Link>
+            </div>
 
-           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#28A745] shadow rounded px-2 py-5">
-             <div className="flex items-center">
-               <AiOutlineShop size={30} className="mr-2" fill="white" />
-               <h3
-                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
-               >
-                 Quản lý người bán hàng
-               </h3>
-             </div>
-             <h5 className="pt-2 pl-[36px] text-[22px] text-white">
-               {sellers && sellers.length}
-             </h5>
-             <Link to="/admin-sellers">
-               <h5 className="pt-4 pl-2 text-[#000000]">
-                 Xem danh sách cửa hàng
-               </h5>
-             </Link>
-           </div>
-
-
-           <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#f6960b] shadow rounded px-2 py-5">
-             <div className="flex items-center">
-               <AiOutlineShopping
-                 size={30}
-                 className="mr-2"
-                 fill="white"
-               />
-               <h3
-                 className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
-               >
-                 Đơn hàng
-               </h3>
-             </div>
-             <h5 className="pt-2 pl-[36px] text-[22px] text-white">
-               {adminOrders && adminOrders.length}
-             </h5>
-             <Link to="/admin-orders">
-               <h5 className="pt-4 pl-2 text-[#000000]">
-                 Xem danh sách đơn hàng
-               </h5>
-             </Link>
-           </div>
-         </div>
-         <br />
-         <h3 className="text-[22px] font-Poppins pb-2">Thống kê</h3>
-         <div
-           style={{
-             padding: "20px",
-             background: "#F5F5DC",
-           }}
-         >
-           <div
-             style={{
-               display: "flex",
-               justifyContent: "space-between",
-             }}
-           >
-             <h1
-               style={{
-                 fontSize: "25px",
-                 fontFamily: "Roboto",
-                 color: " #ccc",
-                 lineHeight: "1.25",
-                 fontSize: "18px",
-                 fontWeight: "500",
-                 color: "#00000085",
-               }}
-             >
-               Thống kê doanh thu
-             </h1>
-             <div>
-               <label>Ngày bắt đầu: </label>
-               <input
-                 style={{ border: "1px solid black" }}
-                 value={valStartDay}
-                 type="date"
-                 onChange={handleStartDayChange}
-               ></input>
-
+            <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-[#f6960b] shadow rounded px-2 py-5">
+              <div className="flex items-center">
+                <AiOutlineShopping size={30} className="mr-2" fill="white" />
+                <h3
+                  className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
+                >
+                  Đơn hàng
+                </h3>
+              </div>
+              <h5 className="pt-2 pl-[36px] text-[22px] text-white">
+                {adminOrders && adminOrders.length}
+              </h5>
+              <Link to="/admin-orders">
+                <h5 className="pt-4 pl-2 text-[#000000]">
+                  Xem danh sách đơn hàng
+                </h5>
+              </Link>
+            </div>
+          </div>
+          <br />
+          <h3 className="text-[22px] font-Poppins pb-2">Thống kê</h3>
+          <div
+            style={{
+              padding: "20px",
+              background: "#F5F5DC",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <h1
+                style={{
+                  fontSize: "25px",
+                  fontFamily: "Roboto",
+                  color: " #ccc",
+                  lineHeight: "1.25",
+                  fontSize: "18px",
+                  fontWeight: "500",
+                  color: "#00000085",
+                }}
+              >
+                Thống kê doanh thu
+              </h1>
+              <div>
+                <label>Ngày bắt đầu: </label>
+                <input
+                  style={{ border: "1px solid black" }}
+                  value={valStartDay}
+                  type="date"
+                  onChange={handleStartDayChange}
+                ></input>
 
                 <label style={{ marginLeft: "50px" }}>Ngày kết thúc: </label>
                 <input

@@ -74,7 +74,7 @@ const UserOrderDetails = () => {
   const refundHandler = async () => {
     await axios
       .put(`${server}/order/order-refund/${id}`, {
-        status: "Processing refund",
+        status: "Đang xử lý hoàn tiền",
       })
       .then((res) => {
         toast.success(res.data.message);
@@ -149,7 +149,7 @@ const UserOrderDetails = () => {
                   )}
                 </h5>
               </div>
-              {!item.isReviewed && data?.status === "Delivered" ? (
+              {!item.isReviewed && data?.status === "Đã giao hàng" ? (
                 <div
                   className={`${styles.button} text-[#fff]`}
                   onClick={() => setOpen(true) || setSelectedItem(item)}
@@ -337,7 +337,7 @@ const UserOrderDetails = () => {
           </h4>
 
           <br />
-          {data?.status === "Delivered" && (
+          {data?.status === "Đã giao hàng" && (
             <div
               className={`${styles.button} text-white`}
               onClick={refundHandler}

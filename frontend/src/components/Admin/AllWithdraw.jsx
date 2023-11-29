@@ -12,7 +12,7 @@ const AllWithdraw = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [withdrawData, setWithdrawData] = useState();
-  const [withdrawStatus, setWithdrawStatus] = useState("Processing");
+  const [withdrawStatus, setWithdrawStatus] = useState("Đang xử lý");
 
   useEffect(() => {
     axios
@@ -72,7 +72,7 @@ const AllWithdraw = () => {
           <BsPencil
             size={20}
             className={`${
-              params.row.status !== "Processing" ? "hidden" : ""
+              params.row.status !== "Đang xử lý" ? "hidden" : ""
             } mr-5 cursor-pointer`}
             onClick={() => setOpen(true) || setWithdrawData(params.row)}
           />

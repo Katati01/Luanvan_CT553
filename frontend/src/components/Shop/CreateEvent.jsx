@@ -54,7 +54,7 @@ const CreateEvent = ({ openForm, setOpen }) => {
       toast.error(error);
     }
     if (success) {
-      toast.success("Event created successfully!");
+      toast.success("Sự kiện tạo thành công!");
       navigate("/dashboard-events");
       window.location.reload();
     }

@@ -52,7 +52,7 @@ const WithdrawMoney = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success("Withdraw method added successfully!");
+        toast.success("Thêm phương thức rút tiền thành công!");
         dispatch(loadSeller());
         setBankInfo({
           bankName: "",
@@ -74,18 +74,20 @@ const WithdrawMoney = () => {
         withCredentials: true,
       })
       .then((res) => {
-        toast.success("Withdraw method deleted successfully!");
+        toast.success("Xóa phương thức rút tiền thành công!");
         dispatch(loadSeller());
       });
   };
 
   const error = () => {
-    toast.error("You not have enough balance to withdraw!");
+    toast.error("Bạn không đủ số dữ để rút tiền !");
   };
 
   const withdrawHandler = async () => {
-    if (withdrawAmount < 50 || withdrawAmount > availableBalance) {
-      toast.error("You can't withdraw this amount!");
+    if (withdrawAmount < 50000) {
+      toast.error("Số tiền rút phải từ 50000 đồng trở lên !");
+    } else if (withdrawAmount > availableBalance) {
+      toast.error("Bạn không đủ số dữ để rút tiền !");
     } else {
       const amount = withdrawAmount;
       await axios
@@ -95,12 +97,12 @@ const WithdrawMoney = () => {
           { withCredentials: true }
         )
         .then((res) => {
-          toast.success("Withdraw money request is successful!");
+          toast.success("Yêu cầu rút tiền được tạo thành công!");
         });
     }
   };
 
-  const availableBalance = seller?.availableBalance.toFixed(2);
+  const availableBalance = seller?.availableBalance;
 
   return (
     <div className="w-full h-[90vh] p-8">

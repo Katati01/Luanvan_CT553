@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import currency from "currency-formatter";
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { GiMoneyStack } from "react-icons/gi";
@@ -32,9 +31,9 @@ const DashboardHero = () => {
   const availableBalance =
     seller?.availableBalance.toLocaleString("vi-VN", {
       style: "currency",
-      currency: "VND"
+      currency: "VND",
     }) + "";
-    
+
   console.log("availableBalance", availableBalance);
 
   const scrollToTarget = () => {
@@ -78,7 +77,7 @@ const DashboardHero = () => {
     return (
       orderDate >= new Date(valStartDay) &&
       orderDate <= new Date(valEndDay) &&
-      item.status === "Delivered"
+      item.status === "Đã giao hàng"
     );
   });
   console.log("getAllProducts", getAllProducts);
@@ -92,7 +91,7 @@ const DashboardHero = () => {
           item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
         return {
           day: order.deliveredAt.slice(0, 10),
-          total: itemPrice * item.qty - itemPrice * item.qty * 0.05
+          total: itemPrice * item.qty - itemPrice * item.qty * 0.05,
         };
       });
 
@@ -126,17 +125,17 @@ const DashboardHero = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.getValue(params.id, "status") === "Đã giao hàng"
           ? "greenColor"
           : "redColor";
-      }
+      },
     },
     {
       field: "itemsQty",
       headerName: "Số lượng",
       type: "number",
       minWidth: 130,
-      flex: 0.7
+      flex: 0.7,
     },
 
     {
@@ -172,8 +171,8 @@ const DashboardHero = () => {
             </Link>
           </>
         );
-      }
-    }
+      },
+    },
   ];
   const row = [];
   // orders &&
@@ -185,19 +184,21 @@ const DashboardHero = () => {
   //     });
   //   });
   orders &&
-orders.forEach((item) => {
-  const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
-  // Lấy giá trị của totalPrice và shopShip từ shopTotal
-  const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
-  const totalPrice = shopTotal.totalPrice || 0;
-  row.push({
-    id: item._id,
-    itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
-    total: totalPrice, 
-    status: item?.status,
-
-  });
-});
+    orders.forEach((item) => {
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal =
+        item.shopTotal && item.shopTotal[product.shopId]
+          ? item.shopTotal[product.shopId]
+          : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      row.push({
+        id: item._id,
+        itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
+        total: totalPrice,
+        status: item?.status,
+      });
+    });
 
   return (
     <div className="w-full p-8 bg-[#f1f5f9]">
@@ -209,8 +210,7 @@ orders.forEach((item) => {
             <h3
               className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-white`}
             >
-              Thu nhập (5% phí dịch vụ){" "}
-              <span className="text-[16px]"></span>
+              Thu nhập (5% phí dịch vụ) <span className="text-[16px]"></span>
             </h3>
           </div>
           <h5 className="pt-2 pl-[36px] text-[22px] text-white">
@@ -266,13 +266,13 @@ orders.forEach((item) => {
       <div
         style={{
           padding: "20px",
-          background: "#F5F5DC"
+          background: "#F5F5DC",
         }}
       >
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           <h1
@@ -283,7 +283,7 @@ orders.forEach((item) => {
               lineHeight: "1.25",
               fontSize: "18px",
               fontWeight: "500",
-              color: "#00000085"
+              color: "#00000085",
             }}
           >
             Thống kê doanh thu
@@ -317,7 +317,7 @@ orders.forEach((item) => {
               fontSize: "20px",
               display: "flex",
               justifyContent: "center",
-              width: "100%"
+              width: "100%",
             }}
           >
             Tiếp tục thống kê
@@ -333,7 +333,7 @@ orders.forEach((item) => {
               fontSize: "20px",
               display: statistic ? "none" : "flex",
               justifyContent: "center",
-              width: "100%"
+              width: "100%",
             }}
           >
             Thống kê
@@ -348,7 +348,7 @@ orders.forEach((item) => {
                 fontSize: "20px",
                 fontWeight: "700",
                 padding: "50px",
-                float: "right"
+                float: "right",
               }}
             >
               <span>Tổng doanh thu: </span>
@@ -356,7 +356,7 @@ orders.forEach((item) => {
                 {totalRevenue
                   ? totalRevenue?.toLocaleString("vi-VN", {
                       style: "currency",
-                      currency: "VND"
+                      currency: "VND",
                     }) + ""
                   : "0 đ"}
               </span>

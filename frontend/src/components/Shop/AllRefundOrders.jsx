@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import currency from "currency-formatter";
 import React, { useEffect } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +21,8 @@ const AllRefundOrders = () => {
     orders &&
     orders.filter(
       (item) =>
-        item.status === "Processing refund" || item.status === "Refund Success"
+        item.status === "Đang xử lý hoàn tiền" ||
+        item.status === "Hoàn tiền thành công"
     );
 
   const columns = [
@@ -34,7 +34,7 @@ const AllRefundOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.getValue(params.id, "status") === "Đã giao hàng"
           ? "greenColor"
           : "redColor";
       },
@@ -94,17 +94,20 @@ const AllRefundOrders = () => {
   //   });
   refundOrders &&
     refundOrders.forEach((item) => {
-  const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
-  // Lấy giá trị của totalPrice và shopShip từ shopTotal
-  const shopTotal = item.shopTotal && item.shopTotal[product.shopId] ? item.shopTotal[product.shopId] : {};
-  const totalPrice = shopTotal.totalPrice || 0;
-  row.push({
-    id: item._id,
-    itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
-    total: totalPrice, 
-    status: item?.status,
-  });
-});
+      const product = item.cart[0]; // Chọn sản phẩm đầu tiên trong đơn hàng
+      // Lấy giá trị của totalPrice và shopShip từ shopTotal
+      const shopTotal =
+        item.shopTotal && item.shopTotal[product.shopId]
+          ? item.shopTotal[product.shopId]
+          : {};
+      const totalPrice = shopTotal.totalPrice || 0;
+      row.push({
+        id: item._id,
+        itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
+        total: totalPrice,
+        status: item?.status,
+      });
+    });
   return (
     <>
       {isLoading ? (

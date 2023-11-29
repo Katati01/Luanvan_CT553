@@ -83,7 +83,7 @@ router.put(
       const withdraw = await Withdraw.findByIdAndUpdate(
         req.params.id,
         {
-          status: "succeed",
+          status: "Thành công",
           updatedAt: Date.now(),
         },
         { new: true }

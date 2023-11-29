@@ -20,30 +20,30 @@ const TrackOrder = () => {
     <div className="w-full h-[80vh] flex justify-center items-center">
       {" "}
       <>
-        {data && data?.status === "Processing" ? (
+        {data && data?.status === "Đang xử lý" ? (
           <h1 className="text-[20px]">Đơn hàng đang được xử lý.</h1>
-        ) : data?.status === "Transferred to delivery partner" ? (
+        ) : data?.status === "Đơn hàng đã giao cho đơn vị vận chuyển" ? (
           <h1 className="text-[20px]">
             Đơn hàng của bạn đang trên đường giao cho đối tác giao hàng.
           </h1>
-        ) : data?.status === "Shipping" ? (
+        ) : data?.status === "Đơn hàng đang vận chuyển" ? (
           <h1 className="text-[20px]">
             Đơn đặt hàng của bạn đang được vận chuyển với đối tác giao hàng của
             chúng tôi.
           </h1>
-        ) : data?.status === "Received" ? (
+        ) : data?.status === "Đơn hàng đã đến kho gần nhất" ? (
           <h1 className="text-[20px]">
             Đơn hàng đã đến khu vực của bạn và chuẩn bị giao hàng.
           </h1>
-        ) : data?.status === "On the way" ? (
+        ) : data?.status === "Đơn hàng đang trên đường giao đến" ? (
           <h1 className="text-[20px]">Đang giao hàng.</h1>
-        ) : data?.status === "Delivered" ? (
+        ) : data?.status === "Đã giao hàng" ? (
           <h1 className="text-[20px]">Đơn hàng đã được giao!</h1>
-        ) : data?.status === "Processing refund" ? (
+        ) : data?.status === "Đang xử lý hoàn tiền" ? (
           <h1 className="text-[20px]">
             Yêu cầu trả hàng và hoàn tiền đang được xử lý!
           </h1>
-        ) : data?.status === "Refund Success" ? (
+        ) : data?.status === "Hoàn tiền thành công" ? (
           <h1 className="text-[20px]">Trả hàng và hoàn tiền thành công!</h1>
         ) : null}
       </>
