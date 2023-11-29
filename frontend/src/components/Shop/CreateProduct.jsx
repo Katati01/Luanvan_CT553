@@ -24,6 +24,7 @@ const CreateProduct = ({ openForm, setOpen }) => {
   const [originalPrice, setOriginalPrice] = useState();
   const [discountPrice, setDiscountPrice] = useState();
   const [stock, setStock] = useState();
+  const [requireImg, setRequireImg] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -52,7 +53,10 @@ const CreateProduct = ({ openForm, setOpen }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (images.length === 0) {
+      setRequireImg(true);
+      return;
+    }
     const newForm = new FormData();
 
     images.forEach((image) => {
@@ -100,22 +104,6 @@ const CreateProduct = ({ openForm, setOpen }) => {
               />
             </div>
             <br />
-            {/* <div>
-          <label className="pb-2">
-            Mô tả <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            cols="30"
-            required
-            rows="8"
-            type="text"
-            name="description"
-            value={description}
-            className="mt-2 appearance-none block w-full pt-2 px-3 border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Thêm mô tả sản phẩm..."
-          ></textarea>
-        </div> */}
             <div>
               <label className="pb-2">
                 Mô tả <span className="text-red-500">*</span>
@@ -130,8 +118,8 @@ const CreateProduct = ({ openForm, setOpen }) => {
                     [{ list: "ordered" }, { list: "bullet" }],
                     ["link", "image"],
                     [{ align: [] }],
-                    ["clean"], // remove formatting button
-                  ],
+                    ["clean"] // remove formatting button
+                  ]
                 }}
                 placeholder="Thêm mô tả sản phẩm..."
               />
@@ -183,18 +171,6 @@ const CreateProduct = ({ openForm, setOpen }) => {
               />
             </div>
             <br />
-            {/* <div>
-          <label className="pb-2">Giá khuyến mãi</label>
-          <input
-            type="number"
-            name="price"
-            value={discountPrice}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setDiscountPrice(e.target.value)}
-            placeholder="Giá sản phẩm sau khi áp dụng khuyễn mãi..."
-          />
-        </div>
-        <br /> */}
             <div>
               <label className="pb-2">
                 Số lượng sản phẩm <span className="text-red-500">*</span>
@@ -213,6 +189,11 @@ const CreateProduct = ({ openForm, setOpen }) => {
               <label className="pb-2">
                 Hình ảnh <span className="text-red-500">*</span>
               </label>
+              {requireImg && (
+                <p className="text-red-500">
+                  Vui lòng thêm ít nhất một hình ảnh.
+                </p>
+              )}
               <input
                 type="file"
                 name=""
