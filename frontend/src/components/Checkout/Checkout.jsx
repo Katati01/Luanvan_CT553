@@ -128,6 +128,7 @@ const Checkout = () => {
 
       if (!shopTotalMap.has(shopId)) {
         shopTotalMap.set(shopId, {
+          shopName: item.shop.name, // Thêm tên cửa hàng vào thông tin
           totalQuantity: item.qty,
           totalPrice: itemTotal,
           shopShip: itemShip,
@@ -433,7 +434,6 @@ const ShippingInfo = ({
 
         <div></div>
       </form>
-
       <h5
         className="text-[18px] cursor-pointer inline-block"
         onClick={() => setUserInfo(!userInfo)}
@@ -463,7 +463,7 @@ const ShippingInfo = ({
             ))}
         </div>
       )}
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <h5 className="text-[18px] font-[500] mb-2">
           Sản phẩm trong đơn hàng:
         </h5>
@@ -476,15 +476,43 @@ const ShippingInfo = ({
             />
             <span className="mr-2">{item.name}</span>
             <span>x{item.qty}</span>
+            <span className="ml-2 text-[#000000a4]">({item.shop.name})</span>
           </div>
         ))}
-      </div>
+      </div> */}
       <div className="mb-4">
-        <h5 className="text-[18px] font-[500] mb-2">Cửa hàng:</h5>
-        {cart.map((item, index) => (
-          <div key={index} className="flex items-center mb-2">
-            <img src={item.shop.avatar} className="w-8 h-8 mr-2 object-cover" />
-            <span className="mr-2">{item.shop.name}</span>
+        <h5 className="text-[18px] font-[500] mb-2">
+          Sản phẩm trong đơn hàng:
+        </h5>
+        {/* Group items by shop ID */}
+        {Object.values(
+          cart.reduce((acc, item) => {
+            const shopId = item.shopId;
+            if (!acc[shopId]) {
+              acc[shopId] = {
+                shopName: item.shop.name,
+                items: [],
+              };
+            }
+            acc[shopId].items.push(item);
+            return acc;
+          }, {})
+        ).map((shopGroup, index) => (
+          <div key={index}>
+            <h4 className="text-[18px] font-[500] mb-2">
+              {shopGroup.shopName}
+            </h4>
+            {shopGroup.items.map((item, innerIndex) => (
+              <div key={innerIndex} className="flex items-center mb-2">
+                <img
+                  src={item.images[0]}
+                  alt={item.name}
+                  className="w-8 h-8 mr-2 object-cover"
+                />
+                <span className="mr-2">{item.name}</span>
+                <span>x{item.qty}</span>
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -505,19 +533,19 @@ const CartData = ({
 }) => {
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
-      <div className="flex justify-between">
+      {/* <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng tiền:</h3>
         <h5 className="text-[18px] font-[600]">
           {currency.format(subTotalPrice, { code: "VND" })}
         </h5>
-      </div>
+      </div> */}
 
-      <br />
+      {/* <br /> */}
 
-      {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
+      {/* {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
         <div key={shopId} className="flex justify-between">
           <h3 className="text-[16px] font-[400] text-[#000000a4]">
-            Tiền shop {shopId.slice(0, 5)}:
+            Tiền shop {shopInfo.shopName}:
           </h3>
           <h5 className="text-[18px] font-[600]">
             {currency.format(shopInfo.totalPrice, { code: "VND" })}
@@ -537,7 +565,7 @@ const CartData = ({
       <br />
 
       <div className="flex justify-between border-b pb-3">
-        {/* <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>
         <h5 className="text-[18px] font-[600]">
           -
           {discountPercentenge
@@ -546,13 +574,51 @@ const CartData = ({
                 code: "VND",
               })}`
             : null}
-        </h5> */}
+        </h5>
+      </div> */}
+      {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
+        <div key={shopId} className="flex justify-between">
+          <h3 className="text-[16px] font-[400] text-[#000000a4]">
+            Tiền shop {shopInfo.shopName}:
+          </h3>
+          <h5 className="text-[18px] font-[600]">
+            {currency.format(shopInfo.totalPrice, { code: "VND" })}
+          </h5>
+        </div>
+      ))}
+      <div className="flex justify-between">
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">
+          Phí giao hàng:
+        </h3>
+        <h5 className="text-[18px] font-[600]">
+          {currency.format(shipping.toFixed(2), { code: "VND" })}
+        </h5>
       </div>
-      <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng cộng:</h3>
+      <div className="flex justify-between border-b pb-3">
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>
+        <h5 className="text-[18px] font-[600]">
+          -
+          {discountPercentenge
+            ? "" +
+              `${currency.format(discountPercentenge.toString(), {
+                code: "VND",
+              })}`
+            : null}
+        </h5>
+      </div>
+
+      <br />
+      <div className="flex justify-between">
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng cộng:</h3>
+        <h5 className="text-[18px] font-[600]">
+          {currency.format(totalPrice, { code: "VND" })}
+        </h5>
+      </div>
+      {/* <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng cộng:</h3>
       <h5 className="text-[18px] font-[600] text-end pt-3">
         {" "}
         {currency.format(totalPrice, { code: "VND" })}
-      </h5>
+      </h5> */}
       <br />
       <form onSubmit={handleSubmit}>
         <input
