@@ -119,23 +119,6 @@ const CreateEvent = ({ openForm, setOpen }) => {
               />
             </div>
             <br />
-            {/* <div>
-          <label className="pb-2">
-            Mô tả <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            cols="30"
-            required
-            rows="8"
-            type="text"
-            name="description"
-            value={description}
-            className="mt-2 appearance-none block w-full pt-2 px-3 border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Mô tả sự kiện, nội dung..."
-          ></textarea>
-          
-        </div> */}
             <div>
               <label className="pb-2">
                 Mô tả <span className="text-red-500">*</span>
@@ -150,32 +133,13 @@ const CreateEvent = ({ openForm, setOpen }) => {
                     [{ list: "ordered" }, { list: "bullet" }],
                     ["link", "image"],
                     [{ align: [] }],
-                    ["clean"], // remove formatting button
-                  ],
+                    ["clean"] // remove formatting button
+                  ]
                 }}
                 placeholder="Mô tả sự kiện, nội dung..."
               />
             </div>
 
-            {/* <br />
-        <div>
-          <label className="pb-2">
-            Danh mục <span className="text-red-500">*</span>
-          </label>
-          <select
-            className="w-full mt-2 border h-[35px] rounded-[5px]"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="Choose a category">Chọn danh mục</option>
-            {categoriesData &&
-              categoriesData.map((i) => (
-                <option value={i.title} key={i.title}>
-                  {i.title}
-                </option>
-              ))}
-          </select>
-        </div> */}
             <br />
             <div>
               <label className="pb-2">Tags</label>
@@ -189,82 +153,9 @@ const CreateEvent = ({ openForm, setOpen }) => {
               />
             </div>
             <br />
-            {/* <div>
-          <label className="pb-2">Giá gốc</label>
-          <input
-            type="number"
-            name="price"
-            value={originalPrice}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setOriginalPrice(e.target.value)}
-            placeholder="Nhập giá gốc..."
-          />
-        </div>
-        <br />
-        <div>
-          <label className="pb-2">
-            Giá khuyến mãi <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="number"
-            name="price"
-            value={discountPrice}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setDiscountPrice(e.target.value)}
-            placeholder="Giá khuyến mãi của sản phẩm trong sự kiện..."
-          />
-        </div>
-        <br /> */}
-            {/* <div>
-          <label className="pb-2">
-            Số lượng <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="number"
-            name="price"
-            value={stock}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setStock(e.target.value)}
-            placeholder="Số lượng sản phẩm..."
-          />
-        </div>
-        <br /> */}
-            {/* <div>
-              <label className="pb-2">
-                Ngày bắt đầu <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="date"
-                name="price"
-                id="start-date"
-                value={startDate ? startDate.toISOString().slice(0, 10) : ""}
-                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                onChange={handleStartDateChange}
-                min={today}
-                placeholder="Enter your event product stock..."
-              />
-            </div>
             <br />
             <div>
-              <label className="pb-2">
-                Ngày kết thúc <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="date"
-                name="price"
-                id="start-date"
-                value={endDate ? endDate.toISOString().slice(0, 10) : ""}
-                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                onChange={handleEndDateChange}
-                min={minEndDate}
-                placeholder="Enter your event product stock..."
-              />
-            </div> */}
-            <br />
-            <div>
-              <label className="pb-2">
-                Hình ảnh <span className="text-red-500">*</span>
-              </label>
+              <label className="pb-2">Hình ảnh</label>
               <input
                 type="file"
                 name=""
