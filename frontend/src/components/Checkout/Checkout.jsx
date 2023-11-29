@@ -38,7 +38,7 @@ const Checkout = () => {
         country,
         city,
         name,
-        phoneNumber,
+        phoneNumber
       };
 
       // Validate phoneNumber format
@@ -55,7 +55,7 @@ const Checkout = () => {
         shopTotal,
         discountPrice,
         shippingAddress,
-        user,
+        user
       };
 
       // update local storage with the updated orders array
@@ -132,7 +132,7 @@ const Checkout = () => {
           totalQuantity: item.qty,
           totalPrice: itemTotal,
           shopShip: itemShip,
-          shopCoupon: couponValue,
+          shopCoupon: couponValue
         });
       } else {
         const existingShopTotal = shopTotalMap.get(shopId);
@@ -212,7 +212,7 @@ const Checkout = () => {
           // Cập nhật giá trị coupon cho từng cửa hàng
           setShopCouponValues((prevValues) => ({
             ...prevValues,
-            [shopId]: couponCodeValue,
+            [shopId]: couponCodeValue
           }));
         }
       }
@@ -299,48 +299,49 @@ const ShippingInfo = ({
   setName,
   phoneNumber,
   setPhoneNumber,
-  cart,
+  cart
 }) => {
   return (
-    <div className="w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8">
-      <h5 className="text-[18px] font-[500]">Thông tin giao hàng</h5>
-      <br />
-      <form>
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
-            <label className="block pb-2">Tên khách hàng:</label>
-            <input
-              type="text"
-              value={name}
-              required
-              onChange={(e) => setName(e.target.value)}
-              className={`${styles.input} !w-[95%]`}
-            />
+    <>
+      <div className="w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8 shadow-md">
+        <h5 className="text-[18px] font-[500]">Thông tin giao hàng</h5>
+        <br />
+        <form>
+          <div className="w-full flex pb-3">
+            <div className="w-[50%]">
+              <label className="block pb-2">Tên khách hàng:</label>
+              <input
+                type="text"
+                value={name}
+                required
+                onChange={(e) => setName(e.target.value)}
+                className={`${styles.input} !w-[95%]`}
+              />
+            </div>
+            <div className="w-[50%]">
+              <label className="block pb-2">Email:</label>
+              <input
+                type="email"
+                value={user && user.email}
+                required
+                className={`${styles.input}`}
+              />
+            </div>
           </div>
-          <div className="w-[50%]">
-            <label className="block pb-2">Email:</label>
-            <input
-              type="email"
-              value={user && user.email}
-              required
-              className={`${styles.input}`}
-            />
-          </div>
-        </div>
 
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
-            <label className="block pb-2">Số điện thoại: +(84)</label>
-            <input
-              type="number"
-              required
-              // value={user && user.phoneNumber}
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className={`${styles.input} !w-[95%]`}
-            />
-          </div>
-          {/* <div className="w-[50%]">
+          <div className="w-full flex pb-3">
+            <div className="w-[50%]">
+              <label className="block pb-2">Số điện thoại: +(84)</label>
+              <input
+                type="number"
+                required
+                // value={user && user.phoneNumber}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className={`${styles.input} !w-[95%]`}
+              />
+            </div>
+            {/* <div className="w-[50%]">
            <label className="block pb-2">Zip Code</label>
            <input
              type="number"
@@ -350,46 +351,46 @@ const ShippingInfo = ({
              className={`${styles.input}`}
            />
          </div> */}
-          <div className="w-[50%]">
-            <label className="block pb-2">Tỉnh, thành phố:</label>
-            <select
-              className="w-[95%] border h-[40px] rounded-[5px]"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            >
-              <option className="block pb-2" value="">
-                Chọn tỉnh, thành phố
-              </option>
-              {State &&
-                State.getStatesOfCountry(country).map((item) => (
-                  <option key={item.isoCode} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-            </select>
+            <div className="w-[50%]">
+              <label className="block pb-2">Tỉnh, thành phố:</label>
+              <select
+                className="w-[95%] border h-[40px] rounded-[5px]"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              >
+                <option className="block pb-2" value="">
+                  Chọn tỉnh, thành phố
+                </option>
+                {State &&
+                  State.getStatesOfCountry(country).map((item) => (
+                    <option key={item.isoCode} value={item.name}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
-            <label className="block pb-2">Khu vực:</label>
-            <select
-              className="w-[95%] border h-[40px] rounded-[5px]"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            >
-              <option className="block pb-2" value="">
-                Chọn khu vực
-              </option>
-              {Country &&
-                Country.getAllCountries().map((item) => (
-                  <option key={item.isoCode} value={item.isoCode}>
-                    {item.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-          {/* <div className="w-[50%]">
+          <div className="w-full flex pb-3">
+            <div className="w-[50%]">
+              <label className="block pb-2">Khu vực:</label>
+              <select
+                className="w-[95%] border h-[40px] rounded-[5px]"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              >
+                <option className="block pb-2" value="">
+                  Chọn khu vực
+                </option>
+                {Country &&
+                  Country.getAllCountries().map((item) => (
+                    <option key={item.isoCode} value={item.isoCode}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            {/* <div className="w-[50%]">
           <label className="block pb-2">Tỉnh, thành phố:</label>
            <select
              className="w-[95%] border h-[40px] rounded-[5px]"
@@ -407,20 +408,20 @@ const ShippingInfo = ({
                ))}
            </select>
          </div> */}
-        </div>
-
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
-            <label className="block pb-2">Địa chỉ:</label>
-            <input
-              type="address"
-              required
-              value={address1}
-              onChange={(e) => setAddress1(e.target.value)}
-              className={`${styles.input} !w-[95%]`}
-            />
           </div>
-          {/* <div className="w-[50%]">
+
+          <div className="w-full flex pb-3">
+            <div className="w-[50%]">
+              <label className="block pb-2">Địa chỉ:</label>
+              <input
+                type="address"
+                required
+                value={address1}
+                onChange={(e) => setAddress1(e.target.value)}
+                className={`${styles.input} !w-[95%]`}
+              />
+            </div>
+            {/* <div className="w-[50%]">
            <label className="block pb-2">Address2</label>
            <input
              type="address"
@@ -430,40 +431,40 @@ const ShippingInfo = ({
              className={`${styles.input}`}
            />
          </div> */}
-        </div>
+          </div>
 
-        <div></div>
-      </form>
-      <h5
-        className="text-[18px] cursor-pointer inline-block"
-        onClick={() => setUserInfo(!userInfo)}
-      >
-        Chọn địa chỉ mà bạn đã lưu:{" "}
-        <h5 className="text-[#027df0fd]">(Nhấn vào đây để chọn)</h5>
-      </h5>
-      {userInfo && (
-        <div>
-          {user &&
-            user.addresses.map((item, index) => (
-              <div className="w-full flex mt-1">
-                <input
-                  type="checkbox"
-                  className="mr-3"
-                  value={item.addressType}
-                  onClick={() =>
-                    setAddress1(item.address1) ||
-                    // setAddress2(item.address2) ||
-                    // setZipCode(item.zipCode) ||
-                    setCountry(item.country) ||
-                    setCity(item.city)
-                  }
-                />
-                <h2>{item.addressType}</h2>
-              </div>
-            ))}
-        </div>
-      )}
-      {/* <div className="mb-4">
+          <div></div>
+        </form>
+        <h5
+          className="text-[18px] cursor-pointer inline-block"
+          onClick={() => setUserInfo(!userInfo)}
+        >
+          Chọn địa chỉ mà bạn đã lưu:{" "}
+          <h5 className="text-[#027df0fd]">(Nhấn vào đây để chọn)</h5>
+        </h5>
+        {userInfo && (
+          <div>
+            {user &&
+              user.addresses.map((item, index) => (
+                <div className="w-full flex mt-1">
+                  <input
+                    type="checkbox"
+                    className="mr-3"
+                    value={item.addressType}
+                    onClick={() =>
+                      setAddress1(item.address1) ||
+                      // setAddress2(item.address2) ||
+                      // setZipCode(item.zipCode) ||
+                      setCountry(item.country) ||
+                      setCity(item.city)
+                    }
+                  />
+                  <h2>{item.addressType}</h2>
+                </div>
+              ))}
+          </div>
+        )}
+        {/* <div className="mb-4">
         <h5 className="text-[18px] font-[500] mb-2">
           Sản phẩm trong đơn hàng:
         </h5>
@@ -480,43 +481,46 @@ const ShippingInfo = ({
           </div>
         ))}
       </div> */}
-      <div className="mb-4">
-        <h5 className="text-[18px] font-[500] mb-2">
-          Sản phẩm trong đơn hàng:
-        </h5>
-        {/* Group items by shop ID */}
-        {Object.values(
-          cart.reduce((acc, item) => {
-            const shopId = item.shopId;
-            if (!acc[shopId]) {
-              acc[shopId] = {
-                shopName: item.shop.name,
-                items: [],
-              };
-            }
-            acc[shopId].items.push(item);
-            return acc;
-          }, {})
-        ).map((shopGroup, index) => (
-          <div key={index}>
-            <h4 className="text-[18px] font-[500] mb-2">
-              {shopGroup.shopName}
-            </h4>
-            {shopGroup.items.map((item, innerIndex) => (
-              <div key={innerIndex} className="flex items-center mb-2">
-                <img
-                  src={item.images[0]}
-                  alt={item.name}
-                  className="w-8 h-8 mr-2 object-cover"
-                />
-                <span className="mr-2">{item.name}</span>
-                <span>x{item.qty}</span>
-              </div>
-            ))}
-          </div>
-        ))}
       </div>
-    </div>
+      <div className="mt-4 w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8 shadow-md">
+        <div className="mb-4">
+          <h5 className="text-[18px] font-[500] mb-2">
+            Sản phẩm trong đơn hàng:
+          </h5>
+          {/* Group items by shop ID */}
+          {Object.values(
+            cart.reduce((acc, item) => {
+              const shopId = item.shopId;
+              if (!acc[shopId]) {
+                acc[shopId] = {
+                  shopName: item.shop.name,
+                  items: []
+                };
+              }
+              acc[shopId].items.push(item);
+              return acc;
+            }, {})
+          ).map((shopGroup, index) => (
+            <div key={index}>
+              <h4 className="text-[18px] font-[500] mb-2">
+                {shopGroup.shopName}
+              </h4>
+              {shopGroup.items.map((item, innerIndex) => (
+                <div key={innerIndex} className="flex items-center mb-2">
+                  <img
+                    src={item.images[0]}
+                    alt={item.name}
+                    className="w-8 h-8 mr-2 object-cover"
+                  />
+                  <span className="mr-2">{item.name}</span>
+                  <span>x{item.qty}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -529,10 +533,10 @@ const CartData = ({
   subTotalPrice,
   couponCode,
   setCouponCode,
-  discountPercentenge,
+  discountPercentenge
 }) => {
   return (
-    <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
+    <div className="w-full bg-[#fff] rounded-md p-5 pb-8 shadow-md">
       {/* <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng tiền:</h3>
         <h5 className="text-[18px] font-[600]">
@@ -601,7 +605,7 @@ const CartData = ({
           {discountPercentenge
             ? "" +
               `${currency.format(discountPercentenge.toString(), {
-                code: "VND",
+                code: "VND"
               })}`
             : null}
         </h5>
