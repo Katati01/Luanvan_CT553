@@ -2,17 +2,11 @@ import axios from "axios";
 import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
-import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { server } from "../../server";
-import {
-  footerProductLinks,
-  footerSupportLinks,
-  footercompanyLinks
-} from "../../static/data";
-import styles from "../../styles/styles";
 import logo from "../../Assests/PhotoType/logo.png";
+import { server } from "../../server";
+import styles from "../../styles/styles";
 import Footer from "../Layout/Footer";
 
 const Login = () => {
@@ -28,14 +22,14 @@ const Login = () => {
         `${server}/user/login-user`,
         {
           email,
-          password
+          password,
         },
         { withCredentials: true }
       );
 
       const isAdmin = response.data.user.role === "Admin";
       console.log("------" + response.data.user.role);
-      toast.success("Login Success!");
+      toast.success("Đăng nhập thành công!");
       if (isAdmin) {
         navigate("/admin/dashboard");
       } else {

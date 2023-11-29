@@ -3,13 +3,8 @@ import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { server } from "../../server";
-import {
-  footerProductLinks,
-  footerSupportLinks,
-  footercompanyLinks
-} from "../../static/data";
 import logo from "../../Assests/PhotoType/logo.png";
+import { server } from "../../server";
 import styles from "../../styles/styles";
 import Footer from "../Layout/Footer";
 
@@ -27,12 +22,12 @@ const ShopLogin = () => {
         `${server}/shop/login-shop`,
         {
           email,
-          password
+          password,
         },
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success("Login Success!");
+        toast.success("Đăng nhập thành công!");
         navigate("/dashboard");
         window.location.reload(true);
       })

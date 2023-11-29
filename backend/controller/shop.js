@@ -48,7 +48,7 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
     try {
       await sendMail({
         email: seller.email,
-        subject: "Activate your Shop",
+        subject: "Kích hoạt tài khoản cửa hàng",
         message: `Xin chào ${seller.name}, Vui lòng nhấn vào liên kết để xác minh email đăng ký " Trở thành người bán" trên Nông Nghiệp Xanh: ${activationUrl}`,
       });
       res.status(201).json({

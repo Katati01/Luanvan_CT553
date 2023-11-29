@@ -18,15 +18,21 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
     const { name, email, password } = req.body;
     const userEmail = await User.findOne({ email });
 
+    if (!name) {
+      return next(new ErrorHandler("Tên không được bỏ trống", 400));
+    }
+    if (!password) {
+      return next(new ErrorHandler("Mật khẩu không được bỏ trống", 400));
+    }
     if (userEmail) {
-      const filename = req.file.filename;
-      const filePath = `uploads/${filename}`;
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.log(err);
-          res.status(500).json({ message: "Error deleting file" });
-        }
-      });
+      // const filename = req.file.filename;
+      // const filePath = `uploads/${filename}`;
+      // fs.unlink(filePath, (err) => {
+      //   if (err) {
+      //     console.log(err);
+      //     res.status(500).json({ message: "Error deleting file" });
+      //   }
+      // });
       return next(new ErrorHandler("Người dùng đã tồn tại", 400));
     }
 
@@ -46,7 +52,7 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
     try {
       await sendMail({
         email: user.email,
-        subject: "Activate your account",
+        subject: "Kích hoạt tài khoản",
         message: `Xin chào ${user.name}, vui lòng nhấn vào liên kết để kích hoạt tài khoản: ${activationUrl}`,
       });
       res.status(201).json({

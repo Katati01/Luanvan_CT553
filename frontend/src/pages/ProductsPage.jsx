@@ -29,8 +29,8 @@ const ProductsPage = () => {
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
   const sortProducts = (sortBy, data) => {
     switch (sortBy) {
