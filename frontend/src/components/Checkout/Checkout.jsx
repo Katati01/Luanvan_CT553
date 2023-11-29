@@ -148,13 +148,18 @@ const Checkout = () => {
   const shopTotal = calculateShopTotal(cart);
   console.log(shopTotal);
 
-  const subTotalPrice = cart.reduce((acc, item) => {
-    const itemPrice =
-      item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
-    const totalForItem =
-      item.shopId in shopTotal ? shopTotal[item.shopId].totalPrice : 0;
-    return acc + totalForItem;
-  }, 0);
+  // const subTotalPrice = cart.reduce((acc, item) => {
+  //   const itemPrice =
+  //     item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
+  //   const totalForItem =
+  //     item.shopId in shopTotal ? shopTotal[item.shopId].totalPrice : 0;
+  //   return acc + totalForItem;
+  // }, 0);
+
+  const subTotalPrice = Object.values(shopTotal).reduce(
+    (acc, shopInfo) => acc + shopInfo.totalPrice,
+    0
+  );
 
   const shopCount = new Set(cart.map((item) => item.shopId)).size;
   const shipping = 30000 * shopCount;
@@ -197,8 +202,10 @@ const Checkout = () => {
           //   return acc + item.qty * itemPrice;
           // }, 0);
           const discountPrice = (eligiblePrice * couponCodeValue) / 100;
-
-          setDiscountPrice(discountPrice);
+          setDiscountPrice((prevDiscount) =>
+            prevDiscount !== null ? prevDiscount + discountPrice : discountPrice
+          );
+          // setDiscountPrice(discountPrice);
           setCouponCodeData(res.data.couponCode);
           setCouponCode("");
           // Cập nhật giá trị coupon cho từng cửa hàng
@@ -506,6 +513,7 @@ const CartData = ({
       </div>
 
       <br />
+
       {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
         <div key={shopId} className="flex justify-between">
           <h3 className="text-[16px] font-[400] text-[#000000a4]">
