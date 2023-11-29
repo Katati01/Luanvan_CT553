@@ -256,7 +256,7 @@ const Header = ({ activeHeading }) => {
           <div className="flex">
             <div className={`${styles.noramlFlex}`}>
               {/* notification */}
-              {(!isAdmin || isSeller) && (
+              {user?.role === "user" && (
                 <div
                   className="relative cursor-pointer mr-[15px]"
                   onMouseEnter={handleMouseEnter}
