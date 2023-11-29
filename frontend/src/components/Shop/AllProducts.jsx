@@ -17,6 +17,7 @@ import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
 import ChartComponentShop from "./ChartComponentShop";
 import CreateProduct from "./CreateProduct";
+import { toast } from "react-toastify";
 
 const AllProducts = () => {
   const { products, isLoading } = useSelector((state) => state.products);
@@ -37,6 +38,7 @@ const AllProducts = () => {
 
   const handleDelete = async () => {
     await dispatch(deleteProduct(productIdToDelete));
+    toast.success("Xoá sản phẩm thành công!");
     // window.location.reload();
     dispatch(getAllProductsShop(seller._id));
   };

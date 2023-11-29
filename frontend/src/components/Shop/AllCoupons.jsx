@@ -31,7 +31,7 @@ const AllCoupons = () => {
     setIsLoading(true);
     axios
       .get(`${server}/coupon/get-coupon/${seller._id}`, {
-        withCredentials: true,
+        withCredentials: true
       })
       .then((res) => {
         setIsLoading(false);
@@ -43,9 +43,9 @@ const AllCoupons = () => {
   }, [dispatch, seller._id]);
 
   const handleDelete = async (id) => {
-    axios
+    await axios
       .delete(`${server}/coupon/delete-coupon/${couponIdToDelete}`, {
-        withCredentials: true,
+        withCredentials: true
       })
       .then((res) => {
         toast.success("Xóa mã giảm giá thành công!");
@@ -66,7 +66,7 @@ const AllCoupons = () => {
           selectedProducts,
           value,
           quantity,
-          shopId: seller._id,
+          shopId: seller._id
         },
         { withCredentials: true }
       )
@@ -86,25 +86,25 @@ const AllCoupons = () => {
       field: "name",
       headerName: "Mã giảm giá",
       minWidth: 180,
-      flex: 1.4,
+      flex: 1.4
     },
     {
       field: "price",
       headerName: "Giá trị",
       minWidth: 100,
-      flex: 0.6,
+      flex: 0.6
     },
     {
       field: "quantity",
       headerName: "Số lượng mã",
       minWidth: 120,
-      flex: 0.8,
+      flex: 0.8
     },
     {
       field: "remainingQuantity",
       headerName: "Số lượng đã dùng",
       minWidth: 150,
-      flex: 0.8,
+      flex: 0.8
     },
     {
       field: "Xóa",
@@ -125,8 +125,8 @@ const AllCoupons = () => {
             </Button>
           </>
         );
-      },
-    },
+      }
+    }
   ];
 
   const row = [];
@@ -139,7 +139,7 @@ const AllCoupons = () => {
         quantity: item.quantity,
         price: item.value + " %",
         // sold: 10,
-        remainingQuantity: item.remainingQuantity,
+        remainingQuantity: item.remainingQuantity
       });
     });
 

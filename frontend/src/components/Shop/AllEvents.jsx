@@ -9,6 +9,7 @@ import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
 import CreateEvent from "./CreateEvent";
 import { RxCross1 } from "react-icons/rx";
+import { toast } from "react-toastify";
 const AllEvents = () => {
   const [open, setOpen] = useState(false);
   const { events, isLoading } = useSelector((state) => state.events);
@@ -23,7 +24,7 @@ const AllEvents = () => {
 
   const handleDelete = async () => {
     await dispatch(deleteEvent(eventIdToDelete));
-    // window.location.reload();
+    toast.success("Xoá sự kiện thành công!");
     dispatch(getAllEventsShop(seller._id));
   };
 

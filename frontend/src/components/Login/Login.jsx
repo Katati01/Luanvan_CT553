@@ -28,7 +28,6 @@ const Login = () => {
       );
 
       const isAdmin = response.data.user.role === "Admin";
-      console.log("------" + response.data.user.role);
       toast.success("Đăng nhập thành công!");
       if (isAdmin) {
         navigate("/admin/dashboard");
