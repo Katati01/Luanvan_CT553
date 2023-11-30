@@ -38,7 +38,7 @@ const Checkout = () => {
         country,
         city,
         name,
-        phoneNumber
+        phoneNumber,
       };
 
       // Validate phoneNumber format
@@ -55,7 +55,7 @@ const Checkout = () => {
         shopTotal,
         discountPrice,
         shippingAddress,
-        user
+        user,
       };
 
       // update local storage with the updated orders array
@@ -74,6 +74,7 @@ const Checkout = () => {
     }
   };
   const discountPercentenge = couponCodeData ? discountPrice : "";
+
   console.log("voucher", discountPercentenge);
 
   // const calculateShopTotal = (cart, shippingFee) => {
@@ -132,7 +133,7 @@ const Checkout = () => {
           totalQuantity: item.qty,
           totalPrice: itemTotal,
           shopShip: itemShip,
-          shopCoupon: couponValue
+          shopCoupon: couponValue,
         });
       } else {
         const existingShopTotal = shopTotalMap.get(shopId);
@@ -190,11 +191,13 @@ const Checkout = () => {
           // Cập nhật remainingQuantity sau khi sử dụng mã giảm giá
           // const updatedRemainingQuantity = remainingQuantity + 1;
 
-          const eligiblePrice = isCouponValid.reduce(
-            (acc, item) => acc + item.qty * item.discountPrice,
-
-            0
-          );
+          const eligiblePrice = isCouponValid.reduce((acc, item) => {
+            const itemPrice =
+              item.discountPrice === 0
+                ? item.originalPrice
+                : item.discountPrice;
+            return acc + item.qty * itemPrice;
+          }, 0);
           // const eligiblePrice = cart.reduce((acc, item) => {
           //   const itemPrice =
           //     item.discountPrice === 0
@@ -212,7 +215,7 @@ const Checkout = () => {
           // Cập nhật giá trị coupon cho từng cửa hàng
           setShopCouponValues((prevValues) => ({
             ...prevValues,
-            [shopId]: couponCodeValue
+            [shopId]: couponCodeValue,
           }));
         }
       }
@@ -299,7 +302,7 @@ const ShippingInfo = ({
   setName,
   phoneNumber,
   setPhoneNumber,
-  cart
+  cart,
 }) => {
   return (
     <>
@@ -494,7 +497,7 @@ const ShippingInfo = ({
               if (!acc[shopId]) {
                 acc[shopId] = {
                   shopName: item.shop.name,
-                  items: []
+                  items: [],
                 };
               }
               acc[shopId].items.push(item);
@@ -533,7 +536,7 @@ const CartData = ({
   subTotalPrice,
   couponCode,
   setCouponCode,
-  discountPercentenge
+  discountPercentenge,
 }) => {
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8 shadow-md">
@@ -605,7 +608,7 @@ const CartData = ({
           {discountPercentenge
             ? "" +
               `${currency.format(discountPercentenge.toString(), {
-                code: "VND"
+                code: "VND",
               })}`
             : null}
         </h5>
