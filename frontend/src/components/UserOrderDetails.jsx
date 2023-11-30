@@ -49,7 +49,7 @@ const UserOrderDetails = () => {
           rating,
           comment,
           productId: selectedItem?._id,
-          orderId: id,
+          orderId: id
         },
         { withCredentials: true }
       )
@@ -74,7 +74,7 @@ const UserOrderDetails = () => {
   const refundHandler = async () => {
     await axios
       .put(`${server}/order/order-refund/${id}`, {
-        status: "Đang xử lý hoàn tiền",
+        status: "Đang xử lý hoàn tiền"
       })
       .then((res) => {
         toast.success(res.data.message);
@@ -104,7 +104,7 @@ const UserOrderDetails = () => {
             {new Date(data?.createdAt).toLocaleString("vi-VN", {
               year: "numeric",
               month: "numeric",
-              day: "numeric",
+              day: "numeric"
             })}
           </span>
         </h5>
@@ -151,10 +151,10 @@ const UserOrderDetails = () => {
               </div>
               {!item.isReviewed && data?.status === "Đã giao hàng" ? (
                 <div
-                  className={`${styles.button} text-[#fff]`}
+                  className={`${styles.button} w-[250px] text-[#fff]`}
                   onClick={() => setOpen(true) || setSelectedItem(item)}
                 >
-                  Đánh giá SP
+                  Đánh giá sản phẩm
                 </div>
               ) : null}
             </div>
@@ -186,7 +186,7 @@ const UserOrderDetails = () => {
                 <div className="pl-3 text-[20px]">{selectedItem?.name}</div>
                 <h4 className="pl-3 text-[20px]">
                   {currency.format(selectedItem?.discountPrice, {
-                    code: "VND",
+                    code: "VND"
                   })}{" "}
                   x {selectedItem?.qty}
                 </h4>
@@ -279,7 +279,7 @@ const UserOrderDetails = () => {
                     <strong>
                       {totalPrice.toLocaleString("vi-VN", {
                         style: "currency",
-                        currency: "VND",
+                        currency: "VND"
                       }) + ""}
                     </strong>
                   </h5>
@@ -288,7 +288,7 @@ const UserOrderDetails = () => {
                     <strong>
                       {shopShip.toLocaleString("vi-VN", {
                         style: "currency",
-                        currency: "VND",
+                        currency: "VND"
                       }) + ""}
                     </strong>
                   </h5>
@@ -297,7 +297,7 @@ const UserOrderDetails = () => {
                     <strong>
                       {totalAmount.toLocaleString("vi-VN", {
                         style: "currency",
-                        currency: "VND",
+                        currency: "VND"
                       }) + ""}
                     </strong>
                   </h5>
