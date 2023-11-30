@@ -1,14 +1,11 @@
 import React from "react";
 import {
   AiOutlineComment,
-  AiOutlineTags,
+  AiOutlineForm,
   AiOutlineInbox,
-  AiOutlineForm
+  AiOutlineTags,
 } from "react-icons/ai";
 import { RiCoupon2Line } from "react-icons/ri";
-import { BiMessageSquareDetail } from "react-icons/bi";
-import { FiPackage, FiShoppingBag } from "react-icons/fi";
-import { MdOutlineLocalOffer } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../Assests/PhotoType/logo.png";
@@ -16,7 +13,7 @@ import logo from "../../../Assests/PhotoType/logo.png";
 const DashboardHeader = () => {
   const { seller } = useSelector((state) => state.seller);
   return (
-    <div className="w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
+    <div className="w-full h-[80px] bg-[#4A5C76] shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
       <div>
         <Link to="/">
           <img
@@ -50,7 +47,11 @@ const DashboardHeader = () => {
             />
           </Link>
           <Link to="/dashboard-orders" className="800px:block hidden">
-            <AiOutlineForm color="#555" size={30} className="mx-5 cursor-pointer" />
+            <AiOutlineForm
+              color="#555"
+              size={30}
+              className="mx-5 cursor-pointer"
+            />
           </Link>
           <Link to="/dashboard-messages" className="800px:block hidden">
             <AiOutlineComment

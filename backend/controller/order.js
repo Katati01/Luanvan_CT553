@@ -117,7 +117,7 @@ router.put(
           new ErrorHandler("Đơn hàng không tìm thấy với ID này", 400)
         );
       }
-      if (req.body.status === "Đơn hàng đã được giao cho đơn vị vận chuyển") {
+      if (req.body.status === "Đơn hàng đã giao cho đơn vị vận chuyển") {
         order.cart.forEach(async (o) => {
           await updateOrder(o._id, o.qty);
         });
@@ -128,6 +128,7 @@ router.put(
       if (req.body.status === "Đã giao hàng") {
         order.deliveredAt = Date.now();
         order.paymentInfo.status = "Đã thanh toán";
+
         const serviceCharge = order.totalPrice * 0.05;
         await updateSellerInfo(order.shopTotal);
       }

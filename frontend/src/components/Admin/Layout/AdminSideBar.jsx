@@ -1,15 +1,15 @@
 import React from "react";
-import { RxDashboard } from "react-icons/rx";
-import { Link } from "react-router-dom";
-import { 
-  AiOutlineSetting,
+import {
   AiOutlineContacts,
   AiOutlineCreditCard,
-  AiOutlineTeam,
-  AiOutlineTags,
+  AiOutlineForm,
   AiOutlineInbox,
-  AiOutlineForm
+  AiOutlineSetting,
+  AiOutlineTags,
+  AiOutlineTeam,
 } from "react-icons/ai";
+import { RxDashboard } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 const AdminSideBar = ({ active }) => {
   return (
@@ -81,7 +81,10 @@ const AdminSideBar = ({ active }) => {
 
       <div className="w-full flex items-center p-4">
         <Link to="/admin-products" className="w-full flex items-center">
-          <AiOutlineInbox size={30} color={`${active === 5 ? "#009b49" : "#555"}`} />
+          <AiOutlineInbox
+            size={30}
+            color={`${active === 5 ? "#009b49" : "#555"}`}
+          />
           <h5
             className={`hidden 800px:block pl-2 text-[18px] font-[400] ${
               active === 5 ? "text-[#009b49]" : "text-[#555]"
