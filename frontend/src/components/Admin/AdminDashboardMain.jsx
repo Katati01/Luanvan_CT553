@@ -107,7 +107,7 @@ const AdminDashboardMain = () => {
       const shopTotal = order.shopTotal[item.shopId] || {};
       const totalPrice = shopTotal.totalPrice || 0;
       const shopShip = shopTotal.shopShip || 0;
-      const totalAmount = item.qty * totalPrice + shopShip;
+      const totalAmount = totalPrice + shopShip;
 
       return orderTotal + totalAmount;
     }, 0);
@@ -123,7 +123,7 @@ const AdminDashboardMain = () => {
     const orderTotal = order.cart.reduce((orderTotal, item) => {
       const shopTotal = order.shopTotal[item.shopId] || {};
       const totalPrice = shopTotal.totalPrice || 0;
-      const totalAmount = item.qty * totalPrice;
+      const totalAmount = totalPrice;
 
       return orderTotal + totalAmount;
     }, 0);
