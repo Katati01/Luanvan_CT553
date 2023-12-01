@@ -24,6 +24,7 @@ const Checkout = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   // Thêm state mới vào Checkout component
   const [shopCouponValues, setShopCouponValues] = useState({});
+  const [productCouponValues, setProductCouponValues] = useState({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -113,14 +114,16 @@ const Checkout = () => {
     const shopTotalMap = new Map();
 
     cart.forEach((item) => {
-      const selectedProducts = selectedProducts.includes(item._id);
+      const selectedProducts = item._id; // đúng
+      console.log("id san pham", selectedProducts);
       const shopId = item.shopId;
       const itemPrice =
         item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
       const total = item.qty * itemPrice;
 
       // Check if the item has a coupon value for the shop
-      const couponValue = shopCouponValues[shopId] || 0;
+      // const couponValue = shopCouponValues[shopId] || 0;
+      const couponValue = productCouponValues[selectedProducts] || 0;
 
       // Apply coupon only to the items with the matching shopId
       const itemTotal =
@@ -134,7 +137,7 @@ const Checkout = () => {
           totalQuantity: item.qty,
           totalPrice: itemTotal,
           shopShip: itemShip,
-          shopCoupon: couponValue,
+          // shopCoupon: couponValue,
         });
       } else {
         const existingShopTotal = shopTotalMap.get(shopId);
@@ -239,17 +242,16 @@ const Checkout = () => {
       const quantity = res.data.couponCode?.quantity;
 
       if (res.data.couponCode !== null) {
-
         const isCouponValid = cart.filter((item) =>
           selectedProducts.includes(item._id)
-          );
-      // if (res.data.couponCode !== null) {
-      //   const isCouponValid =
-      //     cart &&
-      //     cart.filter(
-      //       (item) =>
-      //         item.shopId === shopId && item.productId === selectedProducts
-      //     )
+        );
+        // if (res.data.couponCode !== null) {
+        //   const isCouponValid =
+        //     cart &&
+        //     cart.filter(
+        //       (item) =>
+        //         item.shopId === shopId && item.productId === selectedProducts
+        //     )
         if (isCouponValid.length === 0) {
           toast.error("Mã voucher không hợp lệ cho cửa hàng này!");
           setCouponCode("");
@@ -282,7 +284,8 @@ const Checkout = () => {
           setCouponCodeData(res.data.couponCode);
           setCouponCode("");
           // Cập nhật giá trị coupon cho từng cửa hàng
-          setShopCouponValues((prevValues) => ({
+          // setShopCouponValues((prevValues) => ({
+          setProductCouponValues((prevValues) => ({
             ...prevValues,
             [selectedProducts]: couponCodeValue,
           }));
@@ -628,6 +631,7 @@ const CartData = ({
         </div>
       ))}
 
+
       <br />
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">
@@ -638,6 +642,7 @@ const CartData = ({
         </h5>
       </div>
       <br />
+
 
       <div className="flex justify-between border-b pb-3">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>
