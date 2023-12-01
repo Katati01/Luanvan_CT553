@@ -24,6 +24,7 @@ const Checkout = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   // Thêm state mới vào Checkout component
   const [shopCouponValues, setShopCouponValues] = useState({});
+  const [productCouponValues, setProductCouponValues] = useState({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,7 +39,7 @@ const Checkout = () => {
         country,
         city,
         name,
-        phoneNumber
+        phoneNumber,
       };
 
       // Validate phoneNumber format
@@ -55,7 +56,7 @@ const Checkout = () => {
         shopTotal,
         discountPrice,
         shippingAddress,
-        user
+        user,
       };
 
       // update local storage with the updated orders array
@@ -74,6 +75,7 @@ const Checkout = () => {
     }
   };
   const discountPercentenge = couponCodeData ? discountPrice : "";
+
   console.log("voucher", discountPercentenge);
 
   // const calculateShopTotal = (cart, shippingFee) => {
@@ -112,13 +114,16 @@ const Checkout = () => {
     const shopTotalMap = new Map();
 
     cart.forEach((item) => {
+      const selectedProducts = item._id; // đúng
+      console.log("id san pham", selectedProducts);
       const shopId = item.shopId;
       const itemPrice =
         item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
       const total = item.qty * itemPrice;
 
       // Check if the item has a coupon value for the shop
-      const couponValue = shopCouponValues[shopId] || 0;
+      // const couponValue = shopCouponValues[shopId] || 0;
+      const couponValue = productCouponValues[selectedProducts] || 0;
 
       // Apply coupon only to the items with the matching shopId
       const itemTotal =
@@ -132,7 +137,7 @@ const Checkout = () => {
           totalQuantity: item.qty,
           totalPrice: itemTotal,
           shopShip: itemShip,
-          shopCoupon: couponValue
+          // shopCoupon: couponValue,
         });
       } else {
         const existingShopTotal = shopTotalMap.get(shopId);
@@ -166,20 +171,87 @@ const Checkout = () => {
   const shipping = 30000 * shopCount;
   console.log(shipping);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const name = couponCode;
+
+  //   await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
+  //     const shopId = res.data.couponCode?.shopId;
+  //     const selectedProducts = res.data.couponCode?.selectedProducts;
+  //     const couponCodeValue = res.data.couponCode?.value;
+  //     const remainingQuantity = res.data.couponCode?.remainingQuantity; // Lấy remainingQuantity từ response
+  //     const quantity = res.data.couponCode?.quantity;
+
+  //     if (res.data.couponCode !== null) {
+  //       const isCouponValid =
+  //         cart && cart.filter((item) => item.shopId === shopId);
+
+  //       if (isCouponValid.length === 0) {
+  //         toast.error("Mã voucher không hợp lệ cho cửa hàng này!");
+  //         setCouponCode("");
+  //       } else if (remainingQuantity >= quantity) {
+  //         toast.error("Mã voucher đã hết!");
+  //         setCouponCode("");
+  //       } else {
+  //         // Cập nhật remainingQuantity sau khi sử dụng mã giảm giá
+  //         // const updatedRemainingQuantity = remainingQuantity + 1;
+
+  //         const eligiblePrice = isCouponValid.reduce((acc, item) => {
+  //           const itemPrice =
+  //             item.discountPrice === 0
+  //               ? item.originalPrice
+  //               : item.discountPrice;
+  //           return acc + item.qty * itemPrice;
+  //         }, 0);
+  //         // const eligiblePrice = cart.reduce((acc, item) => {
+  //         //   const itemPrice =
+  //         //     item.discountPrice === 0
+  //         //       ? item.originalPrice
+  //         //       : item.discountPrice;
+  //         //   return acc + item.qty * itemPrice;
+  //         // }, 0);
+  //         const discountPrice = (eligiblePrice * couponCodeValue) / 100;
+  //         setDiscountPrice((prevDiscount) =>
+  //           prevDiscount !== null ? prevDiscount + discountPrice : discountPrice
+  //         );
+  //         // setDiscountPrice(discountPrice);
+  //         setCouponCodeData(res.data.couponCode);
+  //         setCouponCode("");
+  //         // Cập nhật giá trị coupon cho từng cửa hàng
+  //         setShopCouponValues((prevValues) => ({
+  //           ...prevValues,
+  //           [shopId]: couponCodeValue,
+  //         }));
+  //       }
+  //     }
+  //     if (res.data.couponCode === null) {
+  //       toast.error("Mã Voucher này không tồn tại!");
+  //       setCouponCode("");
+  //     }
+  //   });
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = couponCode;
 
     await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
       const shopId = res.data.couponCode?.shopId;
+      const selectedProducts = res.data.couponCode?.selectedProducts;
       const couponCodeValue = res.data.couponCode?.value;
       const remainingQuantity = res.data.couponCode?.remainingQuantity; // Lấy remainingQuantity từ response
       const quantity = res.data.couponCode?.quantity;
 
       if (res.data.couponCode !== null) {
-        const isCouponValid =
-          cart && cart.filter((item) => item.shopId === shopId);
-
+        const isCouponValid = cart.filter((item) =>
+          selectedProducts.includes(item._id)
+        );
+        // if (res.data.couponCode !== null) {
+        //   const isCouponValid =
+        //     cart &&
+        //     cart.filter(
+        //       (item) =>
+        //         item.shopId === shopId && item.productId === selectedProducts
+        //     )
         if (isCouponValid.length === 0) {
           toast.error("Mã voucher không hợp lệ cho cửa hàng này!");
           setCouponCode("");
@@ -190,11 +262,13 @@ const Checkout = () => {
           // Cập nhật remainingQuantity sau khi sử dụng mã giảm giá
           // const updatedRemainingQuantity = remainingQuantity + 1;
 
-          const eligiblePrice = isCouponValid.reduce(
-            (acc, item) => acc + item.qty * item.discountPrice,
-
-            0
-          );
+          const eligiblePrice = isCouponValid.reduce((acc, item) => {
+            const itemPrice =
+              item.discountPrice === 0
+                ? item.originalPrice
+                : item.discountPrice;
+            return acc + item.qty * itemPrice;
+          }, 0);
           // const eligiblePrice = cart.reduce((acc, item) => {
           //   const itemPrice =
           //     item.discountPrice === 0
@@ -210,9 +284,10 @@ const Checkout = () => {
           setCouponCodeData(res.data.couponCode);
           setCouponCode("");
           // Cập nhật giá trị coupon cho từng cửa hàng
-          setShopCouponValues((prevValues) => ({
+          // setShopCouponValues((prevValues) => ({
+          setProductCouponValues((prevValues) => ({
             ...prevValues,
-            [shopId]: couponCodeValue
+            [selectedProducts]: couponCodeValue,
           }));
         }
       }
@@ -222,7 +297,6 @@ const Checkout = () => {
       }
     });
   };
-
   const totalPrice = couponCodeData
     ? (subTotalPrice + shipping).toFixed(2)
     : (subTotalPrice + shipping).toFixed(2);
@@ -299,7 +373,7 @@ const ShippingInfo = ({
   setName,
   phoneNumber,
   setPhoneNumber,
-  cart
+  cart,
 }) => {
   return (
     <>
@@ -494,7 +568,7 @@ const ShippingInfo = ({
               if (!acc[shopId]) {
                 acc[shopId] = {
                   shopName: item.shop.name,
-                  items: []
+                  items: [],
                 };
               }
               acc[shopId].items.push(item);
@@ -533,7 +607,7 @@ const CartData = ({
   subTotalPrice,
   couponCode,
   setCouponCode,
-  discountPercentenge
+  discountPercentenge,
 }) => {
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8 shadow-md">
@@ -557,6 +631,7 @@ const CartData = ({
         </div>
       ))}
 
+
       <br />
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">
@@ -567,6 +642,7 @@ const CartData = ({
         </h5>
       </div>
       <br />
+
 
       <div className="flex justify-between border-b pb-3">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>
@@ -605,7 +681,7 @@ const CartData = ({
           {discountPercentenge
             ? "" +
               `${currency.format(discountPercentenge.toString(), {
-                code: "VND"
+                code: "VND",
               })}`
             : null}
         </h5>
