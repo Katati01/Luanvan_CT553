@@ -257,18 +257,27 @@ const AllCoupons = () => {
                     </label>
                     <select
                       className="w-full mt-2 border h-[35px] rounded-[5px]"
+                      name="selectedProduct"
                       value={selectedProducts}
+                      required
                       onChange={(e) => setSelectedProducts(e.target.value)}
                     >
                       <option value="Choose your selected products">
                         Chọn sản phẩm
                       </option>
                       {products &&
+    products.map((i) => (
+      <option value={i._id} key={i._id}>
+        {i.name}
+      </option>
+    ))}
+
+                      {/* {products &&
                         products.map((i) => (
                           <option value={i.name} key={i.name}>
                             {i.name}
                           </option>
-                        ))}
+                        ))} */}
                     </select>
                   </div>
                   <br />
