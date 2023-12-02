@@ -60,8 +60,8 @@ const UpdateProduct = () => {
       .post(`${server}/product/upload-images`, formData, {
         withCredentials: true,
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then(async (response) => {
         if (response.data.success) {
@@ -153,7 +153,7 @@ const UpdateProduct = () => {
       originalPrice,
       discountPrice,
       stock,
-      shopId: seller._id
+      shopId: seller._id,
     };
 
     try {
@@ -224,8 +224,8 @@ const UpdateProduct = () => {
                 [{ list: "ordered" }, { list: "bullet" }],
                 ["link", "image"],
                 [{ align: [] }],
-                ["clean"] // remove formatting button
-              ]
+                ["clean"], // remove formatting button
+              ],
             }}
             placeholder="Thêm mô tả sản phẩm..."
           />
@@ -250,7 +250,7 @@ const UpdateProduct = () => {
           </select>
         </div>
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">Tags</label>
           <input
             type="text"
@@ -261,7 +261,7 @@ const UpdateProduct = () => {
             placeholder="Thêm tag cho sản phẩm..."
           />
         </div>
-        <br />
+        <br /> */}
         <div>
           <label className="pb-2">
             Giá gốc<span className="text-red-500">*</span>

@@ -118,8 +118,8 @@ const CreateProduct = ({ openForm, setOpen }) => {
                     [{ list: "ordered" }, { list: "bullet" }],
                     ["link", "image"],
                     [{ align: [] }],
-                    ["clean"] // remove formatting button
-                  ]
+                    ["clean"], // remove formatting button
+                  ],
                 }}
                 placeholder="Thêm mô tả sản phẩm..."
               />
@@ -145,7 +145,7 @@ const CreateProduct = ({ openForm, setOpen }) => {
               </select>
             </div>
             <br />
-            <div>
+            {/* <div>
               <label className="pb-2">Tags</label>
               <input
                 type="text"
@@ -156,7 +156,7 @@ const CreateProduct = ({ openForm, setOpen }) => {
                 placeholder="Thêm tag cho sản phẩm..."
               />
             </div>
-            <br />
+            <br /> */}
             <div>
               <label className="pb-2">
                 Giá gốc <span className="text-red-500">*</span>
