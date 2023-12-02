@@ -585,7 +585,7 @@ export const footerProductLinks = [
   },
   {
     name: "Tuyển dụng",
-    link: "/carrers"
+//    link: "/carrers"
   },
   // {
   //   name: "Store Locations",
