@@ -96,28 +96,6 @@ const ProductDetails = ({ data }) => {
 
   const averageRating = avg.toFixed(2);
 
-  // const handleMessageSubmit = async () => {
-  //   if (isAuthenticated) {
-  //     const groupTitle = data._id + user._id;
-  //     const userId = user._id;
-  //     const sellerId = data.shop._id;
-  //     await axios
-  //       .post(`${server}/conversation/create-new-conversation`, {
-  //         groupTitle,
-  //         userId,
-  //         sellerId,
-  //       })
-  //       .then((res) => {
-  //         navigate(`/inbox?${res.data.conversation._id}`);
-  //       })
-  //       .catch((error) => {
-  //         toast.error(error.response.data.message);
-  //       });
-  //   } else {
-  //     toast.error("Vui lòng đăng nhập để nhắn tin");
-  //   }
-  // };
-
   const handleMessageSubmit = async () => {
     if (isAuthenticated) {
       // const groupTitle = data._id + data.shop._id; // Sử dụng id của sản phẩm và cửa hàng để tạo groupTitle
@@ -130,10 +108,6 @@ const ProductDetails = ({ data }) => {
       console.log(userId);
       console.log(sellerId);
 
-      // Kiểm tra xem đã có cuộc hội thoại trước đó chưa
-      // const response = await axios.get(
-      //   `${server}/conversation/get-all-conversation-user/${userId}`
-      // );
       const response = await axios.get(
         `${server}/conversation/get-all-conversation-user/${userId}`,
         { withCredentials: true }
@@ -210,13 +184,6 @@ const ProductDetails = ({ data }) => {
               <div className="w-full 800px:w-[50%] pt-5">
                 <h1 className={`${styles.productTitle}`}>{data.name}</h1>
                 <div className="flex">
-                  {/* <p>
-                   Tag: #<i className="text-[#242e8a] mr-4 ">{data.tags}</i>
-                 </p>
-                 <p>
-                   Danh mục: <i className="text-[#8a2424] ">{data.category}</i>
-                 </p> */}
-
                   <p>
                     Danh mục:{" "}
                     <i
@@ -263,42 +230,6 @@ const ProductDetails = ({ data }) => {
                 </div>
 
                 <div className="flex items-center mt-12 justify-between pr-3">
-                  {/* <div>
-                   <button
-                     className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                     onClick={decrementCount}
-                   >
-                     -
-                   </button>
-                   <span className="bg-gray-200 text-gray-800 font-medium px-6 py-[11px]">
-                     {count}
-                   </span>
-                   <button
-                     className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-1 px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                     onClick={incrementCount}
-                   >
-                     +
-                   </button>
-                 </div> */}
-                  {/* <div>
-                   {click ? (
-                     <AiFillHeart
-                       size={30}
-                       className="cursor-pointer"
-                       onClick={() => removeFromWishlistHandler(data)}
-                       color={click ? "red" : "#333"}
-                       title="Remove from wishlist"
-                     />
-                   ) : (
-                     <AiOutlineHeart
-                       size={30}
-                       className="cursor-pointer"
-                       onClick={() => addToWishlistHandler(data)}
-                       color={click ? "red" : "#333"}
-                       title="Add to wishlist"
-                     />
-                   )}
-                 </div> */}
                   <div className="counter flex items-center text-2xl justify-start">
                     <div className="ml-5 shadow-md flex">
                       <div

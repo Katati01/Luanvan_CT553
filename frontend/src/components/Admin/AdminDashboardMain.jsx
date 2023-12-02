@@ -62,6 +62,7 @@ const AdminDashboardMain = () => {
       const products = order.cart.map((item) => {
         const itemPrice =
           item.discountPrice !== 0 ? item.discountPrice : item.originalPrice;
+
         return {
           day: order.deliveredAt.slice(0, 10),
           total: itemPrice * item.qty,
@@ -109,7 +110,7 @@ const AdminDashboardMain = () => {
       const shopShip = shopTotal.shopShip || 0;
       const totalAmount = totalPrice + shopShip;
 
-      return orderTotal + totalAmount;
+      return totalAmount;
     }, 0);
 
     return total + orderTotal;
@@ -125,7 +126,7 @@ const AdminDashboardMain = () => {
       const totalPrice = shopTotal.totalPrice || 0;
       const totalAmount = totalPrice;
 
-      return orderTotal + totalAmount;
+      return totalAmount;
     }, 0);
 
     return total + orderTotal;
