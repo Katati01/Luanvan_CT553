@@ -10,12 +10,12 @@ const CategoryProduct = ({ category }) => {
 
   useEffect(() => {
     if (category === null) {
-      const d = allProducts;
-      setData(d);
+      setData(allProducts);
     } else {
-      const d =
-        allProducts && allProducts.filter((i) => i.category === category);
-      setData(d);
+      setData(
+        allProducts &&
+          allProducts.filter((i) => i.category === category).slice(0, 5)
+      );
     }
   }, [allProducts, category]);
 
