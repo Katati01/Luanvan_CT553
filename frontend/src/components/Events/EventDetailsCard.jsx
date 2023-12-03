@@ -46,31 +46,10 @@ const EventDetailsCard = ({ setOpen }) => {
 
   //   return formattedDate;
   // };
-
-  const formatDate = (date) => {
-    const inputDate = typeof date === "string" ? new Date(date) : date;
-
-    if (
-      Object.prototype.toString.call(inputDate) !== "[object Date]" ||
-      isNaN(inputDate.getTime())
-    ) {
-      return "Invalid Date";
-    }
-
-    const day = inputDate.getUTCDate();
-    const month = inputDate.getUTCMonth() + 1;
-    const year = inputDate.getUTCFullYear();
-
-    const formattedDate = `${day < 10 ? "0" : ""}${day}-${
-      month < 10 ? "0" : ""
-    }${month}-${year}`;
-
-    return formattedDate;
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("vi-VN", options);
   };
-
-  // const startDate = eventData ? formatDate(eventData.start_Date) : "";
-  // const finishDate = eventData ? formatDate(eventData.Finish_Date) : "";
-
   return (
     <div className="flex items-center bg-[#efefef]">
       {eventData ? (
@@ -95,16 +74,11 @@ const EventDetailsCard = ({ setOpen }) => {
                 </Link>
               </div>
 
-              {/* <div className="font-semibold">
-                Thời gian diễn ra sự kiện: Từ{" "}
-                <span className="text-[#c96665]">{" " + startDate}</span> đến{" "}
-                <span className="text-[#c96665]">{" " + finishDate}</span>
-              </div> */}
-
               <div className="font-semibold">
                 Ngày đăng:
                 <span className="text-[#c96665]">
-                  {" " + eventData.createdAt.slice(0, 10)}
+                  {/* {" " + eventData.createdAt.slice(0, 10)} */}
+                  {" " + formatDate(eventData.createdAt)}
                 </span>
               </div>
             </div>
@@ -115,12 +89,6 @@ const EventDetailsCard = ({ setOpen }) => {
                   className="text-[18px] text-[#1b4462] text-justify leading-8"
                   dangerouslySetInnerHTML={{ __html: eventData.description }}
                 ></p>
-
-                {/* <img
-                  src={`${eventData && eventData.images[select]}`}
-                  alt="Event"
-                  className="rounded-[8px] mx-auto my-6 w-[60%] h-[60%]"
-                /> */}
               </div>
             </div>
           </div>

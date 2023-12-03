@@ -93,11 +93,17 @@ const UserOrderDetails = () => {
           <h1 className="pl-2 text-[25px]">Thông tin đơn hàng</h1>
         </div>
       </div>
+      <div>
+        <h5 className={`text-red(data?.status)}`}>
+          Trạng thái đơn hàng: {data?.status}
+        </h5>
+      </div>
 
       <div className="w-full flex items-center justify-between pt-6">
         <h5 className="text-[#00000084]">
           ID đơn hàng: <span>#{data?._id}</span>
         </h5>
+
         <h5 className="text-[#00000084]">
           Ngày đặt:{" "}
           <span>
@@ -348,10 +354,7 @@ const UserOrderDetails = () => {
         </div>
       </div>
       <br />
-      <Link to="/">
-        <div className={`${styles.button} text-white`}>Gửi tin nhắn</div>
-      </Link>
-      <br />
+
       <br />
     </div>
   );
