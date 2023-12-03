@@ -182,6 +182,17 @@ router.put(
       }
 
       order.status = req.body.status;
+      const fiveDaysAgo = new Date();
+
+      fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
+      if (order.deliveredAt < fiveDaysAgo) {
+        return next(
+          new ErrorHandler(
+            "Không thể yêu cầu hoàn tiền với đơn hàng đã qua 5 ngày",
+            400
+          )
+        );
+      }
       await order.save({ validateBeforeSave: false });
 
       try {
@@ -213,15 +224,18 @@ router.put(
     try {
       const order = await Order.findById(req.params.id);
 
+
       if (!order) {
         return next(
           new ErrorHandler("Không tìm thấy đơn đặt hàng với id này", 400)
         );
       }
 
+
       order.status = req.body.status;
 
-      await order.save();
+
+     
       try {
         await sendMail({
           email: order.user.email,
@@ -231,31 +245,42 @@ router.put(
       } catch (error) {
         console.error("Error sending refund confirmation email:", error);
       }
-      res.status(200).json({
-        success: true,
-        message: "Hoàn tiền đặt hàng thành công!",
-      });
+
 
       // Tính toán và trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
       const shopTotal = order.shopTotal;
       const refundAmount = calculateRefundAmount(shopTotal);
 
+
+      // Kiểm tra xem số tiền hoàn lớn hơn số dư khả dụng của người bán không
+      const seller = await Shop.findById(req.seller.id);
+      if (refundAmount > seller.availableBalance) {
+        return next(
+          new ErrorHandler(
+            "Số tiền hoàn lớn hơn số dư khả dụng của người bán.",
+            400
+          )
+        );
+      }
+      await order.save();
       await updateSellerInfo(-refundAmount);
+
 
       // Hàm cập nhật thông tin cửa hàng
       async function updateSellerInfo(amount) {
-        const seller = await Shop.findById(req.seller.id);
-
         // Trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
         seller.availableBalance += amount;
+
 
         // Lưu thông tin cửa hàng sau khi cập nhật
         await seller.save();
       }
 
+
       // Hàm tính toán số tiền hoàn tiền từ shopTotal
       function calculateRefundAmount(shopTotal) {
         let refundAmount = 0;
+
 
         for (const shopId in shopTotal) {
           if (shopTotal.hasOwnProperty(shopId)) {
@@ -265,13 +290,21 @@ router.put(
           }
         }
 
+
         return refundAmount;
       }
+
+
+      res.status(200).json({
+        success: true,
+        message: "Hoàn tiền đặt hàng thành công!",
+      });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
   })
 );
+
 
 // all orders --- for admin
 router.get(
