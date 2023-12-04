@@ -2,13 +2,14 @@ import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { server } from "../../server";
 import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
+import { Link } from "react-router-dom";
 
 const AllCoupons = () => {
   const [open, setOpen] = useState(false);
@@ -107,6 +108,26 @@ const AllCoupons = () => {
       flex: 0.8
     },
     {
+      field: "Xem sản phẩm",
+      flex: 0.4,
+      minWidth: 50,
+      headerName: "",
+      type: "number",
+      sortable: false,
+      renderCell: (params) => {
+        const productName = params.row.nameProduct; 
+        return (
+          <>
+            <Link to={`/product/${productName}`}>
+              <Button>
+                <AiOutlineEye size={20} />
+              </Button>
+            </Link>
+          </>
+        );
+      }
+    },
+    {
       field: "Xóa",
       flex: 0.8,
       minWidth: 120,
@@ -132,17 +153,17 @@ const AllCoupons = () => {
   const row = [];
 
   coupouns &&
-    coupouns.forEach((item) => {
-      row.push({
-        id: item._id,
-        name: item.name,
-        quantity: item.quantity,
-        price: item.value + " %",
-        // sold: 10,
-        remainingQuantity: item.remainingQuantity
-      });
+  coupouns.forEach((item) => {
+    
+    row.push({
+      id: item._id,
+      name: item.name,
+      quantity: item.quantity,
+      price: item.value + " %",
+      nameProduct: item.selectedProducts,
+      remainingQuantity: item.remainingQuantity,
     });
-
+  });
   return (
     <>
       {isLoading ? (
