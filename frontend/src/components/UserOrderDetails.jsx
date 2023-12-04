@@ -191,10 +191,25 @@ const UserOrderDetails = () => {
               <div>
                 <div className="pl-3 text-[20px]">{selectedItem?.name}</div>
                 <h4 className="pl-3 text-[20px]">
-                  {currency.format(selectedItem?.discountPrice, {
+                  {/* {currency.format(selectedItem?.discountPrice, {
                     code: "VND",
                   })}{" "}
-                  x {selectedItem?.qty}
+                  x {selectedItem?.qty} */}
+                  {selectedItem?.discountPrice === 0 ? (
+                    <span>
+                      {currency.format(selectedItem?.originalPrice, {
+                        code: "VND",
+                      })}{" "}
+                      x {selectedItem?.qty}
+                    </span>
+                  ) : (
+                    <span>
+                      {currency.format(selectedItem?.discountPrice, {
+                        code: "VND",
+                      })}{" "}
+                      x {selectedItem?.qty}
+                    </span>
+                  )}
                 </h4>
               </div>
             </div>

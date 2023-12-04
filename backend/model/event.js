@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const eventSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please enter your event product name!"],
+    required: [true, "Vui lòng nhập tên sự kiện!"],
   },
   description: {
     type: String,
-    required: [true, "Please enter your event product description!"],
+    required: [true, "Vui lòng nhập nội dung sự kiện!"],
   },
 
   tags: {

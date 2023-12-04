@@ -13,9 +13,9 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "Chọn danh mục sản phẩm!"],
   },
-  tags: {
-    type: String,
-  },
+  // tags: {
+  //   type: String,
+  // },
   originalPrice: {
     type: Number,
     required: [true, "Nhập giá sản phẩm vào!"],

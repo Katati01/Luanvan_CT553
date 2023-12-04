@@ -6,16 +6,16 @@ const crypto = require("crypto");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please enter your name!"],
+    required: [true, "Vui lòng nhập tên người dùng!"],
   },
   email: {
     type: String,
-    required: [true, "Please enter your email!"],
+    required: [true, "Vui lòng nhập email!"],
   },
   password: {
     type: String,
-    required: [true, "Please enter your password"],
-    minLength: [4, "Password should be greater than 4 characters"],
+    required: [true, "Vui lòng nhập mật khẩu"],
+    minLength: [6, "Mật khẩu phải từ 6 ký tự"],
     select: false,
   },
   phoneNumber: {
