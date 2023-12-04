@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../Assests/PhotoType/logo.png";
 import {
   footercompanyLinks,
   footerProductLinks,
-  footerSupportLinks
+  footerSupportLinks,
 } from "../../static/data";
-import logo from "../../Assests/PhotoType/logo.png";
 
 const Footer = () => {
   return (
@@ -26,7 +26,7 @@ const Footer = () => {
         </ul>
 
         <ul className="text-center lg:text-start">
-          <h1 className="mb-1 font-semibold text-[20px]">Công ty</h1>
+          <h1 className="mb-1 font-semibold text-[20px]">AgriStore</h1>
           {footerProductLinks.map((link, index) => (
             <li key={index}>
               <Link
