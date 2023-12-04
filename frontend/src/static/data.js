@@ -584,17 +584,20 @@ export const footerProductLinks = [
     link: "/about"
   },
   {
-    name: "Tuyển dụng",
-//    link: "/carrers"
-  },
-  // {
-  //   name: "Store Locations",
-  // },
-  {
-    name: "Blog"
+    name: "Trang chủ",
+    link: "/"
   },
   {
-    name: "Đánh giá"
+    name: "Bán chạy",
+    link: "/best-selling"
+  },
+  {
+    name: "Sản phẩm",
+    link: "/products"
+  },
+  {
+    name: "Sự kiện",
+    link: "/events"
   }
 ];
 
