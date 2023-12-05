@@ -242,9 +242,32 @@ router.put(
         console.error("Error sending refund confirmation email:", error);
       }
 
+      // Kiểm tra xem order có thuộc tính 'cart' không
+      if (!order.cart || !Array.isArray(order.cart)) {
+        return next(new ErrorHandler("Đơn đặt hàng không chứa thông tin giỏ hàng", 400));
+      }
+
       // Tính toán và trừ số tiền hoàn tiền khỏi doanh thu của cửa hàng
       const shopTotal = order.shopTotal;
-      const refundAmount = calculateRefundAmount(shopTotal);
+      const refundAmount = calculateRefundAmount(shopTotal, order.cart);
+      function calculateRefundAmount(shopTotal, cart) {
+        let refundAmount = 0;
+      
+        for (const shopId in shopTotal) {
+          if (shopTotal.hasOwnProperty(shopId)) {
+            // Kiểm tra xem shopId có trong cart không
+            const isInCart = cart.some(item => item.shopId === shopId);
+            if (isInCart) {
+              const totalPrice = shopTotal[shopId].totalPrice;
+              const discountedAmount = totalPrice - totalPrice * 0.05; // Giảm giá 5%
+              refundAmount += discountedAmount;
+            }
+          }
+        }
+      
+        return refundAmount;
+      }
+      console.log("tiền hoàn", refundAmount);
 
       // Kiểm tra xem số tiền hoàn lớn hơn số dư khả dụng của người bán không
       const seller = await Shop.findById(req.seller.id);
@@ -268,21 +291,6 @@ router.put(
         await seller.save();
       }
 
-      // Hàm tính toán số tiền hoàn tiền từ shopTotal
-      function calculateRefundAmount(shopTotal) {
-        let refundAmount = 0;
-
-        for (const shopId in shopTotal) {
-          if (shopTotal.hasOwnProperty(shopId)) {
-            const totalPrice = shopTotal[shopId].totalPrice;
-            const discountedAmount = totalPrice - totalPrice * 0.05; // Giảm giá 5%
-            refundAmount += discountedAmount;
-          }
-        }
-
-        return refundAmount;
-      }
-
       res.status(200).json({
         success: true,
         message: "Hoàn tiền đặt hàng thành công!",
@@ -292,7 +300,6 @@ router.put(
     }
   })
 );
-
 // all orders --- for admin
 router.get(
   "/admin-all-orders",
