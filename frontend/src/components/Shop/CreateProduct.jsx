@@ -32,7 +32,7 @@ const CreateProduct = ({ openForm, setOpen }) => {
     }
     if (success) {
       toast.success("Thêm sản phẩm thành công!");
-      navigate("/dashboard");
+      navigate("/dashboard-products");
       window.location.reload();
     }
   }, [dispatch, error, success]);
