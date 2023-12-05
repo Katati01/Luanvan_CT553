@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styles from "../../styles/styles";
 // import EventCard from "./EventCard";
 import EventCard from "./EventSuggestCard";
+import { Link } from "react-router-dom";
 
 const Events = () => {
   const { allEvents, isLoading } = useSelector((state) => state.events);
@@ -14,8 +15,16 @@ const Events = () => {
           {allEvents.length !== 0 && (
             <>
               <div className={`${styles.section}`}>
-                <div className={`${styles.heading}`}>
+                <div
+                  className={`${styles.heading} flex justify-between items-center`}
+                >
                   <h1>Sự kiện khuyến mãi, giảm giá nổi bật</h1>
+                  <Link
+                    to={`/events`}
+                    className="text-[#fff] font-[700] text-[1rem] hover:text-[#000] ease-linear duration-100 mr-5 bg-[#009b49] py-2 px-3 rounded-3xl"
+                  >
+                    Xem thêm
+                  </Link>
                 </div>
               </div>
 
