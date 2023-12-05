@@ -39,7 +39,7 @@ const Checkout = () => {
         country,
         city,
         name,
-        phoneNumber,
+        phoneNumber
       };
 
       // Validate phoneNumber format
@@ -56,7 +56,7 @@ const Checkout = () => {
         shopTotal,
         discountPrice,
         shippingAddress,
-        user,
+        user
       };
 
       // update local storage with the updated orders array
@@ -77,38 +77,6 @@ const Checkout = () => {
   const discountPercentenge = couponCodeData ? discountPrice : "";
 
   console.log("voucher", discountPercentenge);
-
-  // const calculateShopTotal = (cart, shippingFee) => {
-  //   const shopTotalMap = new Map();
-
-  //   cart.forEach((item) => {
-  //     const shopId = item.shopId;
-  //     const itemPrice =
-  //       item.discountPrice === 0 ? item.originalPrice : item.discountPrice;
-  //     const itemTotal = item.qty * itemPrice;
-  //     const itemShip = 30000;
-  //     const couponValue = shopCouponValues[shopId] || 0; // Lấy giá trị coupon cho cửa hàng
-
-  //     if (!shopTotalMap.has(shopId)) {
-  //       shopTotalMap.set(shopId, {
-  //         totalQuantity: item.qty,
-  //         totalPrice: itemTotal,
-  //         shopShip: itemShip,
-  //         shopCoupon: couponValue,
-  //       });
-  //     } else {
-  //       const existingShopTotal = shopTotalMap.get(shopId);
-  //       existingShopTotal.totalQuantity += item.qty;
-  //       // existingShopTotal.totalPrice += itemTotal;
-  //       existingShopTotal.totalPrice +=
-  //         itemTotal - (itemTotal * couponValue) / 100;
-
-  //       existingShopTotal.shopShip += itemShip;
-  //     }
-  //   });
-
-  //   return Object.fromEntries(shopTotalMap);
-  // };
 
   const calculateShopTotal = (cart) => {
     const shopTotalMap = new Map();
@@ -136,7 +104,7 @@ const Checkout = () => {
           shopName: item.shop.name, // Thêm tên cửa hàng vào thông tin
           totalQuantity: item.qty,
           totalPrice: itemTotal,
-          shopShip: itemShip,
+          shopShip: itemShip
           // shopCoupon: couponValue,
         });
       } else {
@@ -171,65 +139,6 @@ const Checkout = () => {
   const shipping = 30000 * shopCount;
   console.log(shipping);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const name = couponCode;
-
-  //   await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
-  //     const shopId = res.data.couponCode?.shopId;
-  //     const selectedProducts = res.data.couponCode?.selectedProducts;
-  //     const couponCodeValue = res.data.couponCode?.value;
-  //     const remainingQuantity = res.data.couponCode?.remainingQuantity; // Lấy remainingQuantity từ response
-  //     const quantity = res.data.couponCode?.quantity;
-
-  //     if (res.data.couponCode !== null) {
-  //       const isCouponValid =
-  //         cart && cart.filter((item) => item.shopId === shopId);
-
-  //       if (isCouponValid.length === 0) {
-  //         toast.error("Mã voucher không hợp lệ cho cửa hàng này!");
-  //         setCouponCode("");
-  //       } else if (remainingQuantity >= quantity) {
-  //         toast.error("Mã voucher đã hết!");
-  //         setCouponCode("");
-  //       } else {
-  //         // Cập nhật remainingQuantity sau khi sử dụng mã giảm giá
-  //         // const updatedRemainingQuantity = remainingQuantity + 1;
-
-  //         const eligiblePrice = isCouponValid.reduce((acc, item) => {
-  //           const itemPrice =
-  //             item.discountPrice === 0
-  //               ? item.originalPrice
-  //               : item.discountPrice;
-  //           return acc + item.qty * itemPrice;
-  //         }, 0);
-  //         // const eligiblePrice = cart.reduce((acc, item) => {
-  //         //   const itemPrice =
-  //         //     item.discountPrice === 0
-  //         //       ? item.originalPrice
-  //         //       : item.discountPrice;
-  //         //   return acc + item.qty * itemPrice;
-  //         // }, 0);
-  //         const discountPrice = (eligiblePrice * couponCodeValue) / 100;
-  //         setDiscountPrice((prevDiscount) =>
-  //           prevDiscount !== null ? prevDiscount + discountPrice : discountPrice
-  //         );
-  //         // setDiscountPrice(discountPrice);
-  //         setCouponCodeData(res.data.couponCode);
-  //         setCouponCode("");
-  //         // Cập nhật giá trị coupon cho từng cửa hàng
-  //         setShopCouponValues((prevValues) => ({
-  //           ...prevValues,
-  //           [shopId]: couponCodeValue,
-  //         }));
-  //       }
-  //     }
-  //     if (res.data.couponCode === null) {
-  //       toast.error("Mã Voucher này không tồn tại!");
-  //       setCouponCode("");
-  //     }
-  //   });
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = couponCode;
@@ -287,7 +196,7 @@ const Checkout = () => {
           // setShopCouponValues((prevValues) => ({
           setProductCouponValues((prevValues) => ({
             ...prevValues,
-            [selectedProducts]: couponCodeValue,
+            [selectedProducts]: couponCodeValue
           }));
         }
       }
@@ -373,7 +282,7 @@ const ShippingInfo = ({
   setName,
   phoneNumber,
   setPhoneNumber,
-  cart,
+  cart
 }) => {
   return (
     <>
@@ -409,22 +318,12 @@ const ShippingInfo = ({
               <input
                 type="number"
                 required
-                // value={user && user.phoneNumber}
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 className={`${styles.input} !w-[95%]`}
               />
             </div>
-            {/* <div className="w-[50%]">
-           <label className="block pb-2">Zip Code</label>
-           <input
-             type="number"
-             value={zipCode}
-             onChange={(e) => setZipCode(e.target.value)}
-             required
-             className={`${styles.input}`}
-           />
-         </div> */}
+
             <div className="w-[50%]">
               <label className="block pb-2">Tỉnh, thành phố:</label>
               <select
@@ -464,24 +363,6 @@ const ShippingInfo = ({
                   ))}
               </select>
             </div>
-            {/* <div className="w-[50%]">
-          <label className="block pb-2">Tỉnh, thành phố:</label>
-           <select
-             className="w-[95%] border h-[40px] rounded-[5px]"
-             value={city}
-             onChange={(e) => setCity(e.target.value)}
-           >
-             <option className="block pb-2" value="">
-               Chọn tỉnh, thành phố
-             </option>
-             {State &&
-               State.getStatesOfCountry(country).map((item) => (
-                 <option key={item.isoCode} value={item.isoCode}>
-                   {item.name}
-                 </option>
-               ))}
-           </select>
-         </div> */}
           </div>
 
           <div className="w-full flex pb-3">
@@ -495,16 +376,6 @@ const ShippingInfo = ({
                 className={`${styles.input} !w-[95%]`}
               />
             </div>
-            {/* <div className="w-[50%]">
-           <label className="block pb-2">Address2</label>
-           <input
-             type="address"
-             value={address2}
-             onChange={(e) => setAddress2(e.target.value)}
-             required
-             className={`${styles.input}`}
-           />
-         </div> */}
           </div>
 
           <div></div>
@@ -538,23 +409,6 @@ const ShippingInfo = ({
               ))}
           </div>
         )}
-        {/* <div className="mb-4">
-        <h5 className="text-[18px] font-[500] mb-2">
-          Sản phẩm trong đơn hàng:
-        </h5>
-        {cart.map((item, index) => (
-          <div key={index} className="flex items-center mb-2">
-            <img
-              src={item.images[0]}
-              alt={item.name}
-              className="w-8 h-8 mr-2 object-cover"
-            />
-            <span className="mr-2">{item.name}</span>
-            <span>x{item.qty}</span>
-            <span className="ml-2 text-[#000000a4]">({item.shop.name})</span>
-          </div>
-        ))}
-      </div> */}
       </div>
       <div className="mt-4 w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8 shadow-md">
         <div className="mb-4">
@@ -568,7 +422,7 @@ const ShippingInfo = ({
               if (!acc[shopId]) {
                 acc[shopId] = {
                   shopName: item.shop.name,
-                  items: [],
+                  items: []
                 };
               }
               acc[shopId].items.push(item);
@@ -607,55 +461,10 @@ const CartData = ({
   subTotalPrice,
   couponCode,
   setCouponCode,
-  discountPercentenge,
+  discountPercentenge
 }) => {
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8 shadow-md">
-      {/* <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng tiền:</h3>
-        <h5 className="text-[18px] font-[600]">
-          {currency.format(subTotalPrice, { code: "VND" })}
-        </h5>
-      </div> */}
-
-      {/* <br /> */}
-
-      {/* {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
-        <div key={shopId} className="flex justify-between">
-          <h3 className="text-[16px] font-[400] text-[#000000a4]">
-            Tiền shop {shopInfo.shopName}:
-          </h3>
-          <h5 className="text-[18px] font-[600]">
-            {currency.format(shopInfo.totalPrice, { code: "VND" })}
-          </h5>
-        </div>
-      ))}
-
-
-      <br />
-      <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">
-          Phí giao hàng:
-        </h3>
-        <h5 className="text-[18px] font-[600]">
-          {currency.format(shipping.toFixed(2), { code: "VND" })}
-        </h5>
-      </div>
-      <br />
-
-
-      <div className="flex justify-between border-b pb-3">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">Voucher:</h3>
-        <h5 className="text-[18px] font-[600]">
-          -
-          {discountPercentenge
-            ? "" +
-              `${currency.format(discountPercentenge.toString(), {
-                code: "VND",
-              })}`
-            : null}
-        </h5>
-      </div> */}
       {Object.entries(shopTotal).map(([shopId, shopInfo]) => (
         <div key={shopId} className="flex justify-between">
           <h3 className="text-[16px] font-[400] text-[#000000a4]">
@@ -681,7 +490,7 @@ const CartData = ({
           {discountPercentenge
             ? "" +
               `${currency.format(discountPercentenge.toString(), {
-                code: "VND",
+                code: "VND"
               })}`
             : null}
         </h5>
@@ -694,11 +503,6 @@ const CartData = ({
           {currency.format(totalPrice, { code: "VND" })}
         </h5>
       </div>
-      {/* <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng cộng:</h3>
-      <h5 className="text-[18px] font-[600] text-end pt-3">
-        {" "}
-        {currency.format(totalPrice, { code: "VND" })}
-      </h5> */}
       <br />
       <form onSubmit={handleSubmit}>
         <input

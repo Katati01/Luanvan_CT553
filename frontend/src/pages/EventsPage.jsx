@@ -25,7 +25,6 @@ const EventsPage = () => {
               <div className={`${styles.section} my-8`}>
                 <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-4 xl:gap-[30px] mb-12">
                   {allEvents.map((allEvents, index) => (
-                    // <EventCard key={index} data={allEvents} />
                     <EventCard key={index} data={allEvents} />
                   ))}{" "}
                 </div>

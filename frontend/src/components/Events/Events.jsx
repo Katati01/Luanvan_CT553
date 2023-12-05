@@ -28,17 +28,6 @@ const Events = () => {
                 </div>
               </div>
 
-              {/* <div className="w-full bg-[#f0f6f6] grid h-[55vh] overflow-x-auto hover:overflow-scroll">
-                <div className={`${styles.section}`}>
-                  <div className="">
-                    {" "}
-                    {allEvents &&
-                      allEvents.map((allEvents, index) => (
-                        <EventCard key={index} data={allEvents} />
-                      ))}
-                  </div>
-                </div>
-              </div> */}
               <div className={`${styles.section}`}>
                 <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-4 xl:gap-[30px] mb-12">
                   {allEvents.slice(0, 4).map((allEvents, index) => (
