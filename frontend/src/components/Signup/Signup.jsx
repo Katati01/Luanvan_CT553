@@ -6,11 +6,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { server } from "../../server";
-import {
-  footerProductLinks,
-  footerSupportLinks,
-  footercompanyLinks
-} from "../../static/data";
 import styles from "../../styles/styles";
 import logo from "../../Assests/PhotoType/logo.png";
 import Footer from "../Layout/Footer";
@@ -20,13 +15,8 @@ const Singup = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-  const [avatar, setAvatar] = useState(null);
   const { isSeller } = useSelector((state) => state.seller);
 
-  const handleFileInputChange = (e) => {
-    const file = e.target.files[0];
-    setAvatar(file);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +24,6 @@ const Singup = () => {
 
     const newForm = new FormData();
 
-    newForm.append("file", avatar);
     newForm.append("name", name);
     newForm.append("email", email);
     newForm.append("password", password);
@@ -46,7 +35,6 @@ const Singup = () => {
         setName("");
         setEmail("");
         setPassword("");
-        setAvatar();
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -177,41 +165,6 @@ const Singup = () => {
                 </div>
               </div>
 
-              {/* <div>
-                <label
-                  htmlFor="avatar"
-                  className="block text-sm font-medium text-gray-700"
-                ></label>
-                <div className="mt-2 flex items-center">
-                  <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
-                    {avatar ? (
-                      <img
-                        src={URL.createObjectURL(avatar)}
-                        alt="avatar"
-                        className="h-full w-full object-cover rounded-full"
-                      />
-                    ) : (
-                      <BiCool className="h-8 w-8 " />
-                    )}
-                  </span>
-                  <label
-                    htmlFor="file-input"
-                    className="ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                  >
-                    <span>Cập nhật ảnh đại diện?</span>
-                    <input
-                      type="file"
-                      name="avatar"
-                      id="file-input"
-                      accept=".jpg,.jpeg,.webp,.png"
-                      onChange={handleFileInputChange}
-                      className="sr-only"
-
-                    />
-                  </label>
-                </div>
-              </div> */}
-
               <div>
                 <button
                   type="submit"
@@ -233,7 +186,7 @@ const Singup = () => {
 
       {/* footer */}
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

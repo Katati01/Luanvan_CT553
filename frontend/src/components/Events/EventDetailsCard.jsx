@@ -24,7 +24,9 @@ const EventDetailsCard = ({ setOpen }) => {
     fetchEventData();
   }, [id]);
 
-  const filteredSuggestEvents = allEvents?.filter((event) => event._id !== id);
+  const filteredSuggestEvents = allEvents
+    ?.filter((event) => event._id !== id)
+    .slice(0, 5);
 
   // const formatDate = (date) => {
   //   const inputDate = typeof date === "string" ? new Date(date) : date;

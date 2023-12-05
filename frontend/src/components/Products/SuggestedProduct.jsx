@@ -10,9 +10,12 @@ const SuggestedProduct = ({ data }) => {
 
   useEffect(() => {
     const d =
-      allProducts && allProducts.filter((i) => i.category === data.category);
+      allProducts &&
+      allProducts
+        .filter((i) => i.category === data.category && i._id !== data._id)
+        .slice(0, 5);
     setProductData(d);
-  }, [allProducts, data.category]);
+  }, [allProducts, data.category, data._id]);
 
   return (
     <div>

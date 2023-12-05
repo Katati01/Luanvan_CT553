@@ -90,24 +90,6 @@ const ProductCard = ({ data, isEvent }) => {
             <Ratings rating={data?.ratings} />
           </div>
 
-          {/* <div className="py-2 flex items-center justify-between">
-            <div className="flex">
-              <h5 className={`${styles.productDiscountPrice}`}>
-                {data.originalPrice === 0
-                  ? `${currency.format(data.originalPrice, { code: "VND" })}`
-                  : `${currency.format(data.discountPrice, { code: "VND" })}`}
-              </h5>
-              <h4 className={`${styles.price}`}>
-                {data.originalPrice
-                  ? `${currency.format(data.originalPrice, { code: "VND" })}`
-                  : null}
-              </h4>
-            </div>
-
-            {/* <span className="font-[400] text-[17px] text-[#68d284]">
-              {data?.sold_out} sold
-            </span> */}
-
           <div className="py-2 flex items-center justify-between">
             <div className="flex">
               {data.discountPrice > 0 ? ( // Kiểm tra nếu có giá khuyến mãi

@@ -2,7 +2,7 @@ import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import {
   CardNumberElement,
   useElements,
-  useStripe,
+  useStripe
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import currency from "currency-formatter";
@@ -39,14 +39,14 @@ const Payment = () => {
             amount: {
               currency_code: "USD",
               // value: orderData?.totalPrice,
-              value: usdTotal.toFixed(2),
-            },
-          },
+              value: usdTotal.toFixed(2)
+            }
+          }
         ],
         // not needed if a shipping address is actually needed
         application_context: {
-          shipping_preference: "NO_SHIPPING",
-        },
+          shipping_preference: "NO_SHIPPING"
+        }
       })
       .then((orderID) => {
         return orderID;
@@ -59,7 +59,7 @@ const Payment = () => {
     user: user && user,
     totalPrice: orderData?.totalPrice,
     shipping: orderData?.shipping?.toFixed(2),
-    shopTotal: orderData?.shopTotal,
+    shopTotal: orderData?.shopTotal
   };
   console.log("tien ship", order.shipping);
   console.log("tiền shop", order.shopTotal);
@@ -79,14 +79,14 @@ const Payment = () => {
   const paypalPaymentHandler = async (paymentInfo) => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
 
     order.paymentInfo = {
       id: paymentInfo.payer_id,
       status: "Thanh toán thành công",
-      type: "Thanh toán qua Paypal",
+      type: "Thanh toán qua Paypal"
     };
 
     await axios
@@ -102,7 +102,7 @@ const Payment = () => {
   };
 
   const paymentData = {
-    amount: Math.round(orderData?.totalPrice * 100),
+    amount: Math.round(orderData?.totalPrice * 100)
   };
 
   const paymentHandler = async (e) => {
@@ -110,8 +110,8 @@ const Payment = () => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       };
 
       const { data } = await axios.post(
@@ -125,8 +125,8 @@ const Payment = () => {
       if (!stripe || !elements) return;
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
-          card: elements.getElement(CardNumberElement),
-        },
+          card: elements.getElement(CardNumberElement)
+        }
       });
 
       if (result.error) {
@@ -136,7 +136,7 @@ const Payment = () => {
           order.paymnentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
-            type: "Credit Card",
+            type: "Credit Card"
           };
 
           await axios
@@ -161,12 +161,12 @@ const Payment = () => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
 
     order.paymentInfo = {
-      type: "Thanh toán khi nhận hàng",
+      type: "Thanh toán khi nhận hàng"
     };
 
     await axios
@@ -210,7 +210,7 @@ const PaymentInfo = ({
   onApprove,
   createOrder,
   paymentHandler,
-  cashOnDeliveryHandler,
+  cashOnDeliveryHandler
 }) => {
   const [select, setSelect] = useState(1);
 
@@ -237,7 +237,7 @@ const PaymentInfo = ({
         {select === 2 ? (
           <div className="w-full flex border-b">
             <div
-              className={`${styles.button} !bg-[#f63b60] text-white h-[45px] rounded-[5px] cursor-pointer text-[18px] font-[600]`}
+              className={`${styles.button} text-white h-[45px] rounded-[5px] cursor-pointer text-[18px] font-[600]`}
               onClick={() => setOpen(true)}
             >
               Thanh toán ngay
@@ -255,7 +255,7 @@ const PaymentInfo = ({
                   <PayPalScriptProvider
                     options={{
                       "client-id":
-                        "ASKKoZMziCnQPVINeRdR2yLhP7hsYw4wAYzM8WniydfEN1YXYlOHPSQy-Wg6AuaHFBZRuZuwcUNNt_NN",
+                        "ASKKoZMziCnQPVINeRdR2yLhP7hsYw4wAYzM8WniydfEN1YXYlOHPSQy-Wg6AuaHFBZRuZuwcUNNt_NN"
                     }}
                   >
                     <PayPalButtons
@@ -313,7 +313,7 @@ const CartData = ({ orderData }) => {
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng:</h3>
         <h5 className="text-[18px] font-[600]">
           {currency.format(orderData?.subTotalPrice, {
-            code: "VND",
+            code: "VND"
           })}
         </h5>
       </div>
@@ -324,7 +324,7 @@ const CartData = ({ orderData }) => {
         </h3>
         <h5 className="text-[18px] font-[600]">
           {currency.format(shipping, {
-            code: "VND",
+            code: "VND"
           })}
         </h5>
       </div>
@@ -337,7 +337,7 @@ const CartData = ({ orderData }) => {
           {/* {orderData?.discountPrice ? "$" + orderData.discountPrice : "-"} */}
           -{" "}
           {currency.format(orderData.discountPrice, {
-            code: "VND",
+            code: "VND"
           })}
         </h5>
       </div>
@@ -345,7 +345,7 @@ const CartData = ({ orderData }) => {
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Tổng cộng:</h3>
 
         {currency.format(orderData?.totalPrice, {
-          code: "VND",
+          code: "VND"
         })}
       </h5>
       <br />

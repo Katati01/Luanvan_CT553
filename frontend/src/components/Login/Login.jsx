@@ -22,12 +22,13 @@ const Login = () => {
         `${server}/user/login-user`,
         {
           email,
-          password,
+          password
         },
         { withCredentials: true }
       );
 
       const isAdmin = response.data.user.role === "Admin";
+
       toast.success("Đăng nhập thành công!");
       if (isAdmin) {
         navigate("/admin/dashboard");
